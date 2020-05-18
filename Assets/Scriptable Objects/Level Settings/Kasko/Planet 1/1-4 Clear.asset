@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 884ef401ef6ab284eb567efc775b3ca9, type: 3}
+  m_Name: 1-4 Clear
+  m_EditorClassIdentifier: 
+  gameType: 1
+  medalValuePerRound: 12.5
+  trackClicks: 1
+  movesPerCard: 0
+  levelTypeSettings: {fileID: 11400000, guid: 7cacefeb21ccd5345a0d694a044429ea, type: 2}
+  uniqueId: 2eb36a86-7e0f-48e6-892e-717e3d83d8ce
+  resetId: 0
+  areYouSure: 0

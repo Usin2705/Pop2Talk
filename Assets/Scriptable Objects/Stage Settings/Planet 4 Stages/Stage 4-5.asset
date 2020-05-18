@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c4ab024b5586634aa2ec5c656d41891, type: 3}
+  m_Name: Stage 4-5
+  m_EditorClassIdentifier: 
+  level: {fileID: 11400000, guid: ab4efd06923d2a442b5e921cc85e4720, type: 2}
+  starsRequired: 0
+  totalCards: 7
+  quizCards: 1
+  forcedWords: []
+  wordLists:
+  - wordList: {fileID: 11400000, guid: 32d77c978aed89c43a0b839508e07314, type: 2}
+    first: 0
+    quizzable: 1
+    rove: 0
+  popSoundType: 1
+  popSoundIsWordForQuiz: 0
+  adaptiveWords: 0
+  cardPerRound: 2
+  background: {fileID: 21300000, guid: c2286707b4079124fb2ffc103c3e9e0b, type: 3}
+  day: 14
+  uniqueId: b9fc134a-5f07-4d82-b499-8e2ce5d7b50a
+  resetId: 0
+  areYouSure: 0

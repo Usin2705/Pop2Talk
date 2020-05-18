@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c4ab024b5586634aa2ec5c656d41891, type: 3}
+  m_Name: Stage 1-10
+  m_EditorClassIdentifier: 
+  level: {fileID: 11400000, guid: 635bafde9bc349843abbee1a0606c207, type: 2}
+  starsRequired: 0
+  totalCards: 7
+  quizCards: 0
+  forcedWords: []
+  wordLists: []
+  popSoundType: 1
+  popSoundIsWordForQuiz: 0
+  adaptiveWords: 0
+  cardPerRound: 2
+  background: {fileID: 21300000, guid: 5dfc3e52fd86d8849b0e6fca7417e422, type: 3}
+  day: 4
+  uniqueId: 3990b596-2e12-4879-b7e7-16ea4cc5e3d6
+  resetId: 0
+  areYouSure: 0

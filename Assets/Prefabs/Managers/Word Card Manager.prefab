@@ -1,0 +1,161 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1027629063008674}
+  m_IsPrefabParent: 1
+--- !u!1 &1027629063008674
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4193155256842196}
+  - component: {fileID: 114277149318257608}
+  - component: {fileID: 82910648391467082}
+  m_Layer: 0
+  m_Name: Word Card Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4193155256842196
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1027629063008674}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &82910648391467082
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1027629063008674}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+--- !u!114 &114277149318257608
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1027629063008674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d386b9b1ea835c942a19dc510149005a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wordCard: {fileID: 0}
+  recordSound: {fileID: 114631013279012476, guid: 77d5fdbfee6ae554e9d2d8f60e1d01e6,
+    type: 2}
+  quizPrompts:
+    m_keys: 01000000
+    m_values:
+    - prompts:
+        m_keys: 02000000
+        m_values:
+        - {fileID: 8300000, guid: 1a138f66c30e78746bc28a814286381c, type: 3}
+  memoryPrompts:
+    m_keys: 01000000
+    m_values:
+    - {fileID: 8300000, guid: 2ed364e0ba3d6ca489cd29086db9a371, type: 3}
+  starSpeeches:
+  - {fileID: 11400000, guid: 7ee55b42f151e934690ce3e783471d9f, type: 2}
+  - {fileID: 11400000, guid: fbd2cfb8375e16b4a99826dba7eaa382, type: 2}
+  - {fileID: 11400000, guid: c910ce985dbbdba41aa307b0494989f0, type: 2}
+  - {fileID: 11400000, guid: 9a256296d89c0c647a39619aad83a43a, type: 2}
+  - {fileID: 11400000, guid: 4709799839a900544bea2bfe55002db9, type: 2}
+  - {fileID: 11400000, guid: c910ce985dbbdba41aa307b0494989f0, type: 2}
+  - {fileID: 11400000, guid: 8ff7dda51940e024c93d9ec1beaca0b8, type: 2}
+  - {fileID: 11400000, guid: 5024e1e78891ccc4d94430af25fe210a, type: 2}
+  - {fileID: 11400000, guid: 930e750bbd84bd04a9eb616264a4869d, type: 2}
+  - {fileID: 11400000, guid: 4a149ce2c5a54544d9d034ec21ad6351, type: 2}
+  - {fileID: 11400000, guid: 8be0ee47c51c9eb4eb5c366a84637529, type: 2}
+  timeOutSpeech: {fileID: 11400000, guid: 0db3c7bba0cb4a94eb1dcbbab65259eb, type: 2}
