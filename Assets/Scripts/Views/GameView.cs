@@ -67,7 +67,7 @@ public class GameView : View, IGameCaller {
 
 	public void Clicked() {
 		if (stage.popSoundType == PopSoundType.Next && (stage.popSoundIsWordForQuiz || WordMaster.Instance.PeekNextType() != WordCardType.Quiz)) {
-			SoundEffectManager.GetManager().FadeMusic(0.25f, 0f);
+			ToggleMusic(0.25f, false);
 			musicFaded = true;
 			GameMaster.Instance.SetCustomClip(WordMaster.Instance.GetPopWord(GameMaster.Instance.RemainingProgress / GameMaster.Instance.MaxProgress).languageWords[LanguageManager.GetManager().TargetLanguage].pronunciations.GetRandom());
 		} else 
@@ -75,10 +75,14 @@ public class GameView : View, IGameCaller {
 	}
 
 	public void ClickDone() {
-		if (musicFaded) {
-			SoundEffectManager.GetManager().FadeMusic(0.5f, 1f);
-			musicFaded = false;
-		}
+		ToggleMusic(0.5f, true);
+	}
+
+	void ToggleMusic(float duration, bool on) {
+		if (musicFaded != on)
+			return;
+		SoundEffectManager.GetManager().FadeMusic(duration, (on) ? 1f : 0f);
+		musicFaded = !on;
 	}
 
 	void GameDone() {
@@ -139,6 +143,8 @@ public class GameView : View, IGameCaller {
 			}
 			CardDone(stars);
 		} else {
+			ToggleMusic(0.25f, false);
+
 			ShowCard();
 		}
 	}
@@ -161,14 +167,14 @@ public class GameView : View, IGameCaller {
 		if (WordMaster.Instance.RemainingBatch > 0)
 			ShowCard();
 		else if (WordMaster.Instance.CardsRemaining > 0) {
-			SoundEffectManager.GetManager().FadeMusic(1f, 1f);
+			ToggleMusic(1f, true);
 			WordMaster.Instance.ChooseNextWordBatch();
 			if (WordMaster.Instance.CardsRemaining == 1)
 				GameMaster.Instance.FinalRound = true;
 			GameMaster.Instance.StartRound();
 		} else {
 			GameDone();
-			SoundEffectManager.GetManager().FadeMusic(1f, 1f);
+			ToggleMusic(1f, true);
 		}
 	}
 
