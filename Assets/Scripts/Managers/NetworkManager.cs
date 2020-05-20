@@ -412,7 +412,7 @@ public class NetworkManager : MonoBehaviour
                 }*/
 #endif
 
-#if UNITY_ANDROID || UNITY_IOS
+//#if UNITY_ANDROID || UNITY_IOS
                 if (packets == 0)
                 {
                     sud.player = Player;
@@ -458,7 +458,7 @@ public class NetworkManager : MonoBehaviour
                     ud.data = System.Convert.ToBase64String(voiceData);
                     socket.EmitJson("continue_upload", JsonUtility.ToJson(ud));
                 }
-#endif
+//#endif
                 packets++;
             }
             else
