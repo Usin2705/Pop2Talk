@@ -42,7 +42,7 @@ public class GameHandler : MonoBehaviour
         #endif*/
         findMicrophones();
 #if PLATFORM_IOS
-            yield return Application.RequestUserAuthorization(UserAuthorization.Microphone);
+            Application.RequestUserAuthorization(UserAuthorization.Microphone);
             if (Application.HasUserAuthorization(UserAuthorization.Microphone))
             {
                 Debug.Log("Microphone found");
