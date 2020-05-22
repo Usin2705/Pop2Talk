@@ -39,7 +39,7 @@ public class MatchableTile : Tile {
     }
 
     public override bool Interact(InteractType type) {
-        if (!base.Interact(type))
+        if (!base.Interact(type) || moving)
             return false;
 
         if (GridManager.GetManager() == null || !GridManager.GetManager().CanClick) {
@@ -67,6 +67,7 @@ public class MatchableTile : Tile {
     }
 
     public override void MoveToVisual(Vector3 position, float duration) {
+		moving = true;
         StartCoroutine(MoveTowards(position,duration));
     }
 }
