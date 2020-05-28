@@ -31,7 +31,7 @@ public class QuizCardHandler : BaseWordCardHandler {
 			WordCardManager.GetManager().SetFlags(false, false);
 		}
         //yield return new WaitForSeconds(phaseGap);
-		yield return WordCardManager.GetManager().StartCoroutine(WordCardManager.GetManager().RecordAndPlay(phaseGap));
+		yield return WordCardManager.GetManager().StartCoroutine(WordCardManager.GetManager().RecordAndPlay(phaseGap, "MemoryChallenge"));
         yield return new WaitForSeconds(phaseGap);
         WordCardManager.GetManager().StartCoroutine(WordCardManager.GetManager().GiveStars(phaseGap));
     }
