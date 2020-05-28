@@ -80,7 +80,6 @@ public class GameMaster : MonoBehaviour {
 		FinalRound = false;
 		gameCaller.LaunchSetup();
         NetworkManager.GetManager().LevelStarted(CurrentLevel.name, LevelSettings.GetDoneStatus(CurrentLevel, NetworkManager.GetManager().Player), LevelSettings.GetMedal(CurrentLevel, NetworkManager.GetManager().Player));
-        currentGameModeHandler.Initialize(CurrentLevel);
 		StartRound();
     }
 

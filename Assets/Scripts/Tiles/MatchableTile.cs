@@ -42,7 +42,7 @@ public class MatchableTile : Tile {
         if (!base.Interact(type) || moving)
             return false;
 
-        if (GridManager.GetManager() == null || !GridManager.GetManager().CanClick) {
+        if (GridManager.GetManager() == null || !GridManager.GetManager().CanClick || GridManager.GetManager().Moving) {
             return false;
         }
 

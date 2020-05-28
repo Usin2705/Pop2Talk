@@ -187,11 +187,15 @@ public class WordMaster : MonoBehaviour {
 		}
 	}
 
+	string prevWord;
+
     WordData GetRandomLeastShownWord(WordCardType type) {
         Dictionary<string, int> dictionary = showTimes[type];
         List<string> leastShowns = new List<string>();
         int least = int.MaxValue;
         foreach (string s in dictionary.Keys) {
+			if (prevWord == s)
+				continue;
             if (dictionary[s] < least) {
                 least = dictionary[s];
                 leastShowns.Clear();
@@ -207,6 +211,8 @@ public class WordMaster : MonoBehaviour {
 			newQuizzes--;
         string chosen = leastShowns[Random.Range(0, leastShowns.Count)];
         dictionary[chosen]++;
+		if (showTimes.Count > 1)
+			prevWord = chosen;
         return StringToWordData(chosen);
     }
 	

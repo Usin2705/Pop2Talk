@@ -65,7 +65,9 @@ public class MachineCard : BaseWordCard {
 		initialized = true;
 	}
 
-	public void SetBarShowAsHideSlot(bool on) {
+	public void SetBarShowAsHideSlot(bool on) {  
+		if (on && !gameObject.activeSelf)
+			gameObject.SetActive(true);
 		showingBar = on;
 		currentHideSlot = (on) ? barShowSlot : cardHideSlot;
 		HideInstantly();

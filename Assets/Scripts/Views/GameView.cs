@@ -180,6 +180,7 @@ public class GameView : View, IGameCaller {
 
 	public override void Deactivate() {
 		base.Deactivate();
+		gameUI.SetCardBar(false);
 		WordCardManager.GetManager().StopCard();
 		GameMaster.Instance.Back();
 	}
@@ -198,7 +199,6 @@ public class GameView : View, IGameCaller {
 
 	public void Back() {
 		doExitFluff = false;
-		gameUI.SetCardBar(false);
 		ViewManager.GetManager().ShowView(stageHub);
 	}
 

@@ -105,6 +105,7 @@ public class WordCardManager : MonoBehaviour {
 		wordCard.SetFlagOneOn(false);
 		wordCard.SetFlagTwoOn(false);
 		wordCard.gameObject.SetActive(true);
+		wordCard.HideInstantly();
 		wordCard.ToggleFeedback(false);
 		wordCard.ToggleMic(false);
 		wordCard.ToggleButtons(false);
