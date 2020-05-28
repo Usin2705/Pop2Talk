@@ -164,7 +164,7 @@ public class WordCardManager : MonoBehaviour {
 		wordCard.SetFlagTwoOn(target);
 	}
 
-	public IEnumerator RecordAndPlay(float gap) {
+	public IEnumerator RecordAndPlay(float gap, string challengeType) {
 		score = 0;
 		wordCard.ToggleMic(true);
 		/*if (recordSound != null) {
@@ -182,7 +182,7 @@ public class WordCardManager : MonoBehaviour {
 			word += LanguageManager.GetManager().GetLanguagePrefix() + parts[i];
 		}
 
-		NetworkManager.GetManager().SendMicrophone(Microphone.devices[0], word, recording, recordDuration, ReceiveScore, "");
+		NetworkManager.GetManager().SendMicrophone(Microphone.devices[0], word, recording, recordDuration, ReceiveScore, challengeType);
 		bool enoughRecording;
 		scoreReceived = false;
 		float a = 0;

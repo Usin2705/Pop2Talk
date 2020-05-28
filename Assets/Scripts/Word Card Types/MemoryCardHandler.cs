@@ -40,7 +40,7 @@ public class MemoryCardHandler : BaseWordCardHandler {
         yield return WordCardManager.GetManager().StartCoroutine(WordCardManager.GetManager().SayWord(nativeLanguage));
         WordCardManager.GetManager().SetFlags(false,false);
         //yield return new WaitForSeconds(phaseGap);
-        yield return WordCardManager.GetManager().StartCoroutine(WordCardManager.GetManager().RecordAndPlay(phaseGap));
+        yield return WordCardManager.GetManager().StartCoroutine(WordCardManager.GetManager().RecordAndPlay(phaseGap, "GapRepeatChallenge"));
         yield return new WaitForSeconds(phaseGap);
         WordCardManager.GetManager().SetFlags(false,true);
         yield return WordCardManager.GetManager().StartCoroutine(WordCardManager.GetManager().SayWord(targetLanguage));
