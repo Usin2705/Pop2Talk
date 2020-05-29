@@ -8,6 +8,10 @@ public class InputManager : MonoBehaviour {
     bool sendingInputs = true;
 	UnityEngine.EventSystems.EventSystem eventSystem;
 
+	bool waitingRelease;
+	Vector2 pressPosition;
+	float pressTime;
+
 	List<Callback> tryInputCallbacks = new List<Callback>();
 
 	public bool SendingInputs {
@@ -22,7 +26,7 @@ public class InputManager : MonoBehaviour {
     }
 
     static InputManager inputManager;
-    
+
     void Awake() {
         if (inputManager != null) {
             Debug.LogError("Multiple Input Managers");
@@ -38,8 +42,10 @@ public class InputManager : MonoBehaviour {
     }
 
     void Update () {
-        if (SendingInputs)
-            HandleInputs();
+		if (SendingInputs)
+			HandleInputs();
+		else
+			waitingRelease = false;
 	}
 
     void HandleInputs() {
@@ -68,7 +74,8 @@ public class InputManager : MonoBehaviour {
     }
 
     void TryInput(Vector2 position, InteractType type) {
-        RaycastHit hit;
+		CheckForSwipe(position, type);
+		RaycastHit hit;
 		foreach (Callback Cb in tryInputCallbacks)
 			Cb();
         if (Physics.Raycast(Camera.main.ScreenPointToRay(position), out hit, ConstantHolder.interactableLayer)) {
@@ -83,5 +90,25 @@ public class InputManager : MonoBehaviour {
 	public void SubscribeTryinput(Callback callback) {
 		if (callback != null)
 			tryInputCallbacks.Add(callback);
+	}
+
+	void CheckForSwipe(Vector2 position, InteractType type) {
+		if (type == InteractType.Press && !waitingRelease) {
+			waitingRelease = true;
+			pressPosition = position;
+			pressTime = Time.time;
+		}
+
+		if (type == InteractType.Release) {
+			if (waitingRelease) {
+				float swipeMinDistance = 50f;
+				float swipeMinTime = 0.1f;
+
+				if (Time.time - pressTime > swipeMinTime && Vector2.Distance(position, pressPosition) > swipeMinDistance) {
+					Debug.Log("SWIPE!");
+				}
+			}
+			waitingRelease = false;
+		}
 	}
 }
