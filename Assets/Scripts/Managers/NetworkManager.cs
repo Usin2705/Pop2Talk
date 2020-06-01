@@ -136,7 +136,7 @@ public class NetworkManager : MonoBehaviour
             Debug.Log("Connected successfully");
             connected = true;
             connecting = false;
-            SendLoggableEvent("start");
+            SimpleEvent("start");
         });
 
         /*socket.On(Socket.EVENT_CONNECT_ERROR, () =>
@@ -561,7 +561,7 @@ public class NetworkManager : MonoBehaviour
         Connect();
     }
 
-    public void Event1(string name, string view)
+    public void SimpleEvent(string name)
     {
 
 
@@ -570,10 +570,40 @@ public class NetworkManager : MonoBehaviour
             eventname = name,
             player = Player,
             sessionid = sessionId,
-            view = view,
         };
         StartCoroutine(SendLoggableEvent(ae));
-}
+    }
+
+    public void CharacterSelectEvent(string name, string character)
+    {
+
+
+        AnalyticsEvent ae = new AnalyticsEvent
+        {
+            eventname = name,
+            eventtarget = character,
+            player = Player,
+            sessionid = sessionId,
+        };
+        StartCoroutine(SendLoggableEvent(ae));
+    }
+
+    public void LevelCompleteEvent(string name, string stageName, float levelDuration, int averageStars, int totalStarsCollected, int stonesCollected, bool medalBool)
+    {
+
+
+        AnalyticsEvent ae = new AnalyticsEvent
+        {
+            eventname = name,
+            medal = medalBool,
+            avgStars = averageStars,
+            totalStars = totalStarsCollected,
+            stones = stonesCollected,
+            player = Player,
+            sessionid = sessionId,
+        };
+        StartCoroutine(SendLoggableEvent(ae));
+    }
 
 
 
@@ -585,18 +615,11 @@ public class NetworkManager : MonoBehaviour
         System.TimeSpan span = new System.TimeSpan(version.Build, 0, 0, version.Revision * 2);
         System.DateTime buildDate = startDate.Add(span);
         ae.builddate = buildDate;
+        ae.view = ViewManager.GetManager().CurrentView.name;
 
         ae.platform = Application.platform.ToString();
         ae.device = SystemInfo.deviceName.ToString();
         ae.sessiontime = secondsSinceStartup;
-        ae.leveltime = leveltime;
-        ae.screensize = screensize;
-        ae.eventtarget = eventtarget;
-
-        ae.startxcoord = startxcoord;
-        ae.startycoord = startycoord;
-        ae.endxcoord = endxcoord;
-        ae.endycoord = endycoord;
 
         ae.serverurl = socketUrl;
 

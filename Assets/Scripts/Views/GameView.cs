@@ -86,7 +86,6 @@ public class GameView : View, IGameCaller {
 	}
 
 	void GameDone() {
-		NetworkManager.GetManager().SendAnalyticsEvent("level_duration", ViewManager.GetManager().CurrentView.name, stage.name, leveltime: levelDuration);
 		bool done = TotalStars >= stage.starsRequired;
 		if (done)
 			StageSettings.SetDoneStatus(stage, NetworkManager.GetManager().Player);
@@ -99,7 +98,7 @@ public class GameView : View, IGameCaller {
 			LevelSettings.SetMedal(stage.level, NetworkManager.GetManager().Player);
 		if (GameMaster.Instance.TrackedValue > LevelSettings.GetHiscore(stage.level, NetworkManager.GetManager().Player))
 			LevelSettings.SetHiscore(stage.level, GameMaster.Instance.TrackedValue, NetworkManager.GetManager().Player);
-		NetworkManager.GetManager().LevelCompleted(stage.name, done, medal);
+		NetworkManager.GetManager().LevelCompleteEvent("level_complete", stage.name, levelDuration, , TotalStars, , medal);
 		SpeechCollection speech = !firstCheerDone ? (done ? (medal ? clearGetMedalSpeech : clearNoMedalSpeech) : noClearSpeech) : Random.Range(0,1) >= cheerChance ? (done ? (medal ? clearGetMedalSpeech : clearNoMedalSpeech) : noClearSpeech) : noClearSpeech;
         if (speech != noClearSpeech && !firstCheerDone)
             firstCheerDone = true;

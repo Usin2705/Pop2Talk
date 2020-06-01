@@ -67,6 +67,11 @@ public class AnalyticsEvent {
     public string serverurl;
     public string sessionid;
 
+    public bool medal;
+    public int avgStars;
+    public int totalStars;
+    public int stones;
+
 }
 
 public class ScoreData

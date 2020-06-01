@@ -59,7 +59,7 @@ public class CharacterSelectView : View {
 	}
 
 	public override void ExitFluff(Callback Done) {
-		NetworkManager.GetManager().SendAnalyticsEvent("character_selection", ViewManager.GetManager().CurrentView.name, eventtarget: CharacterManager.GetManager().CurrentCharacter.name);
+		NetworkManager.GetManager().CharacterSelectEvent("character_selection", CharacterManager.GetManager().CurrentCharacter.name);
 		CharacterManager.GetManager().ShowCharacter(characterSelected, sortingOrder, () => { base.ExitFluff(Done); });
 	}
 
