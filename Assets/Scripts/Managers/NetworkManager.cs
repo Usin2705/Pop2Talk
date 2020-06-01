@@ -561,25 +561,24 @@ public class NetworkManager : MonoBehaviour
         Connect();
     }
 
-    public void SendAnalyticsEvent(string name, string view = null, string level = null, string action = null, string audioinputdevice = null, string audiooutputdevice = null, float leveltime = -1f, string screensize = null, string eventtarget = null, float startxcoord = -1f, float startycoord = -1f, float endxcoord = -1f, float endycoord = -1f)
+    public void Event1(string name, string view)
     {
-        StartCoroutine(SendLoggableEvent(name, view, level, action, audioinputdevice, audiooutputdevice, leveltime, screensize, eventtarget, startxcoord, startycoord, endxcoord, endycoord));
-    }
 
-    public IEnumerator SendLoggableEvent(string name, string view = null, string level = null, string action = null, string audioinputdevice = null, string audiooutputdevice = null, float leveltime = -1f, string screensize = null, string eventtarget = null, float startxcoord = -1f, float startycoord = -1f, float endxcoord = -1f, float endycoord = -1f)
-    {
+
         AnalyticsEvent ae = new AnalyticsEvent
         {
             eventname = name,
             player = Player,
             sessionid = sessionId,
             view = view,
-            level = level,
-            action = action,
-            audioinputdevice = audioinputdevice,
-            audiooutputdevice = audiooutputdevice,
-            build = Assembly.GetExecutingAssembly().GetName().Version.Build.ToString()
         };
+        StartCoroutine(SendLoggableEvent(ae));
+}
+
+
+
+    IEnumerator SendLoggableEvent(AnalyticsEvent ae)
+    {
 
         System.Version version = Assembly.GetExecutingAssembly().GetName().Version;
         System.DateTime startDate = new System.DateTime(2000, 1, 1, 0, 0, 0);
