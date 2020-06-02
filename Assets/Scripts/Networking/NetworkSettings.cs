@@ -50,6 +50,7 @@ public class AnalyticsEvent {
     public string eventtarget;
     public string view;
     public string level;
+    public string levelType;
     public float leveltime;
     public float sessiontime;
     public string action;

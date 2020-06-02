@@ -98,7 +98,7 @@ public class GameView : View, IGameCaller {
 			LevelSettings.SetMedal(stage.level, NetworkManager.GetManager().Player);
 		if (GameMaster.Instance.TrackedValue > LevelSettings.GetHiscore(stage.level, NetworkManager.GetManager().Player))
 			LevelSettings.SetHiscore(stage.level, GameMaster.Instance.TrackedValue, NetworkManager.GetManager().Player);
-		NetworkManager.GetManager().LevelCompleteEvent("level_complete", stage.name, levelDuration, , TotalStars, , medal);
+		NetworkManager.GetManager().LevelCompleteEvent("level_complete", stage.name, stage.level.gameType.ToString(), levelDuration, (TotalStars / stage.totalCards) , TotalStars, GameMaster.Instance.TrackedValue, medal);
 		SpeechCollection speech = !firstCheerDone ? (done ? (medal ? clearGetMedalSpeech : clearNoMedalSpeech) : noClearSpeech) : Random.Range(0,1) >= cheerChance ? (done ? (medal ? clearGetMedalSpeech : clearNoMedalSpeech) : noClearSpeech) : noClearSpeech;
         if (speech != noClearSpeech && !firstCheerDone)
             firstCheerDone = true;

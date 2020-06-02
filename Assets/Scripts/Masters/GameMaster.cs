@@ -87,7 +87,7 @@ public class GameMaster : MonoBehaviour {
 		gameCaller.RoundDone();
 	}
 
-	public void StartRound() {
+    public void StartRound() {
 		if (DebugSettings.Instance.skipPops)
 			GameModeDone();
 		else

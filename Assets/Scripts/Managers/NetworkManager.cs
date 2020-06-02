@@ -588,7 +588,7 @@ public class NetworkManager : MonoBehaviour
         StartCoroutine(SendLoggableEvent(ae));
     }
 
-    public void LevelCompleteEvent(string name, string stageName, float levelDuration, int averageStars, int totalStarsCollected, int stonesCollected, bool medalBool)
+    public void LevelCompleteEvent(string name, string stageName, string stageType, float levelDuration, int averageStars, int totalStarsCollected, int stonesCollected, bool medalBool)
     {
 
 
@@ -599,6 +599,9 @@ public class NetworkManager : MonoBehaviour
             avgStars = averageStars,
             totalStars = totalStarsCollected,
             stones = stonesCollected,
+            leveltime = levelDuration,
+            level = stageName,
+            levelType = stageType,
             player = Player,
             sessionid = sessionId,
         };
