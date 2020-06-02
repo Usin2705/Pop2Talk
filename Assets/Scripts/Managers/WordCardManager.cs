@@ -105,7 +105,6 @@ public class WordCardManager : MonoBehaviour {
 		wordCard.SetFlagOneOn(false);
 		wordCard.SetFlagTwoOn(false);
 		wordCard.gameObject.SetActive(true);
-		wordCard.HideInstantly();
 		wordCard.ToggleFeedback(false);
 		wordCard.ToggleMic(false);
 		wordCard.ToggleButtons(false);
@@ -274,10 +273,10 @@ public class WordCardManager : MonoBehaviour {
 		action = WordCardAction.Continue;
 	}
 
-	public void HideCard(Callback Done) {
-		if (DebugSettings.Instance.skipTransitions) {
+	public void HideCard(Callback Done, bool instantly = false) {
+		if (instantly || DebugSettings.Instance.skipTransitions) {
 			wordCard.HideInstantly();
-			Done();
+			Done?.Invoke();
 		} else
 			wordCard.HideCard(hideDuration, Done);
 	}
