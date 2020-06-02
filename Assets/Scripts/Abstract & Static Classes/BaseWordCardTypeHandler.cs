@@ -23,7 +23,8 @@ public class BaseWordCardHandler {
 		stars = -1;
         WordCardManager.GetManager().SetUpWord(wordData, levelName, this);
         WordCardManager.GetManager().SetUpCard(targetLanguage);
-        WordCardManager.GetManager().ShowWordCard(order, () => { StartCard();});
+		WordCardManager.GetManager().HideCard(null, true);
+		WordCardManager.GetManager().ShowWordCard(order, () => { StartCard();});
     }
 
     public virtual void StartCard() {
