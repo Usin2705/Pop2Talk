@@ -105,7 +105,7 @@ public class InputManager : MonoBehaviour {
 				float swipeMinTime = 0.1f;
 
 				if (Time.time - pressTime > swipeMinTime && Vector2.Distance(position, pressPosition) > swipeMinDistance) {
-					Debug.Log("SWIPE!");
+                    NetworkManager.GetManager().SwipeEvent("swipe_event");
 				}
 			}
 			waitingRelease = false;

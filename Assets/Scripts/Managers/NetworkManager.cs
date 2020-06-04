@@ -628,6 +628,19 @@ public class NetworkManager : MonoBehaviour
         StartCoroutine(SendLoggableEvent(ae));
     }
 
+    public void SwipeEvent(string name)
+    {
+
+
+        AnalyticsEvent ae = new AnalyticsEvent
+        {
+            eventname = name,
+            player = Player,
+            sessionid = sessionId,
+        };
+        StartCoroutine(SendLoggableEvent(ae));
+    }
+
 
     IEnumerator SendLoggableEvent(AnalyticsEvent ae)
     {
@@ -648,7 +661,7 @@ public class NetworkManager : MonoBehaviour
         socket.EmitJson("loggable_event", JsonUtility.ToJson(ae));
         yield return null;
 
-        Debug.Log("Event sent");
+        Debug.Log("Event " + ae.eventname + " sent");
     }
 
     string GetUniqueID()
