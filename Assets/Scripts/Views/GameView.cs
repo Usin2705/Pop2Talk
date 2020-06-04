@@ -197,6 +197,7 @@ public class GameView : View, IGameCaller {
 	} 
 
 	public void Back() {
+		NetworkManager.GetManager().LevelAbortEvent("level_abort", stage.name, stage.level.gameType.ToString(), levelDuration, stage.totalCards - WordMaster.Instance.CardsRemaining, (TotalStars / stage.totalCards), TotalStars, GameMaster.Instance.TrackedValue);
 		doExitFluff = false;
 		ViewManager.GetManager().ShowView(stageHub);
 	}

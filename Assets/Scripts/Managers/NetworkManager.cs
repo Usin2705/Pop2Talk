@@ -608,6 +608,25 @@ public class NetworkManager : MonoBehaviour
         StartCoroutine(SendLoggableEvent(ae));
     }
 
+    public void LevelAbortEvent(string name, string stageName, string stageType, float levelDuration, int cardsCompleted, int averageStars, int totalStarsCollected, int stonesCollected)
+    {
+
+
+        AnalyticsEvent ae = new AnalyticsEvent
+        {
+            eventname = name,
+            avgStars = averageStars,
+            totalStars = totalStarsCollected,
+            completedCards = cardsCompleted,
+            stones = stonesCollected,
+            leveltime = levelDuration,
+            level = stageName,
+            levelType = stageType,
+            player = Player,
+            sessionid = sessionId,
+        };
+        StartCoroutine(SendLoggableEvent(ae));
+    }
 
 
     IEnumerator SendLoggableEvent(AnalyticsEvent ae)

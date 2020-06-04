@@ -71,6 +71,7 @@ public class AnalyticsEvent {
     public bool medal;
     public int avgStars;
     public int totalStars;
+    public int completedCards;
     public int stones;
 
 }
