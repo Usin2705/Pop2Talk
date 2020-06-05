@@ -299,13 +299,13 @@ public class NetworkManager : MonoBehaviour
         }
     }
 
-    public void SendMicrophone(string microphone, string word, AudioClip clip, float duration, IntCallback ScoreReceived, string challengetype)
+    public void SendMicrophone(string microphone, string word, AudioClip clip, float duration, IntCallback ScoreReceived, string challengetype, int retryAmount)
     {
         if (socket != null && connected)
-            StartCoroutine(UploadMicrophone(microphone, word, clip, duration, ScoreReceived, challengetype));
+            StartCoroutine(UploadMicrophone(microphone, word, clip, duration, ScoreReceived, challengetype, retryAmount));
     }
 
-    IEnumerator UploadMicrophone(string microphone, string word, AudioClip clip, float duration, IntCallback ScoreReceived, string challengetype)
+    IEnumerator UploadMicrophone(string microphone, string word, AudioClip clip, float duration, IntCallback ScoreReceived, string challengetype, int retryAmount)
     {
         while (!connected || waitingScore)
             yield return null;
@@ -436,6 +436,7 @@ public class NetworkManager : MonoBehaviour
                     sud.device = SystemInfo.deviceName.ToString();
                     sud.microphone = microphone;
                     sud.challengetype = challengetype;
+                    sud.retryCount = retryAmount;
                     //sud.level = "";
 
                     sud.packetnr = packets;

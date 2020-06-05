@@ -17,6 +17,7 @@ public class InitialAudioData {
     public string device;
     public string microphone;
     public string challengetype;
+    public int retryCount;
 }
 
 public class EstablishedAudioData {
