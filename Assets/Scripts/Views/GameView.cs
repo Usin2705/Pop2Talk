@@ -70,7 +70,7 @@ public class GameView : View, IGameCaller {
 			ToggleMusic(0.25f, false);
 			musicFaded = true;
 			WordData word = WordMaster.Instance.GetPopWord(GameMaster.Instance.RemainingProgress / GameMaster.Instance.MaxProgress);
-			NetworkManager.GetManager().SamplePlayed(stage.name, word.name, false);
+			NetworkManager.GetManager().SamplePlayed(stage.name, word.name, true);
 			GameMaster.Instance.SetCustomClip(word.languageWords[LanguageManager.GetManager().TargetLanguage].pronunciations.GetRandom());
 		} else 
 			GameMaster.Instance.SetCustomClip(null);
