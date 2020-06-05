@@ -69,7 +69,9 @@ public class GameView : View, IGameCaller {
 		if (stage.popSoundType == PopSoundType.Next && (stage.popSoundIsWordForQuiz || WordMaster.Instance.PeekNextType() != WordCardType.Quiz)) {
 			ToggleMusic(0.25f, false);
 			musicFaded = true;
-			GameMaster.Instance.SetCustomClip(WordMaster.Instance.GetPopWord(GameMaster.Instance.RemainingProgress / GameMaster.Instance.MaxProgress).languageWords[LanguageManager.GetManager().TargetLanguage].pronunciations.GetRandom());
+			WordData word = WordMaster.Instance.GetPopWord(GameMaster.Instance.RemainingProgress / GameMaster.Instance.MaxProgress);
+			NetworkManager.GetManager().SamplePlayed(stage.name, word.name, false);
+			GameMaster.Instance.SetCustomClip(word.languageWords[LanguageManager.GetManager().TargetLanguage].pronunciations.GetRandom());
 		} else 
 			GameMaster.Instance.SetCustomClip(null);
 	}

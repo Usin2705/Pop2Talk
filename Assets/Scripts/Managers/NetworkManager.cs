@@ -287,17 +287,16 @@ public class NetworkManager : MonoBehaviour
         }
     }
 
-    public void SamplePlayed(string level, string word, bool fromPop)
-    {
-        if (socket != null && connected)
-        {
-            SampleEvent se = new SampleEvent();
-            se.player = Player;
-            se.word = word;
-            se.fromPop = fromPop;
-            socket.EmitJson("playing_sample", JsonUtility.ToJson(se));
-        }
-    }
+    public void SamplePlayed(string level, string word, bool fromPop) {
+		AnalyticsEvent ae = new AnalyticsEvent {
+			eventname = "sample_played",
+			level = level,
+			sessionid = sessionId,
+			word = word,
+			fromPop = fromPop,
+		};
+		StartCoroutine(SendLoggableEvent(ae));
+	}
 
     public void SendMicrophone(string microphone, string word, AudioClip clip, float duration, IntCallback ScoreReceived, string challengetype, int retryAmount)
     {

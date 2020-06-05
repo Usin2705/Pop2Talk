@@ -52,13 +52,13 @@ public class AnalyticsEvent {
     public string view;
     public string level;
     public string levelType;
-    public float leveltime;
-    public float sessiontime;
-    public string action;
-    public float startxcoord;
-    public float startycoord;
-    public float endxcoord;
-    public float endycoord;
+    public float leveltime = -1;
+    public float sessiontime = -1;
+	public string action;
+    public float startxcoord = -1;
+    public float startycoord = -1;
+    public float endxcoord = -1;
+    public float endycoord = -1;
     public string screensize;
     public string build;
     public DateTime builddate;
@@ -68,12 +68,15 @@ public class AnalyticsEvent {
     public string audiooutputdevice;
     public string serverurl;
     public string sessionid;
+	public string word;
 
     public bool medal;
-    public int avgStars;
-    public int totalStars;
-    public int completedCards;
-    public int stones;
+	public bool fromPop;
+
+    public int avgStars = -1;
+    public int totalStars = -1;
+    public int completedCards = -1;
+    public int stones = -1;
 
 }
 
