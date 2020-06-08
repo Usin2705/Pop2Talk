@@ -1360,7 +1360,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   url: https://(user_management_api_server)/api/game/login
-  socketUrl: https://(speech_processing_development_server)
+  socketUrl: https://(speech_processing_production_server)
   socketPath: (websocket_path)
 --- !u!4 &677993876
 Transform:
