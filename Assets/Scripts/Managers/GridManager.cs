@@ -52,6 +52,8 @@ public class GridManager : MonoBehaviour {
         }
     }
 
+	public bool Moving { get; protected set; }
+
     bool canClick;
     Dictionary<int, int> lowestPops = new Dictionary<int, int>();
 
@@ -874,6 +876,7 @@ public class GridManager : MonoBehaviour {
         Vector3 startPos;
         float sign;
         speed = -jumpSpeed;
+		Moving = true;
         Cell targetCell;
         Dictionary<Tile, float> tileSpeeds = new Dictionary<Tile, float>();
         Dictionary<Cell, Tile> currentTiles = new Dictionary<Cell, Tile>();
@@ -933,6 +936,7 @@ public class GridManager : MonoBehaviour {
             yield return null;
         }
         tileMotions.Clear();
+		Moving = false;
 		if (MoveCompleted != null)
 			MoveCompleted();
     }

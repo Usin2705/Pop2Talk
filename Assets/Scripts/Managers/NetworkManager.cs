@@ -136,7 +136,7 @@ public class NetworkManager : MonoBehaviour
             Debug.Log("Connected successfully");
             connected = true;
             connecting = false;
-            SendLoggableEvent("start");
+            SimpleEvent("start");
         });
 
         /*socket.On(Socket.EVENT_CONNECT_ERROR, () =>
@@ -287,25 +287,24 @@ public class NetworkManager : MonoBehaviour
         }
     }
 
-    public void SamplePlayed(string level, string word, bool fromPop)
+    public void SamplePlayed(string level, string word, bool fromPop) {
+		AnalyticsEvent ae = new AnalyticsEvent {
+			eventname = "sample_played",
+			level = level,
+			sessionid = sessionId,
+			word = word,
+			fromPop = fromPop,
+		};
+		StartCoroutine(SendLoggableEvent(ae));
+	}
+
+    public void SendMicrophone(string microphone, string word, AudioClip clip, float duration, IntCallback ScoreReceived, string challengetype, int retryAmount)
     {
         if (socket != null && connected)
-        {
-            SampleEvent se = new SampleEvent();
-            se.player = Player;
-            se.word = word;
-            se.fromPop = fromPop;
-            socket.EmitJson("playing_sample", JsonUtility.ToJson(se));
-        }
+            StartCoroutine(UploadMicrophone(microphone, word, clip, duration, ScoreReceived, challengetype, retryAmount));
     }
 
-    public void SendMicrophone(string microphone, string word, AudioClip clip, float duration, IntCallback ScoreReceived, string challengetype)
-    {
-        if (socket != null && connected)
-            StartCoroutine(UploadMicrophone(microphone, word, clip, duration, ScoreReceived, challengetype));
-    }
-
-    IEnumerator UploadMicrophone(string microphone, string word, AudioClip clip, float duration, IntCallback ScoreReceived, string challengetype)
+    IEnumerator UploadMicrophone(string microphone, string word, AudioClip clip, float duration, IntCallback ScoreReceived, string challengetype, int retryAmount)
     {
         while (!connected || waitingScore)
             yield return null;
@@ -436,6 +435,7 @@ public class NetworkManager : MonoBehaviour
                     sud.device = SystemInfo.deviceName.ToString();
                     sud.microphone = microphone;
                     sud.challengetype = challengetype;
+                    sud.retryCount = retryAmount;
                     //sud.level = "";
 
                     sud.packetnr = packets;
@@ -561,50 +561,107 @@ public class NetworkManager : MonoBehaviour
         Connect();
     }
 
-    public void SendAnalyticsEvent(string name, string view = null, string level = null, string action = null, string audioinputdevice = null, string audiooutputdevice = null, float leveltime = -1f, string screensize = null, string eventtarget = null, float startxcoord = -1f, float startycoord = -1f, float endxcoord = -1f, float endycoord = -1f)
+    public void SimpleEvent(string name)
     {
-        StartCoroutine(SendLoggableEvent(name, view, level, action, audioinputdevice, audiooutputdevice, leveltime, screensize, eventtarget, startxcoord, startycoord, endxcoord, endycoord));
-    }
 
-    public IEnumerator SendLoggableEvent(string name, string view = null, string level = null, string action = null, string audioinputdevice = null, string audiooutputdevice = null, float leveltime = -1f, string screensize = null, string eventtarget = null, float startxcoord = -1f, float startycoord = -1f, float endxcoord = -1f, float endycoord = -1f)
-    {
+
         AnalyticsEvent ae = new AnalyticsEvent
         {
             eventname = name,
             player = Player,
             sessionid = sessionId,
-            view = view,
-            level = level,
-            action = action,
-            audioinputdevice = audioinputdevice,
-            audiooutputdevice = audiooutputdevice,
-            build = Assembly.GetExecutingAssembly().GetName().Version.Build.ToString()
         };
+        StartCoroutine(SendLoggableEvent(ae));
+    }
+
+    public void CharacterSelectEvent(string name, string character)
+    {
+
+
+        AnalyticsEvent ae = new AnalyticsEvent
+        {
+            eventname = name,
+            eventtarget = character,
+            player = Player,
+            sessionid = sessionId,
+        };
+        StartCoroutine(SendLoggableEvent(ae));
+    }
+
+    public void LevelCompleteEvent(string name, string stageName, string stageType, float levelDuration, int averageStars, int totalStarsCollected, int stonesCollected, bool medalBool)
+    {
+
+
+        AnalyticsEvent ae = new AnalyticsEvent
+        {
+            eventname = name,
+            medal = medalBool,
+            avgStars = averageStars,
+            totalStars = totalStarsCollected,
+            stones = stonesCollected,
+            leveltime = levelDuration,
+            level = stageName,
+            levelType = stageType,
+            player = Player,
+            sessionid = sessionId,
+        };
+        StartCoroutine(SendLoggableEvent(ae));
+    }
+
+    public void LevelAbortEvent(string name, string stageName, string stageType, float levelDuration, int cardsCompleted, int averageStars, int totalStarsCollected, int stonesCollected)
+    {
+
+
+        AnalyticsEvent ae = new AnalyticsEvent
+        {
+            eventname = name,
+            avgStars = averageStars,
+            totalStars = totalStarsCollected,
+            completedCards = cardsCompleted,
+            stones = stonesCollected,
+            leveltime = levelDuration,
+            level = stageName,
+            levelType = stageType,
+            player = Player,
+            sessionid = sessionId,
+        };
+        StartCoroutine(SendLoggableEvent(ae));
+    }
+
+    public void SwipeEvent(string name)
+    {
+
+
+        AnalyticsEvent ae = new AnalyticsEvent
+        {
+            eventname = name,
+            player = Player,
+            sessionid = sessionId,
+        };
+        StartCoroutine(SendLoggableEvent(ae));
+    }
+
+
+    IEnumerator SendLoggableEvent(AnalyticsEvent ae)
+    {
 
         System.Version version = Assembly.GetExecutingAssembly().GetName().Version;
         System.DateTime startDate = new System.DateTime(2000, 1, 1, 0, 0, 0);
         System.TimeSpan span = new System.TimeSpan(version.Build, 0, 0, version.Revision * 2);
         System.DateTime buildDate = startDate.Add(span);
         ae.builddate = buildDate;
+        ae.view = ViewManager.GetManager().CurrentView.name;
 
         ae.platform = Application.platform.ToString();
         ae.device = SystemInfo.deviceName.ToString();
         ae.sessiontime = secondsSinceStartup;
-        ae.leveltime = leveltime;
-        ae.screensize = screensize;
-        ae.eventtarget = eventtarget;
-
-        ae.startxcoord = startxcoord;
-        ae.startycoord = startycoord;
-        ae.endxcoord = endxcoord;
-        ae.endycoord = endycoord;
 
         ae.serverurl = socketUrl;
 
         socket.EmitJson("loggable_event", JsonUtility.ToJson(ae));
         yield return null;
 
-        Debug.Log("Event sent");
+        Debug.Log("Event " + ae.eventname + " sent");
     }
 
     string GetUniqueID()

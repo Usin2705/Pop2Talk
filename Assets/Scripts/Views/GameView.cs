@@ -69,7 +69,9 @@ public class GameView : View, IGameCaller {
 		if (stage.popSoundType == PopSoundType.Next && (stage.popSoundIsWordForQuiz || WordMaster.Instance.PeekNextType() != WordCardType.Quiz)) {
 			ToggleMusic(0.25f, false);
 			musicFaded = true;
-			GameMaster.Instance.SetCustomClip(WordMaster.Instance.GetPopWord(GameMaster.Instance.RemainingProgress / GameMaster.Instance.MaxProgress).languageWords[LanguageManager.GetManager().TargetLanguage].pronunciations.GetRandom());
+			WordData word = WordMaster.Instance.GetPopWord(GameMaster.Instance.RemainingProgress / GameMaster.Instance.MaxProgress);
+			NetworkManager.GetManager().SamplePlayed(stage.name, word.name, true);
+			GameMaster.Instance.SetCustomClip(word.languageWords[LanguageManager.GetManager().TargetLanguage].pronunciations.GetRandom());
 		} else 
 			GameMaster.Instance.SetCustomClip(null);
 	}
@@ -86,7 +88,6 @@ public class GameView : View, IGameCaller {
 	}
 
 	void GameDone() {
-		NetworkManager.GetManager().SendAnalyticsEvent("level_duration", ViewManager.GetManager().CurrentView.name, stage.name, leveltime: levelDuration);
 		bool done = TotalStars >= stage.starsRequired;
 		if (done)
 			StageSettings.SetDoneStatus(stage, NetworkManager.GetManager().Player);
@@ -99,7 +100,7 @@ public class GameView : View, IGameCaller {
 			LevelSettings.SetMedal(stage.level, NetworkManager.GetManager().Player);
 		if (GameMaster.Instance.TrackedValue > LevelSettings.GetHiscore(stage.level, NetworkManager.GetManager().Player))
 			LevelSettings.SetHiscore(stage.level, GameMaster.Instance.TrackedValue, NetworkManager.GetManager().Player);
-		NetworkManager.GetManager().LevelCompleted(stage.name, done, medal);
+		NetworkManager.GetManager().LevelCompleteEvent("level_complete", stage.name, stage.level.gameType.ToString(), levelDuration, (TotalStars / stage.totalCards) , TotalStars, GameMaster.Instance.TrackedValue, medal);
 		SpeechCollection speech = !firstCheerDone ? (done ? (medal ? clearGetMedalSpeech : clearNoMedalSpeech) : noClearSpeech) : Random.Range(0,1) >= cheerChance ? (done ? (medal ? clearGetMedalSpeech : clearNoMedalSpeech) : noClearSpeech) : noClearSpeech;
         if (speech != noClearSpeech && !firstCheerDone)
             firstCheerDone = true;
@@ -180,6 +181,7 @@ public class GameView : View, IGameCaller {
 
 	public override void Deactivate() {
 		base.Deactivate();
+		gameUI.SetCardBar(false);
 		WordCardManager.GetManager().StopCard();
 		GameMaster.Instance.Back();
 	}
@@ -197,8 +199,8 @@ public class GameView : View, IGameCaller {
 	} 
 
 	public void Back() {
+		NetworkManager.GetManager().LevelAbortEvent("level_abort", stage.name, stage.level.gameType.ToString(), levelDuration, stage.totalCards - WordMaster.Instance.CardsRemaining, (TotalStars / stage.totalCards), TotalStars, GameMaster.Instance.TrackedValue);
 		doExitFluff = false;
-		gameUI.SetCardBar(false);
 		ViewManager.GetManager().ShowView(stageHub);
 	}
 

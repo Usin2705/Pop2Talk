@@ -25,8 +25,8 @@ public class PathGUI : MonoBehaviour {
 			for (int i = 0; i < nodes.Length; ++i) {
 				nodes[i] = pathRoot.GetChild(i).GetComponent<RectTransform>();
 			}
-			dummyNode = Instantiate(pathNode.gameObject.GetComponent<RectTransform>(), pathRoot);
-			dummyNode.GetComponent<PathNodeGUI>().Disable();
+			dummyNode = Instantiate(pathNode.gameObject, pathRoot).transform.GetChild(0).GetComponent<RectTransform>(); //The child holds the proper aspect ratio since it has the image
+			dummyNode.GetComponentInParent<PathNodeGUI>().Disable();
 		    StartCoroutine(SetUpEndOfFrame(nodes)); // Dummy gets properly sized at end of frame, we can only take measurements then
 		}
 	}

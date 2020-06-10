@@ -42,6 +42,8 @@ public class WordCardManager : MonoBehaviour {
 	float starDuration = 0.3f;
 	float micExtra = 0.15f;
 
+	int retryCount = 0;
+
     bool firstCheerDone = false;
 
 	int score = 0;
@@ -89,6 +91,7 @@ public class WordCardManager : MonoBehaviour {
 	}
 
 	public void SetUpWord(WordData data, string levelName, BaseWordCardHandler cardHandler) {
+		retryCount = 0;
 		currentWord = data;
 		this.cardHandler = cardHandler;
 		this.levelName = levelName;
@@ -163,7 +166,7 @@ public class WordCardManager : MonoBehaviour {
 		wordCard.SetFlagTwoOn(target);
 	}
 
-	public IEnumerator RecordAndPlay(float gap) {
+	public IEnumerator RecordAndPlay(float gap, string challengeType) {
 		score = 0;
 		wordCard.ToggleMic(true);
 		/*if (recordSound != null) {
@@ -181,7 +184,7 @@ public class WordCardManager : MonoBehaviour {
 			word += LanguageManager.GetManager().GetLanguagePrefix() + parts[i];
 		}
 
-		NetworkManager.GetManager().SendMicrophone(Microphone.devices[0], word, recording, recordDuration, ReceiveScore, "");
+		NetworkManager.GetManager().SendMicrophone(Microphone.devices[0], word, recording, recordDuration, ReceiveScore, challengeType, retryCount);
 		bool enoughRecording;
 		scoreReceived = false;
 		float a = 0;
@@ -264,6 +267,7 @@ public class WordCardManager : MonoBehaviour {
 	}
 
 	public void Retry() {
+		retryCount++;
 		AudioMaster.Instance.Play(this, SoundEffectManager.GetManager().GetButtonSound());
 		action = WordCardAction.Retry;
 	}
@@ -273,10 +277,10 @@ public class WordCardManager : MonoBehaviour {
 		action = WordCardAction.Continue;
 	}
 
-	public void HideCard(Callback Done) {
-		if (DebugSettings.Instance.skipTransitions) {
+	public void HideCard(Callback Done, bool instantly = false) {
+		if (instantly || DebugSettings.Instance.skipTransitions) {
 			wordCard.HideInstantly();
-			Done();
+			Done?.Invoke();
 		} else
 			wordCard.HideCard(hideDuration, Done);
 	}
