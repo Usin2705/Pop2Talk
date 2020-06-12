@@ -11,7 +11,6 @@ public class StageSettings : ScriptableObject {
 	public int quizCards;
 	[Space]
 	public WordData[] forcedWords;
-	public WordListSettings[] wordLists;
 	public PopSoundType popSoundType;
 	public bool popSoundIsWordForQuiz;
 	public int adaptiveWords;
@@ -51,12 +50,4 @@ public class StageSettings : ScriptableObject {
 	public static void SetStars(StageSettings fs, int stars, string playerName) {
 		PlayerPrefs.SetInt(fs.uniqueId + " " + playerName + " stars", stars);
 	}
-}
-
-[System.Serializable]
-public struct WordListSettings {
-	public WordList wordList;
-	public bool first;
-	public bool quizzable;
-	public bool rove;
 }

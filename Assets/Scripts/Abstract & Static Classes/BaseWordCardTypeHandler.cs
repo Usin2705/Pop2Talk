@@ -6,24 +6,22 @@ public class BaseWordCardHandler {
 
     protected static float phaseGap = 0.66f;
 
-	protected Language nativeLanguage;
-	protected Language targetLanguage;
-
 	protected IntCallback Done;
 
 	protected int stars = -1;
 
-	public virtual void ShowCard(WordData wordData, string levelName, Language targetLanguage, Language nativeLanguage, int order, IntCallback Done) {
-		this.nativeLanguage = nativeLanguage;
-		this.targetLanguage = targetLanguage;
+	WordData currentWord;
+
+	public virtual void ShowCard(WordData wordData, string levelName, int order, IntCallback Done) {
 		this.Done = Done;
+		currentWord = wordData;
     }
 
     protected virtual void ShowCard(WordData wordData, string levelName, int order) {
 		stars = -1;
         WordCardManager.GetManager().SetUpWord(wordData, levelName, this);
-        WordCardManager.GetManager().SetUpCard(targetLanguage);
-		WordCardManager.GetManager().HideCard(null, true);
+        WordCardManager.GetManager().SetUpCard();
+		//WordCardManager.GetManager().HideCard(null, true);
 		WordCardManager.GetManager().ShowWordCard(order, () => { StartCard();});
     }
 
@@ -36,6 +34,7 @@ public class BaseWordCardHandler {
     }
 
     public virtual void CardDone() {
+		WordMaster.Instance.RecordStarAmount(currentWord.name, stars);
         WordCardManager.GetManager().HideCard(()=>{ Done(stars); });
 	}
 

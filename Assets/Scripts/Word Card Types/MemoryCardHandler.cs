@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class MemoryCardHandler : BaseWordCardHandler {
 
-    float memoryGap = 4.5f;
-
-	public override void ShowCard(WordData wordData, string levelName, Language targetLanguage, Language nativeLanguage, int order, IntCallback Done) {
-		base.ShowCard(wordData, levelName, targetLanguage, nativeLanguage, order, Done);
+	public override void ShowCard(WordData wordData, string levelName, int order, IntCallback Done) {
+		base.ShowCard(wordData, levelName, order, Done);
+		WordCardManager.GetManager().SetMemory(true);
 		ShowCard(wordData, levelName, order);
 	}
 
@@ -17,34 +16,14 @@ public class MemoryCardHandler : BaseWordCardHandler {
     }
 
     public override void Retry() {
-        WordCardManager.GetManager().SetUpCard(targetLanguage);
+        WordCardManager.GetManager().SetUpCard();
         base.Retry();
     }
 
     IEnumerator CardRoutine() {
-        yield return new WaitForSeconds(phaseGap);
-        WordCardManager.GetManager().SetFlags(true,false);
-        yield return WordCardManager.GetManager().StartCoroutine(WordCardManager.GetManager().SayWord(nativeLanguage));
-        WordCardManager.GetManager().SetFlags(false,false);
-        yield return new WaitForSeconds(phaseGap);
-        WordCardManager.GetManager().SetFlags(false,true);
-        yield return WordCardManager.GetManager().StartCoroutine(WordCardManager.GetManager().SayWord(targetLanguage));
-        WordCardManager.GetManager().SetFlags(false,false);
-        yield return new WaitForSeconds(phaseGap);
-        yield return WordCardManager.GetManager().MemoryPrompt(nativeLanguage,memoryGap);
-        yield return new WaitForSeconds(memoryGap);
-        yield return new WaitForSeconds(phaseGap);
-        yield return WordCardManager.GetManager().QuizPrompt(nativeLanguage, targetLanguage);
-        yield return new WaitForSeconds(phaseGap);
-        WordCardManager.GetManager().SetFlags(true,false);
-        yield return WordCardManager.GetManager().StartCoroutine(WordCardManager.GetManager().SayWord(nativeLanguage));
-        WordCardManager.GetManager().SetFlags(false,false);
-        //yield return new WaitForSeconds(phaseGap);
-        yield return WordCardManager.GetManager().StartCoroutine(WordCardManager.GetManager().RecordAndPlay(phaseGap, "GapRepeatChallenge"));
-        yield return new WaitForSeconds(phaseGap);
-        WordCardManager.GetManager().SetFlags(false,true);
-        yield return WordCardManager.GetManager().StartCoroutine(WordCardManager.GetManager().SayWord(targetLanguage));
-        WordCardManager.GetManager().SetFlags(false,false);
+		yield return new WaitForSeconds(phaseGap);
+		yield return WordCardManager.GetManager().StartingAnimation();
+		yield return WordCardManager.GetManager().StartCoroutine(WordCardManager.GetManager().RecordAndPlay(phaseGap, "MemoryChallenge"));
         yield return new WaitForSeconds(phaseGap);
         WordCardManager.GetManager().StartCoroutine(WordCardManager.GetManager().GiveStars(phaseGap));
     }

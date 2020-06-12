@@ -32,7 +32,7 @@ public class CharacterManager : Overlay {
 
 	public void SetCharacter(int index) {
 		if (index < characters.Length) {
-			if (index == -1) {
+			if (index <= -1) {
 				CurrentCharacter = null;
 				ShipManager.GetManager().SetShip(null);
 			} else {

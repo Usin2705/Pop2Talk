@@ -83,13 +83,13 @@ public class GameMaster : MonoBehaviour {
 		StartRound();
     }
 
-    public void GameModeDone() {
+    public void RoundDone() {
 		gameCaller.RoundDone();
 	}
 
     public void StartRound() {
 		if (DebugSettings.Instance.skipPops)
-			GameModeDone();
+			RoundDone();
 		else
 			currentGameModeHandler.Activate();
 	}
@@ -137,19 +137,12 @@ public class GameMaster : MonoBehaviour {
                 case GameMode.Fill:
                     gameModes.Add(mode, new FillModeHandler());
                     break;
-                case GameMode.Specific:
-                    gameModes.Add(mode, new SpecificModeHandler());
-                    break;
                 case GameMode.Spot:
                     gameModes.Add(mode, new SpotModeHandler());
                     break;
             }
         }
         currentGameModeHandler = gameModes[mode];
-    }
-
-    public void SetSpecificUI(List<MatchType> specificTypes) {
-       gameCaller.SetSpecificUI(specificTypes);
     }
 
 	public bool GetMedal() {

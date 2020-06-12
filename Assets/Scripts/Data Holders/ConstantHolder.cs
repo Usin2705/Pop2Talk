@@ -8,13 +8,15 @@ public class UniqueIdentifierAttribute : PropertyAttribute { }
 
 public enum GameMode { Classic, Clear, Regrow, Fill, Specific, Spot };
 
-public enum WordCardType { Rehearse, Quiz, Memory, Listen };
+public enum WordCardType { Repeat, Memory };
 
 public enum PopSoundType { Sound, Next, Random };
 
 public enum Direction { Down, Up, Left, Right };
 
 public enum SpecialTileType { None, Exploding, Horizontal, Vertical, Joker};
+
+public enum Language { None, Finnish, EnglishUK };
 
 public delegate void Callback();
 public delegate void IntCallback(int i);

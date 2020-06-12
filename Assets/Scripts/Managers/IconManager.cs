@@ -7,8 +7,7 @@ public class IconManager : MonoBehaviour {
 	public Sprite starIcon;
 	public Sprite clickIcon;
 	public Sprite moonstoneIcon;
-	public Sprite medalIcon;
-	public Sprite wordIcon;
+	public Sprite coinIcon;
 	public Sprite arrowIcon;
 	public Sprite replayIcon;
 	public Sprite lockIcon;

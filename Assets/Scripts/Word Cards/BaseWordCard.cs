@@ -6,15 +6,10 @@ using UnityEngine.UI;
 public abstract class BaseWordCard : Overlay {
 
 	public abstract void SetPicture(Sprite sprite);
-	public abstract void SetSpelling(string spelling);
-	public abstract void SetFlagOneOn(bool on);
-	public abstract void SetFlagTwoOn(bool on);
-	public abstract void ToggleFeedback(bool on);
 	public abstract void ToggleMic(bool on);
 	public abstract void ToggleButtons(bool on);
 	public abstract Coroutine SetStars(int amount, float perStarDuration = 0);
-	public abstract void SetQuiz(bool on);
-	public abstract void Wait(float duration);
+	public abstract void SetMemory(bool on);
 	public abstract void VisualizeAudio(float[] samples);
 	public abstract Coroutine ShowCard(float duration);
 	public abstract void HideCard(float duration, Callback Done);

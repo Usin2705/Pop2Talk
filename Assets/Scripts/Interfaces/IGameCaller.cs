@@ -9,6 +9,5 @@ public interface IGameCaller {
 	void LaunchSetup();
 	void SetProgress(float progress);
 	void SetTrackedValue(int value);
-	void SetSpecificUI(List<MatchType> matchTypes);
 	int GetMaxRounds();
 }

@@ -44,15 +44,11 @@ public class MachineCard : BaseWordCard {
 
     private void Awake() {
 		Initialize();
-    }
-
-	private void Start() {
 		continueButton.SubscribePress(Continue);
 		retryButton.SubscribePress(Retry);
 		ToggleButtons(false);
-        HideInstantly();
 
-    }
+	}
 
 	void Initialize() {
 		if (initialized)
@@ -89,7 +85,8 @@ public class MachineCard : BaseWordCard {
     }
 
     public override Coroutine ShowCard(float duration) {
-        return StartCoroutine(IntroSequence(duration));
+		gameObject.SetActive(true);
+		return StartCoroutine(IntroSequence(duration));
     }
 
     IEnumerator IntroSequence(float duration) {
@@ -112,7 +109,9 @@ public class MachineCard : BaseWordCard {
 	}
 
 	public override void RevealInstantly() {
-        fadeCurtain.gameObject.SetActive(true);
+		gameObject.SetActive(true);
+		Debug.Log(gameObject.activeSelf);
+		fadeCurtain.gameObject.SetActive(true);
         fadeCurtain.color = curtainColor;
 		cardHolder.position = cardShowSlot.position;
 	}
@@ -122,7 +121,7 @@ public class MachineCard : BaseWordCard {
 		retryButton.gameObject.SetActive(on);
 	}
 
-	public override void SetQuiz(bool on) {
+	public override void SetMemory(bool on) {
 		micPic.sprite = (on) ? quizMic : startMic;
 		micDisabled.sprite = (on) ? quizMicOff : startMicOff;
 		volumeBars.SetQuiz(on);
@@ -206,7 +205,7 @@ public class MachineCard : BaseWordCard {
 		starAmount = 0;
 		SetProgress(0);
 		StopAllCoroutines();
-		SetQuiz(false);
+		SetMemory(false);
 		ToggleButtons(false);
 		pearl.position = pearlStartSlot.position;
 		gameObject.SetActive(showingBar);
@@ -227,25 +226,4 @@ public class MachineCard : BaseWordCard {
 	public void SetProgress(float ratio) {
 		progressBar.fillAmount = ratio;
 	}
-
-	public override void SetSpelling(string spelling) {
-		//Not used
-	}
-
-	public override void SetFlagOneOn(bool on) {
-		//Not used
-	}
-
-	public override void SetFlagTwoOn(bool on) {
-		//Not used
-	}
-
-	public override void ToggleFeedback(bool on) {
-		//Not used
-	}
-
-	public override void Wait(float duration) {
-		//Not used
-	}
-
 }

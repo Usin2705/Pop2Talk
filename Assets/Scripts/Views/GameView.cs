@@ -14,11 +14,10 @@ public class GameView : View, IGameCaller {
 	[SerializeField] Image background;
 	[SerializeField] GameUIHandler gameUI;
 	[SerializeField] UIButton backButton;
-    [Space]
-    [SerializeField] [Range(0.0f, 1.0f)]float cheerChance = 0.25f;
+	[Space]
+	[SerializeField] [Range(0.0f, 1.0f)] float cheerChance = 0.25f;
 
 	StageSettings stage;
-	WordData currentWord;
 
 	float levelDuration = 0f;
 
@@ -26,10 +25,9 @@ public class GameView : View, IGameCaller {
 
 	bool musicFaded;
 
-    bool firstCheerDone = false;
+	bool firstCheerDone = false;
 
-	void Update()
-	{
+	void Update() {
 		levelDuration += Time.deltaTime;
 	}
 
@@ -37,20 +35,10 @@ public class GameView : View, IGameCaller {
 		base.Initialize();
 		backButton.SubscribePress(Back);
 	}
-	
+
 	public override void Activate() {
 		base.Activate();
-		stage = PlanetManager.GetManager().GetStage();
 		background.sprite = stage.background;
-		int firsts = 0;
-		foreach (WordListSettings ws in stage.wordLists) {
-			if (ws.first)
-				firsts += ws.wordList.GetWords().Length;
-		}
-		int adaptiveWords = Mathf.Max(Mathf.Min(stage.totalCards - firsts-stage.forcedWords.Length, stage.adaptiveWords));
-		if (adaptiveWords != stage.adaptiveWords)
-			Debug.Log("Too many adaptive words for amount of new words");
-		WordMaster.Instance.SetWords(stage.wordLists, stage.totalCards, stage.quizCards, adaptiveWords, stage.cardPerRound, stage.forcedWords);
 		GameMaster.Instance.Initialize(stage.level, this);
 		gameUI.SetTrackedIcon((stage.level.trackClicks) ? IconManager.GetManager().clickIcon : IconManager.GetManager().moonstoneIcon);
 		gameUI.SetCardBar(true);
@@ -66,13 +54,13 @@ public class GameView : View, IGameCaller {
 	}
 
 	public void Clicked() {
-		if (stage.popSoundType == PopSoundType.Next && (stage.popSoundIsWordForQuiz || WordMaster.Instance.PeekNextType() != WordCardType.Quiz)) {
+		if (stage.popSoundType == PopSoundType.Next && (stage.popSoundIsWordForQuiz || WordMaster.Instance.PeekNextType() != WordCardType.Memory)) {
 			ToggleMusic(0.25f, false);
 			musicFaded = true;
-			WordData word = WordMaster.Instance.GetPopWord(GameMaster.Instance.RemainingProgress / GameMaster.Instance.MaxProgress);
+			WordData word = WordMaster.Instance.PeekNextWord();
 			NetworkManager.GetManager().SamplePlayed(stage.name, word.name, true);
-			GameMaster.Instance.SetCustomClip(word.languageWords[LanguageManager.GetManager().TargetLanguage].pronunciations.GetRandom());
-		} else 
+			GameMaster.Instance.SetCustomClip(word.pronunciations.GetRandom());
+		} else
 			GameMaster.Instance.SetCustomClip(null);
 	}
 
@@ -100,21 +88,21 @@ public class GameView : View, IGameCaller {
 			LevelSettings.SetMedal(stage.level, NetworkManager.GetManager().Player);
 		if (GameMaster.Instance.TrackedValue > LevelSettings.GetHiscore(stage.level, NetworkManager.GetManager().Player))
 			LevelSettings.SetHiscore(stage.level, GameMaster.Instance.TrackedValue, NetworkManager.GetManager().Player);
-		NetworkManager.GetManager().LevelCompleteEvent("level_complete", stage.name, stage.level.gameType.ToString(), levelDuration, (TotalStars / stage.totalCards) , TotalStars, GameMaster.Instance.TrackedValue, medal);
-		SpeechCollection speech = !firstCheerDone ? (done ? (medal ? clearGetMedalSpeech : clearNoMedalSpeech) : noClearSpeech) : Random.Range(0,1) >= cheerChance ? (done ? (medal ? clearGetMedalSpeech : clearNoMedalSpeech) : noClearSpeech) : noClearSpeech;
-        if (speech != noClearSpeech && !firstCheerDone)
-            firstCheerDone = true;
-        Debug.Log(firstCheerDone);
+		NetworkManager.GetManager().LevelCompleteEvent("level_complete", stage.name, stage.level.gameType.ToString(), levelDuration, (TotalStars / stage.totalCards), TotalStars, GameMaster.Instance.TrackedValue, medal);
+		SpeechCollection speech = !firstCheerDone ? (done ? (medal ? clearGetMedalSpeech : clearNoMedalSpeech) : noClearSpeech) : Random.Range(0, 1) >= cheerChance ? (done ? (medal ? clearGetMedalSpeech : clearNoMedalSpeech) : noClearSpeech) : noClearSpeech;
+		if (speech != noClearSpeech && !firstCheerDone)
+			firstCheerDone = true;
+		Debug.Log(firstCheerDone);
 		Sprite[] icons = new Sprite[2];
 		if (IconManager.GetManager() != null) {
 			icons[0] = IconManager.GetManager().starIcon;
 			icons[1] = (stage.level.trackClicks) ? IconManager.GetManager().clickIcon : IconManager.GetManager().moonstoneIcon;
 		}
-		Callback[] actions = new Callback[2] { ()=> { GameMaster.Instance.LaunchGame(stage.totalCards == 1); }, Back };
+		Callback[] actions = new Callback[2] { () => { GameMaster.Instance.LaunchGame(stage.totalCards == 1); }, Back };
 		Sprite[] buttons = new Sprite[2];
 		buttons[0] = IconManager.GetManager().replayIcon;
 		buttons[1] = IconManager.GetManager().arrowIcon;
-		DataOverlayManager.GetManager().Show(sortingOrder, false, "", icons, PlanetManager.GetManager().GetStageStats(false, TotalStars, GameMaster.Instance.TrackedValue), actions, buttons, () => { GameOverDelay(speech); });
+		//DataOverlayManager.GetManager().Show(sortingOrder, false, "", icons, PlanetManager.GetManager().GetStageStats(false, TotalStars, GameMaster.Instance.TrackedValue), actions, buttons, () => { GameOverDelay(speech); });
 	}
 
 	void GameOverDelay(SpeechCollection speech) {
@@ -130,19 +118,14 @@ public class GameView : View, IGameCaller {
 	}
 
 	public void LaunchSetup() {
-		WordMaster.Instance.Initialize();
-		WordMaster.Instance.ChooseNextWordBatch();
+		WordMaster.Instance.MakeQueue();
 		TotalStars = 0;
 	}
 
 	public void RoundDone() {
 		if (DebugSettings.Instance.skipWords) {
-			int stars = 0;
-			while (WordMaster.Instance.RemainingBatch > 0) {
-				WordMaster.Instance.UseNextWord();
-				stars += 5;
-			}
-			CardDone(stars);
+			WordMaster.Instance.Dequeue();
+			CardDone(5);
 		} else {
 			ToggleMusic(0.25f, false);
 
@@ -151,25 +134,21 @@ public class GameView : View, IGameCaller {
 	}
 
 	void ShowCard() {
-		WordCardType nextType = WordMaster.Instance.UseNextType();
-		currentWord = WordMaster.Instance.UseNextWord();
+		WordCardType nextType = WordMaster.Instance.PeekNextType();
+		WordData currentWord = WordMaster.Instance.PeekNextWord();
+		WordMaster.Instance.Dequeue();
 		if (currentWord == null)
 			CardDone(0);
 		else
-			WordMaster.Instance.ShowWordCard(nextType, stage.name, currentWord, LanguageManager.GetManager().TargetLanguage, LanguageManager.GetManager().NativeLanguage, sortingOrder, CardDone);
+			WordMaster.Instance.ShowWordCard(nextType, stage.name, currentWord, sortingOrder, CardDone);
 	}
 
 	void CardDone(int stars) {
 		TotalStars += stars;
 		gameUI.SetStars(TotalStars);
 		gameUI.SetCardsLeft(WordMaster.Instance.CardsRemaining);
-		if (currentWord != null)
-			WordMaster.Instance.RecordStarAmount(currentWord.name, stars);
-		if (WordMaster.Instance.RemainingBatch > 0)
-			ShowCard();
-		else if (WordMaster.Instance.CardsRemaining > 0) {
+		if (WordMaster.Instance.CardsRemaining > 0) {
 			ToggleMusic(1f, true);
-			WordMaster.Instance.ChooseNextWordBatch();
 			if (WordMaster.Instance.CardsRemaining == 1)
 				GameMaster.Instance.FinalRound = true;
 			GameMaster.Instance.StartRound();
@@ -195,8 +174,8 @@ public class GameView : View, IGameCaller {
 	}
 
 	public int GetMaxRounds() {
-		return Mathf.CeilToInt(stage.totalCards/(float)stage.cardPerRound);
-	} 
+		return Mathf.CeilToInt(stage.totalCards / (float)stage.cardPerRound);
+	}
 
 	public void Back() {
 		NetworkManager.GetManager().LevelAbortEvent("level_abort", stage.name, stage.level.gameType.ToString(), levelDuration, stage.totalCards - WordMaster.Instance.CardsRemaining, (TotalStars / stage.totalCards), TotalStars, GameMaster.Instance.TrackedValue);
@@ -204,15 +183,11 @@ public class GameView : View, IGameCaller {
 		ViewManager.GetManager().ShowView(stageHub);
 	}
 
-	public void SetSpecificUI(List<MatchType> matchTypes) {
-		gameUI.SetSpecificUI(matchTypes);
-	}
-
 	public override UIButton GetPointedButton() {
 		return null;
 	}
 
 	public override UIButton[] GetAllButtons() {
-        return null;
+		return null;
 	}
 }

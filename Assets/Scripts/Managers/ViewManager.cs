@@ -8,13 +8,10 @@ public class ViewManager : MonoBehaviour {
 
 	[SerializeField] View firstView;
 	[SerializeField] float openDelay;
-
-	View currentView;
-
 	Coroutine showViewRoutine;
 	Queue<View> viewsToSwitch = new Queue<View>();
 
-	public View CurrentView { get { return currentView; } }
+	public View CurrentView { get; private set; }
 
 	public static ViewManager GetManager() {
 		return vm;
@@ -26,7 +23,7 @@ public class ViewManager : MonoBehaviour {
 
 	void Start() {
 		firstView.Activate();
-		currentView = firstView;
+		CurrentView = firstView;
 	}
 
 	public void ShowView(View targetView, bool skipTransitions = false) {
@@ -41,9 +38,9 @@ public class ViewManager : MonoBehaviour {
 		InputManager.GetManager().SendingInputs = false;
 
 		if (showTransitions) {
-			if (currentView != null && currentView.DoExitFluff) {
+			if (CurrentView != null && CurrentView.DoExitFluff) {
 				waiting = true;
-				currentView.ExitFluff(() => { waiting = false; });
+				CurrentView.ExitFluff(() => { waiting = false; });
 				while (waiting)
 					yield return null;
 			}
@@ -54,13 +51,13 @@ public class ViewManager : MonoBehaviour {
 				yield return null;
 		}
 
-		if (currentView != null) {
-			currentView.Deactivate();
+		if (CurrentView != null) {
+			CurrentView.Deactivate();
 		}
 		CharacterManager.GetManager().HideCharacter();
 		ShipManager.GetManager().HideShip();
 		targetView.Activate();
-		currentView = targetView;
+		CurrentView = targetView;
 		yield return new WaitForSeconds(openDelay);
 
 		if (showTransitions) {
@@ -84,6 +81,6 @@ public class ViewManager : MonoBehaviour {
 	}
 
 	public void SendCurrentViewInputs(bool send) {
-		currentView.GetComponent<UnityEngine.EventSystems.BaseRaycaster>().enabled = send;
+		CurrentView.GetComponent<UnityEngine.EventSystems.BaseRaycaster>().enabled = send;
 	}
 }

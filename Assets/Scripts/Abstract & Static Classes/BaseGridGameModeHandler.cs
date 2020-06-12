@@ -108,7 +108,7 @@ public abstract class BaseGridGameModeHandler : IGameMode {
 			if (specialTilesRemaining.Count > 0 && GameMaster.Instance.FinalRound)
 				GridManager.GetManager().StartCoroutine(StartPopping(null, specialTilesRemaining));
 			else
-				GameMaster.Instance.GameModeDone();
+				GameMaster.Instance.RoundDone();
 		} else {
 			GameMaster.Instance.ClickDone();
 			GridManager.GetManager().CanClick = true;

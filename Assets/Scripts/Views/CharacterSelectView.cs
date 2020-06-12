@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class CharacterSelectView : View {
 
-	[SerializeField] View planetHub;
-	[SerializeField] View tutorial;
+	[SerializeField] View shipHub;
 	//[SerializeField] View login;
 	[Space]
 	[SerializeField] GameObject characterButtonPrefab;
@@ -54,7 +53,7 @@ public class CharacterSelectView : View {
 		if (CharacterManager.GetManager().CurrentCharacter != null) {
 			doExitFluff = chosenIndex != prevChosenIndex;
 			prevChosenIndex = chosenIndex;
-			ViewManager.GetManager().ShowView(planetHub);
+			ViewManager.GetManager().ShowView(shipHub);
 		}
 	}
 

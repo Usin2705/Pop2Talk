@@ -11,11 +11,7 @@ public class WordCardManager : MonoBehaviour {
 	BaseWordCard wordCard;
 	[SerializeField]
 	AudioInstance recordSound;
-
-	[SerializeField]
-	LanguagePromptDictionary quizPrompts;
-	[SerializeField]
-	LanguageAudioClipDictionary memoryPrompts;
+	
 	[Space]
 	[SerializeField] SpeechCollection[] starSpeeches;
 	[SerializeField] SpeechCollection timeOutSpeech;
@@ -97,18 +93,14 @@ public class WordCardManager : MonoBehaviour {
 		this.levelName = levelName;
 	}
 
-	public void SetQuiz(bool quiz) {
-		wordCard.SetQuiz(quiz);
+	public void SetMemory(bool memory) {
+		wordCard.SetMemory(memory);
 	}
 
-	public void SetUpCard(Language language) {
+	public void SetUpCard() {
 		action = WordCardAction.None;
-		wordCard.SetSpelling(currentWord.languageWords[language].spelling);
 		wordCard.SetPicture(currentWord.picture);
-		wordCard.SetFlagOneOn(false);
-		wordCard.SetFlagTwoOn(false);
 		wordCard.gameObject.SetActive(true);
-		wordCard.ToggleFeedback(false);
 		wordCard.ToggleMic(false);
 		wordCard.ToggleButtons(false);
 		wordCard.SetStars(0);
@@ -117,62 +109,20 @@ public class WordCardManager : MonoBehaviour {
 	public IEnumerator StartingAnimation() {
 		yield return wordCard.StartingAnimation();
 	}
-
-	/// <summary>
-	/// Vanilla
-	/// </summary>
-	/// <param name="language"></param>
-	/// <returns></returns>
-	public IEnumerator SayWord(Language language) {
-		audioSource.clip = currentWord.languageWords[language].pronunciations.GetRandom();
-		wordCard.SetSpelling(currentWord.languageWords[language].spelling);
+	
+	public IEnumerator SayWord() {
+		audioSource.clip = currentWord.pronunciations.GetRandom();
 		if (audioSource.clip == null)
 			yield break;
 		audioSource.Play();
 		NetworkManager.GetManager().SamplePlayed(levelName, currentWord.name, false);
 		yield return new WaitForSeconds(audioSource.clip.length);
 	}
-
-	/// <summary>
-	/// No sample pronunciation?
-	/// </summary>
-	/// <param name="native"></param>
-	/// <param name="target"></param>
-	/// <returns></returns>
-	public IEnumerator QuizPrompt(Language native, Language target) {
-		audioSource.clip = quizPrompts[native].prompts[target];
-		if (audioSource.clip != null) {
-			audioSource.Play();
-			yield return new WaitForSeconds(audioSource.clip.length);
-		}
-	}
-
-	/// <summary>
-	/// Small pause between sample pronunciation and recording
-	/// </summary>
-	/// <param name="native"></param>
-	/// <param name="waitDuration"></param>
-	/// <returns></returns>
-	public IEnumerator MemoryPrompt(Language native, float waitDuration) {
-		audioSource.clip = memoryPrompts[native];
-		audioSource.Play();
-		yield return new WaitForSeconds(audioSource.clip.length);
-		wordCard.Wait(waitDuration);
-	}
-
-
-	public void SetFlags(bool native, bool target) {
-		wordCard.SetFlagOneOn(native);
-		wordCard.SetFlagTwoOn(target);
-	}
+	
 
 	public IEnumerator RecordAndPlay(float gap, string challengeType) {
 		score = 0;
 		wordCard.ToggleMic(true);
-		/*if (recordSound != null) {
-			AudioInstance record = AudioMaster.Instance.Play(this, recordSound);
-			yield return new WaitForSecondsRealtime(record.GetLength());
-		}*/
 		AudioClip recording = Microphone.Start(Microphone.devices[0], false, recordDuration, 16000);
 		yield return new WaitForSeconds(micExtra);
 
@@ -246,7 +196,7 @@ public class WordCardManager : MonoBehaviour {
 		SpeechCollection speech = !firstCheerDone ? starSpeeches[Random.Range(0, starSpeeches.Length)] : ( Random.Range(0,1) >= cheerChance ? starSpeeches[Random.Range(0, starSpeeches.Length)] : null);
         if (speech != null && !firstCheerDone)
             firstCheerDone = true;
-		if (timeOut /*|| (score == 0 && NetworkManager.GetManager().Connected)*/)
+		if (timeOut)
 			speech = null;
 		if (!DebugSettings.Instance.skipTransitions && CharacterManager.GetManager().CurrentCharacter != null)
 			CharacterManager.GetManager().ShowCharacter(speech, wordCard.GetOrder(), () => { StartCoroutine(FinishCard()); });
@@ -256,13 +206,12 @@ public class WordCardManager : MonoBehaviour {
 
 	public IEnumerator FinishCard(bool feedback = true) {
 		yield return wordCard.FinishingAnimation();
-		wordCard.ToggleFeedback(feedback);
 		wordCard.ToggleButtons(true);
 		while (action == WordCardAction.None)
 			yield return null;
-		if (action == WordCardAction.Continue)
+		if (action == WordCardAction.Continue) {
 			cardHandler.CardDone();
-		else
+		} else
 			cardHandler.Retry();
 	}
 

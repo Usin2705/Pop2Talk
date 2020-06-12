@@ -6,8 +6,6 @@ public class WordRushView : View {
 
 	[SerializeField] UIButton backButton;
 	[SerializeField] UIButton cardButton;
-	[Space]
-	[SerializeField] WordList[] wordLists;
 
 	List<string> rushWords = new List<string>();
 	int rushIndex = 0;
@@ -20,10 +18,6 @@ public class WordRushView : View {
 		cardButton.SubscribePress(ShowCard);
 		cardButton.SetIcon(IconManager.GetManager().arrowIcon);
 		rushWords.Clear();
-		foreach (WordList wl in wordLists) {
-			foreach (string s in wl.GetWords())
-				rushWords.Add(s);
-		}
 	}
 
 	public override void Activate() {
@@ -38,7 +32,7 @@ public class WordRushView : View {
 
 	void ShowCard() {
 		currentWord = rushWords[rushIndex];
-		WordMaster.Instance.ShowWordCard(WordCardType.Rehearse, "Word Rush", WordMaster.Instance.StringToWordData(currentWord), LanguageManager.GetManager().TargetLanguage, LanguageManager.GetManager().NativeLanguage, sortingOrder, Done);
+		WordMaster.Instance.ShowWordCard(WordCardType.Repeat, "Word Rush", WordMaster.Instance.StringToWordData(currentWord), sortingOrder, Done);
 	}
 
 	void Done(int stars) {

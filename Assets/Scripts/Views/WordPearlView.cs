@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class WordPearlView : View {
 
-	[SerializeField] View planetHubView;
+	[SerializeField] View shipHubView;
 	[Space]
 	[SerializeField] UIButton backButton;
 	[SerializeField] GameObject wordPearlPrefab;
 	[SerializeField] Transform gridHolder;
+	[Space]
+	[SerializeField] MachineCard machineCard;
 
 	Dictionary<string, PearlStars> pearls = new Dictionary<string, PearlStars>();
 	string currentWord;
@@ -20,7 +22,7 @@ public class WordPearlView : View {
 
 	public override void Activate() {
 		base.Activate();
-
+		//machineCard.SetBarShowAsHideSlot(false);
 		Dictionary<string, int> bestResults = WordMaster.Instance.GetBestResults();
 		foreach (string s in bestResults.Keys) {
 			if (!pearls.ContainsKey(s)) {
@@ -31,17 +33,23 @@ public class WordPearlView : View {
 		}
 	}
 
+	public override void Deactivate() {
+		base.Deactivate();
+		WordCardManager.GetManager().StopCard();
+	}
+
 	public void ShowCard(string word) {
 		currentWord = word;
-		WordMaster.Instance.ShowWordCard(WordCardType.Rehearse, "Word Pearl Rehearse", WordMaster.Instance.StringToWordData(currentWord), 
-			LanguageManager.GetManager().TargetLanguage, LanguageManager.GetManager().NativeLanguage, sortingOrder, Done);
+		SoundEffectManager.GetManager().FadeMusic(0.25f, 0);
+		WordMaster.Instance.ShowWordCard(WordCardType.Repeat, "Word Pearl Rehearse", WordMaster.Instance.StringToWordData(currentWord), sortingOrder, Done);
 	}
 
 	void Back() {
-		ViewManager.GetManager().ShowView(planetHubView);
+		ViewManager.GetManager().ShowView(shipHubView);
 	}
 
 	void Done(int stars) {
+		SoundEffectManager.GetManager().FadeMusic(0.25f, 1);
 		pearls[currentWord].SetStars(stars);
 	}
 

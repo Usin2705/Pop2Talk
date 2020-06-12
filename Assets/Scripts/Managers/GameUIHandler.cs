@@ -25,8 +25,6 @@ public class GameUIHandler : MonoBehaviour {
     GameObject uiHolder;
     [SerializeField]
     GameObject backButton;
-    [SerializeField]
-    SpecificTypeUI specificUI;
 
     float bulgeTime = -1;
     float bulgeDuration = 0.5f;
@@ -65,12 +63,6 @@ public class GameUIHandler : MonoBehaviour {
 
     public void ToggleUI(bool on) {
         uiHolder.SetActive(on);
-        if (!on)
-            specificUI.gameObject.SetActive(false);
-    }
-
-    public void SetSpecificUI(List<MatchType> specificTypes) {
-        specificUI.SetSpecific(specificTypes);
     }
 
     void ChangeText(Text t, int i, bool instant) {
