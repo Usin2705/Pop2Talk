@@ -501,7 +501,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &114424680553458130
 MonoBehaviour:
@@ -566,8 +566,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59128a666afef2b4a8343417c70676ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  planetHub: {fileID: 0}
-  tutorial: {fileID: 0}
+  shipHub: {fileID: 0}
   characterButtonPrefab: {fileID: 1375700468244870, guid: 079dd44268213614c9248ae0aec4a48b,
     type: 3}
   backButton: {fileID: 114908667744659428}

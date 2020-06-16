@@ -98,6 +98,12 @@ public class UIButton : MonoBehaviour {
 		this.lockedSprite = lockedSprite;
 	}
 
+	public void SetSpriteTint(Color color) {
+		if (button == null)
+			button = GetComponent<Button>();
+		button.image.color = color;
+	}
+
 	public void SetText(string s) {
 		if (text != null) {
 			text.text = s;

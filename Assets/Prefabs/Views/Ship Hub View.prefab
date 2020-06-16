@@ -357,7 +357,7 @@ GameObject:
   - component: {fileID: 2397005745178557377}
   - component: {fileID: 875967888325083267}
   m_Layer: 5
-  m_Name: Shop Button
+  m_Name: Store Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -893,7 +893,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &6527486035781064309
 MonoBehaviour:
@@ -958,13 +958,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fe4a99cac999964db6226ab6aa7dc6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loginView: {fileID: 0}
-  shopView: {fileID: 0}
+  storeView: {fileID: 0}
   wordPearlView: {fileID: 0}
   travelView: {fileID: 0}
   backButton: {fileID: 6527965058448718691}
   travelButton: {fileID: 1813492055576377570}
-  shopButton: {fileID: 2397005745178557377}
+  storeButton: {fileID: 2397005745178557377}
   pearlButton: {fileID: 8111101962869249930}
   coins: {fileID: 5091189920999935544}
   pearls: {fileID: 1965858989533735848}

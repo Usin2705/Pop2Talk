@@ -5,14 +5,14 @@ using UnityEngine.UI;
 
 public class ShipHubView : View {
 	
-	[SerializeField] View shopView;
+	[SerializeField] View storeView;
 	[SerializeField] View wordPearlView;
 	[SerializeField] View travelView;
 
 	[Space]
 	[SerializeField] UIButton backButton;
 	[SerializeField] UIButton travelButton;
-	[SerializeField] UIButton shopButton;
+	[SerializeField] UIButton storeButton;
 	[SerializeField] UIButton pearlButton;
 	[SerializeField] Text coins;
 	[SerializeField] Text pearls;
@@ -22,7 +22,7 @@ public class ShipHubView : View {
 		base.Initialize();
 		backButton.SubscribePress(Exit);
 		travelButton.SubscribePress(GotoTravelView);
-		shopButton.SubscribePress(GotoShopView);
+		storeButton.SubscribePress(GotoStoreView);
 		pearlButton.SubscribePress(GotoPearlView);
 
 	}
@@ -38,7 +38,7 @@ public class ShipHubView : View {
 		UIButton[] uiButtons = new UIButton[4];
 		uiButtons[0] = backButton;
 		uiButtons[1] = travelButton;
-		uiButtons[2] = shopButton;
+		uiButtons[2] = storeButton;
 		uiButtons[3] = pearlButton;
 		return uiButtons;
 	}
@@ -47,8 +47,8 @@ public class ShipHubView : View {
 		ViewManager.GetManager().ShowView(travelView);
 	}
 
-	void GotoShopView() {
-		ViewManager.GetManager().ShowView(shopView);
+	void GotoStoreView() {
+		ViewManager.GetManager().ShowView(storeView);
 	}
 
 	void GotoPearlView() {

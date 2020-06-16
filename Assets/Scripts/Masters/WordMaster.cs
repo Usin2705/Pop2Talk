@@ -27,6 +27,7 @@ public class WordMaster : MonoBehaviour {
 
 	WordCardType[] sampleTypes;
 	string[] sampleWords;
+	int par;
 
 	Dictionary<string, int> bestStars = new Dictionary<string, int>();
 	HashSet<string> unsaidWords = new HashSet<string>();
@@ -85,9 +86,10 @@ public class WordMaster : MonoBehaviour {
 		}
 	}
 
-	public void SetSamples(WordCardType[] types, string[] words) {
+	public void SetSamples(WordCardType[] types, string[] words, int par) {
 		sampleTypes = types;
 		sampleWords = words;
+		this.par = par;
 	}
 
 	public WordData StringToWordData(string word) {

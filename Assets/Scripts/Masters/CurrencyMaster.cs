@@ -10,7 +10,8 @@ public class CurrencyMaster : MonoBehaviour {
 
 	public int LootLevel { get; set; }
 
-	public int gamesToChest = 3;
+	public float minGamesToChest = 3;
+	public float maxGamesToChest = 8;
 
 	public static CurrencyMaster Instance {
 		get {
@@ -23,6 +24,14 @@ public class CurrencyMaster : MonoBehaviour {
 	}
 
 	public int IncreaseCoins(float starRatio, float dustRatio) {
-		return 0;
+		if (starRatio == 0 || dustRatio == 0)
+			return 0;
+		int addedCoins = Mathf.RoundToInt(1f / Mathf.Lerp(minGamesToChest, maxGamesToChest, starRatio * dustRatio) * GetLootLevelCoins(LootLevel));
+		Coins += addedCoins;
+		return addedCoins;
+	}
+
+	public int GetLootLevelCoins(int level) {
+		return StoreManager.GetManager().GetBoxPrice(level);
 	}
 }
