@@ -520,12 +520,11 @@ public class NetworkManager : MonoBehaviour {
 		StartCoroutine(SendLoggableEvent(ae));
 	}
 
-	public void LevelCompleteEvent(string name, string stageName, string stageType, float levelDuration, int averageStars, int totalStarsCollected, int stonesCollected, bool medalBool) {
+	public void LevelCompleteEvent(string name, string stageName, string stageType, float levelDuration, float averageStars, int totalStarsCollected, int stonesCollected) {
 
 
 		AnalyticsEvent ae = new AnalyticsEvent {
 			eventname = name,
-			medal = medalBool,
 			avgStars = averageStars,
 			totalStars = totalStarsCollected,
 			stones = stonesCollected,

@@ -22,7 +22,6 @@ public class WordPearlView : View {
 
 	public override void Activate() {
 		base.Activate();
-		//machineCard.SetBarShowAsHideSlot(false);
 		Dictionary<string, int> bestResults = WordMaster.Instance.GetBestResults();
 		foreach (string s in bestResults.Keys) {
 			if (!pearls.ContainsKey(s)) {

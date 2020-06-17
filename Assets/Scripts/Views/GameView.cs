@@ -79,17 +79,14 @@ public class GameView : View, IGameCaller {
 		bool done = TotalStars >= stage.starsRequired;
 		if (done)
 			StageSettings.SetDoneStatus(stage, NetworkManager.GetManager().Player);
-		bool medal = GameMaster.Instance.GetMedal();
 		if (TotalStars > StageSettings.GetStars(stage, NetworkManager.GetManager().Player)) {
 			// TODO: ZZZ-lowprio More specific cheers for compeleting level?
 			StageSettings.SetStars(stage, TotalStars, NetworkManager.GetManager().Player);
 		}
-		if (medal)
-			LevelSettings.SetMedal(stage.level, NetworkManager.GetManager().Player);
 		if (GameMaster.Instance.TrackedValue > LevelSettings.GetHiscore(stage.level, NetworkManager.GetManager().Player))
 			LevelSettings.SetHiscore(stage.level, GameMaster.Instance.TrackedValue, NetworkManager.GetManager().Player);
-		NetworkManager.GetManager().LevelCompleteEvent("level_complete", stage.name, stage.level.gameType.ToString(), levelDuration, (TotalStars / stage.totalCards), TotalStars, GameMaster.Instance.TrackedValue, medal);
-		SpeechCollection speech = !firstCheerDone ? (done ? (medal ? clearGetMedalSpeech : clearNoMedalSpeech) : noClearSpeech) : Random.Range(0, 1) >= cheerChance ? (done ? (medal ? clearGetMedalSpeech : clearNoMedalSpeech) : noClearSpeech) : noClearSpeech;
+		NetworkManager.GetManager().LevelCompleteEvent("level_complete", stage.name, stage.level.gameType.ToString(), levelDuration, (TotalStars / (float)stage.totalCards), TotalStars, GameMaster.Instance.TrackedValue);
+		SpeechCollection speech = !firstCheerDone ? (done ? clearNoMedalSpeech : noClearSpeech) : Random.Range(0, 1) >= cheerChance ? (done ?clearNoMedalSpeech : noClearSpeech) : noClearSpeech;
 		if (speech != noClearSpeech && !firstCheerDone)
 			firstCheerDone = true;
 		Debug.Log(firstCheerDone);

@@ -8,7 +8,7 @@ public class CosmeticManager : MonoBehaviour {
 	[SerializeField] Cosmetic[] allCosmetics;
 
 	Dictionary<string, Cosmetic> cosmetics = new Dictionary<string, Cosmetic>();
-	HashSet<string> unclockedCosmetics = new HashSet<string>();
+	HashSet<string> unlockedCosmetics = new HashSet<string>();
 	Dictionary<CosmeticSlot, string> equippedCosmetics = new Dictionary<CosmeticSlot, string>();
 
 	static CosmeticManager cm;
@@ -27,16 +27,16 @@ public class CosmeticManager : MonoBehaviour {
 	public Cosmetic GetCosmetic(string id) {
 		if (cosmetics.ContainsKey(id))
 			return cosmetics[id];
-		return FindCosmetic(id);
+		return FindUnregisteredCosmetic(id);
 	}
 
 	public Cosmetic GetEquippedCosmetic(CosmeticSlot slot) {
 		if (equippedCosmetics.ContainsKey(slot))
-			return FindCosmetic(equippedCosmetics[slot]);
+			return GetCosmetic(equippedCosmetics[slot]);
 		return null;
 	}
 
-	Cosmetic FindCosmetic(string id) {
+	Cosmetic FindUnregisteredCosmetic(string id) {
 		foreach (Cosmetic c in allCosmetics) {
 			if (c.Id != id)
 				continue;
@@ -46,25 +46,47 @@ public class CosmeticManager : MonoBehaviour {
 		return null;
 	}
 
-	public void EquipCosmetic(CosmeticSlot[] slots, string[] ids) {
-		for (int i = 0; i < slots.Length; ++i) {
-			EquipCosmetic(slots[i], ids[i]);
+	public void EquipCosmetic(string[] ids) {
+		for (int i = 0; i < ids.Length; ++i) {
+			EquipCosmetic(ids[i]);
 		}
 	}
 	
-	public void EquipCosmetic(CosmeticSlot slot, string id) {
+	public void EquipCosmetic(string id) {
 		bool slotChanged = true;
-		if (equippedCosmetics.ContainsKey(slot)) {
-			if (id != equippedCosmetics[slot])
-				equippedCosmetics[slot] = id;
+		if (!unlockedCosmetics.Contains(id))
+			UnlockCosmetic(id);
+		Cosmetic c = GetCosmetic(id);
+		if (equippedCosmetics.ContainsKey(c.slot)) {
+			if (id != equippedCosmetics[c.slot])
+				equippedCosmetics[c.slot] = id;
 			else
 				slotChanged = false;
 		} else
-			equippedCosmetics.Add(slot, id);
+			equippedCosmetics.Add(c.slot, id);
 
 		if (slotChanged) {
-
 		}
+	}
+
+	public void UnlockCosmetic(string[] ids) {
+		foreach (string s in ids)
+			UnlockCosmetic(s);
+	}
+
+	public void UnlockCosmetic(string id) {
+		if (!unlockedCosmetics.Contains(id))
+			unlockedCosmetics.Add(id);
+	}
+
+	public Cosmetic[] GetUnlockedCosmetics() {
+		Cosmetic[] cosmetics = new Cosmetic[unlockedCosmetics.Count];
+		int i = 0;
+		foreach (string s in unlockedCosmetics) {
+			cosmetics[i] = GetCosmetic(s);
+			++i;
+		}
+		return cosmetics;
 	}
 
 }

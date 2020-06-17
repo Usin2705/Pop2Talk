@@ -30,6 +30,10 @@ public class ButtonEffects : MonoBehaviour {
 		uib.SubscribeSelect(Select);
 		uib.SubscribeDeselect(Deselect);
 		uib.SubscribePress(Press);
+		if (uib.Selected) {
+			targetScale = selectedScale;
+			Scale(true);
+		}
 	}
 
 	void Update() {
@@ -55,8 +59,8 @@ public class ButtonEffects : MonoBehaviour {
 		}
 	}
 
-	void Scale() {
-		if (scaleDuration > 0 && scaleSpeed > 0)
+	void Scale(bool ignoreDuration = false) {
+		if (scaleDuration > 0 && scaleSpeed > 0 && !ignoreDuration)
 			currentScale = Mathf.MoveTowards(currentScale, targetScale, scaleSpeed * Time.deltaTime);
 		else {
 			currentScale = targetScale;

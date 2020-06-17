@@ -11,8 +11,7 @@ public class UIButton : MonoBehaviour {
 	[SerializeField] Image insideIcon;
 	[SerializeField] bool repressDeselects;
 	[SerializeField] bool lockedGrayscale;
-
-	bool selected;
+	[SerializeField] bool deselectGrayscale;
 
 	Button button;
 	Text text;
@@ -34,17 +33,21 @@ public class UIButton : MonoBehaviour {
 
 	Color lockedColor = new Color(Color.gray.r, Color.gray.g, Color.gray.b, 0.7f);
 
+	public bool Selected { get; private set; }
+
 	private void Awake() {
 		button = GetComponent<Button>();
 		button.onClick.AddListener(Press);
 		text = GetComponentInChildren<Text>();
+		if (deselectGrayscale && selectable)
+			button.image.color = lockedColor;
 	}
 
 	public void Press() {
 		iterating = true;
 		if (selectable) {
-			if (!selected) {
-				selected = true;
+			if (!Selected) {
+				Selected = true;
 				CallSubscriptions(SelectCallbacks);
 			} else {
 				if (repressDeselects)
@@ -57,6 +60,8 @@ public class UIButton : MonoBehaviour {
 		PressOneshots.Clear();
 		CheckSubscriptionChanges();
 		iterating = false;
+		if (deselectGrayscale && selectable)
+			button.image.color = (!Selected) ? lockedColor : Color.white;
 	}
 
 	void CallSubscriptions(List<Callback> callbacks) {
@@ -68,7 +73,7 @@ public class UIButton : MonoBehaviour {
 	}
 
 	public void Deselect() {
-		selected = false;
+		Selected = false;
 		for (int i = DeselectCallbacks.Count - 1; i >= 0; --i) {
 			DeselectCallbacks[i]();
 		}

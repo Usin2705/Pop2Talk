@@ -34,10 +34,10 @@ public class CharacterManager : Overlay {
 		if (index < characters.Length) {
 			if (index <= -1) {
 				CurrentCharacter = null;
-				ShipManager.GetManager().SetShip(null);
+				MovingImageManager.GetManager().SetMoverSprite(null);
 			} else {
 				CurrentCharacter = characters[index];
-				ShipManager.GetManager().SetShip(CurrentCharacter.shipSprite);
+				MovingImageManager.GetManager().SetMoverSprite(CurrentCharacter.shipSprite);
 				character.sprite = CurrentCharacter.characterSprite;
 			}
 		} else {

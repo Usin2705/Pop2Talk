@@ -73,7 +73,7 @@ public class AnalyticsEvent {
     public bool medal;
 	public bool fromPop;
 
-    public int avgStars = -1;
+    public float avgStars = -1;
     public int totalStars = -1;
     public int completedCards = -1;
     public int stones = -1;

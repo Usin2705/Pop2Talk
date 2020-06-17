@@ -144,8 +144,8 @@ public class GameMaster : MonoBehaviour {
         }
         currentGameModeHandler = gameModes[mode];
     }
-
-	public bool GetMedal() {
-		return currentGameModeHandler.GetMedal(TrackedValue, Mathf.FloorToInt(gameCaller.GetMaxRounds() * CurrentLevel.medalValuePerRound));
+	
+	public float GetDustRatio(float dust) {
+		return 0.5f; //Todo: Dustratio
 	}
 }

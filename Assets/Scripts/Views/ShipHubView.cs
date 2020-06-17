@@ -30,7 +30,7 @@ public class ShipHubView : View {
 	public override void Activate() {
 		base.Activate();
 		coins.text = CurrencyMaster.Instance.Coins.ToString();
-		pearls.text = WordMaster.Instance.GetBestResults().Count.ToString() + "/" + (WordMaster.Instance.GetBestResults().Count + WordMaster.Instance.GetUnsaidWordCount()).ToString();
+		pearls.text = WordMaster.Instance.GetBestResults().Count.ToString() + "/" + (WordMaster.Instance.TotalWords);
 		character.sprite = CharacterManager.GetManager().CurrentCharacter.characterSprite;
 	}
 

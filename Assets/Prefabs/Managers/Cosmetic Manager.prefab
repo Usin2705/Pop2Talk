@@ -43,4 +43,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8be21b1c20091b4495ef01d47f907c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allCosmetics: []
+  allCosmetics:
+  - {fileID: 11400000, guid: 26d64cf0ba0a61c4db675825f8c46b47, type: 2}
+  - {fileID: 11400000, guid: 3ead74bc5871ec849adad6e6e6ceece2, type: 2}
+  - {fileID: 11400000, guid: 14fb40f8095f35a498f2adc36da5c912, type: 2}
+  - {fileID: 11400000, guid: ab353d2afc30adb479a0c0b3c1fb16dd, type: 2}

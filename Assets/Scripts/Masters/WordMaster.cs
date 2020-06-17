@@ -16,6 +16,12 @@ public class WordMaster : MonoBehaviour {
 		}
 	}
 
+	public int TotalWords {
+		get {
+			return bestStars.Count + unsaidWords.Count;
+		}
+	}
+
 	public int CardsRemaining {
 		get {
 			return (cardTypeQueue == null) ? 0 : cardTypeQueue.Count;
@@ -27,7 +33,7 @@ public class WordMaster : MonoBehaviour {
 
 	WordCardType[] sampleTypes;
 	string[] sampleWords;
-	int par;
+	float par;
 
 	Dictionary<string, int> bestStars = new Dictionary<string, int>();
 	HashSet<string> unsaidWords = new HashSet<string>();
@@ -51,7 +57,7 @@ public class WordMaster : MonoBehaviour {
 	}
 
 	public void SetStarAmounts(string[] words, int[] stars) {
-		for(int i = 0; i < words.Length; ++i) {
+		for (int i = 0; i < words.Length; ++i) {
 			if (stars[i] >= 0)
 				bestStars.Add(words[i], stars[i]);
 			else
@@ -78,7 +84,7 @@ public class WordMaster : MonoBehaviour {
 	}
 
 	public void MakeQueue() {
-		foreach(WordCardType wct in sampleTypes) {
+		foreach (WordCardType wct in sampleTypes) {
 			cardTypeQueue.Enqueue(wct);
 		}
 		foreach (string s in sampleWords) {
@@ -114,5 +120,9 @@ public class WordMaster : MonoBehaviour {
 			}
 		}
 		wordCardHandlers[type].ShowCard(word, levelName, order, Done);
+	}
+
+	public float GetStarRatio(float starAverage) {
+		return Mathf.Clamp01((starAverage - par + 0.1f) / (5 - par + 0.1f)); //0.1f so that you get score at exactly spar
 	}
 }

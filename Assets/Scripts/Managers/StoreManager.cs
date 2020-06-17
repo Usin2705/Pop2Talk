@@ -21,4 +21,7 @@ public class StoreManager : MonoBehaviour {
 		return boxes[index].price;
 	}
 
+	public LootBoxSettings[] GetBoxes() {
+		return boxes;
+	}
 }

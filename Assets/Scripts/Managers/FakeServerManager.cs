@@ -7,6 +7,8 @@ public class FakeServerManager : MonoBehaviour {
 	[SerializeField] int characterIndex = -1;
 	[SerializeField] int coins = 100;
 	[SerializeField] StringInt[] words;
+	[SerializeField] string equipId;
+	[SerializeField] string[] collectionId;
 
 	static FakeServerManager fsm;
 
@@ -35,6 +37,8 @@ public class FakeServerManager : MonoBehaviour {
 		}
 		WordMaster.Instance.SetStarAmounts(strings, stars);
 		CurrencyMaster.Instance.Coins = coins;
+		CosmeticManager.GetManager().UnlockCosmetic(collectionId);
+		CosmeticManager.GetManager().EquipCosmetic(equipId);
 	}
 
 }
