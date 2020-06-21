@@ -67,3 +67,10 @@ MonoBehaviour:
   equipId: 70d3a5df-9fbb-4843-a9ec-f0bb38c15afc
   collectionId:
   - 15b53619-1d2f-42c6-984d-f749d7426716
+  largestModuleIndex: 2
+  cardWords:
+  - en_uk_grandpa
+  - en_uk_juice
+  - en_uk_uncle
+  - en_uk_grandma
+  cardTypes: 00000000000000000000000000000000

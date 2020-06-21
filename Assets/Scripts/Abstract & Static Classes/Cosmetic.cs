@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Cosmetic")]
+[CreateAssetMenu(fileName = "Cosmetic", menuName = "CustomObjects/Cosmetic")]
 public class Cosmetic : ScriptableObject {
 
 	public CosmeticSlot slot;

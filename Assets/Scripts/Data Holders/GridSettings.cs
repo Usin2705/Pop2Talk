@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Grid Settings")]
+[CreateAssetMenu(fileName = "Grid Settings", menuName = "CustomObjects/Grid Settings")]
 public class GridSettings : LevelTypeSettings {
 
 	public int gridHeight;

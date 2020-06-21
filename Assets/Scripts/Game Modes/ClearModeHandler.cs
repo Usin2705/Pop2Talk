@@ -12,7 +12,7 @@ public class ClearModeHandler : BaseGridGameModeHandler {
     public override void TileClicked(Tile t) {
         base.TileClicked(t);
         numberOfPops = 0;
-        GameMaster.Instance.TrackedValue++;
+        GridGameMaster.Instance.SpaceDust++;
         List<Dictionary<Tile, Coordinate>> touchingMatches = new List<Dictionary<Tile, Coordinate>>() { GridManager.GetManager().GetTouchingMatches(t) };
         if (!touchingMatches.Contains(null)) {
             GridManager.GetManager().StartCoroutine(StartPopping(t, touchingMatches));
@@ -20,10 +20,10 @@ public class ClearModeHandler : BaseGridGameModeHandler {
     }
 
     public override void Activate() {
-        GameMaster.Instance.MaxProgress = GridManager.GetManager().CellCount;
+        GridGameMaster.Instance.MaxProgress = GridManager.GetManager().CellCount;
         GridManager.GetManager().DropTiles(true);
         GridManager.GetManager().BreakMatches();
-        GameMaster.Instance.RemainingProgress = GridManager.GetManager().TileCount;
+        GridGameMaster.Instance.RemainingProgress = GridManager.GetManager().TileCount;
         GridManager.GetManager().MoveTiles(base.Activate);
     }
 
@@ -33,16 +33,16 @@ public class ClearModeHandler : BaseGridGameModeHandler {
     }
 
     protected override void GridPopDropRecursion(List<Dictionary<Tile, Coordinate>> touchingMatches, Callback RecursionDone, bool createNew = true) {
-        GameMaster.Instance.RemainingProgress = GridManager.GetManager().TileCount;
+        GridGameMaster.Instance.RemainingProgress = GridManager.GetManager().TileCount;
         base.GridPopDropRecursion(touchingMatches, RecursionDone, createNew);
     }
 
     protected override void CheckDone() {
-        GameMaster.Instance.RemainingProgress = GridManager.GetManager().TileCount;
+        GridGameMaster.Instance.RemainingProgress = GridManager.GetManager().TileCount;
         base.CheckDone();
     }
 
-    public override bool GetMedal(int value, int target) {
-        return ClickMedal(value, target);
-    }
+	protected override void SetupLevelTypes(LevelTypeSettings[] types) {
+		SetupGrid(types);
+	}
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Speech Collection")]
+[CreateAssetMenu(fileName = "Speech Collection", menuName = "CustomObjects/Speech Collection")]
 public class SpeechCollection : ScriptableObject {
 
 	[System.Serializable]

@@ -41,10 +41,6 @@ public class GameUIHandler : MonoBehaviour {
             backButton.SetActive(on);
     }
 
-	public void SetTrackedIcon(Sprite icon) {
-		trackedIcon.sprite = icon;
-	}
-
     public void SetStars(int starAmount, bool instant = false) {
         ChangeText(stars, starAmount, instant);
     }

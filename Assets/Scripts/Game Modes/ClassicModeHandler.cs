@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ClassicModeHandler : BaseGridGameModeHandler {
 
+	int movesPerRound = -1;
+
     public override void Initialize(LevelSettings level) {
         base.Initialize(level);
     }
@@ -17,25 +19,25 @@ public class ClassicModeHandler : BaseGridGameModeHandler {
         }
     }
 
-    public override void Activate() {
-        GameMaster.Instance.MaxProgress = level.movesPerCard;
-        GameMaster.Instance.RemainingProgress = level.movesPerCard;
+	protected override void SetupLevelTypes(LevelTypeSettings[] types) {
+		SetupGridAndMoves(types, ref movesPerRound);
+	}
+
+	public override void Activate() {
+        GridGameMaster.Instance.MaxProgress = movesPerRound;
+        GridGameMaster.Instance.RemainingProgress = movesPerRound;
 		base.Activate();
 	}
 
     protected override IEnumerator StartPopping(Tile startTile, List<Dictionary<Tile, Coordinate>> touchingMatches) {
-        GameMaster.Instance.RemainingProgress--;
+        GridGameMaster.Instance.RemainingProgress--;
         yield return GridManager.GetManager().StartCoroutine(base.StartPopping(startTile, touchingMatches));
         GridPopDropRecursion(touchingMatches, CheckDone);
     }
 
     protected override void GridPopDropRecursion(List<Dictionary<Tile, Coordinate>> touchingMatches, Callback RecursionDone, bool createNew = true) {
         foreach (Dictionary<Tile,Coordinate> d in touchingMatches)
-            GameMaster.Instance.TrackedValue += d.Count;
+            GridGameMaster.Instance.SpaceDust += d.Count;
         base.GridPopDropRecursion(touchingMatches, RecursionDone, createNew);
-    }
-
-    public override bool GetMedal(int value, int target) {
-        return PopMedal(target, value);
     }
 }

@@ -17,7 +17,7 @@ public class SpotModeHandler : BaseGridGameModeHandler {
     public override void TileClicked(Tile t) {
         base.TileClicked(t);
         numberOfPops = 0;
-        GameMaster.Instance.TrackedValue++;
+        GridGameMaster.Instance.SpaceDust++;
         List<Dictionary<Tile, Coordinate>> touchingMatches = new List<Dictionary<Tile, Coordinate>>() { GridManager.GetManager().GetTouchingMatches(t) };
         if (!touchingMatches.Contains(null)) {
             GridManager.GetManager().StartCoroutine(StartPopping(t, touchingMatches));
@@ -41,8 +41,8 @@ public class SpotModeHandler : BaseGridGameModeHandler {
                 spots[potentialSpot].Grow(() => { });
             }
         }
-        GameMaster.Instance.MaxProgress = spotCount;
-        GameMaster.Instance.RemainingProgress = spotCount;
+        GridGameMaster.Instance.MaxProgress = spotCount;
+        GridGameMaster.Instance.RemainingProgress = spotCount;
 		base.Activate();
 	}
 
@@ -67,7 +67,7 @@ public class SpotModeHandler : BaseGridGameModeHandler {
                     continue;
                 spots[popped].Shrink();
                 toRemove.Add(popped);
-                GameMaster.Instance.RemainingProgress--;
+                GridGameMaster.Instance.RemainingProgress--;
             }
         }
         foreach(Cell c in toRemove)
@@ -75,10 +75,6 @@ public class SpotModeHandler : BaseGridGameModeHandler {
         base.GridPopDropRecursion(touchingMatches, RecursionDone, createNew);
     }
     
-    public override bool GetMedal(int value, int target) {
-        return ClickMedal(value, target);
-    }
-
     public override void Back() {
         foreach (Cell c in spots.Keys) {
             PoolMaster.Instance.Destroy(spots[c].gameObject);
@@ -86,4 +82,8 @@ public class SpotModeHandler : BaseGridGameModeHandler {
         spots.Clear();
         base.Back();
     }
+
+	protected override void SetupLevelTypes(LevelTypeSettings[] types) {
+		SetupGrid(types);
+	}
 }

@@ -9,6 +9,9 @@ public class FakeServerManager : MonoBehaviour {
 	[SerializeField] StringInt[] words;
 	[SerializeField] string equipId;
 	[SerializeField] string[] collectionId;
+	[SerializeField] int largestModuleIndex;
+	[SerializeField] string[] cardWords;
+	[SerializeField] WordCardType[] cardTypes;
 
 	static FakeServerManager fsm;
 
@@ -41,4 +44,31 @@ public class FakeServerManager : MonoBehaviour {
 		CosmeticManager.GetManager().EquipCosmetic(equipId);
 	}
 
+	public void UpdateCoins(int newCoins) {
+
+	}
+
+	public void EquipCosmetic(string id, CosmeticSlot slot) {
+
+	}
+
+	public void UnlockCosmetic(string id) {
+
+	}
+
+	public int GetLargestModuleIndex() {
+		return largestModuleIndex;
+	}
+
+	public string[] GetCardWords() {
+		return cardWords;
+	}
+
+	public WordCardType[] GetCardTypes() {
+		return cardTypes;
+	}
+
+	public float GetCardPar() {
+		return 2;
+	}
 }

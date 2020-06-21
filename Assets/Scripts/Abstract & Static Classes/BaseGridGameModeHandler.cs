@@ -4,133 +4,163 @@ using UnityEngine;
 
 public abstract class BaseGridGameModeHandler : IGameMode {
 
-    protected LevelSettings level;
+	protected GridLevelSettings gridLevel;
 	protected GridSettings gridSettings;
-    protected int numberOfPops;
-    protected List<Dictionary<Tile,Coordinate>> tilesToGrow;
+	protected int numberOfPops;
+	protected List<Dictionary<Tile, Coordinate>> tilesToGrow;
 
-    public virtual void Initialize(LevelSettings level) {
-        this.level = level;
-		if (level.levelTypeSettings != null && level.levelTypeSettings is GridSettings) {
-			gridSettings = (GridSettings)level.levelTypeSettings;
-		} else {
-			Debug.LogError("No gridsettings in " + level.name + "!");
+	public virtual void Initialize(LevelSettings level) {
+		if (level.GetType() != typeof(GridLevelSettings)) {
+			Debug.LogError(level.name + "is not a GridLevel!");
+			return;
 		}
-        GameMaster.Instance.TrackedValue = 0;
-        GridManager.GetManager().SetGridSettings(gridSettings);
-        GridManager.GetManager().SetGameMode(this);
-        GridManager.GetManager().InitializeRandomMatches();
-        GridManager.GetManager().CreateGrid();
-        GridManager.GetManager().PopulateGrid();
-    }
-
-    public virtual void Activate() {
-		GridManager.GetManager().CanClick = true;
-    }
-
-    public virtual void FinishedResolvingClick() {
-
-    }
-
-    public virtual void TileClicked(Tile t) {
-		GameMaster.Instance.Clicked();
+		gridLevel = (GridLevelSettings)level;
+		SetupLevelTypes(gridLevel.typeSettings);
+		GridGameMaster.Instance.SpaceDust = 0;
+		GridManager.GetManager().SetGridSettings(gridSettings);
+		GridManager.GetManager().SetGameMode(this);
+		GridManager.GetManager().InitializeRandomMatches();
+		GridManager.GetManager().CreateGrid();
+		GridManager.GetManager().PopulateGrid();
 	}
 
-    public virtual bool DoesUseClicks() {
-        return true;
-    }
+	protected abstract void SetupLevelTypes(LevelTypeSettings[] types);
 
-    protected virtual IEnumerator StartPopping(Tile startTile, List<Dictionary<Tile, Coordinate>> tilesToPop) {
-        GridManager.GetManager().CanClick = false;
-        //AudioMaster.Instance.Play(GridManager.GetManager(), SoundEffectManager.GetManager().GetPopSound());
-        if (startTile != null) {
-            startTile.ClickVisual(GridManager.GetManager().PreclickDuration);
-            yield return new WaitForSeconds(GridManager.GetManager().PreclickDuration);
-        }
-    }
+	protected virtual void SetupGrid(LevelTypeSettings[] types) {
+		foreach (LevelTypeSettings lts in types) {
+			if (lts.GetType() == typeof(GridSettings)) {
+				gridSettings = (GridSettings)lts;
+				break;
+			}
+		}
+		if (gridSettings == null) {
+			Debug.LogError("No gridsettings in " + gridLevel.name + "!");
+		}
+	}
 
-    protected virtual void GridPopDropRecursion(List<Dictionary<Tile, Coordinate>> tilesToPop, Callback RecursionDone, bool createNew = true) {
-        GridManager.GetManager().CanMove = true;
-        GridManager.GetManager().PopTiles(tilesToPop, () => {
-            tilesToPop = GridManager.GetManager().GetPostPopSpecialTilePops();
-            if (tilesToPop.Count == 0) {
-                GameMaster.Instance.PlayPopSound(numberOfPops);
-                numberOfPops++;
-                GridManager.GetManager().DropTiles(createNew);
-                GridManager.GetManager().MoveTiles(() => {
-                    tilesToPop = GridManager.GetManager().GetPostMoveSpecialTilePops();
-                    if (tilesToPop.Count == 0) {
-                        tilesToPop = GridManager.GetManager().GetAllTouchingMatches(ConstantHolder.minimumCombo);
-                        if (tilesToPop.Count > 0) {
-                            GridPopDropRecursion(tilesToPop, RecursionDone, createNew);
-                        } else
-                            RecursionDone();
-                    } else
-                        GridPopDropRecursion(tilesToPop, RecursionDone, createNew);
-                });
-            } else {
-                GridPopDropRecursion(tilesToPop, RecursionDone, createNew);
-            }
-        });
-    }
-    
-    protected virtual void GridPopGrowRecursion(List<Dictionary<Tile, Coordinate>> tilesToPop, Callback RecursionDone) {
-        if (tilesToGrow == null)
-            tilesToGrow = new List<Dictionary<Tile, Coordinate>>();
-        GridManager.GetManager().CanMove = true;
-        GridManager.GetManager().PopTiles(tilesToPop, () => {
-            GameMaster.Instance.PlayPopSound(numberOfPops);
-            numberOfPops++;
-            foreach(Dictionary<Tile,Coordinate> d in tilesToPop)
-                tilesToGrow.Add(d);
-            tilesToPop = GridManager.GetManager().GetPostPopSpecialTilePops();
-            if (tilesToPop.Count == 0) {
-                GridManager.GetManager().GrowTiles(0.2f, tilesToGrow, () => {
-                    tilesToGrow.Clear();
-                    tilesToPop = GridManager.GetManager().GetPostMoveSpecialTilePops();
-                    if (tilesToPop.Count == 0) {
-                        tilesToPop = GridManager.GetManager().GetAllTouchingMatches(ConstantHolder.minimumCombo);
-                        if (tilesToPop.Count > 0) {
-                            GridPopGrowRecursion(tilesToPop, RecursionDone);
-                        } else
-                            RecursionDone();
-                    } else
-                        GridPopGrowRecursion(tilesToPop, RecursionDone);
-                });
-            } else
-                GridPopGrowRecursion(tilesToPop, RecursionDone);
-        });
-    }
+	protected virtual void SetupGridAndMoves(LevelTypeSettings[] types, ref int movesPerRound) {
+		IntSettings intSettings;
+		foreach (LevelTypeSettings lts in types) {
+			if (lts.GetType() == typeof(GridSettings)) {
+				gridSettings = (GridSettings)lts;
+			} else {
 
-    protected virtual void CheckDone() {
-		if (GameMaster.Instance.RemainingProgress <= 0) {
+				intSettings = (IntSettings)lts;
+				if (intSettings != null && intSettings.type == IntTypes.MovesPerRound) {
+					if (intSettings.integer <= 0) {
+						Debug.LogError(intSettings.name + " has round value of ");
+						return;
+					}
+
+					movesPerRound = intSettings.integer;
+				}
+			}
+		}
+		if (gridSettings == null) {
+			Debug.LogError("No gridsettings in " + gridLevel.name + "!");
+		}
+		if (movesPerRound <= 0) {
+			Debug.LogError(gridLevel.name + " has no IntSettings with MovesPerRound as the type");
+		}
+	}
+
+
+	public virtual void Activate() {
+		GridManager.GetManager().CanClick = true;
+	}
+
+	public virtual void FinishedResolvingClick() {
+
+	}
+
+	public virtual void TileClicked(Tile t) {
+		GridGameMaster.Instance.Clicked();
+	}
+
+	public virtual bool DoesUseClicks() {
+		return true;
+	}
+
+	protected virtual IEnumerator StartPopping(Tile startTile, List<Dictionary<Tile, Coordinate>> tilesToPop) {
+		GridManager.GetManager().CanClick = false;
+		//AudioMaster.Instance.Play(GridManager.GetManager(), SoundEffectManager.GetManager().GetPopSound());
+		if (startTile != null) {
+			startTile.ClickVisual(GridManager.GetManager().PreclickDuration);
+			yield return new WaitForSeconds(GridManager.GetManager().PreclickDuration);
+		}
+	}
+
+	protected virtual void GridPopDropRecursion(List<Dictionary<Tile, Coordinate>> tilesToPop, Callback RecursionDone, bool createNew = true) {
+		GridManager.GetManager().CanMove = true;
+		GridManager.GetManager().PopTiles(tilesToPop, () => {
+			tilesToPop = GridManager.GetManager().GetPostPopSpecialTilePops();
+			if (tilesToPop.Count == 0) {
+				GridGameMaster.Instance.PlayPopSound(numberOfPops);
+				numberOfPops++;
+				GridManager.GetManager().DropTiles(createNew);
+				GridManager.GetManager().MoveTiles(() => {
+					tilesToPop = GridManager.GetManager().GetPostMoveSpecialTilePops();
+					if (tilesToPop.Count == 0) {
+						tilesToPop = GridManager.GetManager().GetAllTouchingMatches(ConstantHolder.minimumCombo);
+						if (tilesToPop.Count > 0) {
+							GridPopDropRecursion(tilesToPop, RecursionDone, createNew);
+						} else
+							RecursionDone();
+					} else
+						GridPopDropRecursion(tilesToPop, RecursionDone, createNew);
+				});
+			} else {
+				GridPopDropRecursion(tilesToPop, RecursionDone, createNew);
+			}
+		});
+	}
+
+	protected virtual void GridPopGrowRecursion(List<Dictionary<Tile, Coordinate>> tilesToPop, Callback RecursionDone) {
+		if (tilesToGrow == null)
+			tilesToGrow = new List<Dictionary<Tile, Coordinate>>();
+		GridManager.GetManager().CanMove = true;
+		GridManager.GetManager().PopTiles(tilesToPop, () => {
+			GridGameMaster.Instance.PlayPopSound(numberOfPops);
+			numberOfPops++;
+			foreach (Dictionary<Tile, Coordinate> d in tilesToPop)
+				tilesToGrow.Add(d);
+			tilesToPop = GridManager.GetManager().GetPostPopSpecialTilePops();
+			if (tilesToPop.Count == 0) {
+				GridManager.GetManager().GrowTiles(0.2f, tilesToGrow, () => {
+					tilesToGrow.Clear();
+					tilesToPop = GridManager.GetManager().GetPostMoveSpecialTilePops();
+					if (tilesToPop.Count == 0) {
+						tilesToPop = GridManager.GetManager().GetAllTouchingMatches(ConstantHolder.minimumCombo);
+						if (tilesToPop.Count > 0) {
+							GridPopGrowRecursion(tilesToPop, RecursionDone);
+						} else
+							RecursionDone();
+					} else
+						GridPopGrowRecursion(tilesToPop, RecursionDone);
+				});
+			} else
+				GridPopGrowRecursion(tilesToPop, RecursionDone);
+		});
+	}
+
+	protected virtual void CheckDone() {
+		if (GridGameMaster.Instance.RemainingProgress <= 0) {
 			List<Dictionary<Tile, Coordinate>> specialTilesRemaining = GridManager.GetManager().GetRemainingSpecialTiles();
-			if (specialTilesRemaining.Count > 0 && GameMaster.Instance.FinalRound)
+			if (specialTilesRemaining.Count > 0 && GridGameMaster.Instance.FinalRound)
 				GridManager.GetManager().StartCoroutine(StartPopping(null, specialTilesRemaining));
 			else
-				GameMaster.Instance.RoundDone();
+				GridGameMaster.Instance.RoundDone();
 		} else {
-			GameMaster.Instance.ClickDone();
+			GridGameMaster.Instance.ClickDone();
 			GridManager.GetManager().CanClick = true;
 		}
-    }
+	}
 
-    protected virtual void HandleSpecialTilesAtEnd(Dictionary<Tile,Coordinate> specialTiles) {
+	protected virtual void HandleSpecialTilesAtEnd(Dictionary<Tile, Coordinate> specialTiles) {
 
-    }
+	}
 
-    public virtual bool GetMedal(int value, int target) {
-        return false;
-    }
-
-    public virtual bool PopMedal(int value, int target) {
-		return target <= value;
-    }
-    public virtual bool ClickMedal(int value, int target) {
-        return target >= value;
-    }
-    
-    public virtual void Back() {
+	public virtual void Back() {
 		GridManager.GetManager().StopGrid();
-    }
+	}
 }

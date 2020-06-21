@@ -22,7 +22,7 @@ public class FillModeHandler : BaseGridGameModeHandler {
         }
         System.Collections.Generic.HashSet<MatchType> chosenSet = new System.Collections.Generic.HashSet<MatchType>();
         chosenSet.Add((adjacentTypes.Count > 0) ? adjacentTypes.GetRandom() : (t as MatchableTile).MyMatchType);
-        GameMaster.Instance.TrackedValue++;
+        GridGameMaster.Instance.SpaceDust++;
         List<Dictionary<Tile, Coordinate>> touchingMatches = new List<Dictionary<Tile, Coordinate>>() { GridManager.GetManager().GetTouchingMatches(t) };
         if (!touchingMatches.Contains(null)) {
             foreach (Dictionary<Tile, Coordinate> dic in touchingMatches) {
@@ -35,8 +35,8 @@ public class FillModeHandler : BaseGridGameModeHandler {
     public override void Activate() {
         GridManager.GetManager().DropTiles(true);
         GridManager.GetManager().BreakMatches();
-        GameMaster.Instance.MaxProgress = GridManager.GetManager().TileCount;
-        GameMaster.Instance.RemainingProgress = GridManager.GetManager().TileCount - GridManager.GetManager().GetLargestMatchingGroupCount();
+        GridGameMaster.Instance.MaxProgress = GridManager.GetManager().TileCount;
+        GridGameMaster.Instance.RemainingProgress = GridManager.GetManager().TileCount - GridManager.GetManager().GetLargestMatchingGroupCount();
         GridManager.GetManager().MoveTiles(base.Activate);
     }
 
@@ -48,19 +48,19 @@ public class FillModeHandler : BaseGridGameModeHandler {
     void GridPopGrow(List<Dictionary<Tile, Coordinate>> touchingMatches, Callback GrowthDone) {
         GridManager.GetManager().CanMove = true;
         GridManager.GetManager().PopTiles(touchingMatches, () => {
-            GameMaster.Instance.PlayPopSound(numberOfPops);
+            GridGameMaster.Instance.PlayPopSound(numberOfPops);
             numberOfPops++;
-            if (GameMaster.Instance.RemainingProgress > 0) {
+            if (GridGameMaster.Instance.RemainingProgress > 0) {
                 GridManager.GetManager().GrowTiles(0.2f, touchingMatches, allowed, false, () => {
                     GrowthDone();
-                    GameMaster.Instance.RemainingProgress = GridManager.GetManager().CellCount - GridManager.GetManager().GetLargestMatchingGroupCount();
+                    GridGameMaster.Instance.RemainingProgress = GridManager.GetManager().CellCount - GridManager.GetManager().GetLargestMatchingGroupCount();
                 });
             } else
                 GrowthDone();
         });
     }
 
-    public override bool GetMedal(int value, int target) {
-        return ClickMedal(value, target);
-    }
+	protected override void SetupLevelTypes(LevelTypeSettings[] types) {
+		SetupGrid(types);
+	}
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[CreateAssetMenu(fileName = "LootBox Settings")]
+[CreateAssetMenu(fileName = "LootBox Settings", menuName = "CustomObjects/LootBox Settings")]
 public class LootBoxSettings : ScriptableObject {
 	public Sprite picture;
 	public int price;

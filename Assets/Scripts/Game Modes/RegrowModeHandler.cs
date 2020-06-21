@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class RegrowModeHandler : BaseGridGameModeHandler {
 
+	int movesPerCard = -1;
+
     public override void Initialize(LevelSettings level) {
         base.Initialize(level);
     }
@@ -21,24 +23,24 @@ public class RegrowModeHandler : BaseGridGameModeHandler {
     }
 
     public override void Activate() {
-        GameMaster.Instance.MaxProgress = level.movesPerCard;
-        GameMaster.Instance.RemainingProgress = level.movesPerCard;
+        GridGameMaster.Instance.MaxProgress = movesPerCard;
+        GridGameMaster.Instance.RemainingProgress = movesPerCard;
 		base.Activate();
 	}
 
     protected override IEnumerator StartPopping(Tile startTile, List<Dictionary<Tile, Coordinate>> touchingMatches) {
-        GameMaster.Instance.RemainingProgress--;
+        GridGameMaster.Instance.RemainingProgress--;
         yield return GridManager.GetManager().StartCoroutine(base.StartPopping(startTile, touchingMatches));
         GridPopGrowRecursion(touchingMatches, CheckDone);
     }
 
     protected override void GridPopGrowRecursion(List<Dictionary<Tile, Coordinate>> touchingMatches, Callback RecursionDone) {
         foreach (Dictionary<Tile,Coordinate> d in touchingMatches)
-            GameMaster.Instance.TrackedValue += d.Count;
+            GridGameMaster.Instance.SpaceDust += d.Count;
         base.GridPopGrowRecursion(touchingMatches, RecursionDone);
     }
 
-    public override bool GetMedal(int value, int target) {
-        return PopMedal(value, target);
-    }
+	protected override void SetupLevelTypes(LevelTypeSettings[] types) {
+		SetupGridAndMoves(types, ref movesPerCard);
+	}
 }

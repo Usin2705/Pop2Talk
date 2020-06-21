@@ -28,6 +28,14 @@ public class WordMaster : MonoBehaviour {
 		}
 	}
 
+	public int MaxCards {
+		get {
+			return sampleWords.Length;
+		}
+	}
+
+	public int TotalStars { get; set; }
+
 	Queue<WordCardType> cardTypeQueue;
 	Queue<WordData> wordQueue;
 
@@ -84,6 +92,8 @@ public class WordMaster : MonoBehaviour {
 	}
 
 	public void MakeQueue() {
+		cardTypeQueue = new Queue<WordCardType>();
+		wordQueue = new Queue<WordData>();
 		foreach (WordCardType wct in sampleTypes) {
 			cardTypeQueue.Enqueue(wct);
 		}
@@ -92,7 +102,7 @@ public class WordMaster : MonoBehaviour {
 		}
 	}
 
-	public void SetSamples(WordCardType[] types, string[] words, int par) {
+	public void SetSamples(WordCardType[] types, string[] words, float par) {
 		sampleTypes = types;
 		sampleWords = words;
 		this.par = par;
