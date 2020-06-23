@@ -12,6 +12,7 @@ public class StoreButton : MonoBehaviour {
 	int index;
 
 	[SerializeField] Text priceText;
+	[SerializeField] GameObject priceHolder;
 
 	void Awake () {
 		button = GetComponentInChildren<UIButton>();
@@ -31,7 +32,10 @@ public class StoreButton : MonoBehaviour {
 	
 
 	void Click() {
-		Debug.Log("wa");
 		Clicked(index);
+	}
+
+	public void TogglePrice(bool on) {
+		priceHolder.SetActive(on);
 	}
 }

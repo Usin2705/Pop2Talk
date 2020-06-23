@@ -79,7 +79,7 @@ public class WordCardManager : MonoBehaviour {
 
 	IEnumerator CardIntro(int order, Callback IntroDone) {
 		wordCard.SetOrder(order);
-		if (DebugSettings.Instance.skipTransitions)
+		if (DebugMaster.Instance.skipTransitions)
 			wordCard.RevealInstantly();
 		else
 			yield return wordCard.ShowCard(introDuration);
@@ -198,7 +198,7 @@ public class WordCardManager : MonoBehaviour {
             firstCheerDone = true;
 		if (timeOut)
 			speech = null;
-		if (!DebugSettings.Instance.skipTransitions && CharacterManager.GetManager().CurrentCharacter != null)
+		if (!DebugMaster.Instance.skipTransitions && CharacterManager.GetManager().CurrentCharacter != null)
 			CharacterManager.GetManager().ShowCharacter(speech, wordCard.GetOrder(), () => { StartCoroutine(FinishCard()); });
 		else
 			StartCoroutine(FinishCard());
@@ -227,7 +227,7 @@ public class WordCardManager : MonoBehaviour {
 	}
 
 	public void HideCard(Callback Done, bool instantly = false) {
-		if (instantly || DebugSettings.Instance.skipTransitions) {
+		if (instantly || DebugMaster.Instance.skipTransitions) {
 			wordCard.HideInstantly();
 			Done?.Invoke();
 		} else

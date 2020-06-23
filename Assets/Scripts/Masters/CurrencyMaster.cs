@@ -26,7 +26,7 @@ public class CurrencyMaster : MonoBehaviour {
 	public int IncreaseCoins(float starRatio, float dustRatio) {
 		if (starRatio == 0 || dustRatio == 0)
 			return 0;
-		int addedCoins = Mathf.RoundToInt(1f / Mathf.Lerp(minGamesToChest, maxGamesToChest, starRatio * dustRatio) * GetLootLevelCoins(LootLevel));
+		int addedCoins = Mathf.RoundToInt(1f / Mathf.Lerp(maxGamesToChest, minGamesToChest, starRatio * dustRatio) * GetLootLevelCoins(LootLevel));
 		Coins += addedCoins;
 		return addedCoins;
 	}

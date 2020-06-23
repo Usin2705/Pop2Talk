@@ -81,7 +81,7 @@ public class GridGameMaster : MonoBehaviour {
     public void LaunchGame(bool finalRound = false) {
         SetMode(CurrentLevel.gameMode);
 		currentGameModeHandler.Initialize(CurrentLevel);
-		FinalRound = false;
+		FinalRound = finalRound;
 		gameCaller.LaunchSetup();
 		NetworkManager.GetManager().LevelStarted(CurrentLevel.name, false, false);
 		StartRound();
@@ -92,7 +92,7 @@ public class GridGameMaster : MonoBehaviour {
 	}
 
     public void StartRound() {
-		if (DebugSettings.Instance.skipPops)
+		if (DebugMaster.Instance.skipPops)
 			RoundDone();
 		else
 			currentGameModeHandler.Activate();
@@ -152,6 +152,6 @@ public class GridGameMaster : MonoBehaviour {
 	public float GetDustRatio(float dust) {
 		if (!CurrentLevel.spacedustAffectsCoins)
 			return 0.5f;
-		return Mathf.Clamp01((dust - CurrentLevel.spaceDustMin) / (CurrentLevel.spaceDustMax - CurrentLevel.spaceDustMin));
+		return Mathf.Clamp((dust - CurrentLevel.spaceDustMin) / (CurrentLevel.spaceDustMax - CurrentLevel.spaceDustMin), 0.1f, 1f); //0.1f min to avoid losing due to dust
 	}
 }

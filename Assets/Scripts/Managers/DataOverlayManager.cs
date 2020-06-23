@@ -119,7 +119,7 @@ public class DataOverlayManager : Overlay, IFingerPointable {
 		InputManager.GetManager().SendingInputs = false;
 		Vector3 startSize = (on) ? Vector3.zero : overlayRoot.localScale;
 		Vector3 targetSize = (!on) ? Vector3.zero : overlayRoot.localScale;
-		while (timer < duration && !DebugSettings.Instance.skipTransitions && !interrupt) {
+		while (timer < duration && !DebugMaster.Instance.skipTransitions && !interrupt) {
 			timer += Time.deltaTime;
 			overlayRoot.localScale = Vector3.Lerp(startSize, targetSize, timer / duration);
 			curtain.color = Color.Lerp(startColor, targetColor, timer / duration);

@@ -28,7 +28,7 @@ public class ViewManager : MonoBehaviour {
 
 	public void ShowView(View targetView, bool skipTransitions = false) {
 		if (showViewRoutine == null)
-			showViewRoutine = StartCoroutine(ShowViewRoutine(targetView, !skipTransitions && !DebugSettings.Instance.skipTransitions));
+			showViewRoutine = StartCoroutine(ShowViewRoutine(targetView, !skipTransitions && !DebugMaster.Instance.skipTransitions));
 		else
 			viewsToSwitch.Enqueue(targetView);
 	}

@@ -173,6 +173,7 @@ MonoBehaviour:
   insideIcon: {fileID: 0}
   repressDeselects: 0
   lockedGrayscale: 0
+  deselectGrayscale: 0
 --- !u!114 &2496774961002710130
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -242,6 +243,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   priceText: {fileID: 6638386770915187697}
+  priceHolder: {fileID: 1758074988725682}
 --- !u!1 &1944671692897908
 GameObject:
   m_ObjectHideFlags: 0

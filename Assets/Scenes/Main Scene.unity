@@ -871,6 +871,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa36985cf10094744883439ffd55a7af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &517853944 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4382066698367842480, guid: d5f9d40b482e40a4c96c5eaec7aeee27,
+    type: 3}
+  m_PrefabInstance: {fileID: 716065103}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d54c3ce7038aae489968fcf6d95b224, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &550554293 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 550554293, guid: 444f3ebc27cc72e4aaa5f4fc89d85dc2,
@@ -2882,6 +2894,11 @@ PrefabInstance:
       propertyPath: shipHub
       value: 
       objectReference: {fileID: 458245079}
+    - target: {fileID: 114482468174547504, guid: f836d58a5811aca458ce7e881b0ec392,
+        type: 3}
+      propertyPath: finishView
+      value: 
+      objectReference: {fileID: 517853944}
     - target: {fileID: 114596619015754370, guid: f836d58a5811aca458ce7e881b0ec392,
         type: 3}
       propertyPath: machineCard

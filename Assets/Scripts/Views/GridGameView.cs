@@ -15,11 +15,8 @@ public class GridGameView : View, IGameCaller {
 	[SerializeField] Image background;
 	[SerializeField] GameUIHandler gameUI;
 	[SerializeField] UIButton backButton;
-	[Space]
-	[SerializeField] [Range(0.0f, 1.0f)] float cheerChance = 0.25f;
 
 	float levelDuration = 0f;
-
 
 	bool musicFaded;
 
@@ -78,7 +75,7 @@ public class GridGameView : View, IGameCaller {
 	}
 
 	void GameOverDelay(SpeechCollection speech) {
-		if (!DebugSettings.Instance.skipTransitions)
+		if (!DebugMaster.Instance.skipTransitions)
 			StartCoroutine(GameOverDelayRoutine(speech, 1f));
 		else
 			InputManager.GetManager().SendingInputs = true;
@@ -95,7 +92,7 @@ public class GridGameView : View, IGameCaller {
 	}
 
 	public void RoundDone() {
-		if (DebugSettings.Instance.skipWords) {
+		if (DebugMaster.Instance.skipWords) {
 			WordMaster.Instance.Dequeue();
 			CardDone(5);
 		} else {
@@ -119,14 +116,13 @@ public class GridGameView : View, IGameCaller {
 		WordMaster.Instance.TotalStars += stars;
 		gameUI.SetStars(WordMaster.Instance.TotalStars);
 		gameUI.SetCardsLeft(WordMaster.Instance.CardsRemaining);
+		ToggleMusic(1f, true);
 		if (WordMaster.Instance.CardsRemaining > 0) {
-			ToggleMusic(1f, true);
 			if (WordMaster.Instance.CardsRemaining == 1)
 				GridGameMaster.Instance.FinalRound = true;
 			GridGameMaster.Instance.StartRound();
 		} else {
 			GameDone();
-			ToggleMusic(1f, true);
 		}
 	}
 

@@ -69,6 +69,12 @@ public class CosmeticManager : MonoBehaviour {
 		}
 	}
 
+	public Sprite UnlockCosmeticFromBox(LootBoxSettings box) {
+		string id = box.cosmeticIds.GetRandom();
+		UnlockCosmetic(id);
+		return GetCosmetic(id).sprite;
+	}
+
 	public void UnlockCosmetic(string[] ids) {
 		foreach (string s in ids)
 			UnlockCosmetic(s);
