@@ -66,6 +66,7 @@ public class CosmeticManager : MonoBehaviour {
 			equippedCosmetics.Add(c.slot, id);
 
 		if (slotChanged) {
+			FakeServerManager.GetManager().EquipCosmetic(id, c.slot);
 		}
 	}
 
@@ -81,8 +82,10 @@ public class CosmeticManager : MonoBehaviour {
 	}
 
 	public void UnlockCosmetic(string id) {
-		if (!unlockedCosmetics.Contains(id))
+		if (!unlockedCosmetics.Contains(id)) {
+			FakeServerManager.GetManager().UnlockCosmetic(id);
 			unlockedCosmetics.Add(id);
+		}
 	}
 
 	public Cosmetic[] GetUnlockedCosmetics() {

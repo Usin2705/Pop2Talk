@@ -23,20 +23,20 @@ public class RegrowModeHandler : BaseGridGameModeHandler {
     }
 
     public override void Activate() {
-        GridGameMaster.Instance.MaxProgress = movesPerCard;
-        GridGameMaster.Instance.RemainingProgress = movesPerCard;
+        GameMaster.Instance.MaxProgress = movesPerCard;
+        GameMaster.Instance.RemainingProgress = movesPerCard;
 		base.Activate();
 	}
 
     protected override IEnumerator StartPopping(Tile startTile, List<Dictionary<Tile, Coordinate>> touchingMatches) {
-        GridGameMaster.Instance.RemainingProgress--;
+        GameMaster.Instance.RemainingProgress--;
         yield return GridManager.GetManager().StartCoroutine(base.StartPopping(startTile, touchingMatches));
         GridPopGrowRecursion(touchingMatches, CheckDone);
     }
 
     protected override void GridPopGrowRecursion(List<Dictionary<Tile, Coordinate>> touchingMatches, Callback RecursionDone) {
         foreach (Dictionary<Tile,Coordinate> d in touchingMatches)
-            GridGameMaster.Instance.SpaceDust += d.Count;
+            GameMaster.Instance.SpaceDust += d.Count;
         base.GridPopGrowRecursion(touchingMatches, RecursionDone);
     }
 

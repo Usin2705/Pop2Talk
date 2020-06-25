@@ -15,7 +15,7 @@ public class StoreButton : MonoBehaviour {
 	[SerializeField] GameObject priceHolder;
 
 	void Awake () {
-		button = GetComponentInChildren<UIButton>();
+		CheckButton();
 	}
 
 	void Start() {
@@ -23,6 +23,7 @@ public class StoreButton : MonoBehaviour {
 	}
 
 	public void SetUp(LootBoxSettings lootBox, int index, IntCallback OnClick) {
+		CheckButton();
 		myBox = lootBox;
 		button.SetSprite(lootBox.picture);
 		priceText.text = myBox.price.ToString();
@@ -33,6 +34,11 @@ public class StoreButton : MonoBehaviour {
 
 	void Click() {
 		Clicked(index);
+	}
+
+	void CheckButton() {
+		if (button == null)
+			button = GetComponentInChildren<UIButton>();
 	}
 
 	public void TogglePrice(bool on) {

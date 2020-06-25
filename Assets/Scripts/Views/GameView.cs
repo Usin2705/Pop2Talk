@@ -3,14 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GridGameView : View, IGameCaller {
+public class GameView : View, IGameCaller {
 
 	[SerializeField] View shipHub;
 	[SerializeField] View finishView;
-	[Space]
-	[SerializeField] SpeechCollection noClearSpeech;
-	[SerializeField] SpeechCollection clearNoMedalSpeech;
-	[SerializeField] SpeechCollection clearGetMedalSpeech;
 	[Space]
 	[SerializeField] Image background;
 	[SerializeField] GameUIHandler gameUI;
@@ -33,8 +29,8 @@ public class GridGameView : View, IGameCaller {
 
 	public override void Activate() {
 		base.Activate();
-		background.sprite = GridGameMaster.Instance.Background;
-		GridGameMaster.Instance.SetGameCaller(this);
+		background.sprite = GameMaster.Instance.Background;
+		GameMaster.Instance.SetGameCaller(this);
 		gameUI.SetCardBar(true);
 		BeginGame();
 	}
@@ -45,7 +41,7 @@ public class GridGameView : View, IGameCaller {
 		gameUI.SetStars(0, true);
 		gameUI.SetCardsLeft(WordMaster.Instance.CardsRemaining, true);
 		levelDuration = 0f;
-		GridGameMaster.Instance.LaunchGame(WordMaster.Instance.CardsRemaining == 1);
+		GameMaster.Instance.LaunchGame(WordMaster.Instance.CardsRemaining == 1);
 	}
 
 	public void Clicked() {
@@ -53,10 +49,10 @@ public class GridGameView : View, IGameCaller {
 			ToggleMusic(0.25f, false);
 			musicFaded = true;
 			WordData word = WordMaster.Instance.PeekNextWord();
-			NetworkManager.GetManager().SamplePlayed(GridGameMaster.Instance.CurrentLevel.name, word.name, true);
-			GridGameMaster.Instance.SetCustomClip(word.pronunciations.GetRandom());
+			NetworkManager.GetManager().SamplePlayed(GameMaster.Instance.CurrentLevel.name, word.name, true);
+			GameMaster.Instance.SetCustomClip(word.pronunciations.GetRandom());
 		} else
-			GridGameMaster.Instance.SetCustomClip(null);
+			GameMaster.Instance.SetCustomClip(null);
 	}
 
 	public void ClickDone() {
@@ -109,7 +105,7 @@ public class GridGameView : View, IGameCaller {
 		if (currentWord == null)
 			CardDone(0);
 		else
-			WordMaster.Instance.ShowWordCard(nextType, GridGameMaster.Instance.CurrentLevel.name, currentWord, sortingOrder, CardDone);
+			WordMaster.Instance.ShowWordCard(nextType, GameMaster.Instance.CurrentLevel.name, currentWord, sortingOrder, CardDone);
 	}
 
 	void CardDone(int stars) {
@@ -119,8 +115,8 @@ public class GridGameView : View, IGameCaller {
 		ToggleMusic(1f, true);
 		if (WordMaster.Instance.CardsRemaining > 0) {
 			if (WordMaster.Instance.CardsRemaining == 1)
-				GridGameMaster.Instance.FinalRound = true;
-			GridGameMaster.Instance.StartRound();
+				GameMaster.Instance.FinalRound = true;
+			GameMaster.Instance.StartRound();
 		} else {
 			GameDone();
 		}
@@ -130,7 +126,7 @@ public class GridGameView : View, IGameCaller {
 		base.Deactivate();
 		gameUI.SetCardBar(false);
 		WordCardManager.GetManager().StopCard();
-		GridGameMaster.Instance.Back();
+		GameMaster.Instance.Back();
 	}
 
 	public void SetProgress(float progress) {
@@ -142,8 +138,8 @@ public class GridGameView : View, IGameCaller {
 	}
 
 	public void Back() {
-		NetworkManager.GetManager().LevelAbortEvent("level_abort", GridGameMaster.Instance.CurrentLevel.name, GridGameMaster.Instance.CurrentLevel.gameMode.ToString(), levelDuration, 
-			WordMaster.Instance.MaxCards - WordMaster.Instance.CardsRemaining, WordMaster.Instance.TotalStars / WordMaster.Instance.MaxCards, WordMaster.Instance.TotalStars, GridGameMaster.Instance.SpaceDust);
+		NetworkManager.GetManager().LevelAbortEvent("level_abort", GameMaster.Instance.CurrentLevel.name, GameMaster.Instance.CurrentLevel.gameMode.ToString(), levelDuration, 
+			WordMaster.Instance.MaxCards - WordMaster.Instance.CardsRemaining, WordMaster.Instance.TotalStars / WordMaster.Instance.MaxCards, WordMaster.Instance.TotalStars, GameMaster.Instance.SpaceDust);
 		doExitFluff = false;
 		ViewManager.GetManager().ShowView(shipHub);
 	}

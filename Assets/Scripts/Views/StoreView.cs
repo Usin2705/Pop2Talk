@@ -23,7 +23,7 @@ public class StoreView : View {
 	[SerializeField] GameObject storeButtonPrefab;
 	[Space]
 	[SerializeField] GameObject collectionScreen;
-	[SerializeField] RectTransform collectionHolder;
+	[SerializeField] GridPageHandler collectionGridPage;
 	[SerializeField] GameObject selectableButtonPrefab;
 
 
@@ -52,7 +52,7 @@ public class StoreView : View {
 			string s = cosmetics[i].Id;
 			if (collecteds.ContainsKey(s))
 				continue;
-			UIButton button = Instantiate(selectableButtonPrefab, collectionHolder).GetComponent<UIButton>();
+			UIButton button = Instantiate(selectableButtonPrefab, collectionGridPage.GetParent()).GetComponent<UIButton>();
 			collecteds.Add(s, button);
 			if (s == equippedId) {
 				button.Press();

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ClearModeHandler : BaseGridGameModeHandler {
-
+	
     public override void Initialize(LevelSettings level) {
         base.Initialize(level);
 
@@ -12,7 +12,6 @@ public class ClearModeHandler : BaseGridGameModeHandler {
     public override void TileClicked(Tile t) {
         base.TileClicked(t);
         numberOfPops = 0;
-        GridGameMaster.Instance.SpaceDust++;
         List<Dictionary<Tile, Coordinate>> touchingMatches = new List<Dictionary<Tile, Coordinate>>() { GridManager.GetManager().GetTouchingMatches(t) };
         if (!touchingMatches.Contains(null)) {
             GridManager.GetManager().StartCoroutine(StartPopping(t, touchingMatches));
@@ -20,10 +19,10 @@ public class ClearModeHandler : BaseGridGameModeHandler {
     }
 
     public override void Activate() {
-        GridGameMaster.Instance.MaxProgress = GridManager.GetManager().CellCount;
+		GameMaster.Instance.MaxProgress = GridManager.GetManager().CellCount;
         GridManager.GetManager().DropTiles(true);
         GridManager.GetManager().BreakMatches();
-        GridGameMaster.Instance.RemainingProgress = GridManager.GetManager().TileCount;
+        GameMaster.Instance.RemainingProgress = GridManager.GetManager().TileCount;
         GridManager.GetManager().MoveTiles(base.Activate);
     }
 
@@ -33,14 +32,19 @@ public class ClearModeHandler : BaseGridGameModeHandler {
     }
 
     protected override void GridPopDropRecursion(List<Dictionary<Tile, Coordinate>> touchingMatches, Callback RecursionDone, bool createNew = true) {
-        GridGameMaster.Instance.RemainingProgress = GridManager.GetManager().TileCount;
+        GameMaster.Instance.RemainingProgress = GridManager.GetManager().TileCount;
         base.GridPopDropRecursion(touchingMatches, RecursionDone, createNew);
     }
 
     protected override void CheckDone() {
-        GridGameMaster.Instance.RemainingProgress = GridManager.GetManager().TileCount;
+        GameMaster.Instance.RemainingProgress = GridManager.GetManager().TileCount;
         base.CheckDone();
     }
+
+	protected override void Done() {
+		ClickDustConversion();
+		base.Done();
+	}
 
 	protected override void SetupLevelTypes(LevelTypeSettings[] types) {
 		SetupGrid(types);

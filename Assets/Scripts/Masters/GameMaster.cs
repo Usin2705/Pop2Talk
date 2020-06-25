@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GridGameMaster : MonoBehaviour {
+public class GameMaster : MonoBehaviour {
 
-    static GridGameMaster instance;
+    static GameMaster instance;
 
-    public static GridGameMaster Instance {
+    public static GameMaster Instance {
         get {
             if (instance == null) {
-                instance = new GameObject("Grid Game Master").AddComponent<GridGameMaster>();
+                instance = new GameObject("Game Master").AddComponent<GameMaster>();
             }
 
             return instance;

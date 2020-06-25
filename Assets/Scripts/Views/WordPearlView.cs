@@ -8,7 +8,7 @@ public class WordPearlView : View {
 	[Space]
 	[SerializeField] UIButton backButton;
 	[SerializeField] GameObject wordPearlPrefab;
-	[SerializeField] Transform gridHolder;
+	[SerializeField] GridPageHandler gridHandler;
 	[Space]
 	[SerializeField] MachineCard machineCard;
 
@@ -25,7 +25,7 @@ public class WordPearlView : View {
 		Dictionary<string, int> bestResults = WordMaster.Instance.GetBestResults();
 		foreach (string s in bestResults.Keys) {
 			if (!pearls.ContainsKey(s)) {
-				pearls.Add(s, (Instantiate(wordPearlPrefab, gridHolder).GetComponent<PearlStars>()));
+				pearls.Add(s, (Instantiate(wordPearlPrefab, gridHandler.GetParent()).GetComponent<PearlStars>()));
 				pearls[s].SetUp(s, this);
 			}
 			pearls[s].SetStars(bestResults[s]);

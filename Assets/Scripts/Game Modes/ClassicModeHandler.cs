@@ -24,20 +24,20 @@ public class ClassicModeHandler : BaseGridGameModeHandler {
 	}
 
 	public override void Activate() {
-        GridGameMaster.Instance.MaxProgress = movesPerRound;
-        GridGameMaster.Instance.RemainingProgress = movesPerRound;
+        GameMaster.Instance.MaxProgress = movesPerRound;
+        GameMaster.Instance.RemainingProgress = movesPerRound;
 		base.Activate();
 	}
 
     protected override IEnumerator StartPopping(Tile startTile, List<Dictionary<Tile, Coordinate>> touchingMatches) {
-        GridGameMaster.Instance.RemainingProgress--;
+        GameMaster.Instance.RemainingProgress--;
         yield return GridManager.GetManager().StartCoroutine(base.StartPopping(startTile, touchingMatches));
         GridPopDropRecursion(touchingMatches, CheckDone);
     }
 
     protected override void GridPopDropRecursion(List<Dictionary<Tile, Coordinate>> touchingMatches, Callback RecursionDone, bool createNew = true) {
         foreach (Dictionary<Tile,Coordinate> d in touchingMatches)
-            GridGameMaster.Instance.SpaceDust += d.Count;
+            GameMaster.Instance.SpaceDust += d.Count * 10;
         base.GridPopDropRecursion(touchingMatches, RecursionDone, createNew);
     }
 }

@@ -8,7 +8,7 @@ public class FillModeHandler : BaseGridGameModeHandler {
         base.Initialize(level);
     }
 
-    Dictionary<Dictionary<Tile, Coordinate>, System.Collections.Generic.HashSet<MatchType>> allowed = new Dictionary<Dictionary<Tile, Coordinate>, System.Collections.Generic.HashSet<MatchType>>();
+    Dictionary<Dictionary<Tile, Coordinate>,HashSet<MatchType>> allowed = new Dictionary<Dictionary<Tile, Coordinate>, HashSet<MatchType>>();
 
     public override void TileClicked(Tile t) {
         base.TileClicked(t);
@@ -20,9 +20,8 @@ public class FillModeHandler : BaseGridGameModeHandler {
                 adjacentTypes.Add((tile as MatchableTile).MyMatchType);
             }
         }
-        System.Collections.Generic.HashSet<MatchType> chosenSet = new System.Collections.Generic.HashSet<MatchType>();
+		HashSet<MatchType> chosenSet = new System.Collections.Generic.HashSet<MatchType>();
         chosenSet.Add((adjacentTypes.Count > 0) ? adjacentTypes.GetRandom() : (t as MatchableTile).MyMatchType);
-        GridGameMaster.Instance.SpaceDust++;
         List<Dictionary<Tile, Coordinate>> touchingMatches = new List<Dictionary<Tile, Coordinate>>() { GridManager.GetManager().GetTouchingMatches(t) };
         if (!touchingMatches.Contains(null)) {
             foreach (Dictionary<Tile, Coordinate> dic in touchingMatches) {
@@ -35,8 +34,8 @@ public class FillModeHandler : BaseGridGameModeHandler {
     public override void Activate() {
         GridManager.GetManager().DropTiles(true);
         GridManager.GetManager().BreakMatches();
-        GridGameMaster.Instance.MaxProgress = GridManager.GetManager().TileCount;
-        GridGameMaster.Instance.RemainingProgress = GridManager.GetManager().TileCount - GridManager.GetManager().GetLargestMatchingGroupCount();
+        GameMaster.Instance.MaxProgress = GridManager.GetManager().TileCount;
+        GameMaster.Instance.RemainingProgress = GridManager.GetManager().TileCount - GridManager.GetManager().GetLargestMatchingGroupCount();
         GridManager.GetManager().MoveTiles(base.Activate);
     }
 
@@ -48,15 +47,17 @@ public class FillModeHandler : BaseGridGameModeHandler {
     void GridPopGrow(List<Dictionary<Tile, Coordinate>> touchingMatches, Callback GrowthDone) {
         GridManager.GetManager().CanMove = true;
         GridManager.GetManager().PopTiles(touchingMatches, () => {
-            GridGameMaster.Instance.PlayPopSound(numberOfPops);
+            GameMaster.Instance.PlayPopSound(numberOfPops);
             numberOfPops++;
-            if (GridGameMaster.Instance.RemainingProgress > 0) {
-                GridManager.GetManager().GrowTiles(0.2f, touchingMatches, allowed, false, () => {
-                    GrowthDone();
-                    GridGameMaster.Instance.RemainingProgress = GridManager.GetManager().CellCount - GridManager.GetManager().GetLargestMatchingGroupCount();
-                });
-            } else
-                GrowthDone();
+			if (GameMaster.Instance.RemainingProgress > 0) {
+				GridManager.GetManager().GrowTiles(0.2f, touchingMatches, allowed, false, () => {
+					GrowthDone();
+					GameMaster.Instance.RemainingProgress = GridManager.GetManager().CellCount - GridManager.GetManager().GetLargestMatchingGroupCount();
+				});
+			} else {
+				ClickDustConversion();
+				GrowthDone();
+			}
         });
     }
 

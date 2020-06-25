@@ -37,7 +37,7 @@ public class FinishView : View {
 
 	void MakeCoins() {
 		int increase = CurrencyMaster.Instance.IncreaseCoins(WordMaster.Instance.GetStarRatio(WordMaster.Instance.TotalStars / (float)WordMaster.Instance.MaxCards),
-			GridGameMaster.Instance.GetDustRatio(GridGameMaster.Instance.SpaceDust));
+			GameMaster.Instance.GetDustRatio(GameMaster.Instance.SpaceDust));
 		if (increase == 0) {
 			prevButton.gameObject.SetActive(true);
 		} else
@@ -50,7 +50,7 @@ public class FinishView : View {
 		visualScreen.SetActive(true);
 		coinScreen.SetActive(false);
 		starText.text = WordMaster.Instance.TotalStars.ToString();
-		dustText.text = GridGameMaster.Instance.SpaceDust.ToString();
+		dustText.text = GameMaster.Instance.SpaceDust.ToString();
 		yield return new WaitForSeconds(1);
 		float a = 0;
 		float speed = 180;
@@ -76,11 +76,11 @@ public class FinishView : View {
 			stars.Add(finishStar);
 			starText.text = "0";
 			a = 0;
-			while (a < 0.875f) { //for visuals
-				a += Time.deltaTime * Mathf.Lerp(0.1f, 1.5f, a);
-				foreach(FinishStar fs in stars) {
-					fs.ratio = 1 - a;
-					fs.angle += speed * Time.deltaTime / fs.ratio;
+			while (a < 1) {
+				a += Time.deltaTime / 2;
+				foreach (FinishStar fs in stars) {
+					fs.ratio = Mathf.Lerp(1f, 0.1f, Mathf.Pow(Mathf.Max(0, (a - 0.5f) * 2), 2));
+					fs.angle += speed * Time.deltaTime * Mathf.Lerp(1, 2.5f, a * 2)/fs.ratio;
 				}
 				yield return null;
 			}

@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Clear 3-2
   m_EditorClassIdentifier: 
   memoryOnly: 0
-  minWords: 4
-  maxWords: 7
+  minWords: 1
+  maxWords: 20
   spacedustAffectsCoins: 0
   spaceDustMin: 0
   spaceDustMax: 0

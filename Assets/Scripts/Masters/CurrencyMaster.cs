@@ -28,6 +28,7 @@ public class CurrencyMaster : MonoBehaviour {
 			return 0;
 		int addedCoins = Mathf.RoundToInt(1f / Mathf.Lerp(maxGamesToChest, minGamesToChest, starRatio * dustRatio) * GetLootLevelCoins(LootLevel));
 		Coins += addedCoins;
+		FakeServerManager.GetManager().UpdateCoins(Coins);
 		return addedCoins;
 	}
 

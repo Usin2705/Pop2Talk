@@ -17,7 +17,7 @@ public class SpotModeHandler : BaseGridGameModeHandler {
     public override void TileClicked(Tile t) {
         base.TileClicked(t);
         numberOfPops = 0;
-        GridGameMaster.Instance.SpaceDust++;
+        GameMaster.Instance.SpaceDust++;
         List<Dictionary<Tile, Coordinate>> touchingMatches = new List<Dictionary<Tile, Coordinate>>() { GridManager.GetManager().GetTouchingMatches(t) };
         if (!touchingMatches.Contains(null)) {
             GridManager.GetManager().StartCoroutine(StartPopping(t, touchingMatches));
@@ -41,8 +41,8 @@ public class SpotModeHandler : BaseGridGameModeHandler {
                 spots[potentialSpot].Grow(() => { });
             }
         }
-        GridGameMaster.Instance.MaxProgress = spotCount;
-        GridGameMaster.Instance.RemainingProgress = spotCount;
+        GameMaster.Instance.MaxProgress = spotCount;
+        GameMaster.Instance.RemainingProgress = spotCount;
 		base.Activate();
 	}
 
@@ -67,7 +67,7 @@ public class SpotModeHandler : BaseGridGameModeHandler {
                     continue;
                 spots[popped].Shrink();
                 toRemove.Add(popped);
-                GridGameMaster.Instance.RemainingProgress--;
+                GameMaster.Instance.RemainingProgress--;
             }
         }
         foreach(Cell c in toRemove)

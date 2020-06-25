@@ -9,6 +9,8 @@ public abstract class BaseGridGameModeHandler : IGameMode {
 	protected int numberOfPops;
 	protected List<Dictionary<Tile, Coordinate>> tilesToGrow;
 
+	protected int clicks;
+
 	public virtual void Initialize(LevelSettings level) {
 		if (level.GetType() != typeof(GridLevelSettings)) {
 			Debug.LogError(level.name + "is not a GridLevel!");
@@ -16,7 +18,7 @@ public abstract class BaseGridGameModeHandler : IGameMode {
 		}
 		gridLevel = (GridLevelSettings)level;
 		SetupLevelTypes(gridLevel.typeSettings);
-		GridGameMaster.Instance.SpaceDust = 0;
+		GameMaster.Instance.SpaceDust = 0;
 		GridManager.GetManager().SetGridSettings(gridSettings);
 		GridManager.GetManager().SetGameMode(this);
 		GridManager.GetManager().InitializeRandomMatches();
@@ -67,6 +69,7 @@ public abstract class BaseGridGameModeHandler : IGameMode {
 
 	public virtual void Activate() {
 		GridManager.GetManager().CanClick = true;
+		clicks = 0;
 	}
 
 	public virtual void FinishedResolvingClick() {
@@ -74,11 +77,8 @@ public abstract class BaseGridGameModeHandler : IGameMode {
 	}
 
 	public virtual void TileClicked(Tile t) {
-		GridGameMaster.Instance.Clicked();
-	}
-
-	public virtual bool DoesUseClicks() {
-		return true;
+		clicks++;
+		GameMaster.Instance.Clicked();
 	}
 
 	protected virtual IEnumerator StartPopping(Tile startTile, List<Dictionary<Tile, Coordinate>> tilesToPop) {
@@ -95,7 +95,7 @@ public abstract class BaseGridGameModeHandler : IGameMode {
 		GridManager.GetManager().PopTiles(tilesToPop, () => {
 			tilesToPop = GridManager.GetManager().GetPostPopSpecialTilePops();
 			if (tilesToPop.Count == 0) {
-				GridGameMaster.Instance.PlayPopSound(numberOfPops);
+				GameMaster.Instance.PlayPopSound(numberOfPops);
 				numberOfPops++;
 				GridManager.GetManager().DropTiles(createNew);
 				GridManager.GetManager().MoveTiles(() => {
@@ -120,7 +120,7 @@ public abstract class BaseGridGameModeHandler : IGameMode {
 			tilesToGrow = new List<Dictionary<Tile, Coordinate>>();
 		GridManager.GetManager().CanMove = true;
 		GridManager.GetManager().PopTiles(tilesToPop, () => {
-			GridGameMaster.Instance.PlayPopSound(numberOfPops);
+			GameMaster.Instance.PlayPopSound(numberOfPops);
 			numberOfPops++;
 			foreach (Dictionary<Tile, Coordinate> d in tilesToPop)
 				tilesToGrow.Add(d);
@@ -144,16 +144,21 @@ public abstract class BaseGridGameModeHandler : IGameMode {
 	}
 
 	protected virtual void CheckDone() {
-		if (GridGameMaster.Instance.RemainingProgress <= 0) {
+		if (GameMaster.Instance.RemainingProgress <= 0) {
 			List<Dictionary<Tile, Coordinate>> specialTilesRemaining = GridManager.GetManager().GetRemainingSpecialTiles();
-			if (specialTilesRemaining.Count > 0 && GridGameMaster.Instance.FinalRound)
+			if (specialTilesRemaining.Count > 0 && GameMaster.Instance.FinalRound) {
 				GridManager.GetManager().StartCoroutine(StartPopping(null, specialTilesRemaining));
-			else
-				GridGameMaster.Instance.RoundDone();
+			} else {
+				Done();
+			}
 		} else {
-			GridGameMaster.Instance.ClickDone();
+			GameMaster.Instance.ClickDone();
 			GridManager.GetManager().CanClick = true;
 		}
+	}
+
+	protected virtual void Done() {
+		GameMaster.Instance.RoundDone();
 	}
 
 	protected virtual void HandleSpecialTilesAtEnd(Dictionary<Tile, Coordinate> specialTiles) {
@@ -162,5 +167,9 @@ public abstract class BaseGridGameModeHandler : IGameMode {
 
 	public virtual void Back() {
 		GridManager.GetManager().StopGrid();
+	}
+
+	public void ClickDustConversion() {
+		GameMaster.Instance.SpaceDust += Mathf.RoundToInt(Mathf.Lerp(300, 0, (clicks - 10) / 30));
 	}
 }
