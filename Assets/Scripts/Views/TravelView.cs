@@ -8,6 +8,8 @@ public class TravelView : View {
 	[SerializeField] View shipHubView;
 	[SerializeField] View gridGameView;
 	[SerializeField] UIButton backButton;
+	[SerializeField] GameObject planetScreen;
+	[SerializeField] GameObject travelScreen;
 	[Space]
 	[SerializeField] LevelBatch[] levelBatches;
 	[SerializeField] SpriteBatch[] spriteBatches;
@@ -15,12 +17,21 @@ public class TravelView : View {
 	[Space]
 	[SerializeField] UIButton upperPlanetButton;
 	[SerializeField] UIButton lowerPlanetButton;
+	[SerializeField] Image fluffShip;
 	[Space]
+	[SerializeField] Image whiteCurtain;
 	[SerializeField] Image scroller;
 	[SerializeField] float scrollSpeed;
+	[SerializeField] float shipSpeed;
+	[SerializeField] float wobbleAmount;
+	[SerializeField] RectTransform shipStart;
+	[SerializeField] RectTransform shipEnd;
 
 	LevelSettings[] chosenLevels;
 	Sprite[] chosenSprites;
+
+	bool travelDone;
+	Vector3 targetPosition;
 
 	[System.Serializable]
 	struct LevelBatch {
@@ -41,6 +52,15 @@ public class TravelView : View {
 
 	public override void Activate() {
 		base.Activate();
+		doExitFluff = true;
+		if (DebugMaster.Instance.skipTransitions)
+			PrepareButtons();
+		else {
+			StartCoroutine(TravelRoutine());
+		}
+	}
+
+	void PrepareButtons() {
 		int largestModuleIndex = Mathf.Min(levelBatches.Length, FakeServerManager.GetManager().GetLargestModuleIndex());
 		WordMaster.Instance.SetSamples(FakeServerManager.GetManager().GetCardTypes(), FakeServerManager.GetManager().GetCardWords(), FakeServerManager.GetManager().GetCardPar());
 
@@ -69,6 +89,7 @@ public class TravelView : View {
 	}
 
 	void PlanetPressed(int index) {
+		targetPosition = (index == 0) ? upperPlanetButton.transform.position : lowerPlanetButton.transform.position;
 		GameMaster.Instance.SetLevel((GridLevelSettings)chosenLevels[index]);
 		GameMaster.Instance.Background = chosenSprites[index];
 		ViewManager.GetManager().ShowView(gridGameView);
@@ -94,12 +115,61 @@ public class TravelView : View {
 		return chosenBatches;
 	}
 
-	void Update() {
-		scroller.material.SetTextureOffset("_MainTex", Time.time * Vector2.up * scrollSpeed * (Screen.height/1920f));
+	IEnumerator TravelRoutine() {
+		scroller.material.SetTextureOffset("_MainTex", Vector2.zero);
+		planetScreen.SetActive(false);
+		travelScreen.SetActive(true);
+		MovingImageManager.GetManager().SetMoverSprite(CosmeticManager.GetManager().GetEquippedCosmetic(CosmeticSlot.Ship).sprite);
+		travelDone = false;
+		yield return new WaitForSeconds(1.5f);
+		InputManager.GetManager().SendingInputs = false;
+		MovingImageManager.GetManager().ShowMovingImage(sortingOrder, false, new Vector3[] { shipStart.position, shipEnd.position }, new float[] { 0 },
+			new Vector3[] { shipStart.rect.size, shipEnd.rect.size }, new float[] { shipSpeed * (Screen.height / 1920f)},
+			null, TravelDone);
+		while (!travelDone) {
+			yield return null;
+		}
+		MovingImageManager.GetManager().StartWobble(wobbleAmount * 1920f / Screen.height);
+		float a = 0;
+		while (a < 3) {
+			a += Time.deltaTime;
+			scroller.material.SetTextureOffset("_MainTex", a * Vector2.up * scrollSpeed * (Screen.height / 1920f));
+			yield return null;
+		}
+		fluffShip.gameObject.SetActive(true);
+		fluffShip.sprite = CosmeticManager.GetManager().GetEquippedCosmetic(CosmeticSlot.Ship).sprite;
+		MovingImageManager.GetManager().EndWobble();
+		MovingImageManager.GetManager().HideMover();
+		planetScreen.SetActive(true);
+		travelScreen.SetActive(false);
+		whiteCurtain.gameObject.SetActive(true);
+		PrepareButtons();
+		yield return new WaitForSeconds(0.5f);
+		a = 0;
+		while (a < 1) {
+			a += Time.deltaTime / 0.5f;
+			whiteCurtain.color = new Color(1, 1, 1, 1 - a);
+			yield return null;
+		}
+		whiteCurtain.gameObject.SetActive(false);
+		whiteCurtain.color = Color.white;
+		InputManager.GetManager().SendingInputs = true;
+	}
+
+	public void TravelDone() {
+		travelDone = true;
 	}
 
 	void Back() {
+		doExitFluff = false;
 		ViewManager.GetManager().ShowView(shipHubView);
+	}
+
+	public override void ExitFluff(Callback Done) {
+		fluffShip.gameObject.SetActive(false);
+		MovingImageManager.GetManager().ShowMovingImage(sortingOrder, false, new Vector3[] { shipEnd.position, targetPosition }, new float[] { 0.5f },
+			new Vector3[] { shipEnd.rect.size, Vector2.zero }, new float[] { shipSpeed * (Screen.height / 1920f) },
+			null, ()=> { base.ExitFluff(Done); });
 	}
 
 	public override UIButton GetPointedButton() {

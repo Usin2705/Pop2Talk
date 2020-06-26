@@ -2707,7 +2707,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1315015491182420, guid: 1e69b80a87cf62a448222df237ee8496, type: 3}
       propertyPath: m_Name
-      value: Ship Manager
+      value: Moving Image Manager
       objectReference: {fileID: 0}
     - target: {fileID: 224594448004274504, guid: 1e69b80a87cf62a448222df237ee8496,
         type: 3}

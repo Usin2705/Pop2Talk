@@ -11,8 +11,13 @@ public class MovingImageManager : Overlay {
 	[Space]
 	[SerializeField] Image mover;
 	[SerializeField] Image curtain;
+	bool wobbling = false;
 
-	private Vector3 velocity = Vector3.zero;
+	public float BaseSize {
+		get {
+			return 100;
+		}
+	}
 
 	public static MovingImageManager GetManager() {
 		return sm;
@@ -28,21 +33,21 @@ public class MovingImageManager : Overlay {
 
 	public void ShowMovingImage(int order, bool curtain, Vector3[] positions, float[] pauses, Vector3[] sizes, float[] speedMultipliers, AudioInstance[] sounds, Callback Done) {
 		SetOrder(order);
-		StartCoroutine(MovingImageRoutine(positions, pauses, sizes, speedMultipliers, sounds, Done));
+		StartCoroutine(MovingImageRoutine(curtain, positions, pauses, sizes, speedMultipliers, sounds, Done));
 		if (curtain)
 			StartCoroutine(CurtainRoutine(0.5f, 0.7f));
 	}
 
-	IEnumerator MovingImageRoutine(Vector3[] positions, float[] pauses, Vector3[] sizes, float[] speedMultipliers, AudioInstance[] sounds, Callback Done) {
+	IEnumerator MovingImageRoutine(bool curtain, Vector3[] positions, float[] pauses, Vector3[] sizes, float[] speeds, AudioInstance[] sounds, Callback Done) {
 		float timer;
-		if (!(positions.Length == pauses.Length == (positions.Length == sizes.Length))) {
-			Debug.Log("Arrays in shipmotion not all same lengths");
+		if (!(positions.Length == (pauses.Length+1) == (positions.Length == sizes.Length))) {
+			Debug.LogError("Arrays in shipmotion not all same lengths");
 			Done();
 			yield break;
 		}
 
 		if (positions.Length == 0) {
-			Debug.Log("Array lengths are zero");
+			Debug.LogError("Array lengths are zero");
 			Done();
 			yield break;
 		}
@@ -53,22 +58,41 @@ public class MovingImageManager : Overlay {
 		mover.rectTransform.localScale = sizes[0];
 		mover.gameObject.SetActive(true);
 		for (int i = 0; i < positions.Length - 1; ++i) {
-			if (sounds[i] != null)
+			if (sounds != null && sounds[i] != null)
 				AudioMaster.Instance.Play(this, sounds[i]);
 			while (Vector3.Distance(mover.rectTransform.position, positions[i + 1]) > Mathf.Epsilon) {
-				mover.rectTransform.localScale = Vector3.Lerp(sizes[i], sizes[i + 1], Vector3.Distance(mover.rectTransform.position, positions[i]) / Vector3.Distance(positions[i], positions[i + 1]));
-				mover.rectTransform.position = Vector3.SmoothDamp(mover.rectTransform.position, positions[i + 1], ref velocity, 0.3f);
+				mover.rectTransform.localScale = Vector3.Lerp(sizes[i]/BaseSize, sizes[i + 1]/BaseSize, Vector3.Distance(mover.rectTransform.position, positions[i]) / Vector3.Distance(positions[i], positions[i + 1]));
+				mover.rectTransform.position = Vector3.MoveTowards(mover.rectTransform.position, positions[i + 1], speeds[i] * Time.deltaTime);
 				yield return null;
 			}
-			timer = 0;
+		   timer = 0;
 			while (timer < pauses[i]) {
 				timer += Time.deltaTime;
 				mover.rectTransform.position = positions[i + 1] + (Vector3)Random.insideUnitCircle * pauseWobbleAmount;
 				yield return null;
 			}
 		}
-		StartCoroutine(CurtainRoutine(0.25f, 0f));
+		if (curtain)
+			StartCoroutine(CurtainRoutine(0.25f, 0f));
 		Done();
+	}
+
+	public void StartWobble(float wobbleAmount) {
+		wobbling = true;
+		StartCoroutine(WobbleRoutine(wobbleAmount));
+	}
+	
+	public void EndWobble() {
+		wobbling = false;
+	}
+
+	IEnumerator WobbleRoutine(float wobbleAmount) {
+		Vector3 startPos = mover.rectTransform.position;
+		while (wobbling) {
+			mover.rectTransform.position = startPos + (Vector3)Random.insideUnitCircle * wobbleAmount;
+			yield return null;
+		}
+		mover.rectTransform.position = startPos;
 	}
 
 	IEnumerator CurtainRoutine(float showDuration, float curtainAlpha) {
@@ -95,5 +119,4 @@ public class MovingImageManager : Overlay {
 	public void HideMover() {
 		mover.gameObject.SetActive(false);
 	}
-
 }
