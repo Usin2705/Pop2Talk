@@ -516,7 +516,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c02b1dacb2d25db47af20c1ba5a7ee77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemPerGrid: 3
+  itemPerGrid: 15
   nextButton: {fileID: 8252023004031201636}
   prevButton: {fileID: 529815398973196909}
   gridBlueprint: {fileID: 1498034108524962}

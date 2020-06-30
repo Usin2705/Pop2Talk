@@ -4,10 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class MachineCard : BaseWordCard {
-  
-    [SerializeField] Image wordImage;
+
+	[SerializeField] Image wordImage;
 	[SerializeField] RectTransform cardHolder;
-    [SerializeField] Image micPic;
+	[SerializeField] Image micPic;
 	[SerializeField] Image micDisabled;
 	[SerializeField] VolumeBars volumeBars;
 	[SerializeField] Image progressBar;
@@ -22,15 +22,14 @@ public class MachineCard : BaseWordCard {
 	[SerializeField] RectTransform cover;
 	[SerializeField] RectTransform coverHideSlot;
 	[SerializeField] RectTransform coverShowSlot;
-	[SerializeField] RectTransform pearl;
+	[SerializeField] PearlStars pearl;
 	[SerializeField] RectTransform pearlStartSlot;
 	[SerializeField] RectTransform pearlEndSlot;
-	[SerializeField] Image pearlImage;
 	[SerializeField] Image fadeCurtain;
 	[SerializeField] Color offlineColor;
 
 	float starBulgeSize = 1.33f;
-    Color curtainColor;
+	Color curtainColor;
 
 	Sprite startMic;
 	Sprite startMicOff;
@@ -42,7 +41,7 @@ public class MachineCard : BaseWordCard {
 
 	int starAmount;
 
-    private void Awake() {
+	private void Awake() {
 		Initialize();
 		continueButton.SubscribePress(Continue);
 		retryButton.SubscribePress(Retry);
@@ -61,7 +60,7 @@ public class MachineCard : BaseWordCard {
 		initialized = true;
 	}
 
-	public void SetBarShowAsHideSlot(bool on) {  
+	public void SetBarShowAsHideSlot(bool on) {
 		if (on && !gameObject.activeSelf)
 			gameObject.SetActive(true);
 		showingBar = on;
@@ -69,41 +68,40 @@ public class MachineCard : BaseWordCard {
 		HideInstantly();
 	}
 
-    public override void SetPicture(Sprite sprite) {
-        wordImage.sprite = sprite;
-		pearlImage.sprite = sprite;
-    }
+	public override void SetPicture(Sprite sprite) {
+		wordImage.sprite = sprite;
+	}
 
 	public override void ToggleMic(bool on) {
 		micPic.gameObject.SetActive(on);
 		volumeBars.gameObject.SetActive(on);
 	}
 
-    public override Coroutine SetStars(int amount, float perStarDuration = 0) {
+	public override Coroutine SetStars(int amount, float perStarDuration = 0) {
 		starAmount = amount;
-        return StartCoroutine(ToggleStars(starImages, starBulgeSize, amount, perStarDuration));
-    }
+		return StartCoroutine(ToggleStars(starImages, starBulgeSize, amount, perStarDuration));
+	}
 
-    public override Coroutine ShowCard(float duration) {
+	public override Coroutine ShowCard(float duration) {
 		gameObject.SetActive(true);
 		return StartCoroutine(IntroSequence(duration));
-    }
+	}
 
-    IEnumerator IntroSequence(float duration) {
-        fadeCurtain.gameObject.SetActive(true);
-        float a = 0;
-        Color start = new Color(curtainColor.r,curtainColor.g,curtainColor.b, 0);
+	IEnumerator IntroSequence(float duration) {
+		fadeCurtain.gameObject.SetActive(true);
+		float a = 0;
+		Color start = new Color(curtainColor.r, curtainColor.g, curtainColor.b, 0);
 		AudioMaster.Instance.Play(this, SoundEffectManager.GetManager().GetWordCardEnterSound());
-        while (a < 1) {
-            if (duration > 0)
-                a += Time.deltaTime / (duration/2);
-            else
-                a = 1;
-            fadeCurtain.color = Color.Lerp(start, curtainColor,a);
-            cardHolder.position = Vector3.Lerp(currentHideSlot.position, cardShowSlot.position, a);
+		while (a < 1) {
+			if (duration > 0)
+				a += Time.deltaTime / (duration / 2);
+			else
+				a = 1;
+			fadeCurtain.color = Color.Lerp(start, curtainColor, a);
+			cardHolder.position = Vector3.Lerp(currentHideSlot.position, cardShowSlot.position, a);
 			SetProgress(1 - a);
-            if (duration > 0)
-                yield return null;
+			if (duration > 0)
+				yield return null;
 		}
 		yield return new WaitForSeconds(duration / 2f);
 	}
@@ -112,11 +110,11 @@ public class MachineCard : BaseWordCard {
 		gameObject.SetActive(true);
 		Debug.Log(gameObject.activeSelf);
 		fadeCurtain.gameObject.SetActive(true);
-        fadeCurtain.color = curtainColor;
+		fadeCurtain.color = curtainColor;
 		cardHolder.position = cardShowSlot.position;
 	}
 
-    public override void ToggleButtons(bool on) {
+	public override void ToggleButtons(bool on) {
 		continueButton.gameObject.SetActive(on);
 		retryButton.gameObject.SetActive(on);
 	}
@@ -127,55 +125,59 @@ public class MachineCard : BaseWordCard {
 		volumeBars.SetQuiz(on);
 	}
 
-    public override void VisualizeAudio(float[] samples) {
-        volumeBars.Visualize(samples);
-    }
+	public override void VisualizeAudio(float[] samples) {
+		volumeBars.Visualize(samples);
+	}
 
-	public override void HideCard(float duration, Callback Done) {
-        fadeCurtain.gameObject.SetActive(false);
-        ToggleButtons(false);
-		StartCoroutine(HideRoutine(duration, Done));
+	public override void HideCard(float duration, Callback Done, bool newHighScore, WordData word) {
+		fadeCurtain.gameObject.SetActive(false);
+		ToggleButtons(false);
+		StartCoroutine(HideRoutine(duration, Done, newHighScore, word));
 	}
 
 	public override void HideInstantly() {
 		cardHolder.position = currentHideSlot.position;
 		cover.position = coverShowSlot.position;
 		fadeCurtain.color = new Color(curtainColor.r, curtainColor.g, curtainColor.b, 0);
-        fadeCurtain.gameObject.SetActive(false);
+		fadeCurtain.gameObject.SetActive(false);
 		StopCard();
 	}
 
-	IEnumerator HideRoutine(float duration, Callback Done) {
-        float a = 0;
+	IEnumerator HideRoutine(float duration, Callback Done, bool newHighScore, WordData word) {
+		float a = 0;
 		yield return StartCoroutine(HideStars(starImages, starBulgeSize, starAmount, 0.4f));
 		yield return new WaitForSeconds(duration / 4);
-		AudioMaster.Instance.Play(this, SoundEffectManager.GetManager().GetPearlSound());
-        Color target = new Color(curtainColor.r, curtainColor.g, curtainColor.b, 0);
-		while (a < 1) {
-			if (duration > 0)
-				a += Time.deltaTime / (duration/4);
-			else
-				a = 1;
-			pearl.position = Vector3.Lerp(pearlStartSlot.position, pearlEndSlot.position, a);
-			if (duration > 0)
-				yield return null;
+		if (newHighScore) {
+			AudioMaster.Instance.Play(this, SoundEffectManager.GetManager().GetPearlSound());
+			RectTransform rect = pearl.GetComponent<RectTransform>();
+			pearl.SetUp(word.name, null);
+			pearl.SetStars(WordMaster.Instance.GetHighScore(word.name));
+			while (a < 1) {
+				if (duration > 0)
+					a += Time.deltaTime / (duration / 4);
+				else
+					a = 1;
+				rect.position = Vector3.Lerp(pearlStartSlot.position, pearlEndSlot.position, a);
+				if (duration > 0)
+					yield return null;
+			}
+			a = 0;
+			yield return new WaitForSeconds(duration / 4);
 		}
-		a = 0;
-		yield return new WaitForSeconds(duration / 4);
+		Color target = new Color(curtainColor.r, curtainColor.g, curtainColor.b, 0);
 		while (a < 1) {
 			if (duration > 0)
 				a += Time.deltaTime / (duration / 4);
 			else
 				a = 1;
-            fadeCurtain.gameObject.SetActive(false);
-            fadeCurtain.color = Color.Lerp(curtainColor, target, a);
+			fadeCurtain.gameObject.SetActive(false);
+			fadeCurtain.color = Color.Lerp(curtainColor, target, a);
 			cardHolder.position = Vector3.Lerp(cardShowSlot.position, currentHideSlot.position, a);
 			if (duration > 0)
 				yield return null;
 		}
 		StopCard();
-		if (Done != null)
-			Done();
+		Done?.Invoke();
 	}
 
 	public override Coroutine FinishingAnimation() {
@@ -207,7 +209,7 @@ public class MachineCard : BaseWordCard {
 		StopAllCoroutines();
 		SetMemory(false);
 		ToggleButtons(false);
-		pearl.position = pearlStartSlot.position;
+		pearl.GetComponent<RectTransform>().position = pearlStartSlot.position;
 		gameObject.SetActive(showingBar);
 	}
 

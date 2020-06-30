@@ -12,7 +12,7 @@ public abstract class BaseWordCard : Overlay {
 	public abstract void SetMemory(bool on);
 	public abstract void VisualizeAudio(float[] samples);
 	public abstract Coroutine ShowCard(float duration);
-	public abstract void HideCard(float duration, Callback Done);
+	public abstract void HideCard(float duration, Callback Done, bool newHighScore, WordData word);
 	public abstract void HideInstantly();
 	public abstract void RevealInstantly();
 	public abstract void SetOfflineStars();

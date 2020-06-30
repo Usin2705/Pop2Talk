@@ -79,7 +79,8 @@ public class WordMaster : MonoBehaviour {
 			bestStars.Add(word, -1);
 		}
 		bool improvement = stars > bestStars[word];
-		bestStars[word] = stars;
+		if (improvement)
+			bestStars[word] = stars;
 		return improvement;
 	}
 
@@ -134,5 +135,11 @@ public class WordMaster : MonoBehaviour {
 
 	public float GetStarRatio(float starAverage) {
 		return Mathf.Clamp01((starAverage - par + 0.1f) / (5 - par + 0.1f)); //0.1f so that you get score at exactly spar
+	}
+
+	public int GetHighScore(string word) {
+		if (unsaidWords.Contains(word))
+			return -1;
+		return bestStars[word];
 	}
 }

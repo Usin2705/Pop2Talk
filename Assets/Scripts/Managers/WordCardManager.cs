@@ -7,16 +7,15 @@ using UnityEngine.UI;
 public class WordCardManager : MonoBehaviour {
 
 	static WordCardManager wordCardManager;
-	[SerializeField]
-	BaseWordCard wordCard;
-	[SerializeField]
-	AudioInstance recordSound;
+	[SerializeField] BaseWordCard wordCard;
+	[SerializeField] AudioInstance recordSound;
 	
 	[Space]
 	[SerializeField] SpeechCollection[] starSpeeches;
 	[SerializeField] SpeechCollection timeOutSpeech;
     [Space]
     [SerializeField] [Range(0.0f, 1.0f)] float cheerChance = 0.25f;
+	[SerializeField] int backUpStar;
 
     Queue<WordCardType> cardQueue;
 
@@ -28,9 +27,6 @@ public class WordCardManager : MonoBehaviour {
 	BaseWordCardHandler cardHandler;
 
 	WordData currentWord;
-	WordData nextWord;
-	WordCardType nextWordType;
-	WordData nonNextWord;
 
 	float introDuration = 0.75f;
 	float hideDuration = 1.5f;
@@ -42,8 +38,9 @@ public class WordCardManager : MonoBehaviour {
 
     bool firstCheerDone = false;
 
-	int score = 0;
-	bool scoreReceived = false;
+	int stars = 0;
+	int prevHighScore;
+	bool starsReceived = false;
 
 	string levelName;
 
@@ -89,6 +86,7 @@ public class WordCardManager : MonoBehaviour {
 	public void SetUpWord(WordData data, string levelName, BaseWordCardHandler cardHandler) {
 		retryCount = 0;
 		currentWord = data;
+		prevHighScore = WordMaster.Instance.GetHighScore(data.name);
 		this.cardHandler = cardHandler;
 		this.levelName = levelName;
 	}
@@ -121,7 +119,7 @@ public class WordCardManager : MonoBehaviour {
 	
 
 	public IEnumerator RecordAndPlay(float gap, string challengeType) {
-		score = 0;
+		stars = 0;
 		wordCard.ToggleMic(true);
 		AudioClip recording = Microphone.Start(Microphone.devices[0], false, recordDuration, 16000);
 		yield return new WaitForSeconds(micExtra);
@@ -129,14 +127,15 @@ public class WordCardManager : MonoBehaviour {
 		string word = "";
 		string[] parts = currentWord.name.Split(' ', '_');
 		for (int i = 0; i < parts.Length; ++i) {
-			if (i != 0)
+			if ((i != 0 && !LanguageManager.GetManager().TargetLanguageHasDoubleUnderscore()) || i > 1)
 				word += " ";
-			word += LanguageManager.GetManager().GetLanguagePrefix() + parts[i];
+			else
+				word += "_";
 		}
 
-		NetworkManager.GetManager().SendMicrophone(Microphone.devices[0], word, recording, recordDuration, ReceiveScore, challengeType, retryCount);
+		NetworkManager.GetManager().SendMicrophone(Microphone.devices[0], word, recording, recordDuration, ReceiveStars, challengeType, retryCount);
 		bool enoughRecording;
-		scoreReceived = false;
+		starsReceived = false;
 		float a = 0;
 		float[] samples = new float[512];
 		int offset = -samples.Length;
@@ -160,18 +159,18 @@ public class WordCardManager : MonoBehaviour {
 		yield return new WaitForSeconds(audioSource.clip.length);
 	}
 
-	public void ReceiveScore(int score) {
-		this.score = score;
-		scoreReceived = true;
+	public void ReceiveStars(int stars) {
+		this.stars = stars;
+		starsReceived = true;
 	}
 
 
 	public IEnumerator GiveStars(float phaseGap) {
 		bool timeOut = false;
-		if (NetworkManager.GetManager().Connected && !scoreReceived) {
+		if (NetworkManager.GetManager().Connected && !starsReceived) {
 			NetworkManager.GetManager().ServerWait(true);
 			float timer = NetworkManager.GetManager().TimeoutDuration;
-			while (NetworkManager.GetManager().Connected && !scoreReceived) {
+			while (NetworkManager.GetManager().Connected && !starsReceived) {
 				timer -= Time.deltaTime;
 				if (timer < 0) {
 					timeOut = true;
@@ -182,15 +181,15 @@ public class WordCardManager : MonoBehaviour {
 			NetworkManager.GetManager().ServerWait(false);
 		}
 		if (!timeOut && NetworkManager.GetManager().Connected) {
-			score = Mathf.Max(0, score);
+			stars = Mathf.Max(0, stars);
 			wordCard.SetOnlineStars();
 		} else {
-			score = Random.Range(1, 5);
+			stars = backUpStar;
 			wordCard.SetOfflineStars();
 		}
-		cardHandler.SetStars(score);
+		cardHandler.SetStars(stars);
 		yield return wordCard.SetStars(0, 0f);
-		yield return wordCard.SetStars(score, starDuration);
+		yield return wordCard.SetStars(stars, starDuration);
 		yield return new WaitForSeconds(phaseGap);
 		yield return wordCard.SetStars(cardHandler.GetStars(), 0f);
 		SpeechCollection speech = !firstCheerDone ? starSpeeches[Random.Range(0, starSpeeches.Length)] : ( Random.Range(0,1) >= cheerChance ? starSpeeches[Random.Range(0, starSpeeches.Length)] : null);
@@ -230,7 +229,8 @@ public class WordCardManager : MonoBehaviour {
 		if (instantly || DebugMaster.Instance.skipTransitions) {
 			wordCard.HideInstantly();
 			Done?.Invoke();
-		} else
-			wordCard.HideCard(hideDuration, Done);
+		} else {
+			wordCard.HideCard(hideDuration, Done, stars > prevHighScore, currentWord);
+		}
 	}
 }

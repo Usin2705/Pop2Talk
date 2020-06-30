@@ -588,6 +588,7 @@ MonoBehaviour:
   insideIcon: {fileID: 0}
   repressDeselects: 0
   lockedGrayscale: 0
+  deselectGrayscale: 0
 --- !u!1 &1814345125076344
 GameObject:
   m_ObjectHideFlags: 0

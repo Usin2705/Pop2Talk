@@ -44,4 +44,8 @@ public class LanguageManager : MonoBehaviour {
 			default: return "_";
 		}
 	}
+
+	public bool TargetLanguageHasDoubleUnderscore() {
+		return TargetLanguage == Language.EnglishUK;
+	}
 }
