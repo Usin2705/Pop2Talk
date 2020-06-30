@@ -124,16 +124,7 @@ public class WordCardManager : MonoBehaviour {
 		AudioClip recording = Microphone.Start(Microphone.devices[0], false, recordDuration, 16000);
 		yield return new WaitForSeconds(micExtra);
 
-		string word = "";
-		string[] parts = currentWord.name.Split(' ', '_');
-		for (int i = 0; i < parts.Length; ++i) {
-			if ((i != 0 && !LanguageManager.GetManager().TargetLanguageHasDoubleUnderscore()) || i > 1)
-				word += " ";
-			else
-				word += "_";
-		}
-
-		NetworkManager.GetManager().SendMicrophone(Microphone.devices[0], word, recording, recordDuration, ReceiveStars, challengeType, retryCount);
+		NetworkManager.GetManager().SendMicrophone(Microphone.devices[0], currentWord.name, recording, recordDuration, ReceiveStars, challengeType, retryCount);
 		bool enoughRecording;
 		starsReceived = false;
 		float a = 0;
