@@ -64,13 +64,13 @@ public class GameMaster : MonoBehaviour {
         }
     }
 
-	public GridLevelSettings CurrentLevel { get; set; }
+	public LevelSettings CurrentLevel { get; set; }
 	IGameCaller gameCaller;
 
 	BaseGridGameModeHandler currentGameModeHandler;
-    Dictionary<GridGameMode, BaseGridGameModeHandler> gameModes = new Dictionary<GridGameMode, BaseGridGameModeHandler>();
+    Dictionary<GameMode, BaseGridGameModeHandler> gameModes = new Dictionary<GameMode, BaseGridGameModeHandler>();
 	
-	public void SetLevel(GridLevelSettings level) {
+	public void SetLevel(LevelSettings level) {
 		CurrentLevel = level;
 	}
 
@@ -126,22 +126,22 @@ public class GameMaster : MonoBehaviour {
 		currentGameModeHandler.Back();
     }
 
-    void SetMode(GridGameMode mode) {
+    void SetMode(GameMode mode) {
         if (!gameModes.ContainsKey(mode)) {
             switch (mode) {
-                case GridGameMode.Classic:
+                case GameMode.Classic:
                     gameModes.Add(mode, new ClassicModeHandler());
                     break;
-                case GridGameMode.Clear:
+                case GameMode.Clear:
                     gameModes.Add(mode, new ClearModeHandler());
                     break;
-                case GridGameMode.Regrow:
+                case GameMode.Regrow:
                     gameModes.Add(mode, new RegrowModeHandler());
                     break;
-                case GridGameMode.Fill:
+                case GameMode.Fill:
                     gameModes.Add(mode, new FillModeHandler());
                     break;
-                case GridGameMode.Spot:
+                case GameMode.Spot:
                     gameModes.Add(mode, new SpotModeHandler());
                     break;
             }

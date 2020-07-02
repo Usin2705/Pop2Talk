@@ -21,11 +21,13 @@ public class TravelView : View {
 	[Space]
 	[SerializeField] Image whiteCurtain;
 	[SerializeField] Image scroller;
+	[SerializeField] Image portal;
 	[SerializeField] float scrollSpeed;
 	[SerializeField] float shipSpeed;
 	[SerializeField] float wobbleAmount;
 	[SerializeField] RectTransform shipStart;
 	[SerializeField] RectTransform shipEnd;
+	[SerializeField] RectTransform portalStart;
 
 	LevelSettings[] chosenLevels;
 	Sprite[] chosenSprites;
@@ -90,7 +92,7 @@ public class TravelView : View {
 
 	void PlanetPressed(int index) {
 		targetPosition = (index == 0) ? upperPlanetButton.transform.position : lowerPlanetButton.transform.position;
-		GameMaster.Instance.SetLevel((GridLevelSettings)chosenLevels[index]);
+		GameMaster.Instance.SetLevel((LevelSettings)chosenLevels[index]);
 		GameMaster.Instance.Background = chosenSprites[index];
 		ViewManager.GetManager().ShowView(gridGameView);
 	}
@@ -119,6 +121,8 @@ public class TravelView : View {
 		scroller.material.SetTextureOffset("_MainTex", Vector2.zero);
 		planetScreen.SetActive(false);
 		travelScreen.SetActive(true);
+		portal.gameObject.SetActive(false);
+		scroller.material.SetTextureOffset("_MainTex", Vector2.zero);
 		MovingImageManager.GetManager().SetMoverSprite(CosmeticManager.GetManager().GetEquippedCosmetic(CosmeticSlot.Ship).sprite);
 		travelDone = false;
 		yield return new WaitForSeconds(1.5f);
@@ -131,9 +135,15 @@ public class TravelView : View {
 		}
 		MovingImageManager.GetManager().StartWobble(wobbleAmount * 1920f / Screen.height);
 		float a = 0;
+		float portalTime = 0.33f;
 		while (a < 3) {
 			a += Time.deltaTime;
 			scroller.material.SetTextureOffset("_MainTex", a * Vector2.up * scrollSpeed * (Screen.height / 1920f));
+			if (a > 3 - portalTime) {
+				if (!portal.gameObject.activeSelf)
+					portal.gameObject.SetActive(true);
+				portal.rectTransform.position = Vector3.Lerp(portalStart.position, shipEnd.position, (a - (3 - portalTime)) / portalTime);
+			}
 			yield return null;
 		}
 		fluffShip.gameObject.SetActive(true);
@@ -141,6 +151,8 @@ public class TravelView : View {
 		MovingImageManager.GetManager().EndWobble();
 		MovingImageManager.GetManager().HideMover();
 		planetScreen.SetActive(true);
+		scroller.material.SetTextureOffset("_MainTex", Vector2.zero);
+		portal.rectTransform.position = portalStart.position;
 		travelScreen.SetActive(false);
 		whiteCurtain.gameObject.SetActive(true);
 		PrepareButtons();

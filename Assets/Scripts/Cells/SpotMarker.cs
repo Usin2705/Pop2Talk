@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class SpotMarker : MonoBehaviour, IPoolable {
 
-    Transform ring;
+    Transform visual;
     Vector3 startScale;
 
     float shiftDuration = 0.4f;
@@ -13,31 +13,34 @@ public class SpotMarker : MonoBehaviour, IPoolable {
     Coroutine activeShift;
 
     void Awake () {
-		ring = transform.GetChild(0);
-        startScale = ring.localScale;
+		visual = transform.GetChild(0);
+        startScale = visual.localScale;
 	}
-    
-    public void Grow(Callback Done) {
-        Shift(Vector3.zero, startScale, false);
+
+	public void Grow(float delay = 0) {
+        Shift(Vector3.zero, startScale, false, delay);
     }
 
     public void Shrink() {
-        Shift(startScale, Vector3.zero, true);
+        Shift(startScale, Vector3.zero, true, 0);
     }
 
-    public void Shift(Vector3 start, Vector3 end, bool destroy) {
+    public void Shift(Vector3 start, Vector3 end, bool destroy, float delay) {
         if (activeShift != null) {
-            start = ring.localScale;
+            start = visual.localScale;
             StopCoroutine(activeShift);
         }
-        activeShift = StartCoroutine(ShiftRoutine(start, end, destroy));
+        activeShift = StartCoroutine(ShiftRoutine(start, end, destroy, delay));
     }
 
-    IEnumerator ShiftRoutine(Vector3 start, Vector3 end, bool destroy) {
+    IEnumerator ShiftRoutine(Vector3 start, Vector3 end, bool destroy, float delay) {
         float a = 0;
-        while (a < 1) {
+		visual.localScale = start;
+		if (delay > 0)
+			yield return new WaitForSeconds(delay);
+		while (a < 1) {
             a += Time.deltaTime / shiftDuration;
-            ring.localScale = Vector3.Lerp(start,end,a);
+            visual.localScale = Vector3.Lerp(start,end,a);
             yield return null;
         }
         activeShift = null;
@@ -47,6 +50,6 @@ public class SpotMarker : MonoBehaviour, IPoolable {
     }
 
     public void OnReturnToPool() {
-        ring.localScale = startScale;
+        visual.localScale = startScale;
     }
 }

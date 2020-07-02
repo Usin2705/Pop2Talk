@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UniqueIdentifierAttribute : PropertyAttribute { }
 
-public enum GridGameMode { Classic, Clear, Fill, Spot, Regrow };
+public enum GameMode { Classic, Clear, Fill, Spot, Regrow };
 
 public enum WordCardType { Repeat, Memory };
 
@@ -17,8 +17,6 @@ public enum SpecialTileType { None, Exploding, Horizontal, Vertical, Joker};
 public enum Language { None, Finnish, EnglishUK };
 
 public enum CosmeticSlot {Ship, Wallpaper };
-
-public enum IntTypes { MovesPerRound };
 
 public delegate void Callback();
 public delegate void IntCallback(int i);

@@ -34,10 +34,10 @@ RectTransform:
   m_Father: {fileID: 6349918784372420361}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0.5}
-  m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -150, y: -130}
-  m_SizeDelta: {x: 300, y: 1663.2429}
+  m_AnchorMin: {x: 1, y: -0.0008445104}
+  m_AnchorMax: {x: 1, y: 0.86542785}
+  m_AnchoredPosition: {x: -150, y: 0}
+  m_SizeDelta: {x: 300, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &592420490747258016
 MonoBehaviour:
@@ -491,6 +491,7 @@ MonoBehaviour:
   insideIcon: {fileID: 0}
   repressDeselects: 0
   lockedGrayscale: 0
+  deselectGrayscale: 0
 --- !u!114 &875967888325083267
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -658,6 +659,7 @@ MonoBehaviour:
   insideIcon: {fileID: 0}
   repressDeselects: 0
   lockedGrayscale: 0
+  deselectGrayscale: 0
 --- !u!114 &683828230672243776
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1203,6 +1205,7 @@ MonoBehaviour:
   insideIcon: {fileID: 0}
   repressDeselects: 0
   lockedGrayscale: 0
+  deselectGrayscale: 0
 --- !u!1 &7717992656654134339
 GameObject:
   m_ObjectHideFlags: 0
@@ -1809,6 +1812,7 @@ MonoBehaviour:
   insideIcon: {fileID: 0}
   repressDeselects: 0
   lockedGrayscale: 0
+  deselectGrayscale: 0
 --- !u!114 &8043708120704490415
 MonoBehaviour:
   m_ObjectHideFlags: 0

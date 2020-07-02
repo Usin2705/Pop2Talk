@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class BaseGridGameModeHandler : IGameMode {
 
-	protected GridLevelSettings gridLevel;
+	protected LevelSettings level;
 	protected GridSettings gridSettings;
 	protected int numberOfPops;
 	protected List<Dictionary<Tile, Coordinate>> tilesToGrow;
@@ -12,12 +12,8 @@ public abstract class BaseGridGameModeHandler : IGameMode {
 	protected int clicks;
 
 	public virtual void Initialize(LevelSettings level) {
-		if (level.GetType() != typeof(GridLevelSettings)) {
-			Debug.LogError(level.name + "is not a GridLevel!");
-			return;
-		}
-		gridLevel = (GridLevelSettings)level;
-		SetupLevelTypes(gridLevel.typeSettings);
+		this.level = level;
+		SetupLevelTypes(this.level.typeSettings);
 		GameMaster.Instance.SpaceDust = 0;
 		GridManager.GetManager().SetGridSettings(gridSettings);
 		GridManager.GetManager().SetGameMode(this);
@@ -29,6 +25,7 @@ public abstract class BaseGridGameModeHandler : IGameMode {
 	protected abstract void SetupLevelTypes(LevelTypeSettings[] types);
 
 	protected virtual void SetupGrid(LevelTypeSettings[] types) {
+		gridSettings = null;
 		foreach (LevelTypeSettings lts in types) {
 			if (lts.GetType() == typeof(GridSettings)) {
 				gridSettings = (GridSettings)lts;
@@ -36,39 +33,38 @@ public abstract class BaseGridGameModeHandler : IGameMode {
 			}
 		}
 		if (gridSettings == null) {
-			Debug.LogError("No gridsettings in " + gridLevel.name + "!");
+			Debug.LogError("No gridsettings in " + level.name + "!");
 		}
 	}
 
 	protected virtual void SetupGridAndMoves(LevelTypeSettings[] types, ref int movesPerRound) {
+		movesPerRound = -1;
+		gridSettings = null;
 		IntSettings intSettings;
 		foreach (LevelTypeSettings lts in types) {
-			if (lts.GetType() == typeof(GridSettings)) {
+			if (lts is GridSettings) {
 				gridSettings = (GridSettings)lts;
-			} else {
-
+			} else if (lts is IntSettings) {
 				intSettings = (IntSettings)lts;
-				if (intSettings != null && intSettings.type == IntTypes.MovesPerRound) {
-					if (intSettings.integer <= 0) {
-						Debug.LogError(intSettings.name + " has round value of ");
-						return;
-					}
-
-					movesPerRound = intSettings.integer;
+				if (intSettings.integer <= 0) {
+					Debug.LogError(intSettings.name + " has round value of " + intSettings.integer);
+					return;
 				}
+
+				movesPerRound = intSettings.integer;
 			}
 		}
 		if (gridSettings == null) {
-			Debug.LogError("No gridsettings in " + gridLevel.name + "!");
+			Debug.LogError("No gridsettings in " + level.name + "!");
 		}
 		if (movesPerRound <= 0) {
-			Debug.LogError(gridLevel.name + " has no IntSettings with MovesPerRound as the type");
+			Debug.LogError(level.name + " has no IntSettings with MovesPerRound as the type");
 		}
 	}
 
 
 	public virtual void Activate() {
-		GridManager.GetManager().CanClick = true;
+		GridManager.GetManager().IsClickable = true;
 		clicks = 0;
 	}
 
@@ -82,7 +78,7 @@ public abstract class BaseGridGameModeHandler : IGameMode {
 	}
 
 	protected virtual IEnumerator StartPopping(Tile startTile, List<Dictionary<Tile, Coordinate>> tilesToPop) {
-		GridManager.GetManager().CanClick = false;
+		GridManager.GetManager().IsClickable = false;
 		//AudioMaster.Instance.Play(GridManager.GetManager(), SoundEffectManager.GetManager().GetPopSound());
 		if (startTile != null) {
 			startTile.ClickVisual(GridManager.GetManager().PreclickDuration);
@@ -153,7 +149,7 @@ public abstract class BaseGridGameModeHandler : IGameMode {
 			}
 		} else {
 			GameMaster.Instance.ClickDone();
-			GridManager.GetManager().CanClick = true;
+			GridManager.GetManager().IsClickable = true;
 		}
 	}
 
@@ -170,6 +166,6 @@ public abstract class BaseGridGameModeHandler : IGameMode {
 	}
 
 	public void ClickDustConversion() {
-		GameMaster.Instance.SpaceDust += Mathf.RoundToInt(Mathf.Lerp(300, 0, (clicks - 10) / 30));
+		GameMaster.Instance.SpaceDust += Mathf.RoundToInt(Mathf.Lerp(300, 0, (clicks - 10f) / 15f));
 	}
 }

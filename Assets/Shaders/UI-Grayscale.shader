@@ -90,7 +90,7 @@
 		OUT.vertex.xy += (_ScreenParams.zw - 1.0)*float2(-1,1);
 #endif
 
-		OUT.color = IN.color * _Color;
+		OUT.color = IN.color;
 		return OUT;
 	}
 
@@ -108,6 +108,7 @@
 
 		float3 brtColor = color.rgb * _BrightnessAmount;
 		color.rgb = lerp(brtColor, dot(brtColor, float3(0.3, 0.59, 0.11)), _EffectAmount);
+		color = color * _Color;
 		return color;
 	}
 		ENDCG

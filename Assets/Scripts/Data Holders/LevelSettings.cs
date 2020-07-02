@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class LevelSettings : ScriptableObject {
+[CreateAssetMenu(fileName = "Level Settings", menuName = "CustomObjects/Grid Level Settings")]
+public class LevelSettings : ScriptableObject{
 
 	public bool memoryOnly;
 	public int minWords;
@@ -11,5 +12,8 @@ public abstract class LevelSettings : ScriptableObject {
 	public bool spacedustAffectsCoins;
 	public float spaceDustMin;
 	public float spaceDustMax;
+
+	public GameMode gameMode;
+	public LevelTypeSettings[] typeSettings;
 
 }

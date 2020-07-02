@@ -25,6 +25,11 @@ public abstract class Tile : Interactable {
 		}
 	}
 
+	public ITileClickReceiver Receiver {
+		get; set;
+	}
+
+
 	public virtual void PopVisual(float duration) {
 
 	}

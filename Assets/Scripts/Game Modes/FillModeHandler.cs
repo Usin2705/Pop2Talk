@@ -20,7 +20,7 @@ public class FillModeHandler : BaseGridGameModeHandler {
                 adjacentTypes.Add((tile as MatchableTile).MyMatchType);
             }
         }
-		HashSet<MatchType> chosenSet = new System.Collections.Generic.HashSet<MatchType>();
+		HashSet<MatchType> chosenSet = new HashSet<MatchType>();
         chosenSet.Add((adjacentTypes.Count > 0) ? adjacentTypes.GetRandom() : (t as MatchableTile).MyMatchType);
         List<Dictionary<Tile, Coordinate>> touchingMatches = new List<Dictionary<Tile, Coordinate>>() { GridManager.GetManager().GetTouchingMatches(t) };
         if (!touchingMatches.Contains(null)) {
