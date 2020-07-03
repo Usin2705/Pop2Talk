@@ -22,6 +22,7 @@ public class TravelView : View {
 	[SerializeField] Image whiteCurtain;
 	[SerializeField] Image scroller;
 	[SerializeField] Image portal;
+	[SerializeField] Image staticBack;
 	[SerializeField] float scrollSpeed;
 	[SerializeField] float shipSpeed;
 	[SerializeField] float wobbleAmount;
@@ -125,6 +126,7 @@ public class TravelView : View {
 		scroller.material.SetTextureOffset("_MainTex", Vector2.zero);
 		MovingImageManager.GetManager().SetMoverSprite(CosmeticManager.GetManager().GetEquippedCosmetic(CosmeticSlot.Ship).sprite);
 		travelDone = false;
+		InputManager.GetManager().SendingInputs = false;
 		yield return new WaitForSeconds(1.5f);
 		InputManager.GetManager().SendingInputs = false;
 		MovingImageManager.GetManager().ShowMovingImage(sortingOrder, false, new Vector3[] { shipStart.position, shipEnd.position }, new float[] { 0 },
@@ -133,16 +135,21 @@ public class TravelView : View {
 		while (!travelDone) {
 			yield return null;
 		}
+
 		MovingImageManager.GetManager().StartWobble(wobbleAmount * 1920f / Screen.height);
 		float a = 0;
-		float portalTime = 0.33f;
-		while (a < 3) {
+		float portalTime = 0.5f;
+		float travelDuration = 3f;
+		float accelDuration = 1f;
+		Color staticColor = staticBack.color;
+		while (a < travelDuration) {
 			a += Time.deltaTime;
+			staticBack.color = new Color(staticColor.r, staticColor.g, staticColor.b, Mathf.Max(0, accelDuration - a));
 			scroller.material.SetTextureOffset("_MainTex", a * Vector2.up * scrollSpeed * (Screen.height / 1920f));
-			if (a > 3 - portalTime) {
+			if (a > travelDuration  - portalTime) {
 				if (!portal.gameObject.activeSelf)
 					portal.gameObject.SetActive(true);
-				portal.rectTransform.position = Vector3.Lerp(portalStart.position, shipEnd.position, (a - (3 - portalTime)) / portalTime);
+				portal.rectTransform.position = Vector3.Lerp(portalStart.position, shipEnd.position, (a  - (travelDuration - portalTime)) / (portalTime));
 			}
 			yield return null;
 		}
@@ -151,6 +158,7 @@ public class TravelView : View {
 		MovingImageManager.GetManager().EndWobble();
 		MovingImageManager.GetManager().HideMover();
 		planetScreen.SetActive(true);
+		staticBack.color = staticColor;
 		scroller.material.SetTextureOffset("_MainTex", Vector2.zero);
 		portal.rectTransform.position = portalStart.position;
 		travelScreen.SetActive(false);

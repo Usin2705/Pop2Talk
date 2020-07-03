@@ -5,11 +5,16 @@ using UnityEngine;
 public enum MatchType { None, Red, Blue, Yellow, Green, Orange, Purple, Joker = -1 };
 
 public class MatchableTile : Tile {
+
+	[SerializeField] SpriteRenderer stencilRenderer;
+	[SerializeField] SpriteRenderer regularRenderer;
+
 	public MatchType MyMatchType { get; protected set; }
 
 	public virtual void SetMatchType(MatchType type) {
 		MyMatchType = type;
-		GetComponentInChildren<SpriteRenderer>().sprite = GridManager.GetManager().GetMatchSprite(type);
+		stencilRenderer.sprite = GridManager.GetManager().GetMatchSprite(type);
+		regularRenderer.sprite = GridManager.GetManager().GetMatchSprite(type);
 	}
 
 	public void SetRandomMatchType(int maxTypes = -1, HashSet<MatchType> excludedTypes = null) {
@@ -59,5 +64,10 @@ public class MatchableTile : Tile {
 	public override void MoveToVisual(Vector3 position, float duration) {
 		moving = true;
 		StartCoroutine(MoveTowards(position, duration));
+	}
+
+	public void SetStencil(bool stencil) {
+		stencilRenderer.gameObject.SetActive(stencil);
+		regularRenderer.gameObject.SetActive(!stencil);
 	}
 }

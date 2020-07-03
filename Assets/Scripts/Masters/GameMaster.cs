@@ -67,8 +67,8 @@ public class GameMaster : MonoBehaviour {
 	public LevelSettings CurrentLevel { get; set; }
 	IGameCaller gameCaller;
 
-	BaseGridGameModeHandler currentGameModeHandler;
-    Dictionary<GameMode, BaseGridGameModeHandler> gameModes = new Dictionary<GameMode, BaseGridGameModeHandler>();
+	IGameMode currentGameModeHandler;
+    Dictionary<GameMode, IGameMode> gameModes = new Dictionary<GameMode, IGameMode>();
 	
 	public void SetLevel(LevelSettings level) {
 		CurrentLevel = level;
@@ -144,7 +144,10 @@ public class GameMaster : MonoBehaviour {
                 case GameMode.Spot:
                     gameModes.Add(mode, new SpotModeHandler());
                     break;
-            }
+				case GameMode.Path:
+					gameModes.Add(mode, new GameObject("Path Handler").AddComponent<PathGameModeHandler>());
+					break;
+			}
         }
         currentGameModeHandler = gameModes[mode];
     }

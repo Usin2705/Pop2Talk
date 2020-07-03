@@ -13,6 +13,7 @@ public class SoundEffectManager : MonoBehaviour {
 	[SerializeField] AudioInstance cardEnter;
 	[SerializeField] AudioInstance pearlCreate;
 	[SerializeField] AudioInstance music;
+	[SerializeField] AudioInstance badClick;
 
 	static SoundEffectManager sem;
 
@@ -71,5 +72,9 @@ public class SoundEffectManager : MonoBehaviour {
 
 	public AudioInstance GetPopSound() {
 		return popEffects.GetRandom();
+	}
+
+	public AudioInstance GetBadClickSound() {
+		return badClick;
 	}
 }

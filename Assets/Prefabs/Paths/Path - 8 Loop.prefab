@@ -46,12 +46,12 @@ MonoBehaviour:
   editorData:
     _bezierPath:
       points:
-      - {x: 0, y: 3, z: 0}
-      - {x: 6, y: 3, z: 0}
-      - {x: -6, y: -4.5, z: 0}
-      - {x: 0, y: -4.5, z: 0}
-      - {x: 6, y: -4.5, z: 0}
-      - {x: -6, y: 3, z: 0}
+      - {x: 0, y: 3.5, z: 0}
+      - {x: 6, y: 3.5, z: 0}
+      - {x: -6, y: -2.5, z: 0}
+      - {x: 0, y: -2.5, z: 0}
+      - {x: 6, y: -2.5, z: 0}
+      - {x: -6, y: 3.5, z: 0}
       isClosed: 1
       space: 1
       controlMode: 1

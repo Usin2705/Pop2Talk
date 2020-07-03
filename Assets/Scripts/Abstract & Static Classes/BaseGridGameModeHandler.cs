@@ -165,7 +165,7 @@ public abstract class BaseGridGameModeHandler : IGameMode {
 		GridManager.GetManager().StopGrid();
 	}
 
-	public void ClickDustConversion() {
+	protected void ClickDustConversion() {
 		GameMaster.Instance.SpaceDust += Mathf.RoundToInt(Mathf.Lerp(300, 0, (clicks - 10f) / 15f));
 	}
 }

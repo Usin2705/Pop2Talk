@@ -124,7 +124,7 @@ public class GridManager : MonoBehaviour, ITileClickReceiver {
 	}
 
 	public bool CanClick() {
-		return IsClickable && Moving;
+		return IsClickable && !Moving;
 	}
 
 	public bool CanMove { get; set; }
@@ -375,6 +375,7 @@ public class GridManager : MonoBehaviour, ITileClickReceiver {
 			t.transform.SetParent(tileRoot);
 			if (t is MatchableTile) {
 				(t as MatchableTile).SetMatchType(GetRandomMatchType(matchTypes, typesAreExcluded));
+				(t as MatchableTile).SetStencil(true);
 			}
 			TileCount++;
 			return t;
@@ -1089,5 +1090,9 @@ public class GridManager : MonoBehaviour, ITileClickReceiver {
 		Sprite s = null;
 		matchSprites.TryGetValue(type, out s);
 		return s;
+	}
+
+	public GameObject GetMatchableTilePrefab() {
+		return matchableTilePrefab.gameObject;
 	}
 }

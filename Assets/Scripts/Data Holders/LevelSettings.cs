@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Level Settings", menuName = "CustomObjects/Grid Level Settings")]
+[CreateAssetMenu(fileName = "Level Settings", menuName = "CustomObjects/Level Settings")]
 public class LevelSettings : ScriptableObject{
 
 	public bool memoryOnly;
