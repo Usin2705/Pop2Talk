@@ -59,16 +59,16 @@ public abstract class Tile : Interactable {
 		if (duration <= 0)
 			yield break;
 		float a = 0;
-		Vector3 startPos = transform.GetChild(0).localPosition;
-		Vector3 baseScale = transform.localScale;
+		Vector3 startPos = currentChild.localPosition;
+		Vector3 baseScale = currentChild.localScale;
 		float vibrationAmount = 0.1f;
 		while (a < 1) {
 			a += Time.deltaTime / duration;
 			currentChild.localPosition = startPos + new Vector3(vibrationAmount * Random.Range(-1f, 1f), vibrationAmount * Random.Range(-1f, 1f));
-			transform.localScale = Vector3.Lerp(baseScale * startScale, baseScale * targetScale, a * a);
+			currentChild.localScale = Vector3.Lerp(baseScale * startScale, baseScale * targetScale, a * a);
 			yield return null;
 		}
-		transform.GetChild(0).localPosition = Vector3.zero;
+		currentChild.localPosition = Vector3.zero;
 	}
 
 	protected IEnumerator MoveTowards(Vector3 targetPosition, float duration) {
@@ -91,5 +91,9 @@ public abstract class Tile : Interactable {
 
 	public virtual void Pop() {
 		alreadyPopped = true;
+	}
+
+	public virtual void SetScale(Vector3 scale) {
+		currentChild.localScale = scale;
 	}
 }

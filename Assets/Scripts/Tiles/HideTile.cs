@@ -2,19 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum MatchType { None, Red, Blue, Yellow, Green, Orange, Purple, Joker = -1 };
+public class HideTile : ClickableTile {
 
-public class MatchableTile : ClickableTile {
+	[SerializeField] SpriteRenderer tileRenderer;
+	[SerializeField] SpriteRenderer hiderRenderer;
 
-	[SerializeField] SpriteRenderer stencilRenderer;
-	[SerializeField] SpriteRenderer regularRenderer;
+	bool hiding;
 
-	public MatchType MyMatchType { get; protected set; }
+	public bool Hiding {
+		get {
+			return hiding;
+		}
+		set {
+			hiding = value;
+			tileRenderer.gameObject.SetActive(!hiding);
+		}
+	}
 
 	public virtual void SetMatchType(MatchType type) {
-		MyMatchType = type;
-		stencilRenderer.sprite = GridManager.GetManager().GetMatchSprite(type);
-		regularRenderer.sprite = GridManager.GetManager().GetMatchSprite(type);
+		tileRenderer.sprite = GridManager.GetManager().GetMatchSprite(type);
 	}
 
 	public void SetRandomMatchType(int maxTypes = -1, HashSet<MatchType> excludedTypes = null) {
@@ -33,14 +39,8 @@ public class MatchableTile : ClickableTile {
 		SetMatchType(type);
 	}
 
-	public void SetStencil(bool stencil) {
-		currentChild = (stencil) ? stencilRenderer.transform : regularRenderer.transform;
-		stencilRenderer.gameObject.SetActive(stencil);
-		regularRenderer.gameObject.SetActive(!stencil);
-	}
-
 	public override void SetScale(Vector3 scale) {
-		stencilRenderer.transform.localScale = scale;
-		regularRenderer.transform.localScale = scale;
+		tileRenderer.transform.localScale = scale;
+		hiderRenderer.transform.localScale = scale * 1.1f;
 	}
 }

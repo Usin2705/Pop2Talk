@@ -10,7 +10,7 @@ public class PathModeHandler : MonoBehaviour, IGameMode, ITileClickReceiver, ICa
 	protected PathCreation.PathCreator pathCreator;
 	protected int clicks = -1;
 
-	protected float popDuration = 0.2f;
+	protected float popDuration = 0.3f;
 	protected float tileSize = 0.9f;
 
 	protected Dictionary<MatchableTile, float> pathTiles = new Dictionary<MatchableTile, float>();
@@ -27,10 +27,24 @@ public class PathModeHandler : MonoBehaviour, IGameMode, ITileClickReceiver, ICa
 		GameMaster.Instance.MaxProgress = tileCount;
 		GameMaster.Instance.RemainingProgress = tileCount;
 		float length = pathCreator.path.length;
+		float tilePos;
 		MatchableTile tile;
+		bool tooClose;
 		routeTime = 0;
+		int attempts, maxAttempts = 500;
 		for (int i = 0; i < tileCount; ++i) {
 			tile = PoolMaster.Instance.GetPooledObject(GridManager.GetManager().GetMatchableTilePrefab()).GetComponent<MatchableTile>();
+			attempts = 0;
+			do {
+				attempts++;
+				tooClose = false;
+				tilePos = Random.Range(0, length);
+				foreach (MatchableTile t in pathTiles.Keys) {
+					tooClose = Mathf.Abs(pathTiles[t] - tilePos) < tileSize || Mathf.Abs(pathTiles[t] - tilePos) > length - tileSize;
+					if (tooClose)
+						break;
+				}
+			} while (tooClose && attempts < maxAttempts);
 			pathTiles.Add(tile, Random.Range(0, length));
 			tile.Reset();
 			tile.transform.position = pathCreator.path.GetPointAtDistance(pathTiles[tile]);
@@ -38,7 +52,7 @@ public class PathModeHandler : MonoBehaviour, IGameMode, ITileClickReceiver, ICa
 			tile.SetRandomMatchType(6);
 			tile.SetStencil(false);
 			tile.transform.SetParent(transform);
-			tile.transform.localScale = Vector3.one * tileSize;
+			tile.SetScale(Vector3.one * tileSize);
 		}
 	}
 
@@ -49,6 +63,7 @@ public class PathModeHandler : MonoBehaviour, IGameMode, ITileClickReceiver, ICa
 		pathTiles.Clear();
 		PoolMaster.Instance.Destroy(catcher);
 		catcher = null;
+		active = false;
 	}
 
 	public bool CanClick() {
@@ -130,12 +145,12 @@ public class PathModeHandler : MonoBehaviour, IGameMode, ITileClickReceiver, ICa
 		pathTiles.Remove((MatchableTile)tile);
 		GameMaster.Instance.RemainingProgress--;
 		GameMaster.Instance.Clicked();
-		yield return new WaitForSeconds(0.25f);
+		yield return new WaitForSeconds(popDuration);
 		GameMaster.Instance.PlayPopSound(0);
 		PoolMaster.Instance.Destroy(tile.gameObject);
 		yield return new WaitForSeconds(GameMaster.Instance.GetPopSound().GetLength());
 		GameMaster.Instance.ClickDone();
-		if (pathTiles.Count == 0) {
+		if (pathTiles.Count == 0 && active) {
 			active = false;
 			GameMaster.Instance.RoundDone();
 		} else
@@ -143,6 +158,8 @@ public class PathModeHandler : MonoBehaviour, IGameMode, ITileClickReceiver, ICa
 	}
 
 	public void CatchClick() {
+		if (!active)
+			return;
 		AudioMaster.Instance.Play(this, SoundEffectManager.GetManager().GetBadClickSound());
 		clicks++;
 	}

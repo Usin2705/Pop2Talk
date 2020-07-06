@@ -5,42 +5,75 @@ using UnityEngine;
 public class HideModeHandler : MonoBehaviour, IGameMode, ITileClickReceiver {
 	
 	protected int tileCount = -1;
-	protected int hideCount = -1;
+	protected int totalCount = -1;
 	protected int clicks = -1;
-	protected Transform tileRoot;
-	protected float randomDistance = 0;
-	
+	protected Transform hideRoot;
 
 	protected float popDuration = 0.2f;
-	protected float tileSize = 0.9f;
+	protected float tileSize = 0.75f;
+	protected float mininmuDistance = 1.1f;
 
-	protected HashSet<MatchableTile> tiles = new HashSet<MatchableTile>();
+	protected HashSet<HideTile> tiles = new HashSet<HideTile>();
 	protected bool active;
 	protected bool canClick;
 
-	public void Activate() {
+	GameObject hideTile;
 
+	void Awake() {
+		hideTile = Resources.Load("Hide Tile") as GameObject;
+	}
+
+	public void Activate() {
 		clicks = 0;
 		active = true;
 		canClick = true;
 		GameMaster.Instance.MaxProgress = tileCount;
 		GameMaster.Instance.RemainingProgress = tileCount;
-		MatchableTile tile;
-		for (int i = 0; i < tileCount; ++i) {
-			tile = PoolMaster.Instance.GetPooledObject(GridManager.GetManager().GetMatchableTilePrefab()).GetComponent<MatchableTile>();
-			tiles.Add(tile);
+		HideTile tile;
+		List<HideTile> toBeSet = new List<HideTile>();
+		for (int i = 0; i < totalCount; ++i) {
+			tile = PoolMaster.Instance.GetPooledObject(hideTile).GetComponent<HideTile>();
+			toBeSet.Add(tile);
 			tile.Reset();
-			//tile.transform.position = pathCreator.path.GetPointAtDistance(tiles[tile]);
 			tile.Receiver = this;
 			tile.SetRandomMatchType(6);
-			tile.SetStencil(false);
 			tile.transform.SetParent(transform);
 			tile.transform.localScale = Vector3.one * tileSize;
+			tile.Hiding = i <= tileCount;
+			
 		}
+		toBeSet.Shuffle();
+		List<Vector3> positions = new List<Vector3>();
+		Vector3 pos;
+		bool tooClose;
+		Transform hideNode;
+		int attempts, maxAttempts = 100;
+		for (int i = 0; i < toBeSet.Count; ++i) {
+			attempts = 0;
+			do {
+				tooClose = false;
+				hideNode = hideRoot.GetChild(i % hideRoot.childCount);
+				if (hideNode.childCount == 0)
+					pos = hideNode.position;
+				else
+					pos = Vector3.zero;
+				foreach (Vector3 v in positions) {
+					if (Vector3.SqrMagnitude(v - pos) < mininmuDistance * mininmuDistance) {
+						tooClose = true;
+						break;
+					}
+				}
+				attempts++;
+			} while (tooClose && attempts < maxAttempts);
+			positions.Add(pos);
+			toBeSet[i].transform.position = pos;
+		}
+		foreach (HideTile ht in toBeSet)
+			tiles.Add(ht);
 	}
 
 	public void Back() {
-		foreach (MatchableTile tile in tiles) {
+		foreach (HideTile tile in tiles) {
 			PoolMaster.Instance.Destroy(tile.gameObject);
 		}
 		tiles.Clear();
@@ -51,7 +84,7 @@ public class HideModeHandler : MonoBehaviour, IGameMode, ITileClickReceiver {
 	}
 
 	public void ClickTile(Tile tile) {
-		if (tile is MatchableTile && tiles.Contains((MatchableTile)tile)) {
+		if (tile is MatchableTile && tiles.Contains((HideTile)tile)) {
 			clicks++;
 			StartCoroutine(ClickRoutine(tile));
 		}
@@ -64,9 +97,8 @@ public class HideModeHandler : MonoBehaviour, IGameMode, ITileClickReceiver {
 
 	protected void SetupRootAndAmounts(LevelTypeSettings[] levelTypes) {
 		tileCount = -1;
-		hideCount = -1;
-		tileRoot = null;
-
+		totalCount = -1;
+		hideRoot = null;
 		int holder = -1;
 		foreach (LevelTypeSettings lts in levelTypes) {
 			if (lts is IntSettings) {
@@ -74,37 +106,34 @@ public class HideModeHandler : MonoBehaviour, IGameMode, ITileClickReceiver {
 					holder = ((IntSettings)lts).integer;
 				else {
 					tileCount = ((IntSettings)lts).integer;
-					hideCount = Mathf.Max(tileCount, holder);
+					totalCount = Mathf.Max(tileCount, holder);
 					tileCount = Mathf.Min(tileCount, holder);
 				}
 				continue;
 			}
-			if (lts is FloatSettings) {
-				randomDistance = ((FloatSettings)lts).floatingPoint;
-			}
 
 			if (lts is TransformSettings) {
-				tileRoot = ((TransformSettings)lts).transform;
+				hideRoot = ((TransformSettings)lts).transform;
 			}
 		}
 
 		if (tileCount <= 0)
 			Debug.LogError("Tilecount isn't positive!");
-		if (hideCount <= 0)
+		if (totalCount <= 0)
 			Debug.LogError("Hidecount isn't positive!");
-		if (tileRoot = null)
+		if (hideRoot = null)
 			Debug.LogError("No tileroot!");
 	}
 
 	protected void ClickDustConversion() {
-		GameMaster.Instance.SpaceDust += Mathf.RoundToInt(Mathf.Lerp(300, 0, (clicks - 10f) / 15f));
+		GameMaster.Instance.SpaceDust += Mathf.RoundToInt(Mathf.Lerp(300, 0, (clicks - tileCount) / Mathf.Max(1, totalCount-tileCount)));
 	}
 	
 	protected IEnumerator ClickRoutine(Tile tile) {
 		canClick = false;
 		tile.PopVisual(popDuration);
 		tile.Pop();
-		tiles.Remove((MatchableTile)tile);
+		tiles.Remove((HideTile)tile);
 		GameMaster.Instance.RemainingProgress--;
 		GameMaster.Instance.Clicked();
 		yield return new WaitForSeconds(0.25f);

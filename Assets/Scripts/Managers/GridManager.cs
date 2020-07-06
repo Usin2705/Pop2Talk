@@ -371,7 +371,7 @@ public class GridManager : MonoBehaviour, ITileClickReceiver {
 			t.Receiver = this;
 			c.MyTile = t;
 			t.transform.position = (toTheTop) ? c.transform.position - GetGravityVector() * gridSettings.cellSize : c.transform.position;
-			t.transform.localScale = Vector3.one * gridSettings.cellSize;
+			t.SetScale (Vector3.one * gridSettings.cellSize);
 			t.transform.SetParent(tileRoot);
 			if (t is MatchableTile) {
 				(t as MatchableTile).SetMatchType(GetRandomMatchType(matchTypes, typesAreExcluded));

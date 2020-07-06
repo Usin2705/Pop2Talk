@@ -9,7 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db581d807990ace49a1dd966689e6f5e, type: 3}
-  m_Name: Average Tiles
+  m_Script: {fileID: 11500000, guid: aa1a34e268fe23d4282e72e143861318, type: 3}
+  m_Name: Transform Settings - Big Random Hide Root
   m_EditorClassIdentifier: 
-  integer: 7
+  transform: {fileID: 2231083382762583130, guid: 24c1756eaa0589642a79e6780b33d25b,
+    type: 3}

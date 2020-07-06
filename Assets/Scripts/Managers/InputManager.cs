@@ -75,10 +75,10 @@ public class InputManager : MonoBehaviour {
 
     void TryInput(Vector2 position, InteractType type) {
 		CheckForSwipe(position, type);
-		RaycastHit hit;
 		foreach (Callback Cb in tryInputCallbacks)
 			Cb();
-        if (Physics.Raycast(Camera.main.ScreenPointToRay(position), out hit, ConstantHolder.interactableLayer)) {
+		RaycastHit hit;
+		if (Physics.Raycast(Camera.main.ScreenPointToRay(position), out hit, ConstantHolder.interactableLayer)) {
             Interactable inter = hit.collider.GetComponentInParent<Interactable>();
             if (inter != null)
                 inter.Interact(type);
