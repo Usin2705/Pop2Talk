@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PathGameModeHandler : MonoBehaviour, IGameMode, ITileClickReceiver, ICatcherTarget {
+public class PathModeHandler : MonoBehaviour, IGameMode, ITileClickReceiver, ICatcherTarget {
 
 	protected float lowSpeed = -1;
 	protected float highSpeed = -1;

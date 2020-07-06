@@ -145,7 +145,7 @@ public class GameMaster : MonoBehaviour {
                     gameModes.Add(mode, new SpotModeHandler());
                     break;
 				case GameMode.Path:
-					gameModes.Add(mode, new GameObject("Path Handler").AddComponent<PathGameModeHandler>());
+					gameModes.Add(mode, new GameObject("Path Handler").AddComponent<PathModeHandler>());
 					break;
 			}
         }
