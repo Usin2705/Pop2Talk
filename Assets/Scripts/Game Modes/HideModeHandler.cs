@@ -9,9 +9,10 @@ public class HideModeHandler : MonoBehaviour, IGameMode, ITileClickReceiver {
 	protected int clicks = -1;
 	protected Transform hideRoot;
 
-	protected float popDuration = 0.2f;
-	protected float tileSize = 0.75f;
-	protected float mininmuDistance = 1.1f;
+	protected float popDuration = 0.3f;
+	protected float endDuration = 0.6f;
+	protected float tileSize = 0.85f;
+	protected float mininmuDistance = 0.7f;
 
 	protected HashSet<HideTile> tiles = new HashSet<HideTile>();
 	protected bool active;
@@ -19,9 +20,8 @@ public class HideModeHandler : MonoBehaviour, IGameMode, ITileClickReceiver {
 
 	GameObject hideTile;
 
-	void Awake() {
-		hideTile = Resources.Load("Hide Tile") as GameObject;
-	}
+	float waitDuration = 1.5f;
+	float growDuration = 1.5f;
 
 	public void Activate() {
 		clicks = 0;
@@ -39,7 +39,7 @@ public class HideModeHandler : MonoBehaviour, IGameMode, ITileClickReceiver {
 			tile.SetRandomMatchType(6);
 			tile.transform.SetParent(transform);
 			tile.transform.localScale = Vector3.one * tileSize;
-			tile.Hiding = i <= tileCount;
+			tile.Hiding = i < tileCount;
 			
 		}
 		toBeSet.Shuffle();
@@ -55,8 +55,10 @@ public class HideModeHandler : MonoBehaviour, IGameMode, ITileClickReceiver {
 				hideNode = hideRoot.GetChild(i % hideRoot.childCount);
 				if (hideNode.childCount == 0)
 					pos = hideNode.position;
-				else
-					pos = Vector3.zero;
+				else {
+					pos = new Vector3(Random.Range(hideNode.position.x, hideNode.GetChild(0).position.x), 
+						Random.Range(hideNode.position.y, hideNode.GetChild(0).position.y));
+				}
 				foreach (Vector3 v in positions) {
 					if (Vector3.SqrMagnitude(v - pos) < mininmuDistance * mininmuDistance) {
 						tooClose = true;
@@ -70,6 +72,18 @@ public class HideModeHandler : MonoBehaviour, IGameMode, ITileClickReceiver {
 		}
 		foreach (HideTile ht in toBeSet)
 			tiles.Add(ht);
+
+		StartCoroutine(OpenWait(waitDuration));
+	}
+
+	IEnumerator OpenWait(float duration) {
+		canClick = false;
+		yield return new WaitForSeconds(waitDuration);
+		foreach (Tile t in tiles) {
+			t.GrowVisual(growDuration);
+		}
+		yield return new WaitForSeconds(growDuration);
+		canClick = true;
 	}
 
 	public void Back() {
@@ -84,7 +98,7 @@ public class HideModeHandler : MonoBehaviour, IGameMode, ITileClickReceiver {
 	}
 
 	public void ClickTile(Tile tile) {
-		if (tile is MatchableTile && tiles.Contains((HideTile)tile)) {
+		if (tile is HideTile && tiles.Contains((HideTile)tile)) {
 			clicks++;
 			StartCoroutine(ClickRoutine(tile));
 		}
@@ -92,6 +106,8 @@ public class HideModeHandler : MonoBehaviour, IGameMode, ITileClickReceiver {
 
 	public void Initialize(LevelSettings level) {
 		GameMaster.Instance.SpaceDust = 0;
+		if (hideTile == null)
+			hideTile = Resources.Load("Hide Tile") as GameObject;
 		SetupRootAndAmounts(level.typeSettings);
 	}
 
@@ -121,7 +137,7 @@ public class HideModeHandler : MonoBehaviour, IGameMode, ITileClickReceiver {
 			Debug.LogError("Tilecount isn't positive!");
 		if (totalCount <= 0)
 			Debug.LogError("Hidecount isn't positive!");
-		if (hideRoot = null)
+		if (hideRoot == null)
 			Debug.LogError("No tileroot!");
 	}
 
@@ -133,19 +149,36 @@ public class HideModeHandler : MonoBehaviour, IGameMode, ITileClickReceiver {
 		canClick = false;
 		tile.PopVisual(popDuration);
 		tile.Pop();
-		tiles.Remove((HideTile)tile);
-		GameMaster.Instance.RemainingProgress--;
+		if (((HideTile)tile).Hiding)
+			GameMaster.Instance.RemainingProgress--;
 		GameMaster.Instance.Clicked();
-		yield return new WaitForSeconds(0.25f);
+		yield return new WaitForSeconds(popDuration);
+		((HideTile)tile).HideHider();
+		if (popDuration < 0.25f)
+			yield return new WaitForSeconds(0.25f-popDuration);
 		GameMaster.Instance.PlayPopSound(0);
-		PoolMaster.Instance.Destroy(tile.gameObject);
 		yield return new WaitForSeconds(GameMaster.Instance.GetPopSound().GetLength());
 		GameMaster.Instance.ClickDone();
-		if (tiles.Count == 0) {
+		if (GameMaster.Instance.RemainingProgress == 0) {
+			foreach(Tile t in tiles) {
+				if (t.CanPop) {
+					t.PopVisual(endDuration);
+				}
+				if (((HideTile)t).Hiding) {
+					((HideTile)t).FadeHide(endDuration);
+				}
+			}
+			yield return new WaitForSeconds(endDuration);
+			foreach (Tile t in tiles) {
+				PoolMaster.Instance.Destroy(t.gameObject);
+			}
+			tiles.Clear();
+			yield return new WaitForSeconds(0.25f);
 			active = false;
 			GameMaster.Instance.RoundDone();
 		} else
 			canClick = true;
+
 	}
 
 	public void CatchClick() {

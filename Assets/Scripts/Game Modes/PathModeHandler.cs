@@ -88,9 +88,9 @@ public class PathModeHandler : MonoBehaviour, IGameMode, ITileClickReceiver, ICa
 
 	public void Initialize(LevelSettings level) {
 		GameMaster.Instance.SpaceDust = 0;
-		SetUpPathAndSpeeds(level.typeSettings);
 		catcher = PoolMaster.Instance.GetPooledObject((GameObject)Resources.Load("Click Catcher"));
 		catcher.GetComponent<ClickCatcher>().CatcherTarget = this;
+		SetUpPathAndSpeeds(level.typeSettings);
 	}
 
 	protected void SetUpPathAndSpeeds(LevelTypeSettings[] levelTypes) {
@@ -135,7 +135,7 @@ public class PathModeHandler : MonoBehaviour, IGameMode, ITileClickReceiver, ICa
 	}
 
 	protected void ClickDustConversion() {
-		GameMaster.Instance.SpaceDust += Mathf.RoundToInt(Mathf.Lerp(300, 0, (clicks - 10f) / 15f));
+		GameMaster.Instance.SpaceDust += Mathf.RoundToInt(Mathf.Lerp(300, 0, (clicks - tileCount) / tileCount));
 	}
 	
 	protected IEnumerator ClickRoutine(Tile tile) {
@@ -152,6 +152,7 @@ public class PathModeHandler : MonoBehaviour, IGameMode, ITileClickReceiver, ICa
 		GameMaster.Instance.ClickDone();
 		if (pathTiles.Count == 0 && active) {
 			active = false;
+			ClickDustConversion();
 			GameMaster.Instance.RoundDone();
 		} else
 			canClick = true;

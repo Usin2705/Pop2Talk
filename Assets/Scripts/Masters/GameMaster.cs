@@ -147,6 +147,9 @@ public class GameMaster : MonoBehaviour {
 				case GameMode.Path:
 					gameModes.Add(mode, new GameObject("Path Handler").AddComponent<PathModeHandler>());
 					break;
+				case GameMode.Hide:
+					gameModes.Add(mode, new GameObject("Hide Handler").AddComponent<HideModeHandler>());
+					break;
 			}
         }
         currentGameModeHandler = gameModes[mode];

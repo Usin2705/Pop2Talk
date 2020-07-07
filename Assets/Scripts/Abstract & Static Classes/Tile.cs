@@ -17,9 +17,11 @@ public abstract class Tile : Interactable {
 
 	protected bool alreadyPopped;
 	protected Vector3 childStartPos;
-	protected Vector3 startScale;
+	protected Vector3 childStartScale;
 	protected bool moving;
 	protected Transform currentChild;
+
+	protected float vibrationAmount = 0.1f;
 
 	public virtual bool CanPop {
 		get {
@@ -51,6 +53,7 @@ public abstract class Tile : Interactable {
 	protected virtual void Awake() {
 		currentChild = transform.GetChild(0);
 		childStartPos = currentChild.localPosition;
+		childStartScale = currentChild.localScale;
 	}
 
 	protected IEnumerator ScaleAndVibrate(float duration, float startScale, float targetScale, float delay = 0) {
@@ -60,8 +63,7 @@ public abstract class Tile : Interactable {
 			yield break;
 		float a = 0;
 		Vector3 startPos = currentChild.localPosition;
-		Vector3 baseScale = currentChild.localScale;
-		float vibrationAmount = 0.1f;
+		Vector3 baseScale = childStartScale;
 		while (a < 1) {
 			a += Time.deltaTime / duration;
 			currentChild.localPosition = startPos + new Vector3(vibrationAmount * Random.Range(-1f, 1f), vibrationAmount * Random.Range(-1f, 1f));

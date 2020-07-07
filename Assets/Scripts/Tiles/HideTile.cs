@@ -15,8 +15,30 @@ public class HideTile : ClickableTile {
 		}
 		set {
 			hiding = value;
-			tileRenderer.gameObject.SetActive(!hiding);
+			tileRenderer.gameObject.SetActive(hiding);
 		}
+	}
+
+	public override void Reset() {
+		base.Reset();
+		vibrationAmount = 0;
+		currentChild = hiderRenderer.transform;
+		currentChild.localScale = Vector3.zero;
+	}
+
+	public void HideHider() {
+		currentChild.localScale = Vector3.zero;
+	}
+
+	public void FadeHide(float duration) {
+		if (!Hiding)
+			return;
+		currentChild = tileRenderer.transform;
+		PopVisual(duration);
+	}
+
+	public override void PopVisual(float duration) {
+		StartCoroutine(ScaleAndVibrate(duration, 1f, 0.05f));
 	}
 
 	public virtual void SetMatchType(MatchType type) {
