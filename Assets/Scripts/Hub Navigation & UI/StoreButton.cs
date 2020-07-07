@@ -44,4 +44,8 @@ public class StoreButton : MonoBehaviour {
 	public void TogglePrice(bool on) {
 		priceHolder.SetActive(on);
 	}
+
+	public Transform GetBox() {
+		return button.transform;
+	}
 }

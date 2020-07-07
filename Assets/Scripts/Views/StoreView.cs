@@ -98,16 +98,17 @@ public class StoreView : View {
 	IEnumerator PurchaseRoutine(int index) {
 		InputManager.GetManager().SendingInputs = false;
 		if (!DebugMaster.Instance.skipTransitions) {
-			Vector3 start = lootboxButtons[index].transform.position;
-			float a = 0, max = start.x - shakeAnchor.transform.position.x;
-			lootboxButtons[index].TogglePrice(false);
+			Transform box = lootboxButtons[index].GetBox();
+			Vector3 start = box.transform.position;
+			float a = 0, max = lootboxButtons[index].transform.position.x - shakeAnchor.transform.position.x;
+			//lootboxButtons[index].TogglePrice(false);
 			while (a < 1) {
 				a += Time.deltaTime / shakeDuration;
-				lootboxButtons[index].transform.position = start + (Vector3)Random.insideUnitCircle * max;
+				box.position = start + (Vector3)Random.insideUnitCircle * max;
 				yield return null;
 			}
-			lootboxButtons[index].transform.position = start;
-			lootboxButtons[index].TogglePrice(true);
+			box.transform.position = start;
+			//lootboxButtons[index].TogglePrice(true);
 		}
 
 		CurrencyMaster.Instance.Coins -= StoreManager.GetManager().GetBoxes()[index].price;
