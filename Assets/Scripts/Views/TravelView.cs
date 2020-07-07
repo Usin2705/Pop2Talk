@@ -138,7 +138,7 @@ public class TravelView : View {
 
 		MovingImageManager.GetManager().StartWobble(wobbleAmount * 1920f / Screen.height);
 		float a = 0;
-		float portalTime = 0.5f;
+		float portalTime = 0.33f;
 		float travelDuration = 3f;
 		float accelDuration = 1f;
 		Color staticColor = staticBack.color;
