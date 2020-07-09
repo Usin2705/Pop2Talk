@@ -2,28 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HideModeHandler : MonoBehaviour, IGameMode, ITileClickReceiver {
+public class HideModeHandler : RootModeHandler, ITileClickReceiver {
 	
 	protected int tileCount = -1;
 	protected int totalCount = -1;
-	protected int clicks = -1;
-	protected Transform hideRoot;
 
 	protected float popDuration = 0.3f;
 	protected float endDuration = 0.6f;
-	protected float tileSize = 0.85f;
-	protected float mininmuDistance = 0.7f;
+
+	protected float tileSize = 0.8f;
 
 	protected HashSet<HideTile> tiles = new HashSet<HideTile>();
 	protected bool active;
-	protected bool canClick;
 
 	GameObject hideTile;
 
-	float waitDuration = 1.5f;
-	float growDuration = 1.5f;
+	float waitDuration = 3;
+	float growDuration = 2;
 
-	public void Activate() {
+	public override void Activate() {
 		clicks = 0;
 		active = true;
 		canClick = true;
@@ -34,44 +31,20 @@ public class HideModeHandler : MonoBehaviour, IGameMode, ITileClickReceiver {
 		for (int i = 0; i < totalCount; ++i) {
 			tile = PoolMaster.Instance.GetPooledObject(hideTile).GetComponent<HideTile>();
 			toBeSet.Add(tile);
+			tile.SetScale(Vector3.one * tileSize);
 			tile.Reset();
 			tile.Receiver = this;
 			tile.SetRandomMatchType(6);
 			tile.transform.SetParent(transform);
-			tile.transform.localScale = Vector3.one * tileSize;
 			tile.Hiding = i < tileCount;
 			
 		}
 		toBeSet.Shuffle();
-		List<Vector3> positions = new List<Vector3>();
-		Vector3 pos;
-		bool tooClose;
-		Transform hideNode;
-		int attempts, maxAttempts = 100;
+		List<Vector3> positions = GetPositions(toBeSet.Count);
 		for (int i = 0; i < toBeSet.Count; ++i) {
-			attempts = 0;
-			do {
-				tooClose = false;
-				hideNode = hideRoot.GetChild(i % hideRoot.childCount);
-				if (hideNode.childCount == 0)
-					pos = hideNode.position;
-				else {
-					pos = new Vector3(Random.Range(hideNode.position.x, hideNode.GetChild(0).position.x), 
-						Random.Range(hideNode.position.y, hideNode.GetChild(0).position.y));
-				}
-				foreach (Vector3 v in positions) {
-					if (Vector3.SqrMagnitude(v - pos) < mininmuDistance * mininmuDistance) {
-						tooClose = true;
-						break;
-					}
-				}
-				attempts++;
-			} while (tooClose && attempts < maxAttempts);
-			positions.Add(pos);
-			toBeSet[i].transform.position = pos;
+			toBeSet[i].transform.position = positions[i];
+			tiles.Add(toBeSet[i]);
 		}
-		foreach (HideTile ht in toBeSet)
-			tiles.Add(ht);
 
 		StartCoroutine(OpenWait(waitDuration));
 	}
@@ -86,15 +59,11 @@ public class HideModeHandler : MonoBehaviour, IGameMode, ITileClickReceiver {
 		canClick = true;
 	}
 
-	public void Back() {
+	public override void Back() {
 		foreach (HideTile tile in tiles) {
 			PoolMaster.Instance.Destroy(tile.gameObject);
 		}
 		tiles.Clear();
-	}
-
-	public bool CanClick() {
-		return canClick;
 	}
 
 	public void ClickTile(Tile tile) {
@@ -104,7 +73,7 @@ public class HideModeHandler : MonoBehaviour, IGameMode, ITileClickReceiver {
 		}
 	}
 
-	public void Initialize(LevelSettings level) {
+	public override void Initialize(LevelSettings level) {
 		GameMaster.Instance.SpaceDust = 0;
 		if (hideTile == null)
 			hideTile = Resources.Load("Hide Tile") as GameObject;
@@ -114,7 +83,7 @@ public class HideModeHandler : MonoBehaviour, IGameMode, ITileClickReceiver {
 	protected void SetupRootAndAmounts(LevelTypeSettings[] levelTypes) {
 		tileCount = -1;
 		totalCount = -1;
-		hideRoot = null;
+		rootTransform = null;
 		int holder = -1;
 		foreach (LevelTypeSettings lts in levelTypes) {
 			if (lts is IntSettings) {
@@ -129,7 +98,7 @@ public class HideModeHandler : MonoBehaviour, IGameMode, ITileClickReceiver {
 			}
 
 			if (lts is TransformSettings) {
-				hideRoot = ((TransformSettings)lts).transform;
+				rootTransform = ((TransformSettings)lts).transform;
 			}
 		}
 
@@ -137,7 +106,7 @@ public class HideModeHandler : MonoBehaviour, IGameMode, ITileClickReceiver {
 			Debug.LogError("Tilecount isn't positive!");
 		if (totalCount <= 0)
 			Debug.LogError("Hidecount isn't positive!");
-		if (hideRoot == null)
+		if (rootTransform == null)
 			Debug.LogError("No tileroot!");
 	}
 
@@ -173,6 +142,7 @@ public class HideModeHandler : MonoBehaviour, IGameMode, ITileClickReceiver {
 				PoolMaster.Instance.Destroy(t.gameObject);
 			}
 			tiles.Clear();
+			ClickDustConversion();
 			yield return new WaitForSeconds(0.25f);
 			active = false;
 			GameMaster.Instance.RoundDone();

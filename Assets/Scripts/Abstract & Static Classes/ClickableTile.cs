@@ -27,6 +27,10 @@ public abstract class ClickableTile : Tile {
 		StartCoroutine(ScaleAndVibrate(duration, 0f, 1f));
 	}
 
+	public override void ShrinkVisual(float duration) {
+		StartCoroutine(ScaleAndVibrate(duration, 1f, 0f));
+	}
+
 	public override void ClickVisual(float duration) {
 		StartCoroutine(ScaleAndVibrate(duration * 3 / 4f, 1f, 1.5f));
 		StartCoroutine(ScaleAndVibrate(duration / 4f, 1f, 2 / 3f, duration * 3 / 4f));

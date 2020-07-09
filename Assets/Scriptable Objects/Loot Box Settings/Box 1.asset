@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 90a55694fab925f41a71e372f0c19dbc, type: 3}
-  m_Name: TestBox
+  m_Name: Box 1
   m_EditorClassIdentifier: 
   picture: {fileID: 21300000, guid: 22b230ba166072c478992d0eee1d6f02, type: 3}
   price: 60

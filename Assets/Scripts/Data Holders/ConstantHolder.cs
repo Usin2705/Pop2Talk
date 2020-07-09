@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UniqueIdentifierAttribute : PropertyAttribute { }
 
-public enum GameMode { Classic, Clear, Fill, Spot, Regrow, Path, Hide };
+public enum GameMode { Classic, Clear, Fill, Spot, Regrow, Path, Hide, Speed };
 
 public enum WordCardType { Repeat, Memory };
 

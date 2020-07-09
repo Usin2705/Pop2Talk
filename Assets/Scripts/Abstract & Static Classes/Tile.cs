@@ -42,6 +42,10 @@ public abstract class Tile : Interactable {
 
 	}
 
+	public virtual void ShrinkVisual(float duration) {
+
+	}
+
 	public virtual void ClickVisual(float duration) {
 
 	}

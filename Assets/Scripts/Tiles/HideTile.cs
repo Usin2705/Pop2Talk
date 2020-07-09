@@ -63,6 +63,6 @@ public class HideTile : ClickableTile {
 
 	public override void SetScale(Vector3 scale) {
 		tileRenderer.transform.localScale = scale;
-		hiderRenderer.transform.localScale = scale * 1.1f;
+		hiderRenderer.transform.localScale = scale;
 	}
 }
