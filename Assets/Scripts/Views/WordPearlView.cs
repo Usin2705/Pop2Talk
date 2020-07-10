@@ -49,7 +49,8 @@ public class WordPearlView : View {
 
 	void Done(int stars) {
 		SoundEffectManager.GetManager().FadeMusic(0.25f, 1);
-		pearls[currentWord].SetStars(stars);
+		if (stars > pearls[currentWord].Stars)
+			pearls[currentWord].SetAnimatedStars(stars, 1f);
 	}
 
 	public override UIButton GetPointedButton() {

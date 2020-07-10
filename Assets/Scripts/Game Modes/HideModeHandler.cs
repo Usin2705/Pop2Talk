@@ -111,7 +111,7 @@ public class HideModeHandler : RootModeHandler, ITileClickReceiver {
 	}
 
 	protected void ClickDustConversion() {
-		GameMaster.Instance.SpaceDust += Mathf.RoundToInt(Mathf.Lerp(300, 0, (clicks - tileCount) / Mathf.Max(1, totalCount-tileCount)));
+		GameMaster.Instance.SpaceDust += Mathf.RoundToInt(Mathf.Lerp(300, 0, (clicks - tileCount) / (float)Mathf.Max(1, totalCount-tileCount)));
 	}
 	
 	protected IEnumerator ClickRoutine(Tile tile) {

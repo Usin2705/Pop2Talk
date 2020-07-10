@@ -6,6 +6,7 @@ public class HideTile : ClickableTile {
 
 	[SerializeField] SpriteRenderer tileRenderer;
 	[SerializeField] SpriteRenderer hiderRenderer;
+	[SerializeField] Sprite[] hideSprites;
 
 	bool hiding;
 
@@ -24,6 +25,8 @@ public class HideTile : ClickableTile {
 		vibrationAmount = 0;
 		currentChild = hiderRenderer.transform;
 		currentChild.localScale = Vector3.zero;
+		hiderRenderer.color = new Color(Random.Range(0.9f, 1f), Random.Range(0.9f, 1f), Random.Range(0.9f, 1f));
+		hiderRenderer.sprite = hideSprites.GetRandom();
 	}
 
 	public void HideHider() {

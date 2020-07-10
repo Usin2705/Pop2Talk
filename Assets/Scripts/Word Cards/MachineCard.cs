@@ -22,9 +22,11 @@ public class MachineCard : BaseWordCard {
 	[SerializeField] RectTransform cover;
 	[SerializeField] RectTransform coverHideSlot;
 	[SerializeField] RectTransform coverShowSlot;
+	[SerializeField] RectTransform antiCover;
 	[SerializeField] PearlStars pearl;
 	[SerializeField] RectTransform pearlStartSlot;
 	[SerializeField] RectTransform pearlEndSlot;
+	[SerializeField] PathCreation.PathCreator pearlPath;
 	[SerializeField] Image fadeCurtain;
 	[SerializeField] Color offlineColor;
 
@@ -150,17 +152,32 @@ public class MachineCard : BaseWordCard {
 		if (newHighScore) {
 			AudioMaster.Instance.Play(this, SoundEffectManager.GetManager().GetPearlSound());
 			RectTransform rect = pearl.GetComponent<RectTransform>();
+			pearl.gameObject.SetActive(true);
 			pearl.SetUp(word.name, null);
 			pearl.SetStars(WordMaster.Instance.GetHighScore(word.name));
+			Transform parent = rect.parent;
 			while (a < 1) {
-				if (duration > 0)
-					a += Time.deltaTime / (duration / 4);
-				else
-					a = 1;
-				rect.position = Vector3.Lerp(pearlStartSlot.position, pearlEndSlot.position, a);
-				if (duration > 0)
-					yield return null;
+				a += Time.deltaTime;
+				rect.position = pearlPath.path.GetPointAtTime(a, PathCreation.EndOfPathInstruction.Stop);
+				if (a > 0.5f) {
+					if (rect.parent == parent)
+						rect.SetParent(antiCover);
+					rect.localScale = Vector3.Lerp(pearlStartSlot.localScale, pearlEndSlot.localScale, (a - 0.5f) / 0.5f);
+				}
+				yield return null;
 			}
+			yield return new WaitForSeconds(0.5f);
+			CanvasGroup cg = pearl.GetComponent<CanvasGroup>();
+			a = 0;
+			while (a < 1) {
+				a += Time.deltaTime / 0.5f;
+				cg.alpha = Mathf.Max(0, 1f - a);
+				yield return null;
+			}
+			rect.SetParent(parent);
+			pearl.gameObject.SetActive(false);
+			cg.alpha = 1;
+			rect.localScale = pearlStartSlot.localScale;
 			a = 0;
 			yield return new WaitForSeconds(duration / 4);
 		}
