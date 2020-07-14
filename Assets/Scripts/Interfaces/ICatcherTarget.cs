@@ -3,5 +3,5 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public interface ICatcherTarget {
-	void CatchClick();
+	void CatchClick(Vector3 pos);
 }

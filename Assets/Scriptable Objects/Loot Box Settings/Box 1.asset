@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90a55694fab925f41a71e372f0c19dbc, type: 3}
   m_Name: Box 1
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: 22b230ba166072c478992d0eee1d6f02, type: 3}
-  price: 60
+  picture: {fileID: 21300000, guid: 77104dea49d930a4b88abb1f1018d332, type: 3}
+  price: 100
   cosmeticIds:
   - 70d3a5df-9fbb-4843-a9ec-f0bb38c15afc
   - 5ac370a9-2654-4f76-9ef5-dcae4de5f5f2

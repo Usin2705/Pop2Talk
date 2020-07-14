@@ -7,17 +7,13 @@ public enum InteractType { None, Press, Hold, Release};
 
 public abstract class Interactable : MonoBehaviour, IPoolable {
 
-    bool canInteract = true;
+	protected Vector3 interactPosition;
 
-    public bool CanInteract {
-        get {
-            return canInteract;
-        }
+	public bool CanInteract { get; protected set; } = true;
 
-        protected set {
-            canInteract = value;
-        }
-    }
+	public virtual void SetLastInteractPosition(Vector3 pos) {
+		interactPosition = pos;
+	}
 
     public virtual bool Interact(InteractType type) {
         if (!ValidInteracting(type))

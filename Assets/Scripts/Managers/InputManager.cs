@@ -78,12 +78,13 @@ public class InputManager : MonoBehaviour {
 		foreach (Callback Cb in tryInputCallbacks)
 			Cb();
 		RaycastHit hit;
-		if (Physics.Raycast(Camera.main.ScreenPointToRay(position), out hit, ConstantHolder.interactableLayer)) {
+		if (Physics.Raycast(Camera.main.ScreenPointToRay(position), out hit, 100, ConstantHolder.interactableLayer)) {
             Interactable inter = hit.collider.GetComponentInParent<Interactable>();
-            if (inter != null)
-                inter.Interact(type);
-            else
-                Debug.Log(hit.collider.name + " isn't interactable.");
+			if (inter != null) {
+				inter.SetLastInteractPosition(hit.point);
+				inter.Interact(type);
+			} else
+				Debug.Log(hit.collider.name + " isn't interactable.");
         }
     }
 

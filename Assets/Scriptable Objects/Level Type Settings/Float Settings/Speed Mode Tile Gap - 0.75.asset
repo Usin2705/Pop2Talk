@@ -9,8 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa1a34e268fe23d4282e72e143861318, type: 3}
-  m_Name: Transform Settings - Big Random Hide Root
+  m_Script: {fileID: 11500000, guid: 7b121e23e6eeee342bb5bb420b44ccd1, type: 3}
+  m_Name: Speed Mode Tile Gap - 0.75
   m_EditorClassIdentifier: 
-  transform: {fileID: 2231083382762583130, guid: 24c1756eaa0589642a79e6780b33d25b,
-    type: 3}
+  floatingPoint: 0.75

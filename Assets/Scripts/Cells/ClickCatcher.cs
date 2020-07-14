@@ -9,7 +9,7 @@ public class ClickCatcher : Interactable {
 	public override bool Interact(InteractType type) {
 		bool interact = base.Interact(type);
 		if (interact && CatcherTarget != null) {
-			CatcherTarget.CatchClick();
+			CatcherTarget.CatchClick(interactPosition);
 		} 
 
 		return interact;

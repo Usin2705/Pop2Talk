@@ -153,6 +153,9 @@ public class GameMaster : MonoBehaviour {
 				case GameMode.Speed:
 					gameModes.Add(mode, new GameObject("Speed Handler").AddComponent<SpeedModeHandler>());
 					break;
+				case GameMode.Catch:
+					gameModes.Add(mode, new GameObject("Catch Handler").AddComponent<CatchModeHandler>());
+					break;
 			}
         }
         currentGameModeHandler = gameModes[mode];

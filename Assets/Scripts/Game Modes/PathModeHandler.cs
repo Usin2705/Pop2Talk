@@ -88,8 +88,10 @@ public class PathModeHandler : MonoBehaviour, IGameMode, ITileClickReceiver, ICa
 
 	public void Initialize(LevelSettings level) {
 		GameMaster.Instance.SpaceDust = 0;
-		catcher = PoolMaster.Instance.GetPooledObject((GameObject)Resources.Load("Click Catcher"));
-		catcher.GetComponent<ClickCatcher>().CatcherTarget = this;
+		if (catcher == null) {
+			catcher = PoolMaster.Instance.GetPooledObject((GameObject)Resources.Load("Click Catcher"), transform);
+			catcher.GetComponent<ClickCatcher>().CatcherTarget = this;
+		}
 		SetUpPathAndSpeeds(level.typeSettings);
 	}
 
@@ -158,7 +160,8 @@ public class PathModeHandler : MonoBehaviour, IGameMode, ITileClickReceiver, ICa
 			canClick = true;
 	}
 
-	public void CatchClick() {
+	public void CatchClick(Vector3 pos) {
+		Debug.Log("help");
 		if (!active)
 			return;
 		AudioMaster.Instance.Play(this, SoundEffectManager.GetManager().GetBadClickSound());
