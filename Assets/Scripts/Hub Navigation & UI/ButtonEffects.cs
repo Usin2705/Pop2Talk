@@ -18,9 +18,11 @@ public class ButtonEffects : MonoBehaviour {
 	float targetScale = 1;
 
 	float wobbleTimer;
+	Vector3 orientation;
 
 	void Awake() {
 		uib = GetComponent<UIButton>();
+		orientation = new Vector3(Mathf.Sign(transform.localScale.x), Mathf.Sign(transform.localScale.y), Mathf.Sign(transform.localScale.z));
 		targetScale = deselectedScale;
 		Scale();
 		wobbleTimer = Random.Range(0, Mathf.PI * 2);
@@ -66,7 +68,7 @@ public class ButtonEffects : MonoBehaviour {
 			currentScale = targetScale;
 		}
 
-		transform.localScale = currentScale * Vector3.one;
+		transform.localScale = currentScale * orientation;
 	}
 
 	void Deselect() {
