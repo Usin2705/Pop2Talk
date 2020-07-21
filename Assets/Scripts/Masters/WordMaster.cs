@@ -41,7 +41,6 @@ public class WordMaster : MonoBehaviour {
 
 	WordCardType[] sampleTypes;
 	string[] sampleWords;
-	float par;
 
 	Dictionary<string, int> bestStars = new Dictionary<string, int>();
 	HashSet<string> unsaidWords = new HashSet<string>();
@@ -49,6 +48,8 @@ public class WordMaster : MonoBehaviour {
 	BaseWordCardHandler currentWordCardHandler;
 	Dictionary<WordCardType, BaseWordCardHandler> wordCardHandlers = new Dictionary<WordCardType, BaseWordCardHandler>();
 	Dictionary<string, WordData> stringWordDataDictionary = new Dictionary<string, WordData>();
+
+	float starMinimum = 1.1f;
 
 
 	public void Dequeue() {
@@ -103,10 +104,9 @@ public class WordMaster : MonoBehaviour {
 		}
 	}
 
-	public void SetSamples(WordCardType[] types, string[] words, float par) {
+	public void SetSamples(WordCardType[] types, string[] words) {
 		sampleTypes = types;
 		sampleWords = words;
-		this.par = par;
 	}
 
 	public WordData StringToWordData(string word) {
@@ -134,7 +134,7 @@ public class WordMaster : MonoBehaviour {
 	}
 
 	public float GetStarRatio(float starAverage) {
-		return Mathf.Clamp01((starAverage - par + 0.1f) / (5 - par + 0.1f)); //0.1f so that you get score at exactly spar
+		return Mathf.Clamp01((starAverage - starMinimum) / (5 - starMinimum));
 	}
 
 	public int GetHighScore(string word) {

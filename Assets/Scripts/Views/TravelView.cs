@@ -65,7 +65,7 @@ public class TravelView : View {
 
 	void PrepareButtons() {
 		int largestModuleIndex = Mathf.Min(levelBatches.Length, FakeServerManager.GetManager().GetLargestModuleIndex());
-		WordMaster.Instance.SetSamples(FakeServerManager.GetManager().GetCardTypes(), FakeServerManager.GetManager().GetCardWords(), FakeServerManager.GetManager().GetCardPar());
+		WordMaster.Instance.SetSamples(FakeServerManager.GetManager().GetCardTypes(), FakeServerManager.GetManager().GetCardWords());
 
 		List<int> availableIndices = new List<int>();
 		List<List<LevelSettings>> suitableLevels = new List<List<LevelSettings>>();

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43801968d105a1a4d9a773b29afce535, type: 3}
+  m_Name: Hide 4 - Horizontal Rows
+  m_EditorClassIdentifier: 
+  memoryOnly: 0
+  minWords: 1
+  maxWords: 20
+  spacedustAffectsCoins: 0
+  spaceDustMin: 0
+  spaceDustMax: 0
+  gameMode: 6
+  typeSettings:
+  - {fileID: 11400000, guid: 3921ef0274ad285429b4b4fac560c1b5, type: 2}
+  - {fileID: 11400000, guid: 62bb1146de23267448bb5ffe18f65704, type: 2}
+  - {fileID: 11400000, guid: 1758ed8d1ae03c64bb4c0aecdb67edc7, type: 2}

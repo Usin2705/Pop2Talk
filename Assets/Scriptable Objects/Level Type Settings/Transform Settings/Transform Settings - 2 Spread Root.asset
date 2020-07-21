@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa1a34e268fe23d4282e72e143861318, type: 3}
+  m_Name: Transform Settings - 2 Spread Root
+  m_EditorClassIdentifier: 
+  transform: {fileID: 2231083382762583130, guid: e4fa1f6512c931c4b9f2f547d61cbbb2,
+    type: 3}

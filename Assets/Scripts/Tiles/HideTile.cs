@@ -25,8 +25,11 @@ public class HideTile : ClickableTile {
 		vibrationAmount = 0;
 		currentChild = hiderRenderer.transform;
 		currentChild.localScale = Vector3.zero;
-		hiderRenderer.color = new Color(Random.Range(0.9f, 1f), Random.Range(0.9f, 1f), Random.Range(0.9f, 1f));
-		hiderRenderer.sprite = hideSprites.GetRandom();
+		float random = Random.Range(0.6f, 1f);
+		hiderRenderer.color = new Color(random, random, random);
+		Sprite s = hideSprites.GetRandom();
+		foreach (SpriteRenderer rend in hiderRenderer.transform.parent.GetComponentsInChildren<SpriteRenderer>())
+			rend.sprite = s;
 	}
 
 	public void HideHider() {
@@ -34,18 +37,24 @@ public class HideTile : ClickableTile {
 	}
 
 	public void FadeHide(float duration) {
-		if (!Hiding)
-			return;
-		currentChild = tileRenderer.transform;
+		currentChild = transform;
 		PopVisual(duration);
 	}
 
+	public void GrowReveal(float duration) {
+		StartCoroutine(ScaleAndVibrate(tileRenderer.transform, duration, 0f, 1f));
+		Debug.Log(childStartScale);
+		StartCoroutine(ScaleAndVibrate(hiderRenderer.transform.parent.GetChild(1), duration, 0f, 1f));
+	}
+
+
 	public override void PopVisual(float duration) {
-		StartCoroutine(ScaleAndVibrate(duration, 1f, 0.05f));
+		StartCoroutine(ScaleAndVibrate(currentChild, duration, 1f, 0.01f));
 	}
 
 	public virtual void SetMatchType(MatchType type) {
-		tileRenderer.sprite = GridManager.GetManager().GetMatchSprite(type);
+		foreach(SpriteRenderer rend in tileRenderer.GetComponentsInChildren<SpriteRenderer>())
+			rend.sprite = GridManager.GetManager().GetMatchSprite(type);
 	}
 
 	public void SetRandomMatchType(int maxTypes = -1, HashSet<MatchType> excludedTypes = null) {
@@ -65,7 +74,9 @@ public class HideTile : ClickableTile {
 	}
 
 	public override void SetScale(Vector3 scale) {
+		transform.localScale = Vector3.one;
 		tileRenderer.transform.localScale = scale;
 		hiderRenderer.transform.localScale = scale;
+		hiderRenderer.transform.parent.GetChild(1).localScale = scale;
 	}
 }

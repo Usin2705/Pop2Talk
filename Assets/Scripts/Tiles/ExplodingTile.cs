@@ -38,7 +38,7 @@ public class ExplodingTile : MatchableTile, ISpecialTile {
         if (added)
             base.PopVisual(duration);
         else {
-            StartCoroutine(ScaleAndVibrate(duration, 1f, 1.5f));
+            StartCoroutine(ScaleAndVibrate(currentChild, duration, 1f, 1.5f));
         }
     }
 }

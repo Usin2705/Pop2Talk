@@ -10,15 +10,16 @@ public class HideModeHandler : RootModeHandler, ITileClickReceiver {
 	protected float popDuration = 0.3f;
 	protected float endDuration = 0.6f;
 
-	protected float tileSize = 0.8f;
+	protected float tileSize = 0.75f;
 
 	protected HashSet<HideTile> tiles = new HashSet<HideTile>();
 	protected bool active;
 
 	GameObject hideTile;
 
-	float waitDuration = 3;
-	float growDuration = 2;
+	float waitDuration = 1.5f;
+	float growDuration = 2f;
+	float revealDuration = 0.5f;
 
 	public override void Activate() {
 		clicks = 0;
@@ -46,14 +47,21 @@ public class HideModeHandler : RootModeHandler, ITileClickReceiver {
 			tiles.Add(toBeSet[i]);
 		}
 
-		StartCoroutine(OpenWait(waitDuration));
+		StartCoroutine(OpenWait());
 	}
 
-	IEnumerator OpenWait(float duration) {
+	IEnumerator OpenWait() {
 		canClick = false;
+		foreach (HideTile ht in tiles) {
+			ht.SetScale(Vector3.zero);
+		}
+		yield return new WaitForSeconds(revealDuration);
+		foreach (HideTile ht in tiles) {
+			ht.GrowReveal(revealDuration);
+		}
 		yield return new WaitForSeconds(waitDuration);
-		foreach (Tile t in tiles) {
-			t.GrowVisual(growDuration);
+		foreach (HideTile ht in tiles) {
+			ht.GrowVisual(growDuration);
 		}
 		yield return new WaitForSeconds(growDuration);
 		canClick = true;
@@ -84,6 +92,7 @@ public class HideModeHandler : RootModeHandler, ITileClickReceiver {
 		tileCount = -1;
 		totalCount = -1;
 		rootTransform = null;
+		shufflePositions = false;
 		int holder = -1;
 		foreach (LevelTypeSettings lts in levelTypes) {
 			if (lts is IntSettings) {
@@ -99,6 +108,10 @@ public class HideModeHandler : RootModeHandler, ITileClickReceiver {
 
 			if (lts is TransformSettings) {
 				rootTransform = ((TransformSettings)lts).transform;
+			}
+
+			if (lts is BoolSettings) {
+				shufflePositions = ((BoolSettings)lts).boolean;
 			}
 		}
 
@@ -130,12 +143,12 @@ public class HideModeHandler : RootModeHandler, ITileClickReceiver {
 		GameMaster.Instance.ClickDone();
 		if (GameMaster.Instance.RemainingProgress == 0) {
 			foreach(Tile t in tiles) {
-				if (t.CanPop) {
+				/*if (t.CanPop) {
 					t.PopVisual(endDuration);
 				}
-				if (((HideTile)t).Hiding) {
+				if (((HideTile)t).Hiding) {*/
 					((HideTile)t).FadeHide(endDuration);
-				}
+				//}
 			}
 			yield return new WaitForSeconds(endDuration);
 			foreach (Tile t in tiles) {

@@ -60,21 +60,21 @@ public abstract class Tile : Interactable {
 		childStartScale = currentChild.localScale;
 	}
 
-	protected IEnumerator ScaleAndVibrate(float duration, float startScale, float targetScale, float delay = 0) {
+	protected IEnumerator ScaleAndVibrate(Transform target, float duration, float startScale, float targetScale, float delay = 0) {
 		if (delay > 0)
 			yield return new WaitForSeconds(delay);
 		if (duration <= 0)
 			yield break;
 		float a = 0;
-		Vector3 startPos = currentChild.localPosition;
+		Vector3 startPos = target.localPosition;
 		Vector3 baseScale = childStartScale;
 		while (a < 1) {
 			a += Time.deltaTime / duration;
-			currentChild.localPosition = startPos + new Vector3(vibrationAmount * Random.Range(-1f, 1f), vibrationAmount * Random.Range(-1f, 1f));
-			currentChild.localScale = Vector3.Lerp(baseScale * startScale, baseScale * targetScale, a * a);
+			target.localPosition = startPos + new Vector3(vibrationAmount * Random.Range(-1f, 1f), vibrationAmount * Random.Range(-1f, 1f));
+			target.localScale = Vector3.Lerp(baseScale * startScale, baseScale * targetScale, a * a);
 			yield return null;
 		}
-		currentChild.localPosition = Vector3.zero;
+		target.localPosition = startPos;
 	}
 
 	protected IEnumerator MoveTowards(Vector3 targetPosition, float duration) {
@@ -92,11 +92,15 @@ public abstract class Tile : Interactable {
 
 	public virtual void Reset() {
 		alreadyPopped = false;
+		foreach (Collider c in GetComponentsInChildren<Collider>())
+			c.enabled = true;
 		currentChild.localPosition = childStartPos;
 	}
 
 	public virtual void Pop() {
 		alreadyPopped = true;
+		foreach (Collider c in GetComponentsInChildren<Collider>())
+			c.enabled = false;
 	}
 
 	public virtual void SetScale(Vector3 scale) {

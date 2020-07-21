@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SpeedModeHandler : RootModeHandler, ITileClickReceiver {
-	
+
 	protected int tileCount = -1;
 	protected float tileTime = -1;
 	protected float tileGap = -1;
-	protected bool shuffle = true;
 
 	protected float tileSize = 1;
 	float spawnTime = 0;
@@ -37,12 +36,10 @@ public class SpeedModeHandler : RootModeHandler, ITileClickReceiver {
 		shrinkingTiles.Clear();
 		StartCoroutine(SpeedRoutine());
 	}
-	
+
 	IEnumerator SpeedRoutine() {
 		yield return new WaitForSeconds(startDelay);
 		List<Vector3> positions = GetPositions(tileCount);
-		if (shuffle)
-			positions.Shuffle();
 		float maxTime = (tileCount - 1) * tileGap + tileTime;
 		spawnTime = 0;
 		float resizeDuration = Mathf.Min(growDuration, tileTime / 2f);
@@ -61,14 +58,14 @@ public class SpeedModeHandler : RootModeHandler, ITileClickReceiver {
 				tile.Receiver = this;
 				tile.SetRandomMatchType(6);
 				tile.transform.SetParent(transform);
-				tile.SetScale(Vector3.one * tileSize); 
+				tile.SetScale(Vector3.one * tileSize);
 				tile.transform.position = positions[spawnCount];
 				tile.GrowVisual(resizeDuration);
 				spawnTime += tileGap;
 				spawnCount++;
 			}
 
-			foreach(MatchableTile t in tiles.Keys) {
+			foreach (MatchableTile t in tiles.Keys) {
 				if (!shrinkingTiles.Contains(t)) {
 					if (tiles[t] + shrinkAhead < timer) {
 						t.ShrinkVisual(timer + resizeDuration - (tiles[t] + shrinkAhead));
@@ -134,7 +131,7 @@ public class SpeedModeHandler : RootModeHandler, ITileClickReceiver {
 		tileTime = -1;
 		tileGap = -1;
 		rootTransform = null;
-		shuffle = true;
+		shufflePositions = true;
 		float holder = -1;
 
 		foreach (LevelTypeSettings lts in levelTypes) {
@@ -152,7 +149,7 @@ public class SpeedModeHandler : RootModeHandler, ITileClickReceiver {
 				if (holder == -1) {
 					holder = ((FloatSettings)lts).floatingPoint;
 				} else {
-					tileGap  = ((FloatSettings)lts).floatingPoint;
+					tileGap = ((FloatSettings)lts).floatingPoint;
 					tileTime = Mathf.Max(tileGap, holder);
 					tileGap = Mathf.Min(tileGap, holder);
 				}
@@ -160,7 +157,7 @@ public class SpeedModeHandler : RootModeHandler, ITileClickReceiver {
 			}
 
 			if (lts is BoolSettings) {
-				shuffle = ((BoolSettings)lts).boolean;
+				shufflePositions = ((BoolSettings)lts).boolean;
 			}
 		}
 
@@ -175,6 +172,6 @@ public class SpeedModeHandler : RootModeHandler, ITileClickReceiver {
 	}
 
 	protected void ClickDustConversion() {
-		GameMaster.Instance.SpaceDust += Mathf.RoundToInt(Mathf.Lerp(300, 0, clicks /(float)tileCount));
+		GameMaster.Instance.SpaceDust += Mathf.RoundToInt(Mathf.Lerp(300, 0, clicks / (float)tileCount));
 	}
 }

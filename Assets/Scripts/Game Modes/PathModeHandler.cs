@@ -161,7 +161,6 @@ public class PathModeHandler : MonoBehaviour, IGameMode, ITileClickReceiver, ICa
 	}
 
 	public void CatchClick(Vector3 pos) {
-		Debug.Log("help");
 		if (!active)
 			return;
 		AudioMaster.Instance.Play(this, SoundEffectManager.GetManager().GetBadClickSound());

@@ -110,7 +110,6 @@ public class MachineCard : BaseWordCard {
 
 	public override void RevealInstantly() {
 		gameObject.SetActive(true);
-		Debug.Log(gameObject.activeSelf);
 		fadeCurtain.gameObject.SetActive(true);
 		fadeCurtain.color = curtainColor;
 		cardHolder.position = cardShowSlot.position;

@@ -20,20 +20,20 @@ public abstract class ClickableTile : Tile {
 	}
 
 	public override void PopVisual(float duration) {
-		StartCoroutine(ScaleAndVibrate(duration, 1f, 0.25f));
+		StartCoroutine(ScaleAndVibrate(currentChild, duration, 1f, 0.25f));
 	}
 
 	public override void GrowVisual(float duration) {
-		StartCoroutine(ScaleAndVibrate(duration, 0f, 1f));
+		StartCoroutine(ScaleAndVibrate(currentChild, duration, 0f, 1f));
 	}
 
 	public override void ShrinkVisual(float duration) {
-		StartCoroutine(ScaleAndVibrate(duration, 1f, 0f));
+		StartCoroutine(ScaleAndVibrate(currentChild, duration, 1f, 0f));
 	}
 
 	public override void ClickVisual(float duration) {
-		StartCoroutine(ScaleAndVibrate(duration * 3 / 4f, 1f, 1.5f));
-		StartCoroutine(ScaleAndVibrate(duration / 4f, 1f, 2 / 3f, duration * 3 / 4f));
+		StartCoroutine(ScaleAndVibrate(currentChild, duration * 3 / 4f, 1f, 1.5f));
+		StartCoroutine(ScaleAndVibrate(currentChild, duration / 4f, 1f, 2 / 3f, duration * 3 / 4f));
 	}
 
 	public override void MoveToVisual(Vector3 position, float duration) {

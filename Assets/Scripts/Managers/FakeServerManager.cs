@@ -67,8 +67,4 @@ public class FakeServerManager : MonoBehaviour {
 	public WordCardType[] GetCardTypes() {
 		return cardTypes;
 	}
-
-	public float GetCardPar() {
-		return 2;
-	}
 }

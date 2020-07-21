@@ -10,12 +10,11 @@ public class CatchModeHandler : MonoBehaviour, IGameMode, ICatcherTarget {
 	protected Transform rootTransform;
 
 	protected float tileSize = 1;
-	float spawnTime = 0;
 
 	protected Dictionary<MatchableTile, int> tiles = new Dictionary<MatchableTile, int>();
 	protected Transform[] portals;
 	protected bool active;
-	
+
 	protected int collectedTiles;
 	protected int poppedTiles;
 	protected int tilesPlaying;
@@ -25,7 +24,7 @@ public class CatchModeHandler : MonoBehaviour, IGameMode, ICatcherTarget {
 	protected float popDuration = 0.2f;
 	protected float growDuration = 0.25f;
 	protected float startDelay = 1.5f;
-	protected float tileCatcherSpeed = 15f;
+	protected float tileCatcherSpeed = 11f;
 
 	GameObject tileCatcher;
 	GameObject clickCatcher;
@@ -35,6 +34,8 @@ public class CatchModeHandler : MonoBehaviour, IGameMode, ICatcherTarget {
 		poppedTiles = 0;
 		tilesPlaying = 0;
 		active = true;
+		GameMaster.Instance.MaxProgress = tileCount;
+		GameMaster.Instance.RemainingProgress = tileCount;
 		StartCoroutine(TileDropRoutine());
 	}
 
@@ -125,6 +126,7 @@ public class CatchModeHandler : MonoBehaviour, IGameMode, ICatcherTarget {
 	IEnumerator PopRoutine(MatchableTile mt) {
 		mt.Pop();
 		mt.ShrinkVisual(popDuration);
+		GameMaster.Instance.RemainingProgress--;
 		yield return null; //Wait for next frame to not break enumeration
 		tiles.Remove(mt);
 		yield return new WaitForSeconds(popDuration);
@@ -184,10 +186,12 @@ public class CatchModeHandler : MonoBehaviour, IGameMode, ICatcherTarget {
 	}
 
 	protected void CatchDustConversion() {
-		GameMaster.Instance.SpaceDust += Mathf.RoundToInt(Mathf.Lerp(300, 0, collectedTiles / (float)tileCount));
+		GameMaster.Instance.SpaceDust += Mathf.RoundToInt(Mathf.Lerp(300, 0, (tileCount - collectedTiles) / (float)tileCount));
 	}
 
 	public void CatchClick(Vector3 pos) {
+		if (!active)
+			return;
 		float shortestDistance = float.MaxValue;
 		float distance;
 		int chosenIndex = -1;
@@ -201,7 +205,7 @@ public class CatchModeHandler : MonoBehaviour, IGameMode, ICatcherTarget {
 		}
 
 		if (targetIndex == chosenIndex) {
-			shortestDistance = shortestDistance * 1.25f;
+			shortestDistance = 0.8f;
 
 			for (int i = 0; i < portals.Length; ++i) {
 				if (i == targetIndex)
@@ -229,16 +233,17 @@ public class CatchModeHandler : MonoBehaviour, IGameMode, ICatcherTarget {
 		if (tilesPlaying == 0)
 			GameMaster.Instance.Clicked();
 		tilesPlaying++;
+		collectedTiles++;
 		float a = 0;
+		GameMaster.Instance.PlayPopSound(0);
 		while (a < popDuration) {
-			mt.transform.position = Vector3.MoveTowards(mt.transform.position, tileCatcher.transform.position, tileSpeed * Time.deltaTime);
+			mt.transform.position = Vector3.MoveTowards(mt.transform.position, tileCatcher.transform.position, tileCatcherSpeed * Time.deltaTime);
 			a += Time.deltaTime;
 			yield return null;
 		}
-		GameMaster.Instance.PlayPopSound(0);
-		yield return new WaitForSeconds(GameMaster.Instance.GetPopSound().GetLength());
+		yield return new WaitForSeconds(Mathf.Max(0,GameMaster.Instance.GetPopSound().GetLength()-popDuration));
 		tilesPlaying--;
-		if (tilesPlaying == 0)
+		if (tilesPlaying == 0 && active)
 			GameMaster.Instance.ClickDone();
 	}
 
