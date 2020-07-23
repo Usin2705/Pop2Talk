@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4088725462790106144}
   - component: {fileID: 2467686788781018767}
   m_Layer: 0
-  m_Name: Path Creator - Triangle Loops
+  m_Name: Path Creator - Multicircle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,15 +46,42 @@ MonoBehaviour:
   editorData:
     _bezierPath:
       points:
-      - {x: 0, y: 3.5, z: 0}
-      - {x: 0.75, y: 3.5, z: 0}
-      - {x: -1.054712, y: -3.5145655, z: 0}
-      - {x: -2, y: -2.5, z: 0}
-      - {x: -2.945288, y: -1.4854347, z: 0}
-      - {x: 2.6793647, y: -1.352897, z: 0}
-      - {x: 2, y: -2.5, z: 0}
-      - {x: 1.3206353, y: -3.6471028, z: 0}
-      - {x: -0.75, y: 3.5, z: 0}
+      - {x: 0, y: 2.25, z: 0}
+      - {x: 1.5, y: 2.25, z: 0}
+      - {x: 1.5, y: -0.75, z: 0}
+      - {x: 0, y: -0.75, z: 0}
+      - {x: -1.5, y: -0.75, z: 0}
+      - {x: -1.5, y: 2.25, z: 0}
+      - {x: 0, y: 2.25, z: 0}
+      - {x: 1.5, y: 2.25, z: 0}
+      - {x: 2.25, y: 1.5, z: 0}
+      - {x: 2.25, y: 0, z: 0}
+      - {x: 2.25, y: -1.5, z: 0}
+      - {x: -0.75, y: -1.5, z: 0}
+      - {x: -0.75, y: 0, z: 0}
+      - {x: -0.75, y: 1.5, z: 0}
+      - {x: 2.25, y: 1.5, z: 0}
+      - {x: 2.25, y: 0, z: 0}
+      - {x: 2.25, y: -1.5, z: 0}
+      - {x: 1.5, y: -2.25, z: 0}
+      - {x: 0, y: -2.25, z: 0}
+      - {x: -1.5, y: -2.25, z: 0}
+      - {x: -1.5, y: 0.75, z: 0}
+      - {x: 0, y: 0.75, z: 0}
+      - {x: 1.5, y: 0.75, z: 0}
+      - {x: 1.5, y: -2.25, z: 0}
+      - {x: 0, y: -2.25, z: 0}
+      - {x: -1.5, y: -2.25, z: 0}
+      - {x: -2.25, y: -1.3199979, z: 0}
+      - {x: -2.25, y: 0, z: 0}
+      - {x: -2.25, y: 1.3199979, z: 0}
+      - {x: 0.75, y: 1.5, z: 0}
+      - {x: 0.75, y: 0, z: 0}
+      - {x: 0.75, y: -1.5, z: 0}
+      - {x: -2.25, y: -1.5, z: 0}
+      - {x: -2.25, y: 0, z: 0}
+      - {x: -2.25, y: 1.5, z: 0}
+      - {x: -1.5, y: 2.25, z: 0}
       isClosed: 1
       space: 1
       controlMode: 1
@@ -64,6 +91,15 @@ MonoBehaviour:
         m_Center: {x: 0, y: 0, z: 0}
         m_Extent: {x: 2, y: 0.14433756, z: 0}
       perAnchorNormalsAngle:
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
       - 0
       - 0
       - 0
@@ -82,7 +118,7 @@ MonoBehaviour:
     keepConstantHandleSize: 0
     showNormalsInVertexMode: 0
     showBezierPathInVertexMode: 0
-    showDisplayOptions: 0
+    showDisplayOptions: 1
     showPathOptions: 1
     showVertexPathDisplayOptions: 0
     showVertexPathOptions: 1

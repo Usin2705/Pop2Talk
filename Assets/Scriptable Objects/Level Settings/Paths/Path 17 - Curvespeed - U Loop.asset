@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 43801968d105a1a4d9a773b29afce535, type: 3}
-  m_Name: Path - Whirly 1
+  m_Name: Path 17 - Curvespeed - U Loop
   m_EditorClassIdentifier: 
   memoryOnly: 0
   minWords: 1
@@ -21,6 +21,7 @@ MonoBehaviour:
   gameMode: 5
   typeSettings:
   - {fileID: 11400000, guid: 21c975fd29039374c8262c1ee187a025, type: 2}
-  - {fileID: 11400000, guid: f9cbdc80e6e7cbd44b6094a7df7016ec, type: 2}
-  - {fileID: 11400000, guid: fded43dc857fc144499acb768db0c06e, type: 2}
-  - {fileID: 11400000, guid: a1411748864af8e40bdc58927e206a78, type: 2}
+  - {fileID: 11400000, guid: 2f973b359cedda944a0eca5bc84bbdcf, type: 2}
+  - {fileID: 11400000, guid: 263c6d00d9d4ce048a46efa54fc465d0, type: 2}
+  - {fileID: 11400000, guid: d4e017f503799a0408240b6d266b6a15, type: 2}
+  - {fileID: 11400000, guid: 95479a6218306b34a99bebe4d45adaa7, type: 2}

@@ -9,16 +9,19 @@ public class PathModeHandler : MonoBehaviour, IGameMode, ITileClickReceiver, ICa
 	protected int tileCount = -1;
 	protected PathCreation.PathCreator pathCreator;
 	protected int clicks = -1;
+	protected AnimationCurve speedCurve;
 
 	protected float popDuration = 0.3f;
 	protected float tileSize = 0.9f;
 
-	protected Dictionary<MatchableTile, float> pathTiles = new Dictionary<MatchableTile, float>();
+	protected Dictionary<MatchableTile, float> tilePositions = new Dictionary<MatchableTile, float>();
+	protected HashSet<MatchableTile> pathTiles = new HashSet<MatchableTile>();
 	protected bool active;
-	protected float routeTime;
 	protected bool canClick;
+	protected int activeClicks;
 
 	GameObject catcher;
+
 
 	public void Activate() {
 		clicks = 0;
@@ -30,8 +33,8 @@ public class PathModeHandler : MonoBehaviour, IGameMode, ITileClickReceiver, ICa
 		float tilePos;
 		MatchableTile tile;
 		bool tooClose;
-		routeTime = 0;
-		int attempts, maxAttempts = 500;
+		int attempts, maxAttempts = 1000;
+		float minDistance = tileSize * 1.5f;
 		for (int i = 0; i < tileCount; ++i) {
 			tile = PoolMaster.Instance.GetPooledObject(GridManager.GetManager().GetMatchableTilePrefab()).GetComponent<MatchableTile>();
 			attempts = 0;
@@ -39,27 +42,32 @@ public class PathModeHandler : MonoBehaviour, IGameMode, ITileClickReceiver, ICa
 				attempts++;
 				tooClose = false;
 				tilePos = Random.Range(0, length);
-				foreach (MatchableTile t in pathTiles.Keys) {
-					tooClose = Mathf.Abs(pathTiles[t] - tilePos) < tileSize || Mathf.Abs(pathTiles[t] - tilePos) > length - tileSize;
+				foreach (MatchableTile t in tilePositions.Keys) {
+					tooClose = Mathf.Abs(tilePositions[t] - tilePos) < minDistance || Mathf.Abs(tilePositions[t] - tilePos) > length - minDistance;
 					if (tooClose)
 						break;
 				}
 			} while (tooClose && attempts < maxAttempts);
-			pathTiles.Add(tile, Random.Range(0, length));
+			if (attempts >= maxAttempts)
+				Debug.Log("too loopy");
+			pathTiles.Add(tile);
+			tilePositions.Add(tile, tilePos);
 			tile.Reset();
-			tile.transform.position = pathCreator.path.GetPointAtDistance(pathTiles[tile]);
+			tile.transform.position = pathCreator.path.GetPointAtDistance(tilePositions[tile]);
 			tile.Receiver = this;
 			tile.SetRandomMatchType(6);
 			tile.SetStencil(false);
 			tile.transform.SetParent(transform);
 			tile.SetScale(Vector3.one * tileSize);
+			tile.GrowVisual(0.33f);
 		}
 	}
 
 	public void Back() {
-		foreach (MatchableTile tile in pathTiles.Keys) {
+		foreach (MatchableTile tile in tilePositions.Keys) {
 			PoolMaster.Instance.Destroy(tile.gameObject);
 		}
+		tilePositions.Clear();
 		pathTiles.Clear();
 		PoolMaster.Instance.Destroy(catcher);
 		catcher = null;
@@ -71,7 +79,7 @@ public class PathModeHandler : MonoBehaviour, IGameMode, ITileClickReceiver, ICa
 	}
 
 	public void ClickTile(Tile tile) {
-		if (tile is MatchableTile && pathTiles.ContainsKey((MatchableTile)tile)) {
+		if (tile is MatchableTile && tilePositions.ContainsKey((MatchableTile)tile)) {
 			clicks++;
 			StartCoroutine(ClickRoutine(tile));
 		}
@@ -80,9 +88,10 @@ public class PathModeHandler : MonoBehaviour, IGameMode, ITileClickReceiver, ICa
 	void Update() {
 		if (!active)
 			return;
-		routeTime += Time.deltaTime * Mathf.Lerp(highSpeed, lowSpeed, pathTiles.Count/(float)tileCount);
-		foreach (MatchableTile tile in pathTiles.Keys) {
-			tile.transform.position = pathCreator.path.GetPointAtDistance(pathTiles[tile] + routeTime);
+		float speed = Time.deltaTime * Mathf.Lerp(highSpeed, lowSpeed, tilePositions.Count / (float)tileCount);
+		foreach (MatchableTile tile in pathTiles) {
+			tilePositions[tile] += speed * ((speedCurve == null) ? 1 : speedCurve.Evaluate(tilePositions[tile] / pathCreator.path.length));
+			tile.transform.position = pathCreator.path.GetPointAtDistance(tilePositions[tile]);
 		}
 	}
 
@@ -100,6 +109,8 @@ public class PathModeHandler : MonoBehaviour, IGameMode, ITileClickReceiver, ICa
 		lowSpeed = -1;
 		highSpeed = -1;
 		pathCreator = null;
+		speedCurve = null;
+
 		float holder = -1;
 		foreach (LevelTypeSettings lts in levelTypes) {
 			if (lts is PathSettings) {
@@ -120,6 +131,8 @@ public class PathModeHandler : MonoBehaviour, IGameMode, ITileClickReceiver, ICa
 				}
 				continue;
 			}
+			if (lts is CurveSettings)
+				speedCurve = ((CurveSettings)lts).curve;
 		}
 
 		if (tileCount <= 0) {
@@ -137,27 +150,32 @@ public class PathModeHandler : MonoBehaviour, IGameMode, ITileClickReceiver, ICa
 	}
 
 	protected void ClickDustConversion() {
-		GameMaster.Instance.SpaceDust += Mathf.RoundToInt(Mathf.Lerp(300, 0, (clicks - tileCount) / tileCount));
+		GameMaster.Instance.SpaceDust += Mathf.RoundToInt(Mathf.Lerp(300, 0, (clicks - tileCount) / (float)tileCount));
 	}
-	
+
 	protected IEnumerator ClickRoutine(Tile tile) {
-		canClick = false;
+		if (activeClicks == 0)
+			GameMaster.Instance.Clicked();
+		activeClicks++;
 		tile.PopVisual(popDuration);
 		tile.Pop();
+		tilePositions.Remove((MatchableTile)tile);
 		pathTiles.Remove((MatchableTile)tile);
 		GameMaster.Instance.RemainingProgress--;
-		GameMaster.Instance.Clicked();
 		yield return new WaitForSeconds(popDuration);
-		GameMaster.Instance.PlayPopSound(0);
+		GameMaster.Instance.PlayPopSound(activeClicks-1);
 		PoolMaster.Instance.Destroy(tile.gameObject);
 		yield return new WaitForSeconds(GameMaster.Instance.GetPopSound().GetLength());
-		GameMaster.Instance.ClickDone();
-		if (pathTiles.Count == 0 && active) {
-			active = false;
-			ClickDustConversion();
-			GameMaster.Instance.RoundDone();
-		} else
-			canClick = true;
+		activeClicks--;
+		if (activeClicks == 0) {
+			GameMaster.Instance.ClickDone();
+			if (tilePositions.Count == 0 && active) {
+				active = false;
+				canClick = false;
+				ClickDustConversion();
+				GameMaster.Instance.RoundDone();
+			}
+		}
 	}
 
 	public void CatchClick(Vector3 pos) {

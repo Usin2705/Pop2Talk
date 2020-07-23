@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43801968d105a1a4d9a773b29afce535, type: 3}
+  m_Name: Path 14 - Curvespeed - Triangle Loops
+  m_EditorClassIdentifier: 
+  memoryOnly: 0
+  minWords: 1
+  maxWords: 20
+  spacedustAffectsCoins: 0
+  spaceDustMin: 0
+  spaceDustMax: 0
+  gameMode: 5
+  typeSettings:
+  - {fileID: 11400000, guid: 21c975fd29039374c8262c1ee187a025, type: 2}
+  - {fileID: 11400000, guid: 8271afea05b3758479dd9386d3e71f39, type: 2}
+  - {fileID: 11400000, guid: 263c6d00d9d4ce048a46efa54fc465d0, type: 2}
+  - {fileID: 11400000, guid: d4e017f503799a0408240b6d266b6a15, type: 2}
+  - {fileID: 11400000, guid: a3aeb5dcbe2af9e4da842be6fdb81f00, type: 2}

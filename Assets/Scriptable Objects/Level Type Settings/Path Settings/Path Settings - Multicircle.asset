@@ -10,6 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0394d3c0a718997488e6a83142d8811f, type: 3}
-  m_Name: Path Settings - Whirly 1
+  m_Name: Path Settings - Multicircle
   m_EditorClassIdentifier: 
-  path: {fileID: 2467686788781018767, guid: b24bd4bf86308b74ba30f34e1180c91d, type: 3}
+  path: {fileID: 2467686788781018767, guid: d860d6d61def5b64ba14965e170736cb, type: 3}
