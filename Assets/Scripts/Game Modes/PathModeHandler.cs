@@ -154,8 +154,7 @@ public class PathModeHandler : MonoBehaviour, IGameMode, ITileClickReceiver, ICa
 	}
 
 	protected IEnumerator ClickRoutine(Tile tile) {
-		if (activeClicks == 0)
-			GameMaster.Instance.Clicked();
+		GameMaster.Instance.Clicked();
 		activeClicks++;
 		tile.PopVisual(popDuration);
 		tile.Pop();

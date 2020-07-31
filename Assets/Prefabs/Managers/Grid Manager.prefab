@@ -1,22 +1,12 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &100100000
-Prefab:
-  m_ObjectHideFlags: 1
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications: []
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1508643592709726}
-  m_IsPrefabParent: 1
 --- !u!1 &1508643592709726
 GameObject:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 5
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4772339087252284}
   - component: {fileID: 114028894871472468}
@@ -29,9 +19,10 @@ GameObject:
   m_IsActive: 1
 --- !u!4 &4772339087252284
 Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1508643592709726}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -42,9 +33,10 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &114028894871472468
 MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1508643592709726}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -56,11 +48,12 @@ MonoBehaviour:
   popVisualDuration: 0.25
   preclickDuration: 0
   cellPrefab: {fileID: 114902403805151776, guid: 6fb1adc57d5c7a84fa8524fdfb2d8e8b,
-    type: 2}
+    type: 3}
+  emptyCell: {fileID: 1445522332906672, guid: dced64e37cb544d4daf11c57c01ca88b, type: 3}
   matchableTilePrefab: {fileID: 114106293870171646, guid: 4ab8ce09d21ef66438784d1476181e2c,
-    type: 2}
+    type: 3}
   matchSprites:
-    m_keys: 020000000100000003000000040000000500000006000000
+    m_keys: 010000000200000003000000040000000500000006000000
     m_values:
     - {fileID: 21300000, guid: 239527db776f4be45826126339af8b72, type: 3}
     - {fileID: 21300000, guid: f1802053aa3a47d4dbaad78864bea8be, type: 3}

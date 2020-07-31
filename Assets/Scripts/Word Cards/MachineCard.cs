@@ -48,7 +48,6 @@ public class MachineCard : BaseWordCard {
 		continueButton.SubscribePress(Continue);
 		retryButton.SubscribePress(Retry);
 		ToggleButtons(false);
-
 	}
 
 	void Initialize() {
@@ -226,7 +225,7 @@ public class MachineCard : BaseWordCard {
 		SetMemory(false);
 		ToggleButtons(false);
 		pearl.GetComponent<RectTransform>().position = pearlStartSlot.position;
-		gameObject.SetActive(showingBar);
+		//gameObject.SetActive(showingBar);
 	}
 
 	public override void SetOfflineStars() {

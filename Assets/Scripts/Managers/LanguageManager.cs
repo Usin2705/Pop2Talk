@@ -39,13 +39,13 @@ public class LanguageManager : MonoBehaviour {
 
 	public string GetLanguagePrefix() {
 		switch (TargetLanguage) {
-			case Language.EnglishUK: return "en_uk_";
+			case Language.EnglishGB: return "en_gb_";
 			case Language.Finnish: return "fi_";
 			default: return "_";
 		}
 	}
 
 	public bool TargetLanguageHasDoubleUnderscore() {
-		return TargetLanguage == Language.EnglishUK;
+		return TargetLanguage == Language.EnglishGB;
 	}
 }

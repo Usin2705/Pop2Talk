@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b121e23e6eeee342bb5bb420b44ccd1, type: 3}
   m_Name: Catch Tile Gap - 0.5
   m_EditorClassIdentifier: 
-  floatingPoint: 0.75
+  floatingPoint: 0.5

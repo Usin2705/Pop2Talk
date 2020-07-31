@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db581d807990ace49a1dd966689e6f5e, type: 3}
   m_Name: Hide Tiles - 10
   m_EditorClassIdentifier: 
-  integer: 7
+  integer: 10

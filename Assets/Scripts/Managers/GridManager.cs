@@ -11,6 +11,7 @@ public class GridManager : MonoBehaviour, ITileClickReceiver {
 	[SerializeField] float preclickDuration = 0.4f;
 	[Space]
 	[SerializeField] Cell cellPrefab;
+	[SerializeField] GameObject emptyCell;
 	[SerializeField] MatchableTile matchableTilePrefab;
 
 	[SerializeField] MatchTypeSpriteDictionary matchSprites;
@@ -25,6 +26,8 @@ public class GridManager : MonoBehaviour, ITileClickReceiver {
 
 	Cell[][] grid;
 	Dictionary<Tile, TileMotion> tileMotions = new Dictionary<Tile, TileMotion>();
+	Queue<Tile> tileMotionOrders = new Queue<Tile>();
+	HashSet<GameObject> emptyCells = new HashSet<GameObject>();
 
 	Dictionary<SpecialTileType, HashSet<Coordinate>> postPopSpecialTiles = new Dictionary<SpecialTileType, HashSet<Coordinate>>();
 	Dictionary<SpecialTileType, HashSet<Tile>> postMoveSpecialTiles = new Dictionary<SpecialTileType, HashSet<Tile>>();
@@ -85,24 +88,6 @@ public class GridManager : MonoBehaviour, ITileClickReceiver {
 			}
 		}
 	}
-
-	class TilemotionComparer : IComparer<TileMotion> {
-		public int Compare(TileMotion t1, TileMotion t2) {
-			if (t1.startX == t1.lastX && t2.startX != t1.startX)
-				return -1;
-			if (t1.startX != t1.lastX && t2.startX == t1.startX)
-				return 1;
-
-			int result = t1.startY.CompareTo(t2.startY);
-			if (result == 0) {
-				result = t1.lastY.CompareTo(t2.lastY);
-				if (result == 0)
-					return -1;
-			}
-			return result;
-		}
-	}
-
 
 	public bool IsClickable {
 		get {
@@ -308,6 +293,14 @@ public class GridManager : MonoBehaviour, ITileClickReceiver {
 					c.name = "Cell " + (x + 1) + " " + (y + 1);
 					c.SetEven((x + y) % 2 == 0);
 					CellCount++;
+				} else {
+					GameObject go = PoolMaster.Instance.GetPooledObject(emptyCell);
+					emptyCells.Add(go);
+					go.transform.SetParent(cellRoot);
+					go.transform.position = gridSettings.gridCenter + new Vector3((-gridSettings.gridWidth / 2f + x + 0.5f) * gridSettings.cellSize, (-gridSettings.gridHeight / 2f + y + 0.5f) * gridSettings.cellSize);
+					go.transform.localScale = Vector3.one * gridSettings.cellSize;
+					go.name = "Empty Cell " + (x + 1) + " " + (y + 1);
+
 				}
 			}
 		}
@@ -374,7 +367,7 @@ public class GridManager : MonoBehaviour, ITileClickReceiver {
 			t.SetScale (Vector3.one * gridSettings.cellSize*0.95f);
 			t.transform.SetParent(tileRoot);
 			if (t is MatchableTile) {
-				(t as MatchableTile).SetMatchType(GetRandomMatchType(matchTypes, typesAreExcluded));
+				(t as MatchableTile).SetMatchType((MatchType)((TileCount % ConstantHolder.numberOfTypes)+1));
 				(t as MatchableTile).SetStencil(true);
 			}
 			TileCount++;
@@ -860,14 +853,11 @@ public class GridManager : MonoBehaviour, ITileClickReceiver {
 		Cell targetCell;
 		Dictionary<Tile, float> tileSpeeds = new Dictionary<Tile, float>();
 		Dictionary<Cell, Tile> currentTiles = new Dictionary<Cell, Tile>();
-		SortedList<TileMotion, Tile> tileOrder = new SortedList<TileMotion, Tile>(new TilemotionComparer());
-		foreach (Tile t in tileMotions.Keys) {
-			tileOrder.Add(tileMotions[t], t);
-		}
+
 		while (emptyQueues < tileMotions.Count) {
 			if (CanMove) {
 				emptyQueues = 0;
-				foreach (Tile t in tileOrder.Values) {
+				foreach (Tile t in tileMotionOrders) {
 					if (tileMotions[t].Count == 0) {
 						emptyQueues++;
 						continue;
@@ -916,6 +906,7 @@ public class GridManager : MonoBehaviour, ITileClickReceiver {
 			yield return null;
 		}
 		tileMotions.Clear();
+		tileMotionOrders.Clear();
 		Moving = false;
 		if (MoveCompleted != null)
 			MoveCompleted();
@@ -1058,6 +1049,7 @@ public class GridManager : MonoBehaviour, ITileClickReceiver {
 			tileMotions[t].PrevCoordinate = new Coordinate(x, y);
 			tileMotions[t].startX = x;
 			tileMotions[t].startY = y;
+			tileMotionOrders.Enqueue(t);
 		}
 		tileMotions[t].lastX = x;
 		tileMotions[t].lastY = y;
@@ -1065,9 +1057,12 @@ public class GridManager : MonoBehaviour, ITileClickReceiver {
 	}
 
 	public void ClearGrid() {
+		Cell c;
 		if (cellRoot != null) {
 			for (int i = cellRoot.childCount - 1; i >= 0; --i) {
-				cellRoot.GetChild(i).GetComponent<Cell>().MyTile = null;
+				c = cellRoot.GetChild(i).GetComponent<Cell>();
+				if (c != null)
+					c.MyTile = null;
 				PoolMaster.Instance.Destroy(cellRoot.GetChild(i).gameObject);
 			}
 		}

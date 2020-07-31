@@ -9,5 +9,4 @@ public class WordData : ScriptableObject {
 	public Language language;
 	public string spelling;
 	public AudioClip[] pronunciations;
-
 }

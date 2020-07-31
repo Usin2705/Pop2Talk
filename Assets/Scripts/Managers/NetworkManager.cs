@@ -15,6 +15,12 @@ public class NetworkManager : MonoBehaviour {
 	[SerializeField] string socketUrl = "http://pop8.fastparrots.com/(websocket_path)";
 	[SerializeField] string socketPath = "/(websocket_path)";
 
+	string login = "api/game/login";
+	string coinUpdate = "api/game/update/coins";
+	string updateCharacter = "api/game/update/character";
+	string updateHighscore = "api/game/update/highscore";
+	string getWordList = "api/game/create/wordlist";
+
 	Socket socket;
 	bool waitingScore;
 
@@ -439,7 +445,7 @@ public class NetworkManager : MonoBehaviour {
 		form.AddField("username", username);
 		form.AddField("password", password);
 
-		UnityWebRequest www = UnityWebRequest.Post(url, form);
+		UnityWebRequest www = UnityWebRequest.Post(url + login, form);
 		yield return www.SendWebRequest();
 
 

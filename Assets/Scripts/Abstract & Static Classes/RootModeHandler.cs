@@ -23,26 +23,37 @@ public abstract class RootModeHandler : MonoBehaviour, IGameMode {
 		bool tooClose;
 		Transform hideNode;
 		int attempts, maxAttempts = 100;
+		bool skip = false;
 		for (int i = 0; i < rootTransform.childCount; ++i) {
 			if (positions.Count == count)
 				break;
 			hideNode = rootTransform.GetChild(i % rootTransform.childCount);
-			if (hideNode.childCount != 0)
+			if (hideNode.childCount != 0) {
+				skip = true;
 				continue;
+			}
 			positions.Add(hideNode.position);
+
+			if (i == rootTransform.childCount - 1 && !skip)
+				i = -1;
 		}
+
+		Dictionary<int, List<Vector3>> childCheck = new Dictionary<int, List<Vector3>>();
 
 		for (int i = 0; positions.Count < count; ++i) {
 			hideNode = rootTransform.GetChild(i % rootTransform.childCount);
 			if (hideNode.childCount == 0) {
 				continue;
 			}
-			attempts = 0;
+			if (!childCheck.ContainsKey(i)) {
+				childCheck.Add(i, new List<Vector3>());
+			}
+				attempts = 0;
 			do {
 				tooClose = false;
 				pos = new Vector3(Random.Range(hideNode.position.x, hideNode.GetChild(0).position.x),
 					Random.Range(hideNode.position.y, hideNode.GetChild(0).position.y));
-				foreach (Vector3 v in positions) {
+				foreach (Vector3 v in childCheck[i]) {
 					if (Vector3.SqrMagnitude(v - pos) < minimumDistance * minimumDistance) {
 						tooClose = true;
 						break;
@@ -50,6 +61,7 @@ public abstract class RootModeHandler : MonoBehaviour, IGameMode {
 				}
 				attempts++;
 			} while (tooClose && attempts < maxAttempts);
+			childCheck[i].Add(pos);
 			positions.Add(pos);
 		}
 		if (shufflePositions)

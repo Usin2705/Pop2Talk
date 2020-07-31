@@ -5,8 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Grid Settings", menuName = "CustomObjects/Grid Settings")]
 public class GridSettings : LevelTypeSettings {
 
-	public int gridHeight;
 	public int gridWidth;
+	public int gridHeight;
 	public Vector3 gridCenter;
 	public int matchTypes = 4;
 	public float cellSize;

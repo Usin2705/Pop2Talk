@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43801968d105a1a4d9a773b29afce535, type: 3}
+  m_Name: Speed 12 - Nonrandom - Crosspattern
+  m_EditorClassIdentifier: 
+  memoryOnly: 0
+  minWords: 1
+  maxWords: 20
+  spacedustAffectsCoins: 0
+  spaceDustMin: 0
+  spaceDustMax: 0
+  gameMode: 7
+  typeSettings:
+  - {fileID: 11400000, guid: de311821d4028f64fba97ef51f4f1e1e, type: 2}
+  - {fileID: 11400000, guid: 7750ebb0db96bd74f9f2c6d2ba73b0cb, type: 2}
+  - {fileID: 11400000, guid: 2eb10de66a7d97246a0298bd5281782e, type: 2}
+  - {fileID: 11400000, guid: 43e6ca804f1844b4991ec328859847c4, type: 2}
+  - {fileID: 11400000, guid: bb7a696b86b422e419858d414db7a2fa, type: 2}

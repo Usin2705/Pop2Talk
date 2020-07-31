@@ -42,9 +42,13 @@ public class SpeedModeHandler : RootModeHandler, ITileClickReceiver {
 		List<Vector3> positions = GetPositions(tileCount);
 		float maxTime = (tileCount - 1) * tileGap + tileTime;
 		spawnTime = 0;
+		timer = 0;
 		float resizeDuration = Mathf.Min(growDuration, tileTime / 2f);
 		float shrinkAhead = Mathf.Max(tileTime - growDuration, tileTime / 2f);
 		int spawnCount = 0;
+		int offset = 0;
+		if (!shufflePositions)
+			offset = Random.Range(0, positions.Count);
 		MatchableTile tile;
 		List<MatchableTile> toRemove = new List<MatchableTile>();
 
@@ -59,7 +63,7 @@ public class SpeedModeHandler : RootModeHandler, ITileClickReceiver {
 				tile.SetRandomMatchType(6);
 				tile.transform.SetParent(transform);
 				tile.SetScale(Vector3.one * tileSize);
-				tile.transform.position = positions[spawnCount];
+				tile.transform.position = positions[(spawnCount + offset) % positions.Count];
 				tile.GrowVisual(resizeDuration);
 				spawnTime += tileGap;
 				spawnCount++;
@@ -109,14 +113,17 @@ public class SpeedModeHandler : RootModeHandler, ITileClickReceiver {
 	}
 
 	IEnumerator TileDestruction(Tile t, float duration) {
-		currentlyPopping++;
 		GameMaster.Instance.Clicked();
 		yield return new WaitForSeconds(duration);
-		GameMaster.Instance.PlayPopSound(0);
+		currentlyPopping++;
 		PoolMaster.Instance.Destroy(t.gameObject);
 		GameMaster.Instance.RemainingProgress--;
-		yield return new WaitForSeconds(GameMaster.Instance.GetPopSound().GetLength());
+		if (currentlyPopping == 1) {
+			GameMaster.Instance.PlayPopSound(0);
+			yield return new WaitForSeconds(GameMaster.Instance.GetPopSound().GetLength() / 2);
+		}
 		currentlyPopping--;
+		yield return new WaitForSeconds(GameMaster.Instance.GetPopSound().GetLength() / 2);
 		if (currentlyPopping == 0)
 			GameMaster.Instance.ClickDone();
 	}
@@ -172,6 +179,6 @@ public class SpeedModeHandler : RootModeHandler, ITileClickReceiver {
 	}
 
 	protected void ClickDustConversion() {
-		GameMaster.Instance.SpaceDust += Mathf.RoundToInt(Mathf.Lerp(300, 0, clicks / (float)tileCount));
+		GameMaster.Instance.SpaceDust += Mathf.RoundToInt(Mathf.Lerp(300, 0, (tileCount-clicks) / (float)tileCount));
 	}
 }
