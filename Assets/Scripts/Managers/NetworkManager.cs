@@ -475,9 +475,31 @@ public class NetworkManager : MonoBehaviour {
 				yield break;
 			}
 
-			user = JsonUtility.FromJson<UserData>(www.downloadHandler.text);
 
-			Debug.Log("id: " + user.id + "\nname: " + user.name + "\nconsent: " + user.consent + "\nrole: " + user.role);
+			user = JsonUtility.FromJson<UserData>(www.downloadHandler.text);
+			var json = SimpleJSON.JSON.Parse(www.downloadHandler.text);
+
+			WordMaster.Instance.ClearWords();
+
+			for (int i = 0; i < json["words"].Count; ++i) {
+				WordMaster.Instance.AddWord(json["words"][i]["word"].Value);
+			}
+
+			StartCoroutine(WordListRoutine(null));
+
+			for (int i = 0; i < json["game_state"]["wordHighscores"].Count; ++i) {
+				WordMaster.Instance.SetStarAmount(json["game_state"]["wordHighscores"][i]["word"].Value, json["game_state"]["wordHighscores"][i]["maxstars"].AsInt);
+			}
+
+			int module = 1;
+			for (int i = 0; i < json["game_state"]["availableModules"].Count; ++i) {
+				module = Mathf.Max(module, json["game_state"]["availableModules"][i]["module"].AsInt);
+			}
+
+			WordMaster.Instance.SetLargestModuleIndex(module);
+
+			CharacterManager.GetManager().SetCharacter(json["game_state"]["character"].AsInt);
+			CurrencyMaster.Instance.SetCoins(json["game_state"]["coins"].AsInt);
 
 			if (user.consent) {
 				Connect();
@@ -487,6 +509,75 @@ public class NetworkManager : MonoBehaviour {
 			}
 		}
 	}
+
+	public void UpdateCoins(int coins) {
+		StartCoroutine(CoinUpdateRoutine(coins));
+	}
+
+	IEnumerator CoinUpdateRoutine(int coins) {
+
+		WWWForm form = new WWWForm();
+		form.AddField("coins", coins);
+		UnityWebRequest www = UnityWebRequest.Post(url + coinUpdate, form);
+		www.SetRequestHeader("Authorization", "Bearer " + user.access_token);
+		yield return www.SendWebRequest();
+	}
+
+	public void GetWordList(Callback Done) {
+		StartCoroutine(WordListRoutine(Done));
+	}
+
+	IEnumerator WordListRoutine(Callback Done) {
+
+		WWWForm form = new WWWForm();
+		UnityWebRequest www = UnityWebRequest.Post(url + getWordList, form);
+		www.SetRequestHeader("Authorization", "Bearer " + user.access_token);
+		yield return www.SendWebRequest();
+		Debug.Log(www.downloadHandler.text);
+		var json = SimpleJSON.JSON.Parse(www.downloadHandler.text);
+
+		string[] words = new string[json["chosenWords"].Count];
+		WordCardType[] types = new WordCardType[words.Length];
+
+		WordMaster.Instance.SetLargestModuleIndex(json["module"].AsInt);
+
+		for (int i = 0; i < words.Length; ++i) {
+			words[i] = json["chosenWords"][i];
+			types[i] = (WordCardType) json["cardType"][i].AsInt;
+		}
+		WordMaster.Instance.SetSamples(types, words);
+		Done?.Invoke();
+	}
+
+	public void UpdateWordScore(string word, int score, int challenge) {
+		StartCoroutine(WordScoreUpdateRoutine(word, score, challenge));
+	}
+
+	IEnumerator WordScoreUpdateRoutine(string word, int score, int challenge) {
+
+		WWWForm form = new WWWForm();
+		form.AddField("word", word);
+		form.AddField("score", score);
+		form.AddField("challenge", challenge);
+		UnityWebRequest www = UnityWebRequest.Post(url + updateHighscore, form);
+		www.SetRequestHeader("Authorization", "Bearer " + user.access_token);
+		yield return www.SendWebRequest();
+	}
+
+	public void UpdateCharacter(int character) {
+		StartCoroutine(CharacterUpdateRoutine(character));
+	}
+
+	IEnumerator CharacterUpdateRoutine(int character) {
+
+		WWWForm form = new WWWForm();
+		form.AddField("character", character);
+		UnityWebRequest www = UnityWebRequest.Post(url + updateCharacter, form);
+		www.SetRequestHeader("Authorization", "Bearer " + user.access_token);
+		yield return www.SendWebRequest();
+		Debug.Log(www.downloadHandler.text);
+	}
+
 
 	public bool GetConsent() {
 		if (user != null)
@@ -562,7 +653,8 @@ public class NetworkManager : MonoBehaviour {
 	}
 
 	public void SwipeEvent(string name) {
-
+		if (socket == null)
+			return;
 
 		AnalyticsEvent ae = new AnalyticsEvent {
 			eventname = name,

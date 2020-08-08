@@ -34,6 +34,7 @@ public class TravelView : View {
 	Sprite[] chosenSprites;
 
 	bool travelDone;
+	bool wordsReceived;
 	Vector3 targetPosition;
 
 	[System.Serializable]
@@ -56,20 +57,17 @@ public class TravelView : View {
 	public override void Activate() {
 		base.Activate();
 		doExitFluff = true;
-		if (DebugMaster.Instance.skipTransitions)
-			PrepareButtons();
-		else {
-			StartCoroutine(TravelRoutine());
-		}
+		StartCoroutine(TravelRoutine());
 	}
 
-	void PrepareButtons() {
-		int largestModuleIndex = Mathf.Min(levelBatches.Length, FakeServerManager.GetManager().GetLargestModuleIndex());
-		WordMaster.Instance.SetSamples(FakeServerManager.GetManager().GetCardTypes(), FakeServerManager.GetManager().GetCardWords());
+	void PrepareButtons(int largestModuleIndex) {
+		largestModuleIndex = Mathf.Min(levelBatches.Length -1, largestModuleIndex);
 
 		List<int> availableIndices = new List<int>();
 		List<List<LevelSettings>> suitableLevels = new List<List<LevelSettings>>();
 		int wordCount = WordMaster.Instance.MaxCards;
+
+		Debug.Log(largestModuleIndex);
 		for (int i = 0; i <= largestModuleIndex; ++i) {
 			suitableLevels.Add(new List<LevelSettings>());
 			bool applicable = false;
@@ -83,6 +81,8 @@ public class TravelView : View {
 				}
 			}
 		}
+
+		Debug.Log(availableIndices.Count);
 		int[] chosenBatches = ChooseBatches(availableIndices);
 
 		chosenLevels = new LevelSettings[] { suitableLevels[chosenBatches[0]].GetRandom(), suitableLevels[chosenBatches[1]].GetRandom() };
@@ -126,30 +126,34 @@ public class TravelView : View {
 		scroller.material.SetTextureOffset("_MainTex", Vector2.zero);
 		MovingImageManager.GetManager().SetMoverSprite(CosmeticManager.GetManager().GetEquippedCosmetic(CosmeticSlot.Ship).sprite);
 		travelDone = false;
+		wordsReceived = false;
 		InputManager.GetManager().SendingInputs = false;
 		yield return new WaitForSeconds(1.5f);
 		InputManager.GetManager().SendingInputs = false;
 		MovingImageManager.GetManager().ShowMovingImage(sortingOrder, false, new Vector3[] { shipStart.position, shipEnd.position }, new float[] { 0 },
 			new Vector3[] { shipStart.rect.size, shipEnd.rect.size }, new float[] { shipSpeed * (Screen.height / 1920f)},
-			null, TravelDone);
+			null, ()=> { travelDone = true; });
+		NetworkManager.GetManager().GetWordList(WordsReceived);
 		while (!travelDone) {
 			yield return null;
 		}
 
 		MovingImageManager.GetManager().StartWobble(wobbleAmount * 1920f / Screen.height);
-		float a = 0;
+		float a = 0, b = 0;
 		float portalTime = 0.33f;
-		float travelDuration = 3f;
+		float minWait = 1f;
 		float accelDuration = 1f;
 		Color staticColor = staticBack.color;
-		while (a < travelDuration) {
+		while (b < portalTime) {
+			if (a > accelDuration + minWait && wordsReceived)
+				b += Time.deltaTime;
 			a += Time.deltaTime;
 			staticBack.color = new Color(staticColor.r, staticColor.g, staticColor.b, Mathf.Max(0, accelDuration - a));
 			scroller.material.SetTextureOffset("_MainTex", a * Vector2.up * scrollSpeed * (Screen.height / 1920f));
-			if (a > travelDuration  - portalTime) {
+			if (a > accelDuration + minWait && wordsReceived) {
 				if (!portal.gameObject.activeSelf)
 					portal.gameObject.SetActive(true);
-				portal.rectTransform.position = Vector3.Lerp(portalStart.position, shipEnd.position, (a  - (travelDuration - portalTime)) / (portalTime));
+				portal.rectTransform.position = Vector3.Lerp(portalStart.position, shipEnd.position, b / portalTime);
 			}
 			yield return null;
 		}
@@ -163,7 +167,6 @@ public class TravelView : View {
 		portal.rectTransform.position = portalStart.position;
 		travelScreen.SetActive(false);
 		whiteCurtain.gameObject.SetActive(true);
-		PrepareButtons();
 		yield return new WaitForSeconds(0.5f);
 		a = 0;
 		while (a < 1) {
@@ -176,8 +179,9 @@ public class TravelView : View {
 		InputManager.GetManager().SendingInputs = true;
 	}
 
-	public void TravelDone() {
-		travelDone = true;
+	public void WordsReceived() {
+		wordsReceived = true;
+		PrepareButtons(WordMaster.Instance.LargestModuleIndex);
 	}
 
 	void Back() {

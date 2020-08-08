@@ -27,4 +27,8 @@ public class MemoryCardHandler : BaseWordCardHandler {
         yield return new WaitForSeconds(phaseGap);
         WordCardManager.GetManager().StartCoroutine(WordCardManager.GetManager().GiveStars(phaseGap));
     }
+
+	protected override WordCardType GetCardType() {
+		return WordCardType.Memory;
+	}
 }

@@ -532,12 +532,12 @@ PrefabInstance:
     - target: {fileID: 224569009886684270, guid: 5be5b299c2fa18745b74f7095d5d780f,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -161.2002
+      value: -161.19922
       objectReference: {fileID: 0}
     - target: {fileID: 224693029812454330, guid: 5be5b299c2fa18745b74f7095d5d780f,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -31.200195
+      value: -31.199219
       objectReference: {fileID: 0}
     - target: {fileID: 224726458311772126, guid: 5be5b299c2fa18745b74f7095d5d780f,
         type: 3}
@@ -1904,6 +1904,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Connection Status
+      objectReference: {fileID: 0}
+    - target: {fileID: 5026000636085151038, guid: 41363b90cfd21e9409ba0f283370354d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5026000636925461866, guid: 41363b90cfd21e9409ba0f283370354d,
         type: 3}

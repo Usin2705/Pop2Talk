@@ -10,17 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
-  m_Name: en_uk_grandma
+  m_Name: en_gb_grandma
   m_EditorClassIdentifier: 
   picture: {fileID: 21300000, guid: ce15bf3f96ae92849b70011a8f9b137a, type: 3}
-  languageWords:
-    m_keys: 02000000
-    m_values:
-    - spelling: Grandma
-      pronunciations:
-      - {fileID: 8300000, guid: 604285293eab5064ca2e070921ad50e4, type: 3}
   language: 2
   spelling: Grandma
   pronunciations:
   - {fileID: 8300000, guid: 604285293eab5064ca2e070921ad50e4, type: 3}
-  newName3: en_uk_grandma

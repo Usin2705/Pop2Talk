@@ -6,6 +6,8 @@ public class WordMaster : MonoBehaviour {
 
 	static WordMaster instance;
 
+	string path = "Assets/Word Data/Data Objects/Resources/";
+
 	public static WordMaster Instance {
 		get {
 			if (instance == null) {
@@ -18,7 +20,7 @@ public class WordMaster : MonoBehaviour {
 
 	public int TotalWords {
 		get {
-			return bestStars.Count + unsaidWords.Count;
+			return allWords.Count;
 		}
 	}
 
@@ -30,11 +32,14 @@ public class WordMaster : MonoBehaviour {
 
 	public int MaxCards {
 		get {
-			return sampleWords.Length;
+			return (sampleWords != null) ? sampleWords.Length : 0;
 		}
 	}
 
+	public int LargestModuleIndex { get; protected set; } = 1;
+
 	public int TotalStars { get; set; }
+	public bool OnlyMemory { get; protected set; }
 
 	Queue<WordCardType> cardTypeQueue;
 	Queue<WordData> wordQueue;
@@ -43,7 +48,7 @@ public class WordMaster : MonoBehaviour {
 	string[] sampleWords;
 
 	Dictionary<string, int> bestStars = new Dictionary<string, int>();
-	HashSet<string> unsaidWords = new HashSet<string>();
+	HashSet<string> allWords = new HashSet<string>();
 
 	BaseWordCardHandler currentWordCardHandler;
 	Dictionary<WordCardType, BaseWordCardHandler> wordCardHandlers = new Dictionary<WordCardType, BaseWordCardHandler>();
@@ -65,32 +70,56 @@ public class WordMaster : MonoBehaviour {
 		return wordQueue.Peek();
 	}
 
+	public void ClearWords() {
+		bestStars.Clear();
+		allWords.Clear();
+	}
+
+	public void AddWord(string word) {
+		if (allWords.Contains(word))
+			Debug.Log("Allwords already contains " + word + "!");
+		allWords.Add(word);
+		/*if (UnityEditor.AssetDatabase.AssetPathToGUID(path + word + ".asset") == "")
+			Debug.Log("No asset for " + word + "!");*/
+	}
+
+	public void SetStarAmount(string word, int star) {
+		if (!allWords.Contains(word))
+			return;
+		if (star >= 0) {
+			if (!bestStars.ContainsKey(word)) 
+				bestStars.Add(word, star);
+			else {
+				bestStars[word] = star;
+			}
+		} else if (bestStars.ContainsKey(word)) {
+			bestStars.Remove(word);
+		}
+
+	}
+
 	public void SetStarAmounts(string[] words, int[] stars) {
 		for (int i = 0; i < words.Length; ++i) {
-			if (stars[i] >= 0)
-				bestStars.Add(words[i], stars[i]);
-			else
-				unsaidWords.Add(words[i]);
+			SetStarAmount(words[i], stars[i]);
 		}
 	}
 
-	public bool RecordStarAmount(string word, int stars) {
-		if (unsaidWords.Contains(word)) {
-			unsaidWords.Remove(word);
-			bestStars.Add(word, -1);
+	public bool RecordStarAmount(string word, int stars, int type) {
+		if (!allWords.Contains(word)) {
+			return false;
 		}
+		if (!bestStars.ContainsKey(word))
+			bestStars.Add(word, -1);
 		bool improvement = stars > bestStars[word];
-		if (improvement)
+		if (improvement) {
 			bestStars[word] = stars;
+			NetworkManager.GetManager().UpdateWordScore(word, stars, type);
+		}
 		return improvement;
 	}
 
 	public Dictionary<string, int> GetBestResults() {
 		return bestStars;
-	}
-
-	public int GetUnsaidWordCount() {
-		return unsaidWords.Count;
 	}
 
 	public void MakeQueue() {
@@ -107,6 +136,13 @@ public class WordMaster : MonoBehaviour {
 	public void SetSamples(WordCardType[] types, string[] words) {
 		sampleTypes = types;
 		sampleWords = words;
+		OnlyMemory = true;
+		foreach(WordCardType wct in types) {
+			if (wct != WordCardType.Memory) {
+				OnlyMemory = false;
+				break;
+			}
+		}
 	}
 
 	public WordData StringToWordData(string word) {
@@ -115,6 +151,8 @@ public class WordMaster : MonoBehaviour {
 		WordData data = (Resources.Load(word) as WordData);
 		if (data != null) {
 			stringWordDataDictionary.Add(word, data);
+		} else {
+			Debug.Log(word);
 		}
 		return data;
 	}
@@ -138,8 +176,14 @@ public class WordMaster : MonoBehaviour {
 	}
 
 	public int GetHighScore(string word) {
-		if (unsaidWords.Contains(word))
+		if (!bestStars.ContainsKey(word))
 			return -1;
 		return bestStars[word];
+	}
+
+	public void SetLargestModuleIndex(int module) {
+		if (module > LargestModuleIndex)
+			LargestModuleIndex = module;
+		Debug.Log(LargestModuleIndex);
 	}
 }

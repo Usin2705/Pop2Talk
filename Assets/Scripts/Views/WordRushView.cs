@@ -36,7 +36,7 @@ public class WordRushView : View {
 	}
 
 	void Done(int stars) {
-		WordMaster.Instance.RecordStarAmount(currentWord, stars);
+		WordMaster.Instance.RecordStarAmount(currentWord, stars, (int) WordCardType.Repeat);
 		rushIndex++;
 		if (rushIndex == rushWords.Count)
 			ShuffleRush();

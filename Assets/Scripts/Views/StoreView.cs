@@ -11,7 +11,6 @@ public class StoreView : View {
 	[SerializeField] UIButton showLootButton;
 	[SerializeField] Text coinText;
 	[SerializeField] Image shipImage;
-	[SerializeField] RectTransform shakeAnchor;
 	[Space]
 	[SerializeField] GameObject unlockScreen;
 	[SerializeField] Image unlockImage;
@@ -83,7 +82,7 @@ public class StoreView : View {
 				break;
 
 			purchasables.Add(settings[i]);
-			StoreButton button = Instantiate(storeButtonPrefab, lootHolder).GetComponent<StoreButton>();
+			StoreButton button = lootHolder.GetChild(i).GetComponent<StoreButton>();
 			button.SetUp(settings[i], i, LootClicked);
 			lootboxButtons.Add(button);
 		}
@@ -100,7 +99,7 @@ public class StoreView : View {
 		if (!DebugMaster.Instance.skipTransitions) {
 			Transform box = lootboxButtons[index].GetBox();
 			Vector3 start = box.transform.position;
-			float a = 0, max = lootboxButtons[index].transform.position.x - shakeAnchor.transform.position.x;
+			float a = 0, max = 30 * 1080f/Screen.width;
 			//lootboxButtons[index].TogglePrice(false);
 			while (a < 1) {
 				a += Time.deltaTime / shakeDuration;
@@ -111,7 +110,7 @@ public class StoreView : View {
 			//lootboxButtons[index].TogglePrice(true);
 		}
 
-		CurrencyMaster.Instance.Coins -= StoreManager.GetManager().GetBoxes()[index].price;
+		CurrencyMaster.Instance.ModifyCoins(-StoreManager.GetManager().GetBoxes()[index].price);
 		coinText.text = CurrencyMaster.Instance.Coins.ToString();
 		unlockScreen.SetActive(true);
 		unlockImage.sprite = CosmeticManager.GetManager().UnlockCosmeticFromBox(StoreManager.GetManager().GetBoxes()[index]);

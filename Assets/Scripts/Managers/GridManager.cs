@@ -364,10 +364,10 @@ public class GridManager : MonoBehaviour, ITileClickReceiver {
 			t.Receiver = this;
 			c.MyTile = t;
 			t.transform.position = (toTheTop) ? c.transform.position - GetGravityVector() * gridSettings.cellSize : c.transform.position;
-			t.SetScale (Vector3.one * gridSettings.cellSize*0.95f);
+			t.SetScale(Vector3.one * gridSettings.cellSize * 0.95f);
 			t.transform.SetParent(tileRoot);
 			if (t is MatchableTile) {
-				(t as MatchableTile).SetMatchType((MatchType)((TileCount % ConstantHolder.numberOfTypes)+1));
+				(t as MatchableTile).SetMatchType(GetRandomMatchType(matchTypes, typesAreExcluded));
 				(t as MatchableTile).SetStencil(true);
 			}
 			TileCount++;
@@ -561,7 +561,7 @@ public class GridManager : MonoBehaviour, ITileClickReceiver {
 			}
 		}
 		foreach (Coordinate c in specialTilesToAdd.Keys) {
-			InstantiateTile(GetRandomSpecialTileToCreate(), c.x, c.y, false, new HashSet<MatchType>() { specialTilesToAdd[c] }, false).GrowVisual(popVisualDuration);
+			InstantiateTile(GetRandomSpecialTileToCreate(), c.x, c.y, false, new HashSet<MatchType>() { specialTilesToAdd[c] }, false).GrowVisual(popVisualDuration, gridSettings.cellSize * 0.95f);
 		}
 		TilesPopped();
 	}
@@ -831,7 +831,7 @@ public class GridManager : MonoBehaviour, ITileClickReceiver {
 				if (c == null)
 					continue;
 				if (c.MyTile == null) {
-					InstantiateTile(matchableTilePrefab, coor.x, coor.y, false, matchTypes[dic], typesAreExcluded).GrowVisual(popVisualDuration);
+					InstantiateTile(matchableTilePrefab, coor.x, coor.y, false, matchTypes[dic], typesAreExcluded).GrowVisual(popVisualDuration, gridSettings.cellSize * 0.95f);
 				}
 			}
 		}

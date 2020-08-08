@@ -10,17 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
-  m_Name: en_uk_toe
+  m_Name: en_gb_toe
   m_EditorClassIdentifier: 
   picture: {fileID: 21300000, guid: 94f53e412a86f7143858135523bbbe1e, type: 3}
-  languageWords:
-    m_keys: 02000000
-    m_values:
-    - spelling: Toe
-      pronunciations:
-      - {fileID: 8300000, guid: c5cdfe7a217e44148a49f5b82e77376d, type: 3}
   language: 2
   spelling: Toe
   pronunciations:
   - {fileID: 8300000, guid: c5cdfe7a217e44148a49f5b82e77376d, type: 3}
-  newName3: en_uk_toe

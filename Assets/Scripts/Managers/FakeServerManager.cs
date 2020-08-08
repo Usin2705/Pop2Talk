@@ -30,24 +30,18 @@ public class FakeServerManager : MonoBehaviour {
 	}
 
 	public void Connect() {
-		CharacterManager.GetManager().SetCharacter(characterIndex);
-
+		//CharacterManager.GetManager().SetCharacter(characterIndex);
+		/*
 		string[] strings = new string[words.Length];
 		int[] stars = new int[words.Length];
 		for (int i = 0; i < stars.Length; ++i) {
 			strings[i] = words[i].word;
 			stars[i] = words[i].stars;
-		}
-		WordMaster.Instance.SetStarAmounts(strings, stars);
-		CurrencyMaster.Instance.Coins = coins;
+		}*/
+		//CurrencyMaster.Instance.SetCoins(coins);
 		CosmeticManager.GetManager().UnlockCosmetic(collectionId);
 		CosmeticManager.GetManager().EquipCosmetic(equipId);
 	}
-
-	public void UpdateCoins(int newCoins) {
-
-	}
-
 	public void EquipCosmetic(string id, CosmeticSlot slot) {
 
 	}

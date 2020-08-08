@@ -69,8 +69,8 @@ MonoBehaviour:
   - 15b53619-1d2f-42c6-984d-f749d7426716
   largestModuleIndex: 1
   cardWords:
-  - en_uk_grandpa
-  - en_uk_juice
-  - en_uk_uncle
-  - en_uk_grandma
+  - en_gb_aunt
+  - en_gb_juice
+  - en_gb_uncle
+  - en_gb_grandma
   cardTypes: 00000000000000000000000000000000

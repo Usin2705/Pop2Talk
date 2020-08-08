@@ -38,7 +38,7 @@ public abstract class Tile : Interactable {
 
 	}
 
-	public virtual void GrowVisual(float duration) {
+	public virtual void GrowVisual(float duration, float endSize = 1f) {
 
 	}
 

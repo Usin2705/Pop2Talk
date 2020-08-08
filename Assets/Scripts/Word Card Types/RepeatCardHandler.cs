@@ -28,4 +28,8 @@ public class RepeatCardHandler : BaseWordCardHandler {
         yield return WordCardManager.GetManager().StartCoroutine(WordCardManager.GetManager().SayWord());
         WordCardManager.GetManager().StartCoroutine(WordCardManager.GetManager().GiveStars(phaseGap));
     }
+
+	protected override WordCardType GetCardType() {
+		return WordCardType.Repeat;
+	}
 }

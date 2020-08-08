@@ -132,7 +132,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectedScale: 1
-  deselectedScale: 0.6
+  deselectedScale: 0.75
   scaleDuration: 0.2
   wobbleAmount: 0
   wobbleSpeed: 0

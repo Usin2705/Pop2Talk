@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BaseWordCardHandler {
+public abstract class BaseWordCardHandler {
 
     protected static float phaseGap = 0.66f;
 
@@ -34,7 +34,7 @@ public class BaseWordCardHandler {
     }
 
     public virtual void CardDone() {
-		WordMaster.Instance.RecordStarAmount(currentWord.name, stars);
+		WordMaster.Instance.RecordStarAmount(currentWord.name, stars, (int)GetCardType());
         WordCardManager.GetManager().HideCard(()=>{ Done(stars); });
 	}
 
@@ -45,4 +45,6 @@ public class BaseWordCardHandler {
     public virtual void SetStars(int stars) {
 		this.stars = Mathf.Max(this.stars, stars);
     }
+
+	protected abstract WordCardType GetCardType();
 }

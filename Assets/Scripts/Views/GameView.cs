@@ -48,9 +48,9 @@ public class GameView : View, IGameCaller {
 		if (WordMaster.Instance.PeekNextType() != WordCardType.Memory) {
 			ToggleMusic(0.25f, false);
 			musicFaded = true;
-			WordData word = WordMaster.Instance.PeekNextWord();
-			NetworkManager.GetManager().SamplePlayed(GameMaster.Instance.CurrentLevel.name, word.name, true);
-			GameMaster.Instance.SetCustomClip(word.pronunciations.GetRandom());
+			//WordData word = WordMaster.Instance.PeekNextWord();
+			//NetworkManager.GetManager().SamplePlayed(GameMaster.Instance.CurrentLevel.name, word.name, true);
+			//GameMaster.Instance.SetCustomClip(word.pronunciations.GetRandom());
 		} else
 			GameMaster.Instance.SetCustomClip(null);
 	}

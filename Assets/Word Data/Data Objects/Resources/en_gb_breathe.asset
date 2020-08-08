@@ -10,17 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
-  m_Name: en_uk_mum
+  m_Name: en_gb_breathe
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: eecd5c756307db140a7cf0927bb0710e, type: 3}
-  languageWords:
-    m_keys: 02000000
-    m_values:
-    - spelling: Mum
-      pronunciations:
-      - {fileID: 8300000, guid: 1a32d66b787eaf24ba016404861d9c81, type: 3}
+  picture: {fileID: 21300000, guid: 7d97540f59f2f6e478d257facc902d2b, type: 3}
   language: 2
-  spelling: Mum
+  spelling: Breathe
   pronunciations:
-  - {fileID: 8300000, guid: 1a32d66b787eaf24ba016404861d9c81, type: 3}
-  newName3: en_uk_mum
+  - {fileID: 8300000, guid: 4288d1ce7cac8864f8e96ff996a87804, type: 3}
