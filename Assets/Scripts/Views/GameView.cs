@@ -45,12 +45,12 @@ public class GameView : View, IGameCaller {
 	}
 
 	public void Clicked() {
-		if (WordMaster.Instance.PeekNextType() != WordCardType.Memory) {
+		WordData word = WordMaster.Instance.PeekNextWord();
+		if (WordMaster.Instance.PeekNextType() != WordCardType.Memory && word != null) {
 			ToggleMusic(0.25f, false);
 			musicFaded = true;
-			//WordData word = WordMaster.Instance.PeekNextWord();
-			//NetworkManager.GetManager().SamplePlayed(GameMaster.Instance.CurrentLevel.name, word.name, true);
-			//GameMaster.Instance.SetCustomClip(word.pronunciations.GetRandom());
+			NetworkManager.GetManager().SamplePlayed(GameMaster.Instance.CurrentLevel.name, word.name, true);
+			GameMaster.Instance.SetCustomClip(word.pronunciations.GetRandom());
 		} else
 			GameMaster.Instance.SetCustomClip(null);
 	}
@@ -138,7 +138,7 @@ public class GameView : View, IGameCaller {
 	}
 
 	public void Back() {
-		NetworkManager.GetManager().LevelAbortEvent("level_abort", GameMaster.Instance.CurrentLevel.name, GameMaster.Instance.CurrentLevel.gameMode.ToString(), levelDuration, 
+		NetworkManager.GetManager().LevelAbortEvent("level_abort", GameMaster.Instance.CurrentLevel.name, GameMaster.Instance.CurrentLevel.gameMode.ToString(), levelDuration,
 			WordMaster.Instance.MaxCards - WordMaster.Instance.CardsRemaining, WordMaster.Instance.TotalStars / WordMaster.Instance.MaxCards, WordMaster.Instance.TotalStars, GameMaster.Instance.SpaceDust);
 		doExitFluff = false;
 		ViewManager.GetManager().ShowView(shipHub);
