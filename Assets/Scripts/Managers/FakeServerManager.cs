@@ -4,23 +4,12 @@ using UnityEngine;
 
 public class FakeServerManager : MonoBehaviour {
 
-	[SerializeField] int characterIndex = -1;
-	[SerializeField] int coins = 100;
-	[SerializeField] StringInt[] words;
+	
 	[SerializeField] string equipId;
 	[SerializeField] string[] collectionId;
-	[SerializeField] int largestModuleIndex;
-	[SerializeField] string[] cardWords;
-	[SerializeField] WordCardType[] cardTypes;
 
 	static FakeServerManager fsm;
-
-	[System.Serializable]
-	struct StringInt {
-		public int stars;
-		public string word;
-	}
-
+	
 	void Awake() {
 		fsm = this;
 	}
@@ -48,17 +37,5 @@ public class FakeServerManager : MonoBehaviour {
 
 	public void UnlockCosmetic(string id) {
 
-	}
-
-	public int GetLargestModuleIndex() {
-		return largestModuleIndex;
-	}
-
-	public string[] GetCardWords() {
-		return cardWords;
-	}
-
-	public WordCardType[] GetCardTypes() {
-		return cardTypes;
 	}
 }

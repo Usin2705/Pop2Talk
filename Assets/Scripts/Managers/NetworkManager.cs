@@ -478,14 +478,14 @@ public class NetworkManager : MonoBehaviour {
 
 			user = JsonUtility.FromJson<UserData>(www.downloadHandler.text);
 			var json = SimpleJSON.JSON.Parse(www.downloadHandler.text);
-
+			
 			WordMaster.Instance.ClearWords();
+
+
 
 			for (int i = 0; i < json["words"].Count; ++i) {
 				WordMaster.Instance.AddWord(json["words"][i]["word"].Value);
 			}
-
-			StartCoroutine(WordListRoutine(null));
 
 			for (int i = 0; i < json["game_state"]["wordHighscores"].Count; ++i) {
 				WordMaster.Instance.SetStarAmount(json["game_state"]["wordHighscores"][i]["word"].Value, json["game_state"]["wordHighscores"][i]["maxstars"].AsInt);
@@ -495,6 +495,10 @@ public class NetworkManager : MonoBehaviour {
 			for (int i = 0; i < json["game_state"]["availableModules"].Count; ++i) {
 				module = Mathf.Max(module, json["game_state"]["availableModules"][i]["module"].AsInt);
 			}
+
+			json["game_state"]["availableModules"] = "";
+
+			Debug.Log(json["game_state"]);
 
 			WordMaster.Instance.SetLargestModuleIndex(module);
 

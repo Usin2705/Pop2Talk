@@ -184,6 +184,5 @@ public class WordMaster : MonoBehaviour {
 	public void SetLargestModuleIndex(int module) {
 		if (module > LargestModuleIndex)
 			LargestModuleIndex = module;
-		Debug.Log(LargestModuleIndex);
 	}
 }
