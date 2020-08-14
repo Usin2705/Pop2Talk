@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 062f9dcf47461814ba4cb0a5814708e3, type: 3}
-  m_Name: Grid - Top & Bot Spikes - 5x7- 5 types
+  m_Name: Grid - Top & Bot Spikes - 5x7 - 5 types
   m_EditorClassIdentifier: 
   gridWidth: 5
   gridHeight: 7
