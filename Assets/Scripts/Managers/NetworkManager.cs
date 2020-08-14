@@ -11,15 +11,18 @@ public class NetworkManager : MonoBehaviour {
 
 	static NetworkManager netWorkManager;
 
-	[SerializeField] string url = "https://(user_management_api_server)/api/game/login";
-	[SerializeField] string socketUrl = "http://pop8.fastparrots.com/(websocket_path)";
-	[SerializeField] string socketPath = "/(websocket_path)";
+	string url = "https://(user_management_api_server)/";
 
 	string login = "api/game/login";
 	string coinUpdate = "api/game/update/coins";
 	string updateCharacter = "api/game/update/character";
 	string updateHighscore = "api/game/update/highscore";
 	string getWordList = "api/game/create/wordlist";
+
+	string devAccount = "devel";
+
+	string liveSocketUrl = "https://(speech_processing_production_server)";
+	string devSocketUrl = "https://(speech_processing_development_server)";
 
 	Socket socket;
 	bool waitingScore;
@@ -97,7 +100,7 @@ public class NetworkManager : MonoBehaviour {
 		connecting = true;
 		connectAttemptTime = Time.time;
 		attemptingToConnect = true;
-		socket = Socket.Connect(socketUrl);
+		socket = Socket.Connect(GetSocketUrl());
 		Debug.Log(socket.Namespace);
 		Debug.Log("Connecting");
 		CheckConnection();
@@ -682,12 +685,18 @@ public class NetworkManager : MonoBehaviour {
 		ae.device = SystemInfo.deviceName.ToString();
 		ae.sessiontime = secondsSinceStartup;
 
-		ae.serverurl = socketUrl;
+		ae.serverurl = GetSocketUrl();
 
 		socket.EmitJson("loggable_event", JsonUtility.ToJson(ae));
 		yield return null;
 
 		Debug.Log("Event " + ae.eventname + " sent");
+	}
+
+	string GetSocketUrl() {
+		if (user.name.ToLower().StartsWith(devAccount.ToLower()))
+			return devSocketUrl;
+		return liveSocketUrl;
 	}
 
 	string GetUniqueID() {
