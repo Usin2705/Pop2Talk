@@ -694,7 +694,7 @@ public class NetworkManager : MonoBehaviour {
 	}
 
 	string GetSocketUrl() {
-		if (user.name.ToLower().StartsWith(devAccount.ToLower()))
+		if (user.name.ToLower().StartsWith(devAccount.ToLower()) && !user.name.Contains("@"))
 			return devSocketUrl;
 		return liveSocketUrl;
 	}
