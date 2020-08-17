@@ -2741,23 +2741,23 @@ MonoBehaviour:
     _bezierPath:
       points:
       - {x: 2, y: 0, z: 0}
-      - {x: 2.3632812, y: -68.96973, z: -1.5625}
-      - {x: 5.060547, y: -275.3318, z: 12.375}
-      - {x: 2.6679688, y: -394.79492, z: 15.5625}
-      - {x: 0.27539062, y: -514.25806, z: 18.75}
-      - {x: 137.75586, y: -605.5696, z: 82.6875}
-      - {x: 317.5918, y: -561.4712, z: 146.3125}
-      - {x: 497.42773, y: -517.3728, z: 209.9375}
-      - {x: 523.06836, y: 115.39209, z: 209.8125}
-      - {x: 302.23047, y: 304.3125, z: 176.25}
+      - {x: 2.3632812, y: -68.96973, z: 0}
+      - {x: 5.060547, y: -275.3318, z: 0}
+      - {x: 2.6679688, y: -394.79492, z: 0}
+      - {x: 0.27539062, y: -514.25806, z: 0}
+      - {x: 137.75586, y: -605.5696, z: 0}
+      - {x: 317.5918, y: -561.4712, z: 0}
+      - {x: 497.42773, y: -517.3728, z: 0}
+      - {x: 523.06836, y: 115.39209, z: 0}
+      - {x: 302.23047, y: 304.3125, z: 0}
       isClosed: 0
-      space: 0
+      space: 1
       controlMode: 1
       autoControlLength: 0.3
       boundsUpToDate: 0
       bounds:
-        m_Center: {x: 0, y: 0, z: 0}
-        m_Extent: {x: 0, y: 0, z: 0}
+        m_Center: {x: 231.09427, y: -134.22223, z: 99.23818}
+        m_Extent: {x: 229.09427, y: 438.53473, z: 99.35992}
       perAnchorNormalsAngle:
       - 0
       - 0
@@ -2765,7 +2765,7 @@ MonoBehaviour:
       - 0
       globalNormalsAngle: 0
       flipNormals: 0
-    vertexPathUpToDate: 1
+    vertexPathUpToDate: 0
     vertexPathMaxAngleError: 0.3
     vertexPathMinVertexSpacing: 0.01
     showTransformTool: 1
@@ -2773,14 +2773,14 @@ MonoBehaviour:
     showPerSegmentBounds: 0
     displayAnchorPoints: 1
     displayControlPoints: 1
-    bezierHandleScale: 1
+    bezierHandleScale: 0.6
     globalDisplaySettingsFoldout: 0
-    keepConstantHandleSize: 0
+    keepConstantHandleSize: 1
     showNormalsInVertexMode: 0
     showBezierPathInVertexMode: 0
-    showDisplayOptions: 0
+    showDisplayOptions: 1
     showPathOptions: 1
-    showVertexPathDisplayOptions: 0
+    showVertexPathDisplayOptions: 1
     showVertexPathOptions: 1
     showNormals: 0
     showNormalsHelpInfo: 0
