@@ -16,7 +16,7 @@ public enum SpecialTileType { None, Exploding, Horizontal, Vertical, Joker};
 
 public enum Language { None, Finnish, EnglishGB };
 
-public enum CosmeticSlot {Ship, Wallpaper };
+public enum CosmeticSlot {ShipTop, ShipMid, ShipBottom, Wallpaper };
 
 public delegate void Callback();
 public delegate void IntCallback(int i);

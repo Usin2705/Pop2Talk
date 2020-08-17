@@ -43,34 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d57ad09952124e43abf04d302eef05a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterIndex: 1
-  coins: 100
-  words:
-  - stars: 2
-    word: en_gb_aunt
-  - stars: -1
-    word: en_gb_uncle
-  - stars: 3
-    word: en_gb_mum
-  - stars: 4
-    word: en_gb_family
-  - stars: 5
-    word: en_gb_dad
-  - stars: -1
-    word: en_gb_grandpa
-  - stars: -1
-    word: en_gb_grandma
-  - stars: -1
-    word: en_gb_juice
-  - stars: -1
-    word: en_gb_grandchild
   equipId: 70d3a5df-9fbb-4843-a9ec-f0bb38c15afc
+  wallId: 2e958afc-513a-419f-aae5-d5968722a5d4
   collectionId:
   - 15b53619-1d2f-42c6-984d-f749d7426716
-  largestModuleIndex: 1
-  cardWords:
-  - en_gb_aunt
-  - en_gb_juice
-  - en_gb_uncle
-  - en_gb_grandma
-  cardTypes: 00000000000000000000000000000000

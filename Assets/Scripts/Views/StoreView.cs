@@ -36,6 +36,8 @@ public class StoreView : View {
 
 	float shakeDuration = 1;
 
+	int chosenCollectionIndex = 0;
+
 	protected override void Initialize() {
 		base.Initialize();
 		backButton.SubscribePress(Back);
@@ -45,13 +47,13 @@ public class StoreView : View {
 	}
 
 	void ShowCollection() {
-		string equippedId = CosmeticManager.GetManager().GetEquippedCosmetic(CosmeticSlot.Ship).Id;
+		string equippedId = CosmeticManager.GetManager().GetEquippedCosmetic(CosmeticSlot.ShipTop).Id;
 		Cosmetic[] cosmetics = CosmeticManager.GetManager().GetUnlockedCosmetics();
 		for (int i = 0; i < cosmetics.Length; ++i) {
 			string s = cosmetics[i].Id;
 			if (collecteds.ContainsKey(s))
 				continue;
-			UIButton button = Instantiate(selectableButtonPrefab, collectionGridPage.GetParent()).GetComponent<UIButton>();
+			UIButton button = Instantiate(selectableButtonPrefab, collectionGridPage.GetNextParent(chosenCollectionIndex)).GetComponent<UIButton>();
 			collecteds.Add(s, button);
 			if (s == equippedId) {
 				button.Press();
@@ -74,7 +76,7 @@ public class StoreView : View {
 		base.Activate();
 		ShowLoot();
 		coinText.text = CurrencyMaster.Instance.Coins.ToString();
-		shipImage.sprite = CosmeticManager.GetManager().GetEquippedCosmetic(CosmeticSlot.Ship).sprite;
+		shipImage.sprite = CosmeticManager.GetManager().GetEquippedCosmetic(CosmeticSlot.ShipTop).sprite;
 		LootBoxSettings[] settings = StoreManager.GetManager().GetBoxes();
 		float ratio = WordMaster.Instance.GetBestResults().Count / (float)WordMaster.Instance.TotalWords;
 		for (int i = purchasables.Count; i < settings.Length; ++i) {
@@ -141,7 +143,7 @@ public class StoreView : View {
 		}
 		chosen = collecteds[id];
 		CosmeticManager.GetManager().EquipCosmetic(id);
-		shipImage.sprite = CosmeticManager.GetManager().GetEquippedCosmetic(CosmeticSlot.Ship).sprite;
+		shipImage.sprite = CosmeticManager.GetManager().GetEquippedCosmetic(CosmeticSlot.ShipTop).sprite;
 	}
 
 	void Back() {
