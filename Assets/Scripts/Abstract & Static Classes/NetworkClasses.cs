@@ -6,7 +6,7 @@ using UnityEngine;
 [Serializable]
 public class UserData {
     public string id;
-    public string name;
+    public string username;
     public bool consent;
     public string role;
 	public string access_token;

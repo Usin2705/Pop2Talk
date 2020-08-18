@@ -21,8 +21,8 @@ public class NetworkManager : MonoBehaviour {
 
 	string devAccount = "devel";
 
-	string liveSocketUrl = "https://(speech_processing_production_server)";
-	string devSocketUrl = "https://(speech_processing_development_server)";
+	string liveSocketUrl = "https://(speech_processing_production_server)/";
+	string devSocketUrl = "https://(speech_processing_development_server)/";
 
 	Socket socket;
 	bool waitingScore;
@@ -480,6 +480,7 @@ public class NetworkManager : MonoBehaviour {
 
 
 			user = JsonUtility.FromJson<UserData>(www.downloadHandler.text);
+			Debug.Log(www.downloadHandler.text);
 			var json = SimpleJSON.JSON.Parse(www.downloadHandler.text);
 			
 			WordMaster.Instance.ClearWords();
@@ -694,7 +695,7 @@ public class NetworkManager : MonoBehaviour {
 	}
 
 	string GetSocketUrl() {
-		if (user.name.ToLower().StartsWith(devAccount.ToLower()) && !user.name.Contains("@"))
+		if (user.username.ToLower().StartsWith(devAccount.ToLower()) && !user.username.Contains("@"))
 			return devSocketUrl;
 		return liveSocketUrl;
 	}
