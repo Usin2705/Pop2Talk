@@ -2653,7 +2653,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1315015491182420, guid: 1e69b80a87cf62a448222df237ee8496, type: 3}
       propertyPath: m_Name
-      value: Moving Image Manager
+      value: Ship Manager
       objectReference: {fileID: 0}
     - target: {fileID: 224594448004274504, guid: 1e69b80a87cf62a448222df237ee8496,
         type: 3}
@@ -4209,11 +4209,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5266944907597949053, guid: fd8ce5052ae9c8542b946f29173e07ef,
-        type: 3}
-      propertyPath: itemPerGrid
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6201773067161204487, guid: fd8ce5052ae9c8542b946f29173e07ef,
         type: 3}

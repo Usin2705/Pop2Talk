@@ -127,7 +127,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pauseWobbleAmount: 10
   shipSpeed: 40
-  mover: {fileID: 0}
+  mover: {fileID: 224801582101922818}
   curtain: {fileID: 1493330020037694253}
   shipTop: {fileID: 4261867021759369764}
   shipMid: {fileID: 1299031189385731576}
