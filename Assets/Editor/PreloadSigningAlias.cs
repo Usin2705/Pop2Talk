@@ -8,9 +8,9 @@ public class PreloadSigningAlias
 
     static PreloadSigningAlias()
     {
-        PlayerSettings.Android.keystorePass = "XT5GaGvF";
-        PlayerSettings.Android.keyaliasName = "pop2talkaalto";
-        PlayerSettings.Android.keyaliasPass = "GdTMx9g3";
+        //PlayerSettings.Android.keystorePass = "XT5GaGvF";
+        //PlayerSettings.Android.keyaliasName = "pop2talkaalto";
+        //PlayerSettings.Android.keyaliasPass = "GdTMx9g3";
     }
 
 }
