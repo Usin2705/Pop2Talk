@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71511e391e529ce49bcc2f8dde81d752, type: 3}
-  m_Name: Ship Cosmetic 2
+  m_Name: Default Top 1
   m_EditorClassIdentifier: 
   slot: 0
-  icon: {fileID: 21300000, guid: 6cf0493dda420ba4593d48cf834af635, type: 3}
-  sprite: {fileID: 21300000, guid: 6cf0493dda420ba4593d48cf834af635, type: 3}
-  uniqueId: 5ac370a9-2654-4f76-9ef5-dcae4de5f5f2
-  idCopy: 5ac370a9-2654-4f76-9ef5-dcae4de5f5f2
+  icon: {fileID: 0}
+  sprite: {fileID: 0}
+  uniqueId: a11d1b93-6134-482c-80f9-7ac3915d8e7c
+  idCopy: a11d1b93-6134-482c-80f9-7ac3915d8e7c
   reset: 0

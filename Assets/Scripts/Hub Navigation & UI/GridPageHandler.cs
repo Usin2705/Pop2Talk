@@ -9,12 +9,12 @@ public class GridPageHandler : MonoBehaviour {
 	[SerializeField] UIButton prevButton;
 	[SerializeField] GameObject gridBlueprint;
 
-	int currentCollection = 0;
+	int currentCollectionIndex = 0;
 
-	List<List<Transform>> pages = new List<List<Transform>>();
+	List<List<Transform>> collections = new List<List<Transform>>();
 	List<int> currentPages = new List<int>();
 
-   void Awake() {
+	void Awake() {
 		nextButton.SubscribePress(Next);
 		prevButton.SubscribePress(Prev);
 	}
@@ -24,15 +24,16 @@ public class GridPageHandler : MonoBehaviour {
 	}
 
 	public Transform GetNextParent(int collectionIndex) {
-		while (collectionIndex >= pages.Count) {
-			pages.Add(new List<Transform>());
+		while (collectionIndex >= collections.Count) {
+			collections.Add(new List<Transform>());
 			currentPages.Add(0);
 		}
-		List<Transform> collection = pages[collectionIndex]; 
-		if (collection.Count == 0 || collection[collection.Count-1].childCount == itemPerGrid) {
+		List<Transform> collection = collections[collectionIndex];
+		if (collection.Count == 0 || collection[collection.Count - 1].childCount == itemPerGrid) {
 			collection.Add(Instantiate(gridBlueprint, transform).transform);
+			collection[collection.Count - 1].gameObject.SetActive(collectionIndex == currentCollectionIndex);
 		}
-		if (collectionIndex == currentCollection) {
+		if (collectionIndex == currentCollectionIndex) {
 			collection[collection.Count - 1].gameObject.SetActive(currentPages[collectionIndex] == collection.Count - 1);
 			UpdateButtons();
 		}
@@ -40,9 +41,15 @@ public class GridPageHandler : MonoBehaviour {
 	}
 
 	public void ShowCollection(int collectionIndex) {
-		pages[currentCollection][currentPages[currentCollection]].gameObject.SetActive(false);
-		currentCollection = collectionIndex;
-		pages[currentCollection][currentPages[currentCollection]].gameObject.SetActive(true);
+		while (collectionIndex >= collections.Count) {
+			collections.Add(new List<Transform>());
+			currentPages.Add(0);
+		}
+		if (currentPages[currentCollectionIndex] < collections[currentCollectionIndex].Count)
+			collections[currentCollectionIndex][currentPages[currentCollectionIndex]].gameObject.SetActive(false);
+		currentCollectionIndex = collectionIndex;
+		if (currentPages[currentCollectionIndex] < collections[currentCollectionIndex].Count)
+			collections[currentCollectionIndex][currentPages[currentCollectionIndex]].gameObject.SetActive(true);
 		UpdateButtons();
 	}
 
@@ -55,14 +62,18 @@ public class GridPageHandler : MonoBehaviour {
 	}
 
 	void ChangePage(int change) {
-		pages[currentCollection][currentPages[currentCollection]].gameObject.SetActive(false);
-		currentPages[currentCollection] += change;
-		pages[currentCollection][currentPages[currentCollection]].gameObject.SetActive(true);
+		collections[currentCollectionIndex][currentPages[currentCollectionIndex]].gameObject.SetActive(false);
+		currentPages[currentCollectionIndex] += change;
+		collections[currentCollectionIndex][currentPages[currentCollectionIndex]].gameObject.SetActive(true);
 		UpdateButtons();
 	}
 
 	void UpdateButtons() {
-		nextButton.gameObject.SetActive(currentPages[currentCollection] != pages[currentCollection].Count - 1);
-		prevButton.gameObject.SetActive(currentPages[currentCollection] != 0);
+		while (currentCollectionIndex >= collections.Count) {
+			collections.Add(new List<Transform>());
+			currentPages.Add(0);
+		}
+		nextButton.gameObject.SetActive(currentPages[currentCollectionIndex] < collections[currentCollectionIndex].Count - 1);
+		prevButton.gameObject.SetActive(currentPages[currentCollectionIndex] != 0);
 	}
 }

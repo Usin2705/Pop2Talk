@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71511e391e529ce49bcc2f8dde81d752, type: 3}
-  m_Name: Ship Cosmetic 4
+  m_Name: Test - Ship Cosmetic 2
   m_EditorClassIdentifier: 
   slot: 0
-  icon: {fileID: 21300000, guid: 4ee3d919f751a2c428258a647827ea67, type: 3}
-  sprite: {fileID: 21300000, guid: 4ee3d919f751a2c428258a647827ea67, type: 3}
-  uniqueId: 15b53619-1d2f-42c6-984d-f749d7426716
-  idCopy: 15b53619-1d2f-42c6-984d-f749d7426716
+  icon: {fileID: 21300000, guid: 6cf0493dda420ba4593d48cf834af635, type: 3}
+  sprite: {fileID: 21300000, guid: 6cf0493dda420ba4593d48cf834af635, type: 3}
+  uniqueId: 5ac370a9-2654-4f76-9ef5-dcae4de5f5f2
+  idCopy: 5ac370a9-2654-4f76-9ef5-dcae4de5f5f2
   reset: 0

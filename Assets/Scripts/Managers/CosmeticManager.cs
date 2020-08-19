@@ -30,6 +30,10 @@ public class CosmeticManager : MonoBehaviour {
 		return FindUnregisteredCosmetic(id);
 	}
 
+	public Dictionary<CosmeticSlot, string> GetEquippedIDs() {
+		return equippedCosmetics;
+	}
+
 	public Cosmetic GetEquippedCosmetic(CosmeticSlot slot) {
 		if (equippedCosmetics.ContainsKey(slot))
 			return GetCosmetic(equippedCosmetics[slot]);

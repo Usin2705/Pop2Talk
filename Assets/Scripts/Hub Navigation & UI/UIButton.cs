@@ -9,7 +9,8 @@ public class UIButton : MonoBehaviour {
 
 	[SerializeField] bool selectable;
 	[SerializeField] Image insideIcon;
-	[SerializeField] bool repressDeselects;
+	[SerializeField] public bool repressDeselects;
+	[SerializeField] public bool canPressSelected = true;
 	[SerializeField] bool lockedGrayscale;
 	[SerializeField] bool deselectGrayscale;
 
@@ -52,6 +53,8 @@ public class UIButton : MonoBehaviour {
 			} else {
 				if (repressDeselects)
 					Deselect();
+				else if (!canPressSelected)
+					return;
 			}
 		}
 		iterating = true;
