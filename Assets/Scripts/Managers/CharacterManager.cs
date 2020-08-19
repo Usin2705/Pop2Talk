@@ -39,6 +39,7 @@ public class CharacterManager : Overlay {
 				CurrentCharacter = characters[index];
 				MovingImageManager.GetManager().SetMoverSprite(CurrentCharacter.shipSprite);
 				character.sprite = CurrentCharacter.characterSprite;
+				NetworkManager.GetManager().UpdateCharacter(index);
 			}
 		} else {
 			Debug.LogError("Trying to set character out of index");

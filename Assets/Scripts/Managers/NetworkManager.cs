@@ -505,8 +505,9 @@ public class NetworkManager : MonoBehaviour {
 			Debug.Log(json["game_state"]);
 
 			WordMaster.Instance.SetLargestModuleIndex(module);
-
-			CharacterManager.GetManager().SetCharacter(json["game_state"]["character"].AsInt);
+			
+			if (json["game_state"]["character"].ToString() != "")
+				CharacterManager.GetManager().SetCharacter(json["game_state"]["character"].AsInt);
 			CurrencyMaster.Instance.SetCoins(json["game_state"]["coins"].AsInt);
 
 			if (user.consent) {
