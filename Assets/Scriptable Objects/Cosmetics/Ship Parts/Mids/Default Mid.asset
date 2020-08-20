@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71511e391e529ce49bcc2f8dde81d752, type: 3}
-  m_Name: Default Top 1
+  m_Name: Default Mid
   m_EditorClassIdentifier: 
-  slot: 0
+  slot: 1
   icon: {fileID: 0}
   sprite: {fileID: 0}
-  uniqueId: a11d1b93-6134-482c-80f9-7ac3915d8e7c
-  idCopy: a11d1b93-6134-482c-80f9-7ac3915d8e7c
+  uniqueId: 1655f232-67fc-40a8-88b7-7ebc82659786
+  idCopy: 1655f232-67fc-40a8-88b7-7ebc82659786
   reset: 0
