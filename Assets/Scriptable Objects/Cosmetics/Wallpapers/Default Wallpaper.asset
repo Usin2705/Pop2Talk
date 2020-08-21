@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Default Wallpaper
   m_EditorClassIdentifier: 
   slot: 3
-  icon: {fileID: 21300000, guid: 542e3985d42a4e14884c694bbf9bf3d1, type: 3}
+  icon: {fileID: 21300000, guid: e360cba04ee2a3640bf123baa96edbd3, type: 3}
   sprite: {fileID: 21300000, guid: 542e3985d42a4e14884c694bbf9bf3d1, type: 3}
   uniqueId: 2e958afc-513a-419f-aae5-d5968722a5d4
   idCopy: 2e958afc-513a-419f-aae5-d5968722a5d4

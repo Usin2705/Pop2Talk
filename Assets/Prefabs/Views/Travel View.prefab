@@ -1545,6 +1545,15 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 6ae2610abfe75764eaec6105e76e4c07, type: 2}
     - {fileID: 11400000, guid: c8a6830b394651043a484a476ede3e2b, type: 2}
     - {fileID: 11400000, guid: c8015a6a090214346840cd40d4f84bf2, type: 2}
+  - settings:
+    - {fileID: 11400000, guid: 9d4db608946d14f44a76479252d950e5, type: 2}
+    - {fileID: 11400000, guid: fc3145d7c0ac0ac42a83638f72d74e6b, type: 2}
+    - {fileID: 11400000, guid: 0635ffe735d4a0b4f9957f34667993cb, type: 2}
+    - {fileID: 11400000, guid: 713c47e5f6cea234991f76611dc5d7f0, type: 2}
+    - {fileID: 11400000, guid: c35e0eb35a2bdc246a2f74c9b89153d9, type: 2}
+    - {fileID: 11400000, guid: 10ac611b315beb74b86802abb20cf7d0, type: 2}
+    - {fileID: 11400000, guid: 4e4bbbe6e0f2159459f34586afaa058e, type: 2}
+    - {fileID: 11400000, guid: 489c5ae18e4b49b429f951b68088b3c9, type: 2}
   spriteBatches:
   - sprites:
     - {fileID: 21300000, guid: 5dfc3e52fd86d8849b0e6fca7417e422, type: 3}
@@ -1564,6 +1573,8 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 90256fea0f3a08c4b97612480115e0a0, type: 3}
   - sprites:
     - {fileID: 21300000, guid: 2dbc72c2dad1fa74f9697059ed95495e, type: 3}
+  - sprites:
+    - {fileID: 21300000, guid: 419987c1fb2db47409a9c2f9514797f1, type: 3}
   planets:
   - {fileID: 21300000, guid: 79a45bc7560e712438d3058aa1afc82c, type: 3}
   - {fileID: 21300000, guid: a59711fd149be8d438ba80dfd68736eb, type: 3}
@@ -1572,6 +1583,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 37896cbda9294914fa1a10aea637d4a7, type: 3}
   - {fileID: 21300000, guid: e3a202ce208edd140abccc4a92fd6acb, type: 3}
   - {fileID: 21300000, guid: c18b972056451d8458c445d17684228f, type: 3}
+  - {fileID: 21300000, guid: 419987c1fb2db47409a9c2f9514797f1, type: 3}
   upperPlanetButton: {fileID: 8654636719147205840}
   lowerPlanetButton: {fileID: 2528720385993169604}
   fluffTop: {fileID: 4100858696457639014}
