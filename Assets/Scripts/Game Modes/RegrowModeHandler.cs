@@ -23,9 +23,9 @@ public class RegrowModeHandler : BaseGridGameModeHandler {
     }
 
     public override void Activate() {
-        GameMaster.Instance.MaxProgress = movesPerCard;
-        GameMaster.Instance.RemainingProgress = movesPerCard;
 		base.Activate();
+		GameMaster.Instance.MaxProgress = movesPerCard;
+		GameMaster.Instance.RemainingProgress = movesPerCard;
 	}
 
     protected override IEnumerator StartPopping(Tile startTile, List<Dictionary<Tile, Coordinate>> touchingMatches) {

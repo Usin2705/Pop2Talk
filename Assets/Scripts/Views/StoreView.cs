@@ -11,6 +11,7 @@ public class StoreView : View {
 	[SerializeField] UIButton showLootButton;
 	[SerializeField] Text coinText;
 	[SerializeField] Image equippedImage;
+	[SerializeField] Image[] shipImages;
 	[Space]
 	[SerializeField] GameObject unlockScreen;
 	[SerializeField] Image unlockImage;
@@ -81,15 +82,30 @@ public class StoreView : View {
 		collectionButtons[chosenCollectionIndex].Deselect();
 		chosenCollectionIndex = index;
 		collectionGridPage.ShowCollection(chosenCollectionIndex);
-		bool found = false;
-		foreach (Cosmetic c in equippedButtons.Keys) {
-			if (index == (int)c.slot) {
-				equippedImage.sprite = c.icon;
-				found = true;
-				break;
+
+		if (index == (int)CosmeticSlot.ShipTop || index == (int)CosmeticSlot.ShipMid ||index == (int)CosmeticSlot.ShipBottom) {
+			equippedImage.gameObject.SetActive(false);
+
+			for (int i = 0; i < shipImages.Length; ++i) {
+				shipImages[i].gameObject.SetActive(true);
+				foreach (Cosmetic c in equippedButtons.Keys) {
+					if (i == (int)c.slot) {
+						shipImages[i].sprite = c.icon;
+						break;
+					}
+				}
 			}
+		} else {
+			bool found = false;
+			foreach (Cosmetic c in equippedButtons.Keys) {
+				if (index == (int)c.slot) {
+					equippedImage.sprite = c.icon;
+					found = true;
+					break;
+				}
+			}
+			equippedImage.gameObject.SetActive(found);
 		}
-		equippedImage.gameObject.SetActive(found);
 	}
 
 	void ShowLoot() {
@@ -125,7 +141,7 @@ public class StoreView : View {
 		if (!DebugMaster.Instance.skipTransitions) {
 			Transform box = lootboxButtons[index].GetBox();
 			Vector3 start = box.transform.position;
-			float a = 0, max = 30 * 1080f/Screen.width;
+			float a = 0, max = 30 * 1080f / Screen.width;
 			//lootboxButtons[index].TogglePrice(false);
 			while (a < 1) {
 				a += Time.deltaTime / shakeDuration;
@@ -163,7 +179,7 @@ public class StoreView : View {
 		if (equippedButtons.ContainsKey(cosmetic) || cosmetic == null)
 			return;
 		Cosmetic current = null;
-		foreach(Cosmetic c in equippedButtons.Keys) {
+		foreach (Cosmetic c in equippedButtons.Keys) {
 			if (c.slot == cosmetic.slot) {
 				current = c;
 				break;

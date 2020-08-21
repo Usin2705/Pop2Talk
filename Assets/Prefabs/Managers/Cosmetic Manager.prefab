@@ -44,8 +44,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allCosmetics:
-  - {fileID: 11400000, guid: 26d64cf0ba0a61c4db675825f8c46b47, type: 2}
-  - {fileID: 11400000, guid: 3ead74bc5871ec849adad6e6e6ceece2, type: 2}
-  - {fileID: 11400000, guid: 14fb40f8095f35a498f2adc36da5c912, type: 2}
-  - {fileID: 11400000, guid: ab353d2afc30adb479a0c0b3c1fb16dd, type: 2}
+  - {fileID: 11400000, guid: 41040f06ef063bf4ba3dfe564e231bf1, type: 2}
+  - {fileID: 11400000, guid: 79783e9a2745e0f43af41e4bb731ce4c, type: 2}
+  - {fileID: 11400000, guid: 92d0e6c225015044eb4eb88411379222, type: 2}
+  - {fileID: 11400000, guid: 350cd811df9c15e43a4b6b316f661489, type: 2}
+  defaultCosmetics:
+  - {fileID: 11400000, guid: 41040f06ef063bf4ba3dfe564e231bf1, type: 2}
+  - {fileID: 11400000, guid: 79783e9a2745e0f43af41e4bb731ce4c, type: 2}
+  - {fileID: 11400000, guid: 92d0e6c225015044eb4eb88411379222, type: 2}
   - {fileID: 11400000, guid: 350cd811df9c15e43a4b6b316f661489, type: 2}

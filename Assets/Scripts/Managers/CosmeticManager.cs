@@ -6,6 +6,7 @@ public class CosmeticManager : MonoBehaviour {
 
 
 	[SerializeField] Cosmetic[] allCosmetics;
+	[SerializeField] Cosmetic[] defaultCosmetics;
 
 	Dictionary<string, Cosmetic> cosmetics = new Dictionary<string, Cosmetic>();
 	HashSet<string> unlockedCosmetics = new HashSet<string>();
@@ -21,6 +22,13 @@ public class CosmeticManager : MonoBehaviour {
 		cm = this;
 		foreach (Cosmetic c in allCosmetics) {
 			cosmetics.Add(c.Id, c);
+		}
+	}
+
+	public void UnlockAndEquipDefaults() {
+		foreach (Cosmetic c in defaultCosmetics) {
+			UnlockCosmetic(c.Id);
+			EquipCosmetic(c.Id);
 		}
 	}
 

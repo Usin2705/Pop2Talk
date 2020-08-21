@@ -19,11 +19,9 @@ public class ClearModeHandler : BaseGridGameModeHandler {
     }
 
     public override void Activate() {
+		base.Activate();
 		GameMaster.Instance.MaxProgress = GridManager.GetManager().CellCount;
-        GridManager.GetManager().DropTiles(true);
-        GridManager.GetManager().BreakMatches();
         GameMaster.Instance.RemainingProgress = GridManager.GetManager().TileCount;
-        GridManager.GetManager().MoveTiles(base.Activate);
     }
 
     protected override IEnumerator StartPopping(Tile startTile, List<Dictionary<Tile, Coordinate>> touchingMatches) {

@@ -384,6 +384,7 @@ GameObject:
   - component: {fileID: 114860362916527170}
   - component: {fileID: 114001854937453728}
   - component: {fileID: 114408853257316042}
+  - component: {fileID: 1140637691555728660}
   m_Layer: 0
   m_Name: Machine Card
   m_TagString: Untagged
@@ -434,7 +435,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &114271424023260618
 MonoBehaviour:
@@ -528,6 +529,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a1aa3e46dde693448cfbea917a9d6c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!225 &1140637691555728660
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1157348065470042}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &1158174385976682
 GameObject:
   m_ObjectHideFlags: 0
@@ -900,6 +913,7 @@ MonoBehaviour:
   selectable: 0
   insideIcon: {fileID: 0}
   repressDeselects: 0
+  canPressSelected: 1
   lockedGrayscale: 0
   deselectGrayscale: 0
 --- !u!114 &114017669793085586
@@ -1277,7 +1291,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &224747121264527498
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1831,6 +1845,7 @@ MonoBehaviour:
   selectable: 0
   insideIcon: {fileID: 0}
   repressDeselects: 0
+  canPressSelected: 1
   lockedGrayscale: 0
   deselectGrayscale: 0
 --- !u!114 &114010409712068622
@@ -2765,7 +2780,7 @@ MonoBehaviour:
       - 0
       globalNormalsAngle: 0
       flipNormals: 0
-    vertexPathUpToDate: 0
+    vertexPathUpToDate: 1
     vertexPathMaxAngleError: 0.3
     vertexPathMinVertexSpacing: 0.01
     showTransformTool: 1

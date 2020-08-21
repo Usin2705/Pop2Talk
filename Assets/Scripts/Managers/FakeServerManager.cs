@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class FakeServerManager : MonoBehaviour {
 
-	
-	[SerializeField] string equipId;
-	[SerializeField] string wallId;
-	[SerializeField] string[] collectionId;
-
 	static FakeServerManager fsm;
 	
 	void Awake() {
@@ -20,19 +15,9 @@ public class FakeServerManager : MonoBehaviour {
 	}
 
 	public void Connect() {
-		//CharacterManager.GetManager().SetCharacter(characterIndex);
-		/*
-		string[] strings = new string[words.Length];
-		int[] stars = new int[words.Length];
-		for (int i = 0; i < stars.Length; ++i) {
-			strings[i] = words[i].word;
-			stars[i] = words[i].stars;
-		}*/
-		//CurrencyMaster.Instance.SetCoins(coins);
-		CosmeticManager.GetManager().UnlockCosmetic(collectionId);
-		CosmeticManager.GetManager().EquipCosmetic(equipId);
-		CosmeticManager.GetManager().EquipCosmetic(wallId);
+		CosmeticManager.GetManager().UnlockAndEquipDefaults();
 	}
+
 	public void EquipCosmetic(string id, CosmeticSlot slot) {
 
 	}

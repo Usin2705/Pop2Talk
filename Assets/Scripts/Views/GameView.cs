@@ -9,17 +9,20 @@ public class GameView : View, IGameCaller {
 	[SerializeField] View finishView;
 	[Space]
 	[SerializeField] Image background;
+	[SerializeField] Image fluffForeground;
 	[SerializeField] GameUIHandler gameUI;
 	[SerializeField] UIButton backButton;
 
 	float levelDuration = 0f;
 
 	bool musicFaded;
+	bool fluffDone = false;
 
 	bool firstCheerDone = false;
 
 	void Update() {
-		levelDuration += Time.deltaTime;
+		if (fluffDone)
+			levelDuration += Time.deltaTime;
 	}
 
 	protected override void Initialize() {
@@ -29,7 +32,13 @@ public class GameView : View, IGameCaller {
 
 	public override void Activate() {
 		base.Activate();
+		fluffDone = false;
 		background.sprite = GameMaster.Instance.Background;
+		if (!DebugMaster.Instance.skipTransitions) {
+			fluffForeground.gameObject.SetActive(true);
+			fluffForeground.sprite = background.sprite;
+			fluffForeground.color = Color.white;
+		}
 		GameMaster.Instance.SetGameCaller(this);
 		gameUI.SetCardBar(true);
 		BeginGame();
@@ -41,7 +50,14 @@ public class GameView : View, IGameCaller {
 		gameUI.SetStars(0, true);
 		gameUI.SetCardsLeft(WordMaster.Instance.CardsRemaining, true);
 		levelDuration = 0f;
-		GameMaster.Instance.LaunchGame(WordMaster.Instance.CardsRemaining == 1);
+		GameMaster.Instance.InitializeGame(WordMaster.Instance.CardsRemaining == 1);
+		StartCoroutine(StartDelay());
+	}
+
+	IEnumerator StartDelay() {
+		while (!fluffDone)
+			yield return null;
+		GameMaster.Instance.StartRound();
 	}
 
 	public void Clicked() {
@@ -150,5 +166,31 @@ public class GameView : View, IGameCaller {
 
 	public override UIButton[] GetAllButtons() {
 		return null;
+	}
+
+	public override void EnterFluff(Callback Done) {
+		if (DebugMaster.Instance.skipTransitions) {
+			fluffDone = true;
+			base.EnterFluff(Done);
+		} else
+			StartCoroutine(EnterFluffRoutine(Done));
+	}
+
+	IEnumerator EnterFluffRoutine(Callback Done) {
+		float a = 0;
+		while (a < 1) {
+			a += Time.deltaTime;
+			yield return null;
+		}
+		while (a > 0) {
+			a -= Time.deltaTime;
+			if (a < 0)
+				a = 0;
+			fluffForeground.color = new Color(1, 1, 1, a);
+			yield return null;
+		}
+		fluffForeground.gameObject.SetActive(false);
+		fluffDone = true;
+		Done();
 	}
 }

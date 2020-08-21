@@ -26,12 +26,16 @@ public abstract class BaseGridGameModeHandler : IGameMode {
 
 	protected virtual void SetupGrid(LevelTypeSettings[] types) {
 		gridSettings = null;
+		Direction dir = Direction.Down;
 		foreach (LevelTypeSettings lts in types) {
 			if (lts.GetType() == typeof(GridSettings)) {
 				gridSettings = (GridSettings)lts;
 				break;
+			} else if (lts is DirectionSettings) {
+				dir = (lts as DirectionSettings).direction;
 			}
 		}
+		GridManager.GetManager().Gravity = dir;
 		if (gridSettings == null) {
 			Debug.LogError("No gridsettings in " + level.name + "!");
 		}
@@ -41,6 +45,7 @@ public abstract class BaseGridGameModeHandler : IGameMode {
 		movesPerRound = -1;
 		gridSettings = null;
 		IntSettings intSettings;
+		Direction dir = Direction.Down;
 		foreach (LevelTypeSettings lts in types) {
 			if (lts is GridSettings) {
 				gridSettings = (GridSettings)lts;
@@ -52,8 +57,11 @@ public abstract class BaseGridGameModeHandler : IGameMode {
 				}
 
 				movesPerRound = intSettings.integer;
+			} else if (lts is DirectionSettings) {
+				dir = (lts as DirectionSettings).direction;
 			}
 		}
+		GridManager.GetManager().Gravity = dir;
 		if (gridSettings == null) {
 			Debug.LogError("No gridsettings in " + level.name + "!");
 		}
@@ -64,8 +72,12 @@ public abstract class BaseGridGameModeHandler : IGameMode {
 
 
 	public virtual void Activate() {
-		GridManager.GetManager().IsClickable = true;
-		clicks = 0;
+		GridManager.GetManager().DropTiles(true);
+		GridManager.GetManager().BreakMatches();
+		GridManager.GetManager().MoveTiles(() => {
+			GridManager.GetManager().IsClickable = true;
+			clicks = 0;
+		});
 	}
 
 	public virtual void FinishedResolvingClick() {
