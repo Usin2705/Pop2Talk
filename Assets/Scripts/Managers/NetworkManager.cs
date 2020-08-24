@@ -18,6 +18,8 @@ public class NetworkManager : MonoBehaviour {
 	string updateCharacter = "api/game/update/character";
 	string updateHighscore = "api/game/update/highscore";
 	string getWordList = "api/game/create/wordlist";
+	string unlockCosmetic = "api/game/unlock/cosmetic";
+	string equipCosmetic = "api/game/equip/cosmetic";
 
 	string devAccount = "devel";
 
@@ -501,8 +503,10 @@ public class NetworkManager : MonoBehaviour {
 			}
 
 			json["game_state"]["availableModules"] = "";
+			json["game_state"]["wordHighscores"] = "";
+			json["words"] = "";
 
-			Debug.Log(json["game_state"]);
+			Debug.Log(json);
 
 			WordMaster.Instance.SetLargestModuleIndex(module);
 
@@ -577,7 +581,6 @@ public class NetworkManager : MonoBehaviour {
 	}
 
 	IEnumerator CharacterUpdateRoutine(int character) {
-
 		WWWForm form = new WWWForm();
 		form.AddField("character", character);
 		UnityWebRequest www = UnityWebRequest.Post(url + updateCharacter, form);
@@ -586,6 +589,32 @@ public class NetworkManager : MonoBehaviour {
 		Debug.Log(www.downloadHandler.text);
 	}
 
+	public void UnlockCosmetic(string id) {
+		StartCoroutine(CosmeticUnlockRoutine(id));
+	}
+
+	IEnumerator CosmeticUnlockRoutine(string id) {
+		WWWForm form = new WWWForm();
+		form.AddField("id", id);
+		UnityWebRequest www = UnityWebRequest.Post(url + unlockCosmetic, form);
+		www.SetRequestHeader("Authorization", "Bearer " + user.access_token);
+		yield return www.SendWebRequest();
+		Debug.Log(www.downloadHandler.text);
+	}
+
+	public void EquipCosmetic(string id, int index) {
+		StartCoroutine(CosmeticEquipRoutine(id, index));
+	}
+
+	IEnumerator CosmeticEquipRoutine(string id, int index) {
+		WWWForm form = new WWWForm();
+		form.AddField("id", id);
+		form.AddField("index", index);
+		UnityWebRequest www = UnityWebRequest.Post(url + equipCosmetic, form);
+		www.SetRequestHeader("Authorization", "Bearer " + user.access_token);
+		yield return www.SendWebRequest();
+		Debug.Log(www.downloadHandler.text);
+	}
 
 	public bool GetConsent() {
 		if (user != null)
