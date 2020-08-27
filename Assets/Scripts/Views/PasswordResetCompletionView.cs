@@ -25,8 +25,7 @@ public class PasswordResetCompletionView : View {
 	private string email;
 
 
-	protected override void Initialize()
-	{
+	protected override void Initialize() {
 		base.Initialize();
 		email = gameHandler.GetComponent<GameHandler>().emailHolder;
 		gameHandler.GetComponent<GameHandler>().emailHolder = null;
@@ -34,47 +33,55 @@ public class PasswordResetCompletionView : View {
 		resetButton.SubscribePress(Reset);
 	}
 
-	void Back()
-	{
+	void Back() {
 		doExitFluff = false;
 		ViewManager.GetManager().ShowView(loginView);
 	}
 
-	void Reset()
-	{
-		Debug.Log(email);
+	void Reset() {
+		if (passwordField.text != passwordConfirmationField.text) {
+			errorText.text = "The passwords must match!";
+			errorText.gameObject.SetActive(true);
+			return;
+		}
+
+		PasswordScore passwordStrength = PasswordMaster.CheckStrength(passwordField.text);
+
+		if (passwordStrength < PasswordMaster.GetRequiredScore()) {
+			errorText.text = "Password is not strong enough. Please ensure that it is longer than 4 characters.";
+			Debug.Log(passwordStrength);
+			errorText.gameObject.SetActive(true);
+			return;
+		}
+
 		StartCoroutine("SendRequest");
-		ViewManager.GetManager().ShowView(loginView);
 	}
 
-	IEnumerator SendRequest()
-	{
+	IEnumerator SendRequest() {
 		WWWForm form = new WWWForm();
 		form.AddField("email", email);
 		form.AddField("code", resetCodeField.text);
 		form.AddField("password", passwordField.text);
+		InputManager.GetManager().SendingInputs = false;
+		errorText.gameObject.SetActive(false);
 		UnityWebRequest www = UnityWebRequest.Post(serverUrl + resetPath, form);
 		yield return www.SendWebRequest();
-		if (www.isNetworkError || www.isHttpError)
-		{
-			errorText.text = www.error;
-			Debug.LogError(www.downloadHandler.text);
+		InputManager.GetManager().SendingInputs = true;
+		if (www.isNetworkError || www.isHttpError) {
+			errorText.text = "Reset code is not valid!";
 			errorText.gameObject.SetActive(true);
-		}
-		else
-		{
+		} else {
 			Debug.Log(www.downloadHandler.text);
 			requestStatus = www.downloadHandler.text;
+			ViewManager.GetManager().ShowView(loginView);
 		}
 	}
 
-	public override UIButton[] GetAllButtons()
-	{
-		throw new System.NotImplementedException();
+	public override UIButton[] GetAllButtons() {
+		return null;
 	}
 
-	public override UIButton GetPointedButton()
-	{
-		throw new System.NotImplementedException();
+	public override UIButton GetPointedButton() {
+		return null;
 	}
 }

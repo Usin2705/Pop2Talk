@@ -10,7 +10,7 @@ public class RegistrationView : View {
 	[SerializeField] View loginView;
 	[Space]
 	[SerializeField] InputField usernameField;
-    [SerializeField] InputField passwordField;
+	[SerializeField] InputField passwordField;
 	[SerializeField] InputField passwordConfirmField;
 	[SerializeField] UIButton registerButton;
 	[SerializeField] UIButton backButton;
@@ -19,8 +19,8 @@ public class RegistrationView : View {
 	[SerializeField] ScrollRect tosScroll;
 	[SerializeField] Text tosText;
 	[Space]
-    [SerializeField] Text errorText;
-    [Space]
+	[SerializeField] Text errorText;
+	[Space]
 	[SerializeField] string serverUrl = "https://(user_management_api_server)/api/game/";
 	[SerializeField] string userCheckPath = "checkUsername";
 	[SerializeField] string registerPath = "register";
@@ -29,15 +29,6 @@ public class RegistrationView : View {
 	TermsAndConditions TOS;
 
 
-	public enum PasswordScore
-	{
-		Blank = 0,
-		VeryWeak = 1,
-		Weak = 2,
-		Medium = 3,
-		Strong = 4,
-		VeryStrong = 5
-	}
 
 	bool emailIsAvailable;
 
@@ -48,76 +39,63 @@ public class RegistrationView : View {
 		registerButton.SubscribePress(RegisterAccount);
 	}
 
-	void Start()
-	{
+	void Start() {
 		StartCoroutine("RequestNewestTOS");
 	}
 
-	void Back()
-	{
+	void Back() {
 		doExitFluff = false;
 		ViewManager.GetManager().ShowView(loginView);
 	}
 
-	void RegisterAccount()
-	{
+	void RegisterAccount() {
 		//TODO: Add registration functionality
 		Debug.Log("Registering");
 		StartCoroutine("Register");
 		ViewManager.GetManager().ShowView(loginView);
 	}
 
-	public void ValidateForm()
-	{
+	public void ValidateForm() {
 		Debug.Log("Validating form");
-		if (ValidateFormContent())
-		{
+		if (ValidateFormContent()) {
 			Debug.Log("True");
 			registerButton.gameObject.SetActive(true);
 			errorText.gameObject.SetActive(false);
-		}
-		else
-		{
+		} else {
 			Debug.Log("False");
 			registerButton.gameObject.SetActive(false);
 		}
 	}
 
-	bool ValidateFormContent()
-	{
-		if (!IsValidEmail(usernameField.text))
-		{
+	bool ValidateFormContent() {
+		if (!IsValidEmail(usernameField.text)) {
 			errorText.text = "please enter a valid email address.";
 			errorText.gameObject.SetActive(true);
 			return false;
 		}
 		StartCoroutine(EmailIsAvailable(usernameField.text));
 		Debug.Log(usernameField.text);
-		if (!emailIsAvailable)
-		{
+		if (!emailIsAvailable) {
 			errorText.text = "An account with this email address already exists.";
 			errorText.gameObject.SetActive(true);
 			return false;
 		}
-		PasswordScore passwordStrength = CheckStrength(passwordField.text);
+		PasswordScore passwordStrength = PasswordMaster.CheckStrength(passwordField.text);
 
-		if(passwordStrength < PasswordScore.Weak)
-		{
+		if (passwordStrength < PasswordMaster.GetRequiredScore()) {
 			errorText.text = "Password is not strong enough. Please ensure that it is longer than 4 characters.";
 			Debug.Log(passwordStrength);
 			errorText.gameObject.SetActive(true);
 			return false;
 		}
 
-		if (passwordConfirmField.text != passwordField.text)
-		{
+		if (passwordConfirmField.text != passwordField.text) {
 			errorText.text = "The password fields do not match.";
 			errorText.gameObject.SetActive(true);
 			return false;
 		}
 
-		if(!tosToggle.isOn)
-		{
+		if (!tosToggle.isOn) {
 			errorText.text = "Please fully read and accept the Terms of Service and Privacy Policy.";
 			errorText.gameObject.SetActive(true);
 			return false;
@@ -128,111 +106,61 @@ public class RegistrationView : View {
 		return true;
 	}
 
-	bool IsValidEmail(string email)
-	{
-		try
-		{
+	bool IsValidEmail(string email) {
+		try {
 			var addr = new System.Net.Mail.MailAddress(email);
 			return addr.Address == email;
 		}
-		catch
-		{
+		catch {
 			return false;
 		}
 	}
 
-	public static PasswordScore CheckStrength(string password)
-	{
-		int score = 0;
-		
-		if (string.IsNullOrEmpty(password)||string.IsNullOrWhiteSpace(password))
-			score = (int)PasswordScore.Blank;
-		if (password.Length < 4)
-			score = (int)PasswordScore.VeryWeak;
-		if (password.Length >= 8)
-			score++;
-		if (password.Length >= 12)
-			score++;
-		if (Regex.IsMatch(password, @"[0-9]+(\.[0-9][0-9]?)?", RegexOptions.ECMAScript))
-		{
-			Debug.Log("Password has numbers");
-			score++;
-		}
-		if (Regex.IsMatch(password, @"^(?=.*[a-z])(?=.*[A-Z]).+$", RegexOptions.ECMAScript))
-		{
-			Debug.Log("Password has upper- and lowercase");
-			score++;
-		}
-		if (Regex.IsMatch(password, @"[!,@,#,$,%,^,&,*,?,_,~,-,£,(,)]", RegexOptions.ECMAScript))
-		{
-			Debug.Log("Password has special symbol");
-			score++;
-		}
-		
-		Debug.Log(score);
-		return (PasswordScore)score;
-	}
-
-	IEnumerator Register()
-	{
+	IEnumerator Register() {
 		WWWForm form = new WWWForm();
 		form.AddField("email", usernameField.text);
 		form.AddField("password", passwordField.text);
 		form.AddField("newsletter", newsletterToggle.isOn.ToString());
 		UnityWebRequest www = UnityWebRequest.Post(serverUrl + registerPath, form);
 		yield return www.SendWebRequest();
-		if (www.isNetworkError || www.isHttpError)
-		{
+		if (www.isNetworkError || www.isHttpError) {
 			errorText.text = www.error;
 			Debug.LogError(www.downloadHandler.text);
 			errorText.gameObject.SetActive(true);
-		}
-		else
-		{
+		} else {
 			Debug.Log(www.downloadHandler.text);
 		}
 	}
 
-	IEnumerator EmailIsAvailable(string email)
-	{
+	IEnumerator EmailIsAvailable(string email) {
 		WWWForm form = new WWWForm();
 		form.AddField("email", email);
 		UnityWebRequest www = UnityWebRequest.Post(serverUrl + userCheckPath, form);
 		yield return www.SendWebRequest();
-		if (www.isNetworkError || www.isHttpError)
-		{
+		if (www.isNetworkError || www.isHttpError) {
 			errorText.text = www.error;
 			Debug.LogError(www.downloadHandler.text);
 			errorText.gameObject.SetActive(true);
-		}
-		else
-		{
+		} else {
 			Debug.Log(www.downloadHandler.text);
-			if(www.downloadHandler.text == "available")
-			{
+			if (www.downloadHandler.text == "available") {
 				emailIsAvailable = true;
 				yield return null;
-			}
-			else
-			{
+			} else {
 				emailIsAvailable = false;
 				yield return null;
 			}
 		}
 	}
 
-	IEnumerator RequestNewestTOS()
-	{
+	IEnumerator RequestNewestTOS() {
 		UnityWebRequest www = UnityWebRequest.Get(requestTosUrl);
 		yield return www.SendWebRequest();
-		if (www.isNetworkError || www.isHttpError)
-		{
+		if (www.isNetworkError || www.isHttpError) {
 			errorText.text = www.error;
 			Debug.LogError(www.downloadHandler.text);
 			errorText.gameObject.SetActive(true);
-		}
-		else
-		{
+		} else {
 			TOS = JsonUtility.FromJson<TermsAndConditions>(www.downloadHandler.text);
 			Debug.Log(www.downloadHandler.text);
 			tosText.text = TOS.termsOfService + "\n" + TOS.privacyPolicy;
@@ -242,10 +170,10 @@ public class RegistrationView : View {
 
 
 	public override UIButton GetPointedButton() {
-        return null;
+		return null;
 	}
 
 	public override UIButton[] GetAllButtons() {
-        return null;
-    }
+		return null;
+	}
 }
