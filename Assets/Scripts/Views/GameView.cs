@@ -177,13 +177,15 @@ public class GameView : View, IGameCaller {
 	}
 
 	IEnumerator EnterFluffRoutine(Callback Done) {
-		float a = 0;
+		float a = 0, introDuration = 1f, fadeDuration = 0.5f;
 		while (a < 1) {
-			a += Time.deltaTime;
+			a += Time.deltaTime / introDuration;
+			if (a > 1)
+				a = 1;
 			yield return null;
 		}
 		while (a > 0) {
-			a -= Time.deltaTime;
+			a -= Time.deltaTime / fadeDuration;
 			if (a < 0)
 				a = 0;
 			fluffForeground.color = new Color(1, 1, 1, a);

@@ -49,7 +49,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 92d0e6c225015044eb4eb88411379222, type: 2}
   - {fileID: 11400000, guid: 350cd811df9c15e43a4b6b316f661489, type: 2}
   defaultCosmetics:
-  - {fileID: 11400000, guid: 41040f06ef063bf4ba3dfe564e231bf1, type: 2}
-  - {fileID: 11400000, guid: 79783e9a2745e0f43af41e4bb731ce4c, type: 2}
   - {fileID: 11400000, guid: 92d0e6c225015044eb4eb88411379222, type: 2}
+  - {fileID: 11400000, guid: 79783e9a2745e0f43af41e4bb731ce4c, type: 2}
+  - {fileID: 11400000, guid: 41040f06ef063bf4ba3dfe564e231bf1, type: 2}
   - {fileID: 11400000, guid: 350cd811df9c15e43a4b6b316f661489, type: 2}

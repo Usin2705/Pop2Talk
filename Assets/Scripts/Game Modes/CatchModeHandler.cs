@@ -29,6 +29,8 @@ public class CatchModeHandler : MonoBehaviour, IGameMode, ICatcherTarget {
 	GameObject tileCatcher;
 	GameObject clickCatcher;
 
+	Coroutine tileDropRoutine;
+
 	public void Activate() {
 		collectedTiles = 0;
 		poppedTiles = 0;
@@ -36,7 +38,7 @@ public class CatchModeHandler : MonoBehaviour, IGameMode, ICatcherTarget {
 		active = true;
 		GameMaster.Instance.MaxProgress = tileCount;
 		GameMaster.Instance.RemainingProgress = tileCount;
-		StartCoroutine(TileDropRoutine());
+		tileDropRoutine = StartCoroutine(TileDropRoutine());
 	}
 
 	public void Back() {
@@ -55,6 +57,8 @@ public class CatchModeHandler : MonoBehaviour, IGameMode, ICatcherTarget {
 		clickCatcher = null;
 		tileCatcher = null;
 		active = false;
+		if (tileDropRoutine != null)
+			StopCoroutine(tileDropRoutine);
 	}
 
 	public void Initialize(LevelSettings level) {
@@ -121,6 +125,7 @@ public class CatchModeHandler : MonoBehaviour, IGameMode, ICatcherTarget {
 		active = false;
 		CatchDustConversion();
 		GameMaster.Instance.RoundDone();
+		tileDropRoutine = null;
 	}
 
 	IEnumerator PopRoutine(MatchableTile mt) {

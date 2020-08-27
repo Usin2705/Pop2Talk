@@ -74,6 +74,7 @@ public class StoreView : View {
 		}
 
 		collectionGridPage.ShowCollection(chosenCollectionIndex);
+		UpdateEquippedImages();
 		collectionScreen.SetActive(true);
 		lootScreen.SetActive(false);
 	}
@@ -83,7 +84,11 @@ public class StoreView : View {
 		chosenCollectionIndex = index;
 		collectionGridPage.ShowCollection(chosenCollectionIndex);
 
-		if (index == (int)CosmeticSlot.ShipTop || index == (int)CosmeticSlot.ShipMid ||index == (int)CosmeticSlot.ShipBottom) {
+		UpdateEquippedImages();
+	}
+
+	void UpdateEquippedImages() {
+		if (chosenCollectionIndex == (int)CosmeticSlot.ShipTop || chosenCollectionIndex == (int)CosmeticSlot.ShipMid || chosenCollectionIndex == (int)CosmeticSlot.ShipBottom) {
 			equippedImage.gameObject.SetActive(false);
 
 			for (int i = 0; i < shipImages.Length; ++i) {
@@ -98,11 +103,14 @@ public class StoreView : View {
 		} else {
 			bool found = false;
 			foreach (Cosmetic c in equippedButtons.Keys) {
-				if (index == (int)c.slot) {
+				if (chosenCollectionIndex == (int)c.slot) {
 					equippedImage.sprite = c.icon;
 					found = true;
 					break;
 				}
+			}
+			for (int i = 0; i < shipImages.Length; ++i) {
+				shipImages[i].gameObject.SetActive(false);
 			}
 			equippedImage.gameObject.SetActive(found);
 		}

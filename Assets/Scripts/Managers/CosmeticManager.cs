@@ -25,10 +25,11 @@ public class CosmeticManager : MonoBehaviour {
 		}
 	}
 
-	public void UnlockAndEquipDefaults() {
+	public void CheckDefaultCosmetics() {
 		foreach (Cosmetic c in defaultCosmetics) {
 			UnlockCosmetic(c.Id);
-			EquipCosmetic(c.Id);
+			if (!equippedCosmetics.ContainsKey(c.slot) || equippedCosmetics[c.slot] == "")
+				EquipCosmetic(c.Id);
 		}
 	}
 
@@ -55,6 +56,7 @@ public class CosmeticManager : MonoBehaviour {
 			cosmetics.Add(id, c);
 			return c;
 		}
+		Debug.LogWarning("No cosmetic with id " + id);
 		return null;
 	}
 
@@ -64,11 +66,13 @@ public class CosmeticManager : MonoBehaviour {
 		}
 	}
 	
-	public void EquipCosmetic(string id) {
+	public void EquipCosmetic(string id, bool sendToServer = true) {
+		Cosmetic c = GetCosmetic(id);
+		if (c == null)
+			return;
 		bool slotChanged = true;
 		if (!unlockedCosmetics.Contains(id))
 			UnlockCosmetic(id);
-		Cosmetic c = GetCosmetic(id);
 		if (equippedCosmetics.ContainsKey(c.slot)) {
 			if (id != equippedCosmetics[c.slot])
 				equippedCosmetics[c.slot] = id;
@@ -77,7 +81,7 @@ public class CosmeticManager : MonoBehaviour {
 		} else
 			equippedCosmetics.Add(c.slot, id);
 
-		if (slotChanged) {
+		if (slotChanged && sendToServer) {
 			NetworkManager.GetManager().EquipCosmetic(id, (int)c.slot);
 		}
 	}
@@ -93,9 +97,12 @@ public class CosmeticManager : MonoBehaviour {
 			UnlockCosmetic(s);
 	}
 
-	public void UnlockCosmetic(string id) {
+	public void UnlockCosmetic(string id, bool sendToServer = true) {
+		if (GetCosmetic(id) == null)
+			return;
 		if (!unlockedCosmetics.Contains(id)) {
-			NetworkManager.GetManager().UnlockCosmetic(id);
+			if (sendToServer)
+				NetworkManager.GetManager().UnlockCosmetic(id);
 			unlockedCosmetics.Add(id);
 		}
 	}
@@ -109,5 +116,4 @@ public class CosmeticManager : MonoBehaviour {
 		}
 		return cosmetics;
 	}
-
 }

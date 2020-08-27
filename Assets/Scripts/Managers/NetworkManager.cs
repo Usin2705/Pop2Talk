@@ -509,9 +509,23 @@ public class NetworkManager : MonoBehaviour {
 			Debug.Log(json);
 
 			WordMaster.Instance.SetLargestModuleIndex(module);
-
-			CharacterManager.GetManager().SetCharacter(json["game_state"]["character"].AsInt);
+			if (json["game_state"]["character"].ToString() != "")
+				CharacterManager.GetManager().SetCharacter(json["game_state"]["character"].AsInt, false);
 			CurrencyMaster.Instance.SetCoins(json["game_state"]["coins"].AsInt);
+			
+			if (json["game_state"]["unlocked_cosmetics"].ToString() != "") {
+				for (int i = 0; i < json["game_state"]["unlocked_cosmetics"].Count; ++i) {
+					CosmeticManager.GetManager().UnlockCosmetic(json["game_state"]["unlocked_cosmetics"][i], false);
+				}
+			}
+
+			if (json["game_state"]["equipped_cosmetics"].ToString() != "") {
+				for (int i = 0; i < json["game_state"]["equipped_cosmetics"].Count; ++i) {
+					CosmeticManager.GetManager().EquipCosmetic(json["game_state"]["equipped_cosmetics"][i], false);
+				}
+			}
+
+			CosmeticManager.GetManager().CheckDefaultCosmetics();
 
 			if (user.consent) {
 				Connect();
@@ -590,6 +604,7 @@ public class NetworkManager : MonoBehaviour {
 	}
 
 	public void UnlockCosmetic(string id) {
+		Debug.Log("Trying to unlock: " + id);
 		StartCoroutine(CosmeticUnlockRoutine(id));
 	}
 
@@ -603,6 +618,7 @@ public class NetworkManager : MonoBehaviour {
 	}
 
 	public void EquipCosmetic(string id, int index) {
+		Debug.Log("Trying to equip: " + id);
 		StartCoroutine(CosmeticEquipRoutine(id, index));
 	}
 

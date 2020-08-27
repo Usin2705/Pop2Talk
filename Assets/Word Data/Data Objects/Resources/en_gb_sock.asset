@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: en_gb_sock
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: 7390547765443b74091aacca7e7a464b, type: 3}
+  picture: {fileID: 21300000, guid: 8d9061ebbd9b36c49b4718e7c6120758, type: 3}
   language: 2
   spelling: Sock
   pronunciations:

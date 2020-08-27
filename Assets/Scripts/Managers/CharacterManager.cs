@@ -30,13 +30,15 @@ public class CharacterManager : Overlay {
 		cm = this;
 	}
 
-	public void SetCharacter(int index) {
+	public void SetCharacter(int index, bool sendToServer = true) {
 		if (index < characters.Length) {
 			if (index <= -1) {
 				CurrentCharacter = null;
 			} else {
 				CurrentCharacter = characters[index];
 				character.sprite = CurrentCharacter.characterSprite;
+				if (sendToServer)
+					NetworkManager.GetManager().UpdateCharacter(index);
 			}
 		} else {
 			Debug.LogError("Trying to set character out of index");
