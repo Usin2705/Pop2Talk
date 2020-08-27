@@ -20,53 +20,52 @@ public class PasswordResetRequestView : View {
 
 	string requestStatus;
 
-	protected override void Initialize()
-	{
+	protected override void Initialize() {
 		base.Initialize();
 
 		backButton.SubscribePress(Back);
 		requestButton.SubscribePress(RequestReset);
 	}
 
-	void Back()
-	{
+	public override void Activate() {
+		base.Activate();
+		errorText.gameObject.SetActive(false);
+	}
+
+	void Back() {
 		doExitFluff = false;
 		ViewManager.GetManager().ShowView(loginView);
 	}
 
-	void RequestReset()
-	{
+	void RequestReset() {
 		StartCoroutine("SendRequest");
 		gameHandler.GetComponent<GameHandler>().emailHolder = emailField.text;
-		ViewManager.GetManager().ShowView(passwordResetCompletionView);
 	}
 
-	IEnumerator SendRequest()
-	{
+	IEnumerator SendRequest() {
 		WWWForm form = new WWWForm();
 		form.AddField("email", emailField.text);
 		UnityWebRequest www = UnityWebRequest.Post(serverUrl + requestPath, form);
+		InputManager.GetManager().SendingInputs = false;
+		errorText.gameObject.SetActive(false);
 		yield return www.SendWebRequest();
-		if (www.isNetworkError || www.isHttpError)
-		{
-			errorText.text = www.error;
-			Debug.LogError(www.downloadHandler.text);
+		InputManager.GetManager().SendingInputs = true;
+		if (www.isNetworkError || www.isHttpError) {
+			//errorText.text = www.error;
 			errorText.gameObject.SetActive(true);
-		}
-		else
-		{
+			emailField.text = "";
+		} else {
 			Debug.Log(www.downloadHandler.text);
 			requestStatus = www.downloadHandler.text;
+			ViewManager.GetManager().ShowView(passwordResetCompletionView);
 		}
 	}
 
-	public override UIButton[] GetAllButtons()
-	{
-		throw new System.NotImplementedException();
+	public override UIButton[] GetAllButtons() {
+		return null;
 	}
 
-	public override UIButton GetPointedButton()
-	{
-		throw new System.NotImplementedException();
+	public override UIButton GetPointedButton() {
+		return null;
 	}
 }
