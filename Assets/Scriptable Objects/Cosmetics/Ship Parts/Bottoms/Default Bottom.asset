@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Default Bottom
   m_EditorClassIdentifier: 
   slot: 2
-  icon: {fileID: 0}
-  sprite: {fileID: 0}
+  icon: {fileID: 21300000, guid: bff2202ec50d41c4db5e5ed22a970d00, type: 3}
+  sprite: {fileID: 21300000, guid: bff2202ec50d41c4db5e5ed22a970d00, type: 3}
   uniqueId: 88a29127-7663-417a-9974-4ae615afdc0b
   idCopy: 88a29127-7663-417a-9974-4ae615afdc0b
   reset: 0

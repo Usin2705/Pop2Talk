@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71511e391e529ce49bcc2f8dde81d752, type: 3}
-  m_Name: Default Top
+  m_Name: Maneki Gold Top
   m_EditorClassIdentifier: 
-  slot: 0
-  icon: {fileID: 21300000, guid: c104a5883453aee469b0714578ff9efc, type: 3}
-  sprite: {fileID: 21300000, guid: c104a5883453aee469b0714578ff9efc, type: 3}
-  uniqueId: 1fff8a8e-d3b9-4ae4-961b-1cb6ca5728dd
-  idCopy: 1fff8a8e-d3b9-4ae4-961b-1cb6ca5728dd
+  slot: 2
+  icon: {fileID: 21300000, guid: 80f233803c65df04e959fe39c03a9503, type: 3}
+  sprite: {fileID: 21300000, guid: 80f233803c65df04e959fe39c03a9503, type: 3}
+  uniqueId: 88483070-0643-4698-8c54-d11be3d5dd5f
+  idCopy: 88483070-0643-4698-8c54-d11be3d5dd5f
   reset: 0

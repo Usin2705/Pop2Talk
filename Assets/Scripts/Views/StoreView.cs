@@ -21,6 +21,9 @@ public class StoreView : View {
 	[SerializeField] GameObject lootScreen;
 	[SerializeField] RectTransform lootHolder;
 	[SerializeField] GameObject storeButtonPrefab;
+	[SerializeField] GameObject bottomButtonPrefab;
+	[SerializeField] GameObject midButtonPrefab;
+	[SerializeField] GameObject topButtonPrefab;
 	[Space]
 	[SerializeField] GameObject collectionScreen;
 	[SerializeField] GridPageHandler collectionGridPage;
@@ -59,8 +62,16 @@ public class StoreView : View {
 		for (int i = 0; i < cosmetics.Length; ++i) {
 			if (collectedButtons.ContainsKey(cosmetics[i]))
 				continue;
-			UIButton button = Instantiate(selectableButtonPrefab, collectionGridPage.GetNextParent((int)cosmetics[i].slot)).GetComponent<UIButton>();
-			collectedButtons.Add(cosmetics[i], button);
+			GameObject prefab = selectableButtonPrefab;
+			if (cosmetics[i].slot == CosmeticSlot.ShipTop)
+				prefab = topButtonPrefab;
+			else if (cosmetics[i].slot == CosmeticSlot.ShipMid)
+				prefab = midButtonPrefab;
+			else if (cosmetics[i].slot == CosmeticSlot.ShipBottom)
+				prefab = bottomButtonPrefab;
+
+			UIButton button = Instantiate(prefab, collectionGridPage.GetNextParent((int)cosmetics[i].slot)).GetComponent<UIButton>();
+				collectedButtons.Add(cosmetics[i], button);
 			if (equippedIDs[cosmetics[i].slot] == cosmetics[i].Id) {
 				button.Press();
 				equippedButtons.Add(cosmetics[i], button);

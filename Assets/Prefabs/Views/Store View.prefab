@@ -2202,6 +2202,12 @@ MonoBehaviour:
   lootHolder: {fileID: 9018140591901044398}
   storeButtonPrefab: {fileID: 1924271485933692, guid: 40fb191f4c4755f4fbc36eba7c73f32f,
     type: 3}
+  bottomButtonPrefab: {fileID: 7767508298672064779, guid: e2a81cc1897ca734ea380fcce153f3cb,
+    type: 3}
+  midButtonPrefab: {fileID: 7767508298672064779, guid: 5743219fd37b326428798de3124f5869,
+    type: 3}
+  topButtonPrefab: {fileID: 7767508298672064779, guid: e94ac300f552cbf4f95b6b13dc61f27f,
+    type: 3}
   collectionScreen: {fileID: 2061827282684392552}
   collectionGridPage: {fileID: 2830623913225365308}
   selectableButtonPrefab: {fileID: 1375700468244870, guid: 3a757f3dbddead547bd0d333d7bc843a,

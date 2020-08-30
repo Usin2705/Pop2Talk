@@ -64,7 +64,7 @@ public class TravelView : View {
 	}
 
 	void PrepareButtons(int largestModuleIndex) {
-		largestModuleIndex = Mathf.Min(levelBatches.Length -1, largestModuleIndex);
+		largestModuleIndex = Mathf.Min(levelBatches.Length - 1, largestModuleIndex);
 
 		List<int> availableIndices = new List<int>();
 		List<List<LevelSettings>> suitableLevels = new List<List<LevelSettings>>();
@@ -138,8 +138,8 @@ public class TravelView : View {
 		yield return new WaitForSeconds(1.5f);
 		InputManager.GetManager().SendingInputs = false;
 		ShipManager.GetManager().ShowShipMovement(sortingOrder, false, new Vector3[] { shipStart.position, shipEnd.position }, new float[] { 0 },
-			new Vector3[] { shipStart.rect.size, shipEnd.rect.size }, new float[] { shipSpeed * (Screen.height / 1920f)},
-			null, ()=> { travelDone = true; });
+			new Vector3[] { shipStart.rect.size, shipEnd.rect.size }, new float[] { shipSpeed * (Screen.height / 1920f) },
+			null, () => { travelDone = true; });
 		NetworkManager.GetManager().GetWordList(WordsReceived);
 		while (!travelDone) {
 			yield return null;
@@ -164,11 +164,12 @@ public class TravelView : View {
 			}
 			yield return null;
 		}
-		fluffTop.gameObject.SetActive(true);
+
+		fluffBottom.gameObject.SetActive(true);
 		fluffMid.gameObject.SetActive(true);
 		fluffTop.gameObject.SetActive(true);
 
-		fluffTop.sprite = (top != null) ? top.sprite : null;
+		fluffBottom.sprite = (top != null) ? top.sprite : null;
 		fluffMid.sprite = (mid != null) ? mid.sprite : null;
 		fluffTop.sprite = (bottom != null) ? bottom.sprite : null;
 
@@ -203,12 +204,12 @@ public class TravelView : View {
 	}
 
 	public override void ExitFluff(Callback Done) {
-		fluffTop.gameObject.SetActive(false);
-		fluffMid.gameObject.SetActive(false);
 		fluffBottom.gameObject.SetActive(false);
+		fluffMid.gameObject.SetActive(false);
+		fluffTop.gameObject.SetActive(false);
 		ShipManager.GetManager().ShowShipMovement(sortingOrder, false, new Vector3[] { shipEnd.position, targetPosition }, new float[] { 0.5f },
 			new Vector3[] { shipEnd.rect.size, Vector2.zero }, new float[] { shipSpeed * (Screen.height / 1920f) },
-			null, ()=> { base.ExitFluff(Done); });
+			null, () => { base.ExitFluff(Done); });
 	}
 
 	public override UIButton GetPointedButton() {

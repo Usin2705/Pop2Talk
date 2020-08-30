@@ -47,6 +47,15 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 41040f06ef063bf4ba3dfe564e231bf1, type: 2}
   - {fileID: 11400000, guid: 79783e9a2745e0f43af41e4bb731ce4c, type: 2}
   - {fileID: 11400000, guid: 92d0e6c225015044eb4eb88411379222, type: 2}
+  - {fileID: 11400000, guid: 84e8f5a4563e47a4bae8bf64e72ca6b5, type: 2}
+  - {fileID: 11400000, guid: a2ffce5507900234e8d3e697d02e1a59, type: 2}
+  - {fileID: 11400000, guid: 6a6cd2406dbd4d2418c5fdb17e8a5de5, type: 2}
+  - {fileID: 11400000, guid: 3126a55d0fc316e4580a1625809c0716, type: 2}
+  - {fileID: 11400000, guid: e2ad9a8727669f749a185d1e37fc133b, type: 2}
+  - {fileID: 11400000, guid: 9afa2f19b913db542913d5c7efa44477, type: 2}
+  - {fileID: 11400000, guid: 6a42f7b70cdca944dbd1a315483dd14c, type: 2}
+  - {fileID: 11400000, guid: f0f2a35e99249d74582b7b3873b586bf, type: 2}
+  - {fileID: 11400000, guid: a5567bb6efd01544486b48add4582799, type: 2}
   - {fileID: 11400000, guid: 350cd811df9c15e43a4b6b316f661489, type: 2}
   defaultCosmetics:
   - {fileID: 11400000, guid: 92d0e6c225015044eb4eb88411379222, type: 2}
