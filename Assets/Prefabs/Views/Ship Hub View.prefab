@@ -489,6 +489,7 @@ MonoBehaviour:
   selectable: 0
   insideIcon: {fileID: 0}
   repressDeselects: 0
+  canPressSelected: 1
   lockedGrayscale: 0
   deselectGrayscale: 0
 --- !u!114 &875967888325083267
@@ -701,6 +702,7 @@ MonoBehaviour:
   selectable: 0
   insideIcon: {fileID: 0}
   repressDeselects: 0
+  canPressSelected: 1
   lockedGrayscale: 0
   deselectGrayscale: 0
 --- !u!114 &683828230672243776
@@ -938,6 +940,8 @@ MonoBehaviour:
   pearls: {fileID: 1965858989533735848}
   character: {fileID: 3254085546258062741}
   backWall: {fileID: 1284183829868194453}
+  backFloor: {fileID: 2085190045839650878}
+  controlPanel: {fileID: 2412729866569437365}
 --- !u!1 &6559454177205849529
 GameObject:
   m_ObjectHideFlags: 0
@@ -1172,6 +1176,7 @@ MonoBehaviour:
   selectable: 0
   insideIcon: {fileID: 0}
   repressDeselects: 0
+  canPressSelected: 1
   lockedGrayscale: 0
   deselectGrayscale: 0
 --- !u!1 &6994990618914469415
@@ -1185,7 +1190,7 @@ GameObject:
   - component: {fileID: 214739814940218248}
   - component: {fileID: 3231877567399646004}
   m_Layer: 5
-  m_Name: Control panel
+  m_Name: Control Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1380,7 +1385,7 @@ GameObject:
   - component: {fileID: 8191150073412289693}
   - component: {fileID: 2412729866569437365}
   m_Layer: 5
-  m_Name: Back Floor Image
+  m_Name: Control Panel Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1741,6 +1746,7 @@ MonoBehaviour:
   selectable: 0
   insideIcon: {fileID: 0}
   repressDeselects: 0
+  canPressSelected: 1
   lockedGrayscale: 0
   deselectGrayscale: 0
 --- !u!114 &8043708120704490415

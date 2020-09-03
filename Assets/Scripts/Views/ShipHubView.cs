@@ -18,6 +18,9 @@ public class ShipHubView : View {
 	[SerializeField] Text pearls;
 	[SerializeField] Image character;
 	[SerializeField] Image backWall;
+	[SerializeField] Image backFloor;
+	[SerializeField] Image controlPanel;
+
 
 	protected override void Initialize() {
 		base.Initialize();
@@ -34,6 +37,8 @@ public class ShipHubView : View {
 		character.sprite = CharacterManager.GetManager().CurrentCharacter.characterSprite;
 		Cosmetic wall = CosmeticManager.GetManager().GetEquippedCosmetic(CosmeticSlot.Wallpaper);
 		backWall.sprite = (wall != null) ? wall.sprite : null;
+		backFloor.sprite = (wall != null) ? wall.extraSprites[0] : null;
+		controlPanel.sprite = (wall != null) ? wall.extraSprites[1] : null;
 	}
 
 	public override UIButton[] GetAllButtons() {
