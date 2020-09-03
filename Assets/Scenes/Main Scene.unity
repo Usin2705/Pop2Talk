@@ -500,10 +500,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Login View
       objectReference: {fileID: 0}
-    - target: {fileID: 1029074447171076, guid: 5be5b299c2fa18745b74f7095d5d780f, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 114593453114787124, guid: 5be5b299c2fa18745b74f7095d5d780f,
         type: 3}
       propertyPath: characterSelectView
@@ -521,24 +517,14 @@ PrefabInstance:
       objectReference: {fileID: 1685848247}
     - target: {fileID: 114593453114787124, guid: 5be5b299c2fa18745b74f7095d5d780f,
         type: 3}
-      propertyPath: connectionStatus
-      value: 
-      objectReference: {fileID: 1092140833}
-    - target: {fileID: 114593453114787124, guid: 5be5b299c2fa18745b74f7095d5d780f,
-        type: 3}
       propertyPath: shipHubView
       value: 
       objectReference: {fileID: 458245079}
-    - target: {fileID: 224569009886684270, guid: 5be5b299c2fa18745b74f7095d5d780f,
+    - target: {fileID: 114593453114787124, guid: 5be5b299c2fa18745b74f7095d5d780f,
         type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -161.19922
-      objectReference: {fileID: 0}
-    - target: {fileID: 224693029812454330, guid: 5be5b299c2fa18745b74f7095d5d780f,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -31.199219
-      objectReference: {fileID: 0}
+      propertyPath: connectionStatus
+      value: 
+      objectReference: {fileID: 1092140833}
     - target: {fileID: 224726458311772126, guid: 5be5b299c2fa18745b74f7095d5d780f,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -552,11 +538,6 @@ PrefabInstance:
     - target: {fileID: 224726458311772126, guid: 5be5b299c2fa18745b74f7095d5d780f,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224726458311772126, guid: 5be5b299c2fa18745b74f7095d5d780f,
-        type: 3}
-      propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224799156150094292, guid: 5be5b299c2fa18745b74f7095d5d780f,

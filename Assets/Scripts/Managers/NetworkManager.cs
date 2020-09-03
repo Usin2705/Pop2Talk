@@ -478,6 +478,13 @@ public class NetworkManager : MonoBehaviour {
 				yield break;
 			}
 
+			bool noSubcrip = false;
+
+			if (noSubcrip) {
+				errorText.text = "The subscription for this account has ended";
+				errorText.gameObject.SetActive(true);
+				yield break;
+			}
 
 			user = JsonUtility.FromJson<UserData>(www.downloadHandler.text);
 			Debug.Log(www.downloadHandler.text);

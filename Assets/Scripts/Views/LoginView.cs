@@ -16,6 +16,7 @@ public class LoginView : View {
 	[SerializeField] UIButton registerButton;
 	[SerializeField] UIButton resetPasswordButton;
 	[SerializeField] UIButton privacyPolicyButton;
+	[SerializeField] Toggle rememberToggle;
 
 	[Space]
 	[SerializeField] ConnectionStatus connectionStatus;
@@ -24,7 +25,9 @@ public class LoginView : View {
 	[SerializeField] string privacyPolicyUrl = "https://www.pop2talk.com/privacy-policy";
 
 
-
+	string rememberKey = "remember";
+	string usernameKey = "username";
+	string passwordKey = "password";
 
 	bool canOnline;
 
@@ -36,6 +39,11 @@ public class LoginView : View {
 		privacyPolicyButton.SubscribePress(OpenPrivacyPolicy);
 		registerButton.SubscribePress(Register);
 		resetPasswordButton.SubscribePress(ResetPassword);
+		if (EncryptedPlayerPrefs.GetInt(rememberKey, 0) == 1) {
+			rememberToggle.isOn = true;
+			usernameField.text = EncryptedPlayerPrefs.GetString(usernameKey);
+			passwordField.text = EncryptedPlayerPrefs.GetString(passwordKey);
+		}
 	}
 
 	void Update() {
@@ -104,10 +112,25 @@ public class LoginView : View {
 
 	void ConnectedOnline() {
 		FakeServerManager.GetManager().Connect();
+		CheckRemember();
 		connectionStatus.SetIngameName(NetworkManager.GetManager().Player);
 		connectionStatus.ShowName(true);
 		connectionStatus.ToggleConnection(true, true);
 		CheckCharacter();
+	}
+
+	void CheckRemember() {
+		if (rememberToggle.isOn) {
+			EncryptedPlayerPrefs.SetInt(rememberKey, 1);
+			EncryptedPlayerPrefs.SetString(usernameKey, usernameField.text);
+			EncryptedPlayerPrefs.SetString(passwordKey, passwordField.text);
+		} else {
+			EncryptedPlayerPrefs.SetInt(rememberKey, 0);
+			if (EncryptedPlayerPrefs.HasKey(usernameKey))
+				EncryptedPlayerPrefs.DeleteKey(usernameKey);
+			if (EncryptedPlayerPrefs.HasKey(passwordKey))
+				EncryptedPlayerPrefs.DeleteKey(passwordKey);
+		}
 	}
 
 	void GotoCharacterSelect() {
