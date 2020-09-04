@@ -16,6 +16,6 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: bb464537a57254749aca86d552f538eb, type: 3}
   sprite: {fileID: 21300000, guid: bb464537a57254749aca86d552f538eb, type: 3}
   extraSprites: []
-  uniqueId: a0b30a2a-1928-47db-9576-a5dc8fd2344f
-  idCopy: a0b30a2a-1928-47db-9576-a5dc8fd2344f
+  idCopy: 36b9c85c-3412-4e52-8773-79a60d183caf
+  uniqueId: 36b9c85c-3412-4e52-8773-79a60d183caf
   reset: 0
