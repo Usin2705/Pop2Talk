@@ -4,27 +4,32 @@ using UnityEngine;
 
 public class PairCard : Interactable {
 
+
+
+	[SerializeField] SpriteRenderer spriteRenderer;
+
 	Sprite frontSprite;
 	Sprite backSprite;
 
 	Callback Click;
 
 	float speed = 0;
+	float flipDuration = 0.3f;
+
+	bool targetReached = true;
+	Vector3 targetPosition;
+	Callback TargetReached;
 
 	public bool Open {
-		get {
-			return true;
-		}
+		get; protected set;
 	}
 
 	public bool Rotating {
-		get {
-			return true;
-		}
+		get; protected set;
 	}
 
-	void Start() {
-
+	public void SetClick(Callback Click) {
+		this.Click = Click;
 	}
 
 	public void SetSprites(Sprite front, Sprite back) {
@@ -33,12 +38,28 @@ public class PairCard : Interactable {
 		UpdateSprite();
 	}
 
-	void UpdateSprite() {
+	void Update() {
+		if (!targetReached && speed > 0) {
+			if (Vector3.SqrMagnitude(targetPosition - transform.position) < speed * speed * Time.deltaTime * Time.deltaTime) {
+				transform.position = targetPosition;
+				targetReached = true;
+				TargetReached?.Invoke();
+			} else
+				transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+		}
+	}
 
+	void UpdateSprite() {
+		if (Open)
+			spriteRenderer.sprite = frontSprite;
+		else
+			spriteRenderer.sprite = backSprite;
 	}
 
 	public override bool Interact(InteractType type) {
 		if (base.Interact(type)) {
+			if (Open || Rotating)
+				return false;
 			Click?.Invoke();
 			return true;
 		}
@@ -46,15 +67,49 @@ public class PairCard : Interactable {
 	}
 
 	public void Rotate(bool open, Callback Done) {
-
+		if (open == Open)
+			Done?.Invoke();
+		else
+			StartCoroutine(RotationRoutine(open, Done));
 	}
 
-	public void Move(Vector3 target) {
-		Move(target, speed);
+	IEnumerator RotationRoutine(bool open, Callback Done) {
+		Rotating = true;
+		Quaternion face = Quaternion.Euler(0, 0, 0);
+		Quaternion side = Quaternion.Euler(0, 0, 0);
+		float a = 0;
+		while (a < 1) {
+			if (flipDuration > 0)
+				a += Time.deltaTime / flipDuration;
+			else
+				a = 1;
+			transform.rotation = Quaternion.Lerp(face, side, a);
+			yield return null;
+		}
+		a = 0;
+		Open = open;
+		UpdateSprite();
+		while (a < 1) {
+			if (flipDuration > 0)
+				a += Time.deltaTime / flipDuration;
+			else
+				a = 1;
+			transform.rotation = Quaternion.Lerp(side, face, a);
+			yield return null;
+		}
+		Rotating = false;
+		Done?.Invoke();
 	}
 
-	public void Move(Vector3 target, float speed) {
+	public void Move(Vector3 target, Callback Done) {
+		Move(target, speed, Done);
+	}
 
+	public void Move(Vector3 target, float speed, Callback Done) {
+		targetReached = false;
+		TargetReached = Done;
+		this.speed = speed;
+		targetPosition = target;
 	}
 
 	protected override bool ValidInteracting(InteractType type) {

@@ -9,6 +9,8 @@ public class PairsView : View {
 	[SerializeField] GameObject pairPrefab;
 	[SerializeField] Sprite backSprite;
 	[SerializeField] float shufflespeed;
+	[Space]
+	[SerializeField] UIButton backButton;
 
 	WordData[] words;
 
@@ -16,10 +18,12 @@ public class PairsView : View {
 
 	protected override void Initialize() {
 		base.Initialize();
+		backButton.SubscribePress(GotoShipHub);
 	}
 
 	public override void Activate() {
 		base.Activate();
+		PrepareCards();
 	}
 
 	void PrepareCards() {
@@ -48,7 +52,15 @@ public class PairsView : View {
 	Vector3[] GetCardPositions(int count) {
 		return null;
 	}
-	
+
+
+	public override void Deactivate() {
+		base.Deactivate();
+		foreach(PairCard pc in pairs.Keys) {
+			PoolMaster.Instance.Destroy(pc.gameObject);
+		}
+	}
+
 	void GotoShipHub() {
 		ViewManager.GetManager().ShowView(shipHub);
 	}
