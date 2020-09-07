@@ -14,7 +14,8 @@ public class PairCard : Interactable {
 	Callback Click;
 
 	float speed = 0;
-	float flipDuration = 0.3f;
+	float flipDuration = 0.2f;
+	float delay = 0;
 
 	bool targetReached = true;
 	Vector3 targetPosition;
@@ -38,14 +39,23 @@ public class PairCard : Interactable {
 		UpdateSprite();
 	}
 
+	void Awake() {
+		if (spriteRenderer == null)
+			spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+	}
+
 	void Update() {
 		if (!targetReached && speed > 0) {
-			if (Vector3.SqrMagnitude(targetPosition - transform.position) < speed * speed * Time.deltaTime * Time.deltaTime) {
-				transform.position = targetPosition;
-				targetReached = true;
-				TargetReached?.Invoke();
-			} else
-				transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+			if (delay > 0)
+				delay -= Time.deltaTime;
+			else {
+				if (Vector3.SqrMagnitude(targetPosition - transform.position) < speed * speed * Time.deltaTime * Time.deltaTime) {
+					transform.position = targetPosition;
+					targetReached = true;
+					TargetReached?.Invoke();
+				} else
+					transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+			}
 		}
 	}
 
@@ -76,7 +86,7 @@ public class PairCard : Interactable {
 	IEnumerator RotationRoutine(bool open, Callback Done) {
 		Rotating = true;
 		Quaternion face = Quaternion.Euler(0, 0, 0);
-		Quaternion side = Quaternion.Euler(0, 0, 0);
+		Quaternion side = Quaternion.Euler(0, 90, 0);
 		float a = 0;
 		while (a < 1) {
 			if (flipDuration > 0)
@@ -101,15 +111,12 @@ public class PairCard : Interactable {
 		Done?.Invoke();
 	}
 
-	public void Move(Vector3 target, Callback Done) {
-		Move(target, speed, Done);
-	}
-
-	public void Move(Vector3 target, float speed, Callback Done) {
+	public void Move(Vector3 target, float speed, float delay, Callback Done) {
 		targetReached = false;
 		TargetReached = Done;
 		this.speed = speed;
 		targetPosition = target;
+		this.delay = delay;
 	}
 
 	protected override bool ValidInteracting(InteractType type) {

@@ -50,7 +50,7 @@ Canvas:
   m_GameObject: {fileID: 7837755205485930927}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -60,7 +60,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!114 &7879919460551798355
 MonoBehaviour:
@@ -129,7 +129,17 @@ MonoBehaviour:
   pairPrefab: {fileID: 5631238251280744864, guid: 995060c195bf5b74c8e2f2da4e308c5d,
     type: 3}
   backSprite: {fileID: 21300000, guid: 896958729321d0943acc8ac0a09250cc, type: 3}
-  shufflespeed: 0
+  moveSpeed: 7
+  scale: {x: 1.5, y: 1.5, z: 1.5}
+  center: {x: 0, y: -0.25, z: 0}
+  backButton: {fileID: 7878395491793533621}
+  words:
+  - {fileID: 11400000, guid: 307e110c8c9a216408dd64e6d7e4b297, type: 2}
+  - {fileID: 11400000, guid: bc16d9d351d710d4b8df1a19d027d8e6, type: 2}
+  - {fileID: 11400000, guid: 1636dec2a03177c43afb968f59838e81, type: 2}
+  - {fileID: 11400000, guid: 765ff1808ec4721448b0a1ab7f68049f, type: 2}
+  - {fileID: 11400000, guid: 166a04a2d3962064497d48ebe0abc91b, type: 2}
+  - {fileID: 11400000, guid: 98a95d9e578066d4280678375d962446, type: 2}
 --- !u!1 &7837797912466404033
 GameObject:
   m_ObjectHideFlags: 0

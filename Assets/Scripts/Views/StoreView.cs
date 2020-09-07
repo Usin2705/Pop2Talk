@@ -12,11 +12,6 @@ public class StoreView : View {
 	[SerializeField] Text coinText;
 	[SerializeField] Image shipImage;
 	[Space]
-	[SerializeField] GameObject unlockScreen;
-	[SerializeField] Image unlockImage;
-	[SerializeField] Image whiteCurtain;
-	[SerializeField] UIButton closeUnlockButton;
-	[Space]
 	[SerializeField] GameObject lootScreen;
 	[SerializeField] RectTransform lootHolder;
 	[SerializeField] GameObject storeButtonPrefab;
@@ -41,7 +36,6 @@ public class StoreView : View {
 		backButton.SubscribePress(Back);
 		showCollectionButton.SubscribePress(ShowCollection);
 		showLootButton.SubscribePress(ShowLoot);
-		closeUnlockButton.SubscribePress(CloseUnlock);
 	}
 
 	void ShowCollection() {
@@ -96,6 +90,8 @@ public class StoreView : View {
 
 	IEnumerator PurchaseRoutine(int index) {
 		InputManager.GetManager().SendingInputs = false;
+		CurrencyMaster.Instance.ModifyCoins(-StoreManager.GetManager().GetBoxes()[index].price);
+		coinText.text = CurrencyMaster.Instance.Coins.ToString();
 		if (!DebugMaster.Instance.skipTransitions) {
 			Transform box = lootboxButtons[index].GetBox();
 			Vector3 start = box.transform.position;
@@ -109,30 +105,10 @@ public class StoreView : View {
 			box.transform.position = start;
 			//lootboxButtons[index].TogglePrice(true);
 		}
-
-		CurrencyMaster.Instance.ModifyCoins(-StoreManager.GetManager().GetBoxes()[index].price);
-		coinText.text = CurrencyMaster.Instance.Coins.ToString();
-		unlockScreen.SetActive(true);
-		unlockImage.sprite = CosmeticManager.GetManager().UnlockCosmeticFromBox(StoreManager.GetManager().GetBoxes()[index]);
-		if (!DebugMaster.Instance.skipTransitions) {
-			whiteCurtain.gameObject.SetActive(true);
-			yield return new WaitForSeconds(0.5f);
-			float a = 0;
-			while (a < 1) {
-				a += Time.deltaTime / 0.5f;
-				whiteCurtain.color = new Color(1, 1, 1, 1 - a);
-				yield return null;
-			}
-		}
-		whiteCurtain.gameObject.SetActive(false);
-		whiteCurtain.color = Color.white;
-		InputManager.GetManager().SendingInputs = true;
+		
+		UnlockOverlay.Instance.ShowUnlock(sortingOrder, CosmeticManager.GetManager().UnlockCosmeticFromBox(StoreManager.GetManager().GetBoxes()[index]), null);
 	}
-
-	void CloseUnlock() {
-		unlockScreen.SetActive(false);
-	}
-
+	
 	void CollectionClicked(string id) {
 		if (chosen == collecteds[id])
 			return;
