@@ -40,8 +40,11 @@ public class FinishView : View {
 			GameMaster.Instance.GetDustRatio(GameMaster.Instance.SpaceDust));
 		if (increase == 0) {
 			prevButton.gameObject.SetActive(true);
-		} else
+		} else {
 			prevButton.gameObject.SetActive(false);
+			GameMaster.Instance.CompleteCount++;
+
+		}
 		coinText.text = increase.ToString();
 	}
 

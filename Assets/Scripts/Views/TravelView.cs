@@ -14,6 +14,7 @@ public class TravelView : View {
 	[SerializeField] LevelBatch[] levelBatches;
 	[SerializeField] SpriteBatch[] spriteBatches;
 	[SerializeField] Sprite[] planets;
+	[SerializeField] View[] minigameViews;
 	[Space]
 	[SerializeField] UIButton upperPlanetButton;
 	[SerializeField] UIButton lowerPlanetButton;
@@ -36,6 +37,10 @@ public class TravelView : View {
 	bool travelDone;
 	bool wordsReceived;
 	Vector3 targetPosition;
+	
+	int minigameThreshold = 5;
+	int minigameIndex;
+	int chosenMinigameIndex;
 
 	[System.Serializable]
 	struct LevelBatch {
@@ -47,11 +52,13 @@ public class TravelView : View {
 		public Sprite[] sprites;
 	}
 
+
 	protected override void Initialize() {
 		base.Initialize();
 		backButton.SubscribePress(Back);
 		upperPlanetButton.SubscribePress(() => { PlanetPressed(0); });
 		lowerPlanetButton.SubscribePress(() => { PlanetPressed(1); });
+		GameMaster.Instance.CompleteCount = minigameThreshold;//Random.Range(0, 3);
 	}
 
 	public override void Activate() {
@@ -89,13 +96,27 @@ public class TravelView : View {
 		chosenSprites = new Sprite[] { spriteBatches[chosenBatches[0]].sprites.GetRandom(), spriteBatches[chosenBatches[1]].sprites.GetRandom() };
 		upperPlanetButton.SetSprite(planets[chosenBatches[0]]);
 		lowerPlanetButton.SetSprite(planets[chosenBatches[1]]);
+
+		if (GameMaster.Instance.CompleteCount >= minigameThreshold) {
+			minigameIndex = Random.Range(0, 2);
+			chosenMinigameIndex = Random.Range(0, minigameViews.Length);
+			if (minigameIndex == 0)
+				upperPlanetButton.SetSprite(minigameViews[chosenMinigameIndex].GetComponent<IMinigame>().GetIcon());
+			else
+				lowerPlanetButton.SetSprite(minigameViews[chosenMinigameIndex].GetComponent<IMinigame>().GetIcon());
+		} else
+			minigameIndex = -1;
 	}
 
 	void PlanetPressed(int index) {
 		targetPosition = (index == 0) ? upperPlanetButton.transform.position : lowerPlanetButton.transform.position;
-		GameMaster.Instance.SetLevel((LevelSettings)chosenLevels[index]);
-		GameMaster.Instance.Background = chosenSprites[index];
-		ViewManager.GetManager().ShowView(gridGameView);
+		if (index == minigameIndex) {
+			ViewManager.GetManager().ShowView(minigameViews[chosenMinigameIndex]);
+		} else {
+			GameMaster.Instance.SetLevel(chosenLevels[index]);
+			GameMaster.Instance.Background = chosenSprites[index];
+			ViewManager.GetManager().ShowView(gridGameView);
+		}
 	}
 
 	int[] ChooseBatches(List<int> availableIndices) {

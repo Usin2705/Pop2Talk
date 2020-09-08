@@ -131,15 +131,8 @@ MonoBehaviour:
   backSprite: {fileID: 21300000, guid: 896958729321d0943acc8ac0a09250cc, type: 3}
   moveSpeed: 7
   scale: {x: 1.5, y: 1.5, z: 1.5}
-  center: {x: 0, y: -0.25, z: 0}
+  center: {x: 0, y: 0.25, z: 0}
   backButton: {fileID: 7878395491793533621}
-  words:
-  - {fileID: 11400000, guid: 307e110c8c9a216408dd64e6d7e4b297, type: 2}
-  - {fileID: 11400000, guid: bc16d9d351d710d4b8df1a19d027d8e6, type: 2}
-  - {fileID: 11400000, guid: 1636dec2a03177c43afb968f59838e81, type: 2}
-  - {fileID: 11400000, guid: 765ff1808ec4721448b0a1ab7f68049f, type: 2}
-  - {fileID: 11400000, guid: 166a04a2d3962064497d48ebe0abc91b, type: 2}
-  - {fileID: 11400000, guid: 98a95d9e578066d4280678375d962446, type: 2}
 --- !u!1 &7837797912466404033
 GameObject:
   m_ObjectHideFlags: 0

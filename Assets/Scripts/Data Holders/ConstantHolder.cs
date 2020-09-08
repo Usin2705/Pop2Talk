@@ -6,6 +6,8 @@ public class UniqueIdentifierAttribute : PropertyAttribute { }
 
 public enum GameMode { Classic, Clear, Fill, Spot, Regrow, Path, Hide, Speed, Catch };
 
+public enum Minigames { Pairs };
+
 public enum WordCardType { Repeat, Memory };
 
 public enum PopSoundType { Sound, Next, Random };

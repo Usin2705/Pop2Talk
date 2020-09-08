@@ -64,6 +64,8 @@ public class GameMaster : MonoBehaviour {
         }
     }
 
+	public int CompleteCount { get; set; }
+
 	public LevelSettings CurrentLevel { get; set; }
 	IGameCaller gameCaller;
 

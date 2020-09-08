@@ -185,4 +185,8 @@ public class WordMaster : MonoBehaviour {
 		if (module > LargestModuleIndex)
 			LargestModuleIndex = module;
 	}
+
+	public string[] GetSampleWords() {
+		return sampleWords;
+	}
 }

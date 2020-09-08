@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PairsView : View {
+public class PairsView : View, IMinigame {
 
 	[SerializeField] View shipHub;
 	[SerializeField] GameObject pairPrefab;
@@ -14,8 +14,7 @@ public class PairsView : View {
 	[Space]
 	[SerializeField] UIButton backButton;
 
-	[SerializeField] WordData[] words;
-
+	WordData[] words;
 	Dictionary<PairCard, WordData> pairs = new Dictionary<PairCard, WordData>();
 	int movingCards;
 	int correctCards;
@@ -30,6 +29,11 @@ public class PairsView : View {
 
 	public override void Activate() {
 		base.Activate();
+		string[] samples = WordMaster.Instance.GetSampleWords();
+		words = new WordData[Mathf.Min(6, samples.Length)];
+		for (int i = 0; i < words.Length; ++i) {
+			words[i] = WordMaster.Instance.StringToWordData(samples[i]);
+		}
 		PrepareCards();
 	}
 
@@ -48,7 +52,7 @@ public class PairsView : View {
 				pairCard.transform.localScale = scale;
 				pairCard.SetSprites(words[i].picture, backSprite);
 				pairCard.SetClick(() => { CardClicked(pairCard); });
-				pairCard.Move(positions[i*2 + j], moveSpeed, 1f, CardTargetReached);
+				pairCard.Move(positions[i * 2 + j], moveSpeed, 1f, CardTargetReached);
 				pairs.Add(pairCard, words[i]);
 			}
 		}
@@ -78,6 +82,7 @@ public class PairsView : View {
 				yield return new WaitForSeconds(0.5f);
 				int coins = CurrencyMaster.Instance.GetLootLevelCoins(CurrencyMaster.Instance.LootLevel);
 				CurrencyMaster.Instance.ModifyCoins(coins);
+				GameMaster.Instance.CompleteCount = 0;
 				UnlockOverlay.Instance.ShowUnlock(sortingOrder, IconManager.GetManager().coinIcon, coins.ToString(), GotoShipHub);
 			}
 			cardOne = null;
@@ -104,7 +109,12 @@ public class PairsView : View {
 		float xOffset = (cardsInRow % 2 == 0) ? gap / 2f : 0;
 		float yOffset = (count / cardsInRow % 2 == 0) ? gap / 2f : 0;
 		for (int i = 0; i < positions.Length; ++i) {
-			x = ((cardsInRow / 2) - (i % cardsInRow)) * gap - xOffset; //intentional int division
+			if (i == positions.Length-1 && (i % cardsInRow) == 0)
+				x = 0;
+			else
+				x = ((cardsInRow / 2) - (i % cardsInRow)) * gap - xOffset; //intentional int division
+			if ((i == positions.Length - 1 && (i % cardsInRow) == 1) || (i == positions.Length - 2 && (i % cardsInRow) == 0))
+				x -= gap / 2f;
 			y = (count / (cardsInRow * 2) - (i / cardsInRow)) * gap - yOffset; //intentional int division
 			positions[i] = new Vector3(x, y) + center;
 		}
@@ -128,5 +138,9 @@ public class PairsView : View {
 
 	public override UIButton[] GetAllButtons() {
 		return null;
+	}
+
+	public Sprite GetIcon() {
+		return backSprite;
 	}
 }
