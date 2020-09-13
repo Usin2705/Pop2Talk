@@ -34,6 +34,7 @@ public class LoginView : View {
 	protected override void Initialize() {
 		base.Initialize();
 
+		PurchaseMaster.Instance.BeginInitialization();
 		SoundEffectManager.GetManager().PlayMusic();
 		playButton.SubscribePress(GameOnline);
 		privacyPolicyButton.SubscribePress(OpenPrivacyPolicy);
@@ -50,7 +51,7 @@ public class LoginView : View {
 		bool prevOnline = canOnline;
 		if (usernameField.isFocused || passwordField.isFocused)
 			errorText.gameObject.SetActive(false);
-		if (usernameField.text != "" && passwordField.text != "")
+		if (usernameField.text != "" && passwordField.text != "" && PurchaseMaster.Instance.Initialized)
 			canOnline = true;
 		else {
 			canOnline = false;

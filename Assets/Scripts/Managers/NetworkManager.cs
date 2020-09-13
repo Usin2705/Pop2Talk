@@ -131,6 +131,7 @@ public class NetworkManager : MonoBehaviour {
 			connected = true;
 			connecting = false;
 			SimpleEvent("start");
+			SendAccessTokenToSocket(user.access_token, user.username);
 		});
 
 		/*socket.On(Socket.EVENT_CONNECT_ERROR, () =>
@@ -478,21 +479,11 @@ public class NetworkManager : MonoBehaviour {
 				yield break;
 			}
 
-			bool noSubcrip = false;
-
-			if (noSubcrip) {
-				errorText.text = "The subscription for this account has ended";
-				errorText.gameObject.SetActive(true);
-				yield break;
-			}
-
 			user = JsonUtility.FromJson<UserData>(www.downloadHandler.text);
 			Debug.Log(www.downloadHandler.text);
 			var json = SimpleJSON.JSON.Parse(www.downloadHandler.text);
 			
 			WordMaster.Instance.ClearWords();
-
-
 
 			for (int i = 0; i < json["words"].Count; ++i) {
 				WordMaster.Instance.AddWord(json["words"][i]["word"].Value);
@@ -594,7 +585,6 @@ public class NetworkManager : MonoBehaviour {
 		Debug.Log(www.downloadHandler.text);
 	}
 
-
 	public bool GetConsent() {
 		if (user != null)
 			return user.consent;
@@ -609,6 +599,12 @@ public class NetworkManager : MonoBehaviour {
 		socket = null;
 		Connect();
 	}
+
+	void SendAccessTokenToSocket(string token, string username) {
+		socket.EmitJson("auth", "{ " +
+			"\"token\":" + "\"" + token + "\"," +
+			"\"user\":" + "\"" + username + "\" }");
+	} 
 
 	public void SimpleEvent(string name) {
 
