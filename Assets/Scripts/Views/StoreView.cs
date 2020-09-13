@@ -10,7 +10,8 @@ public class StoreView : View {
 	[SerializeField] UIButton showCollectionButton;
 	[SerializeField] UIButton showLootButton;
 	[SerializeField] Text coinText;
-	[SerializeField] Image shipImage;
+	[SerializeField] Image equippedImage;
+	[SerializeField] Image[] shipImages;
 	[Space]
 	[SerializeField] GameObject unlockScreen;
 	[SerializeField] Image unlockImage;
@@ -20,49 +21,110 @@ public class StoreView : View {
 	[SerializeField] GameObject lootScreen;
 	[SerializeField] RectTransform lootHolder;
 	[SerializeField] GameObject storeButtonPrefab;
+	[SerializeField] GameObject bottomButtonPrefab;
+	[SerializeField] GameObject midButtonPrefab;
+	[SerializeField] GameObject topButtonPrefab;
 	[Space]
 	[SerializeField] GameObject collectionScreen;
 	[SerializeField] GridPageHandler collectionGridPage;
 	[SerializeField] GameObject selectableButtonPrefab;
+	[SerializeField] UIButton[] collectionButtons;
 
 
 	List<LootBoxSettings> purchasables = new List<LootBoxSettings>();
-	Dictionary<string, UIButton> collecteds = new Dictionary<string, UIButton>();
+	Dictionary<Cosmetic, UIButton> collectedButtons = new Dictionary<Cosmetic, UIButton>();
+	Dictionary<Cosmetic, UIButton> equippedButtons = new Dictionary<Cosmetic, UIButton>();
 
 	List<StoreButton> lootboxButtons = new List<StoreButton>();
-	List<UIButton> collectedButtons = new List<UIButton>();
-
-	UIButton chosen;
 
 	float shakeDuration = 1;
+
+	int chosenCollectionIndex = 0;
 
 	protected override void Initialize() {
 		base.Initialize();
 		backButton.SubscribePress(Back);
-		showCollectionButton.SubscribePress(ShowCollection);
+		showCollectionButton.SubscribePress(ShowCollections);
 		showLootButton.SubscribePress(ShowLoot);
 		closeUnlockButton.SubscribePress(CloseUnlock);
+		collectionButtons[chosenCollectionIndex].Press();
+		for (int i = 0; i < collectionButtons.Length; ++i) {
+			int j = i;
+			collectionButtons[i].SubscribeSelect(() => { ShowCollection(j); });
+		}
 	}
 
-	void ShowCollection() {
-		string equippedId = CosmeticManager.GetManager().GetEquippedCosmetic(CosmeticSlot.Ship).Id;
+	void ShowCollections() {
+		Dictionary<CosmeticSlot, string> equippedIDs = CosmeticManager.GetManager().GetEquippedIDs();
+		equippedButtons = new Dictionary<Cosmetic, UIButton>();
+
 		Cosmetic[] cosmetics = CosmeticManager.GetManager().GetUnlockedCosmetics();
 		for (int i = 0; i < cosmetics.Length; ++i) {
-			string s = cosmetics[i].Id;
-			if (collecteds.ContainsKey(s))
+			if (collectedButtons.ContainsKey(cosmetics[i]))
 				continue;
-			UIButton button = Instantiate(selectableButtonPrefab, collectionGridPage.GetParent()).GetComponent<UIButton>();
-			collecteds.Add(s, button);
-			if (s == equippedId) {
+			GameObject prefab = selectableButtonPrefab;
+			if (cosmetics[i].slot == CosmeticSlot.ShipTop)
+				prefab = topButtonPrefab;
+			else if (cosmetics[i].slot == CosmeticSlot.ShipMid)
+				prefab = midButtonPrefab;
+			else if (cosmetics[i].slot == CosmeticSlot.ShipBottom)
+				prefab = bottomButtonPrefab;
+
+			UIButton button = Instantiate(prefab, collectionGridPage.GetNextParent((int)cosmetics[i].slot)).GetComponent<UIButton>();
+				collectedButtons.Add(cosmetics[i], button);
+			if (equippedIDs[cosmetics[i].slot] == cosmetics[i].Id) {
 				button.Press();
-				chosen = button;
+				equippedButtons.Add(cosmetics[i], button);
+				if (cosmetics[i].slot == (CosmeticSlot)chosenCollectionIndex)
+					equippedImage.sprite = cosmetics[i].sprite;
 			}
-			button.SubscribePress(() => { CollectionClicked(s); });
-			button.SetSprite(CosmeticManager.GetManager().GetCosmetic(s).icon);
+			int j = i;
+			button.SubscribePress(() => { CollectionClicked(cosmetics[j]); });
+			button.SetSprite(cosmetics[i].icon);
+			button.canPressSelected = false;
 		}
 
+		collectionGridPage.ShowCollection(chosenCollectionIndex);
+		UpdateEquippedImages();
 		collectionScreen.SetActive(true);
 		lootScreen.SetActive(false);
+	}
+
+	void ShowCollection(int index) {
+		collectionButtons[chosenCollectionIndex].Deselect();
+		chosenCollectionIndex = index;
+		collectionGridPage.ShowCollection(chosenCollectionIndex);
+
+		UpdateEquippedImages();
+	}
+
+	void UpdateEquippedImages() {
+		if (chosenCollectionIndex == (int)CosmeticSlot.ShipTop || chosenCollectionIndex == (int)CosmeticSlot.ShipMid || chosenCollectionIndex == (int)CosmeticSlot.ShipBottom) {
+			equippedImage.gameObject.SetActive(false);
+
+			for (int i = 0; i < shipImages.Length; ++i) {
+				shipImages[i].gameObject.SetActive(true);
+				foreach (Cosmetic c in equippedButtons.Keys) {
+					if (i == (int)c.slot) {
+						shipImages[i].sprite = c.icon;
+						break;
+					}
+				}
+			}
+		} else {
+			bool found = false;
+			foreach (Cosmetic c in equippedButtons.Keys) {
+				if (chosenCollectionIndex == (int)c.slot) {
+					equippedImage.sprite = c.icon;
+					found = true;
+					break;
+				}
+			}
+			for (int i = 0; i < shipImages.Length; ++i) {
+				shipImages[i].gameObject.SetActive(false);
+			}
+			equippedImage.gameObject.SetActive(found);
+		}
 	}
 
 	void ShowLoot() {
@@ -74,7 +136,6 @@ public class StoreView : View {
 		base.Activate();
 		ShowLoot();
 		coinText.text = CurrencyMaster.Instance.Coins.ToString();
-		shipImage.sprite = CosmeticManager.GetManager().GetEquippedCosmetic(CosmeticSlot.Ship).sprite;
 		LootBoxSettings[] settings = StoreManager.GetManager().GetBoxes();
 		float ratio = WordMaster.Instance.GetBestResults().Count / (float)WordMaster.Instance.TotalWords;
 		for (int i = purchasables.Count; i < settings.Length; ++i) {
@@ -99,7 +160,7 @@ public class StoreView : View {
 		if (!DebugMaster.Instance.skipTransitions) {
 			Transform box = lootboxButtons[index].GetBox();
 			Vector3 start = box.transform.position;
-			float a = 0, max = 30 * 1080f/Screen.width;
+			float a = 0, max = 30 * 1080f / Screen.width;
 			//lootboxButtons[index].TogglePrice(false);
 			while (a < 1) {
 				a += Time.deltaTime / shakeDuration;
@@ -133,15 +194,21 @@ public class StoreView : View {
 		unlockScreen.SetActive(false);
 	}
 
-	void CollectionClicked(string id) {
-		if (chosen == collecteds[id])
+	void CollectionClicked(Cosmetic cosmetic) {
+		if (equippedButtons.ContainsKey(cosmetic) || cosmetic == null)
 			return;
-		if (chosen != null) {
-			chosen.Deselect();
+		Cosmetic current = null;
+		foreach (Cosmetic c in equippedButtons.Keys) {
+			if (c.slot == cosmetic.slot) {
+				current = c;
+				break;
+			}
 		}
-		chosen = collecteds[id];
-		CosmeticManager.GetManager().EquipCosmetic(id);
-		shipImage.sprite = CosmeticManager.GetManager().GetEquippedCosmetic(CosmeticSlot.Ship).sprite;
+		equippedButtons[current].Deselect();
+		equippedButtons.Remove(current);
+		equippedButtons.Add(cosmetic, collectedButtons[cosmetic]);
+		CosmeticManager.GetManager().EquipCosmetic(cosmetic.Id);
+		equippedImage.sprite = CosmeticManager.GetManager().GetEquippedCosmetic(CosmeticSlot.ShipTop).sprite;
 	}
 
 	void Back() {

@@ -78,13 +78,12 @@ public class GameMaster : MonoBehaviour {
 		this.gameCaller = gameCaller;
 	}
 	
-    public void LaunchGame(bool finalRound = false) {
+    public void InitializeGame(bool finalRound = false) {
         SetMode(CurrentLevel.gameMode);
 		currentGameModeHandler.Initialize(CurrentLevel);
 		FinalRound = finalRound;
 		gameCaller.LaunchSetup();
 		NetworkManager.GetManager().LevelStarted(CurrentLevel.name, false, false);
-		StartRound();
     }
 
     public void RoundDone() {

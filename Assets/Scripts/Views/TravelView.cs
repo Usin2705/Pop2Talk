@@ -17,7 +17,10 @@ public class TravelView : View {
 	[Space]
 	[SerializeField] UIButton upperPlanetButton;
 	[SerializeField] UIButton lowerPlanetButton;
-	[SerializeField] Image fluffShip;
+	[Space]
+	[SerializeField] Image fluffTop;
+	[SerializeField] Image fluffMid;
+	[SerializeField] Image fluffBottom;
 	[Space]
 	[SerializeField] Image whiteCurtain;
 	[SerializeField] Image scroller;
@@ -61,7 +64,7 @@ public class TravelView : View {
 	}
 
 	void PrepareButtons(int largestModuleIndex) {
-		largestModuleIndex = Mathf.Min(levelBatches.Length -1, largestModuleIndex);
+		largestModuleIndex = Mathf.Min(levelBatches.Length - 1, largestModuleIndex);
 
 		List<int> availableIndices = new List<int>();
 		List<List<LevelSettings>> suitableLevels = new List<List<LevelSettings>>();
@@ -124,21 +127,25 @@ public class TravelView : View {
 		travelScreen.SetActive(true);
 		portal.gameObject.SetActive(false);
 		scroller.material.SetTextureOffset("_MainTex", Vector2.zero);
-		MovingImageManager.GetManager().SetMoverSprite(CosmeticManager.GetManager().GetEquippedCosmetic(CosmeticSlot.Ship).sprite);
+		Cosmetic top = CosmeticManager.GetManager().GetEquippedCosmetic(CosmeticSlot.ShipTop);
+		Cosmetic mid = CosmeticManager.GetManager().GetEquippedCosmetic(CosmeticSlot.ShipMid);
+		Cosmetic bottom = CosmeticManager.GetManager().GetEquippedCosmetic(CosmeticSlot.ShipBottom);
+
+		ShipManager.GetManager().SetShipSprites((top != null) ? top.sprite : null, (mid != null) ? mid.sprite : null, (bottom != null) ? bottom.sprite : null);
 		travelDone = false;
 		wordsReceived = false;
 		InputManager.GetManager().SendingInputs = false;
 		yield return new WaitForSeconds(1.5f);
 		InputManager.GetManager().SendingInputs = false;
-		MovingImageManager.GetManager().ShowMovingImage(sortingOrder, false, new Vector3[] { shipStart.position, shipEnd.position }, new float[] { 0 },
-			new Vector3[] { shipStart.rect.size, shipEnd.rect.size }, new float[] { shipSpeed * (Screen.height / 1920f)},
-			null, ()=> { travelDone = true; });
+		ShipManager.GetManager().ShowShipMovement(sortingOrder, false, new Vector3[] { shipStart.position, shipEnd.position }, new float[] { 0 },
+			new Vector3[] { shipStart.rect.size, shipEnd.rect.size }, new float[] { shipSpeed * (Screen.height / 1920f) },
+			null, () => { travelDone = true; });
 		NetworkManager.GetManager().GetWordList(WordsReceived);
 		while (!travelDone) {
 			yield return null;
 		}
 
-		MovingImageManager.GetManager().StartWobble(wobbleAmount * 1920f / Screen.height);
+		ShipManager.GetManager().StartWobble(wobbleAmount * 1920f / Screen.height);
 		float a = 0, b = 0;
 		float portalTime = 0.33f;
 		float minWait = 1f;
@@ -157,10 +164,17 @@ public class TravelView : View {
 			}
 			yield return null;
 		}
-		fluffShip.gameObject.SetActive(true);
-		fluffShip.sprite = CosmeticManager.GetManager().GetEquippedCosmetic(CosmeticSlot.Ship).sprite;
-		MovingImageManager.GetManager().EndWobble();
-		MovingImageManager.GetManager().HideMover();
+
+		fluffBottom.gameObject.SetActive(true);
+		fluffMid.gameObject.SetActive(true);
+		fluffTop.gameObject.SetActive(true);
+
+		fluffBottom.sprite = (top != null) ? top.sprite : null;
+		fluffMid.sprite = (mid != null) ? mid.sprite : null;
+		fluffTop.sprite = (bottom != null) ? bottom.sprite : null;
+
+		ShipManager.GetManager().EndWobble();
+		ShipManager.GetManager().HideShip();
 		planetScreen.SetActive(true);
 		staticBack.color = staticColor;
 		scroller.material.SetTextureOffset("_MainTex", Vector2.zero);
@@ -190,10 +204,12 @@ public class TravelView : View {
 	}
 
 	public override void ExitFluff(Callback Done) {
-		fluffShip.gameObject.SetActive(false);
-		MovingImageManager.GetManager().ShowMovingImage(sortingOrder, false, new Vector3[] { shipEnd.position, targetPosition }, new float[] { 0.5f },
+		fluffBottom.gameObject.SetActive(false);
+		fluffMid.gameObject.SetActive(false);
+		fluffTop.gameObject.SetActive(false);
+		ShipManager.GetManager().ShowShipMovement(sortingOrder, false, new Vector3[] { shipEnd.position, targetPosition }, new float[] { 0.5f },
 			new Vector3[] { shipEnd.rect.size, Vector2.zero }, new float[] { shipSpeed * (Screen.height / 1920f) },
-			null, ()=> { base.ExitFluff(Done); });
+			null, () => { base.ExitFluff(Done); });
 	}
 
 	public override UIButton GetPointedButton() {

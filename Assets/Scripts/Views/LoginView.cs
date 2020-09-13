@@ -112,7 +112,6 @@ public class LoginView : View {
 	}
 
 	void ConnectedOnline() {
-		FakeServerManager.GetManager().Connect();
 		CheckRemember();
 		connectionStatus.SetIngameName(NetworkManager.GetManager().Player);
 		connectionStatus.ShowName(true);

@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71511e391e529ce49bcc2f8dde81d752, type: 3}
+  m_Name: Default Orange Wallpaper
+  m_EditorClassIdentifier: 
+  slot: 3
+  icon: {fileID: 21300000, guid: e6fd9950db2c4424f9c704f024a1b159, type: 3}
+  sprite: {fileID: 21300000, guid: e838403b6f2781344a01d8f43627d0f4, type: 3}
+  extraSprites:
+  - {fileID: 21300000, guid: 02133ac7cdb5a384db904dea1b72db6a, type: 3}
+  - {fileID: 21300000, guid: 7158931d14847fe4496f9eb0513c322f, type: 3}
+  uniqueId: 06b47328-36f9-4a46-baca-0290754caca4
+  idCopy: 06b47328-36f9-4a46-baca-0290754caca4
+  reset: 0

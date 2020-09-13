@@ -17,6 +17,10 @@ public class ShipHubView : View {
 	[SerializeField] Text coins;
 	[SerializeField] Text pearls;
 	[SerializeField] Image character;
+	[SerializeField] Image backWall;
+	[SerializeField] Image backFloor;
+	[SerializeField] Image controlPanel;
+
 
 	protected override void Initialize() {
 		base.Initialize();
@@ -24,7 +28,6 @@ public class ShipHubView : View {
 		travelButton.SubscribePress(GotoTravelView);
 		storeButton.SubscribePress(GotoStoreView);
 		pearlButton.SubscribePress(GotoPearlView);
-
 	}
 
 	public override void Activate() {
@@ -32,6 +35,10 @@ public class ShipHubView : View {
 		coins.text = CurrencyMaster.Instance.Coins.ToString();
 		pearls.text = WordMaster.Instance.GetBestResults().Count.ToString() + "/" + (WordMaster.Instance.TotalWords);
 		character.sprite = CharacterManager.GetManager().CurrentCharacter.characterSprite;
+		Cosmetic wall = CosmeticManager.GetManager().GetEquippedCosmetic(CosmeticSlot.Wallpaper);
+		backWall.sprite = (wall != null) ? wall.sprite : null;
+		backFloor.sprite = (wall != null) ? wall.extraSprites[0] : null;
+		controlPanel.sprite = (wall != null) ? wall.extraSprites[1] : null;
 	}
 
 	public override UIButton[] GetAllButtons() {
