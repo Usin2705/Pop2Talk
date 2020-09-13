@@ -21,7 +21,10 @@ public class CosmeticManager : MonoBehaviour {
 	void Awake() {
 		cm = this;
 		foreach (Cosmetic c in allCosmetics) {
-			cosmetics.Add(c.Id, c);
+			if (cosmetics.ContainsKey(c.Id)) {
+				Debug.Log(c.Id + " " + c.name + " " + cosmetics[c.Id].name);
+			} else
+				cosmetics.Add(c.Id, c);
 		}
 	}
 
