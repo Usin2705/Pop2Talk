@@ -6,6 +6,7 @@ public class CosmeticManager : MonoBehaviour {
 
 
 	[SerializeField] Cosmetic[] allCosmetics;
+	[SerializeField] Cosmetic[] defaultCosmetics;
 
 	Dictionary<string, Cosmetic> cosmetics = new Dictionary<string, Cosmetic>();
 	HashSet<string> unlockedCosmetics = new HashSet<string>();
@@ -20,7 +21,18 @@ public class CosmeticManager : MonoBehaviour {
 	void Awake() {
 		cm = this;
 		foreach (Cosmetic c in allCosmetics) {
-			cosmetics.Add(c.Id, c);
+			if (cosmetics.ContainsKey(c.Id)) {
+				Debug.Log(c.Id + " " + c.name + " " + cosmetics[c.Id].name);
+			} else
+				cosmetics.Add(c.Id, c);
+		}
+	}
+
+	public void CheckDefaultCosmetics() {
+		foreach (Cosmetic c in defaultCosmetics) {
+			UnlockCosmetic(c.Id);
+			if (!equippedCosmetics.ContainsKey(c.slot) || equippedCosmetics[c.slot] == "")
+				EquipCosmetic(c.Id);
 		}
 	}
 
@@ -28,6 +40,10 @@ public class CosmeticManager : MonoBehaviour {
 		if (cosmetics.ContainsKey(id))
 			return cosmetics[id];
 		return FindUnregisteredCosmetic(id);
+	}
+
+	public Dictionary<CosmeticSlot, string> GetEquippedIDs() {
+		return equippedCosmetics;
 	}
 
 	public Cosmetic GetEquippedCosmetic(CosmeticSlot slot) {
@@ -43,6 +59,7 @@ public class CosmeticManager : MonoBehaviour {
 			cosmetics.Add(id, c);
 			return c;
 		}
+		Debug.LogWarning("No cosmetic with id " + id);
 		return null;
 	}
 
@@ -52,11 +69,13 @@ public class CosmeticManager : MonoBehaviour {
 		}
 	}
 	
-	public void EquipCosmetic(string id) {
+	public void EquipCosmetic(string id, bool sendToServer = true) {
+		Cosmetic c = GetCosmetic(id);
+		if (c == null)
+			return;
 		bool slotChanged = true;
 		if (!unlockedCosmetics.Contains(id))
 			UnlockCosmetic(id);
-		Cosmetic c = GetCosmetic(id);
 		if (equippedCosmetics.ContainsKey(c.slot)) {
 			if (id != equippedCosmetics[c.slot])
 				equippedCosmetics[c.slot] = id;
@@ -65,8 +84,8 @@ public class CosmeticManager : MonoBehaviour {
 		} else
 			equippedCosmetics.Add(c.slot, id);
 
-		if (slotChanged) {
-			FakeServerManager.GetManager().EquipCosmetic(id, c.slot);
+		if (slotChanged && sendToServer) {
+			NetworkManager.GetManager().EquipCosmetic(id, (int)c.slot);
 		}
 	}
 
@@ -81,9 +100,12 @@ public class CosmeticManager : MonoBehaviour {
 			UnlockCosmetic(s);
 	}
 
-	public void UnlockCosmetic(string id) {
+	public void UnlockCosmetic(string id, bool sendToServer = true) {
+		if (GetCosmetic(id) == null)
+			return;
 		if (!unlockedCosmetics.Contains(id)) {
-			FakeServerManager.GetManager().UnlockCosmetic(id);
+			if (sendToServer)
+				NetworkManager.GetManager().UnlockCosmetic(id);
 			unlockedCosmetics.Add(id);
 		}
 	}
@@ -97,5 +119,4 @@ public class CosmeticManager : MonoBehaviour {
 		}
 		return cosmetics;
 	}
-
 }

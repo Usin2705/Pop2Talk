@@ -844,7 +844,9 @@ PlayerSettings:
     daydream:
       daydreamIconForeground: {fileID: 0}
       daydreamIconBackground: {fileID: 0}
-  cloudServicesEnabled: {}
+  cloudServicesEnabled:
+    Build: 1
+    UNet: 1
   luminIcon:
     m_Name: 
     m_ModelFolderPath: 
@@ -857,10 +859,10 @@ PlayerSettings:
     m_VersionCode: 1
     m_VersionName: 
   apiCompatibilityLevel: 3
-  cloudProjectId: 
+  cloudProjectId: e7cf3baa-a227-4c3a-b33a-35837a78dbea
   framebufferDepthMemorylessMode: 0
-  projectName: 
-  organizationId: 
+  projectName: Pop2Talk
+  organizationId: hokema-oy
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0

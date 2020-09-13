@@ -18,6 +18,8 @@ public class NetworkManager : MonoBehaviour {
 	string updateCharacter = "api/game/update/character";
 	string updateHighscore = "api/game/update/highscore";
 	string getWordList = "api/game/create/wordlist";
+	string unlockCosmetic = "api/game/unlock/cosmetic";
+	string equipCosmetic = "api/game/equip/cosmetic";
 
 	string devAccount = "devel";
 
@@ -131,6 +133,7 @@ public class NetworkManager : MonoBehaviour {
 			connected = true;
 			connecting = false;
 			SimpleEvent("start");
+			SendAccessTokenToSocket(user.access_token, user.username);
 		});
 
 		/*socket.On(Socket.EVENT_CONNECT_ERROR, () =>
@@ -478,14 +481,11 @@ public class NetworkManager : MonoBehaviour {
 				yield break;
 			}
 
-
 			user = JsonUtility.FromJson<UserData>(www.downloadHandler.text);
 			Debug.Log(www.downloadHandler.text);
 			var json = SimpleJSON.JSON.Parse(www.downloadHandler.text);
 			
 			WordMaster.Instance.ClearWords();
-
-
 
 			for (int i = 0; i < json["words"].Count; ++i) {
 				WordMaster.Instance.AddWord(json["words"][i]["word"].Value);
@@ -501,14 +501,31 @@ public class NetworkManager : MonoBehaviour {
 			}
 
 			json["game_state"]["availableModules"] = "";
+			json["game_state"]["wordHighscores"] = "";
+			json["words"] = "";
 
-			Debug.Log(json["game_state"]);
+			Debug.Log(json);
 
 			WordMaster.Instance.SetLargestModuleIndex(module);
-			
+
 			if (json["game_state"]["character"].ToString() != "")
-				CharacterManager.GetManager().SetCharacter(json["game_state"]["character"].AsInt);
+				CharacterManager.GetManager().SetCharacter(json["game_state"]["character"].AsInt, false);
+
 			CurrencyMaster.Instance.SetCoins(json["game_state"]["coins"].AsInt);
+			
+			if (json["game_state"]["unlocked_cosmetics"].ToString() != "") {
+				for (int i = 0; i < json["game_state"]["unlocked_cosmetics"].Count; ++i) {
+					CosmeticManager.GetManager().UnlockCosmetic(json["game_state"]["unlocked_cosmetics"][i], false);
+				}
+			}
+
+			if (json["game_state"]["equipped_cosmetics"].ToString() != "") {
+				for (int i = 0; i < json["game_state"]["equipped_cosmetics"].Count; ++i) {
+					CosmeticManager.GetManager().EquipCosmetic(json["game_state"]["equipped_cosmetics"][i], false);
+				}
+			}
+
+			CosmeticManager.GetManager().CheckDefaultCosmetics();
 
 			if (user.consent) {
 				Connect();
@@ -578,7 +595,6 @@ public class NetworkManager : MonoBehaviour {
 	}
 
 	IEnumerator CharacterUpdateRoutine(int character) {
-
 		WWWForm form = new WWWForm();
 		form.AddField("character", character);
 		UnityWebRequest www = UnityWebRequest.Post(url + updateCharacter, form);
@@ -586,8 +602,36 @@ public class NetworkManager : MonoBehaviour {
 		yield return www.SendWebRequest();
 		Debug.Log(www.downloadHandler.text);
 	}
+	
+	public void UnlockCosmetic(string id) {
+		Debug.Log("Trying to unlock: " + id);
+		StartCoroutine(CosmeticUnlockRoutine(id));
+	}
 
+	IEnumerator CosmeticUnlockRoutine(string id) {
+		WWWForm form = new WWWForm();
+		form.AddField("id", id);
+		UnityWebRequest www = UnityWebRequest.Post(url + unlockCosmetic, form);
+		www.SetRequestHeader("Authorization", "Bearer " + user.access_token);
+		yield return www.SendWebRequest();
+		Debug.Log(www.downloadHandler.text);
+	}
 
+	public void EquipCosmetic(string id, int index) {
+		Debug.Log("Trying to equip: " + id);
+		StartCoroutine(CosmeticEquipRoutine(id, index));
+	}
+
+	IEnumerator CosmeticEquipRoutine(string id, int index) {
+		WWWForm form = new WWWForm();
+		form.AddField("id", id);
+		form.AddField("index", index);
+		UnityWebRequest www = UnityWebRequest.Post(url + equipCosmetic, form);
+		www.SetRequestHeader("Authorization", "Bearer " + user.access_token);
+		yield return www.SendWebRequest();
+		Debug.Log(www.downloadHandler.text);
+	}
+	
 	public bool GetConsent() {
 		if (user != null)
 			return user.consent;
@@ -602,6 +646,12 @@ public class NetworkManager : MonoBehaviour {
 		socket = null;
 		Connect();
 	}
+
+	void SendAccessTokenToSocket(string token, string username) {
+		socket.EmitJson("auth", "{ " +
+			"\"token\":" + "\"" + token + "\"," +
+			"\"user\":" + "\"" + username + "\" }");
+	} 
 
 	public void SimpleEvent(string name) {
 

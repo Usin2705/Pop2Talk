@@ -44,7 +44,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allCosmetics:
-  - {fileID: 11400000, guid: 26d64cf0ba0a61c4db675825f8c46b47, type: 2}
-  - {fileID: 11400000, guid: 3ead74bc5871ec849adad6e6e6ceece2, type: 2}
-  - {fileID: 11400000, guid: 14fb40f8095f35a498f2adc36da5c912, type: 2}
-  - {fileID: 11400000, guid: ab353d2afc30adb479a0c0b3c1fb16dd, type: 2}
+  - {fileID: 11400000, guid: 41040f06ef063bf4ba3dfe564e231bf1, type: 2}
+  - {fileID: 11400000, guid: 79783e9a2745e0f43af41e4bb731ce4c, type: 2}
+  - {fileID: 11400000, guid: 92d0e6c225015044eb4eb88411379222, type: 2}
+  - {fileID: 11400000, guid: 84e8f5a4563e47a4bae8bf64e72ca6b5, type: 2}
+  - {fileID: 11400000, guid: a2ffce5507900234e8d3e697d02e1a59, type: 2}
+  - {fileID: 11400000, guid: 6a6cd2406dbd4d2418c5fdb17e8a5de5, type: 2}
+  - {fileID: 11400000, guid: 3126a55d0fc316e4580a1625809c0716, type: 2}
+  - {fileID: 11400000, guid: e2ad9a8727669f749a185d1e37fc133b, type: 2}
+  - {fileID: 11400000, guid: 9afa2f19b913db542913d5c7efa44477, type: 2}
+  - {fileID: 11400000, guid: 6a42f7b70cdca944dbd1a315483dd14c, type: 2}
+  - {fileID: 11400000, guid: f0f2a35e99249d74582b7b3873b586bf, type: 2}
+  - {fileID: 11400000, guid: a5567bb6efd01544486b48add4582799, type: 2}
+  - {fileID: 11400000, guid: 350cd811df9c15e43a4b6b316f661489, type: 2}
+  - {fileID: 11400000, guid: 5327a2184c97e9043a088c8727750991, type: 2}
+  - {fileID: 11400000, guid: 45bd117685cf2c14bbba9e17df31e121, type: 2}
+  - {fileID: 11400000, guid: ed95bfdccb537434e81cd63a5efb97fb, type: 2}
+  - {fileID: 11400000, guid: 270e5e69acc2a3f4a95b1fcdef522232, type: 2}
+  - {fileID: 11400000, guid: cce4800b7a97c2149a3d898b7f207479, type: 2}
+  - {fileID: 11400000, guid: 474ae27a7f3c7d64cb8603293f8e515a, type: 2}
+  - {fileID: 11400000, guid: 13d277fac6d34e74a976a63ac0214fa1, type: 2}
+  - {fileID: 11400000, guid: 95095ff4951be08438892757e682e03f, type: 2}
+  - {fileID: 11400000, guid: a06556bb408e972408b6f6a914193384, type: 2}
+  - {fileID: 11400000, guid: ec105d8b11f783945b90fbf47af095a8, type: 2}
+  - {fileID: 11400000, guid: 6112373e9daa2594fa35287ce5db8b02, type: 2}
+  - {fileID: 11400000, guid: 0ba26834781c7ec42a75fa7e00bb7789, type: 2}
+  - {fileID: 11400000, guid: 52275b395f1f8074c84b509569442c17, type: 2}
+  - {fileID: 11400000, guid: 40929dfac6e24f0429812c290bfe009c, type: 2}
+  - {fileID: 11400000, guid: bb0baee014db6fa4c9ee1aab95bfe757, type: 2}
+  - {fileID: 11400000, guid: 7072c00fd63431a44a98418d573fc243, type: 2}
+  defaultCosmetics:
+  - {fileID: 11400000, guid: 92d0e6c225015044eb4eb88411379222, type: 2}
+  - {fileID: 11400000, guid: 79783e9a2745e0f43af41e4bb731ce4c, type: 2}
+  - {fileID: 11400000, guid: 41040f06ef063bf4ba3dfe564e231bf1, type: 2}
+  - {fileID: 11400000, guid: 350cd811df9c15e43a4b6b316f661489, type: 2}

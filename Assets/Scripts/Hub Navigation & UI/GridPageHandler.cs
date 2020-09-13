@@ -9,7 +9,10 @@ public class GridPageHandler : MonoBehaviour {
 	[SerializeField] UIButton prevButton;
 	[SerializeField] GameObject gridBlueprint;
 
-	int currentPage = 0;
+	int currentCollectionIndex = 0;
+
+	List<List<Transform>> collections = new List<List<Transform>>();
+	List<int> currentPages = new List<int>();
 
 	void Awake() {
 		nextButton.SubscribePress(Next);
@@ -20,31 +23,57 @@ public class GridPageHandler : MonoBehaviour {
 		UpdateButtons();
 	}
 
-	public Transform GetParent() {
-		if (transform.childCount == 0 || transform.GetChild(transform.childCount-1).childCount == itemPerGrid) {
-			Instantiate(gridBlueprint, transform);
+	public Transform GetNextParent(int collectionIndex) {
+		while (collectionIndex >= collections.Count) {
+			collections.Add(new List<Transform>());
+			currentPages.Add(0);
 		}
-		transform.GetChild(transform.childCount - 1).gameObject.SetActive(currentPage == transform.childCount - 1);
+		List<Transform> collection = collections[collectionIndex];
+		if (collection.Count == 0 || collection[collection.Count - 1].childCount == itemPerGrid) {
+			collection.Add(Instantiate(gridBlueprint, transform).transform);
+			collection[collection.Count - 1].gameObject.SetActive(collectionIndex == currentCollectionIndex);
+		}
+		if (collectionIndex == currentCollectionIndex) {
+			collection[collection.Count - 1].gameObject.SetActive(currentPages[collectionIndex] == collection.Count - 1);
+			UpdateButtons();
+		}
+		return collection[collection.Count - 1];
+	}
+
+	public void ShowCollection(int collectionIndex) {
+		while (collectionIndex >= collections.Count) {
+			collections.Add(new List<Transform>());
+			currentPages.Add(0);
+		}
+		if (currentPages[currentCollectionIndex] < collections[currentCollectionIndex].Count)
+			collections[currentCollectionIndex][currentPages[currentCollectionIndex]].gameObject.SetActive(false);
+		currentCollectionIndex = collectionIndex;
+		if (currentPages[currentCollectionIndex] < collections[currentCollectionIndex].Count)
+			collections[currentCollectionIndex][currentPages[currentCollectionIndex]].gameObject.SetActive(true);
 		UpdateButtons();
-		return transform.GetChild(transform.childCount - 1);
 	}
 
 	void Next() {
-		transform.GetChild(currentPage).gameObject.SetActive(false);
-		currentPage++;
-		transform.GetChild(currentPage).gameObject.SetActive(true);
-		UpdateButtons();
+		ChangePage(1);
 	}
 
-	void Prev() { 
-		transform.GetChild(currentPage).gameObject.SetActive(false);
-		currentPage--;
-		transform.GetChild(currentPage).gameObject.SetActive(true);
+	void Prev() {
+		ChangePage(-1);
+	}
+
+	void ChangePage(int change) {
+		collections[currentCollectionIndex][currentPages[currentCollectionIndex]].gameObject.SetActive(false);
+		currentPages[currentCollectionIndex] += change;
+		collections[currentCollectionIndex][currentPages[currentCollectionIndex]].gameObject.SetActive(true);
 		UpdateButtons();
 	}
 
 	void UpdateButtons() {
-		nextButton.gameObject.SetActive(currentPage != transform.childCount - 1);
-		prevButton.gameObject.SetActive(currentPage != 0);
+		while (currentCollectionIndex >= collections.Count) {
+			collections.Add(new List<Transform>());
+			currentPages.Add(0);
+		}
+		nextButton.gameObject.SetActive(currentPages[currentCollectionIndex] < collections[currentCollectionIndex].Count - 1);
+		prevButton.gameObject.SetActive(currentPages[currentCollectionIndex] != 0);
 	}
 }

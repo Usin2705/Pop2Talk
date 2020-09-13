@@ -22,3 +22,4 @@ MonoBehaviour:
   typeSettings:
   - {fileID: 11400000, guid: c176fd0d574143d41ae870a4a7aac98f, type: 2}
   - {fileID: 11400000, guid: 3e9837d80ad18cb42b346dbed82db3c6, type: 2}
+  - {fileID: 11400000, guid: e9cda333d9bed5b478275891ea5ea359, type: 2}

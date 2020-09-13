@@ -29,6 +29,7 @@ public class SpotModeHandler : BaseGridGameModeHandler {
 	}
 
 	public override void Activate() {
+		base.Activate();
 		if (spotPrefab == null)
 			spotPrefab = (GameObject)Resources.Load("Spot Marker");
 		foreach (Cell c in spots.Keys)
@@ -47,7 +48,6 @@ public class SpotModeHandler : BaseGridGameModeHandler {
 		}
 		GameMaster.Instance.MaxProgress = spotCount;
 		GameMaster.Instance.RemainingProgress = spotCount;
-		base.Activate();
 	}
 
 	protected override IEnumerator StartPopping(Tile startTile, List<Dictionary<Tile, Coordinate>> touchingMatches) {

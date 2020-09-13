@@ -8,9 +8,10 @@ public class Cosmetic : ScriptableObject {
 	public CosmeticSlot slot;
 	public Sprite icon;
 	public Sprite sprite;
+	public Sprite[] extraSprites;
 	[Space]
-	[SerializeField][UniqueIdentifier] string uniqueId;
 	[SerializeField] string idCopy;
+	[SerializeField][UniqueIdentifier] string uniqueId;
 	[SerializeField] bool reset;
 
 	public string Id { get { return uniqueId; } }
