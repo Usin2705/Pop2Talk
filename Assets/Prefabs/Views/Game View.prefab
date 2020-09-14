@@ -877,6 +877,7 @@ MonoBehaviour:
   selectable: 0
   insideIcon: {fileID: 0}
   repressDeselects: 0
+  canPressSelected: 1
   lockedGrayscale: 0
   deselectGrayscale: 0
 --- !u!1 &1595297811011918
@@ -996,6 +997,7 @@ MonoBehaviour:
   shipHub: {fileID: 0}
   finishView: {fileID: 0}
   background: {fileID: 114967581072652412}
+  fluffForeground: {fileID: 0}
   gameUI: {fileID: 114596619015754370}
   backButton: {fileID: 114569838267960890}
 --- !u!114 &114596619015754370

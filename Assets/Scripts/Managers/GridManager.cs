@@ -317,6 +317,7 @@ public class GridManager : MonoBehaviour, ITileClickReceiver {
 			tileRoot.name = "Tile Root";
 			tileRoot.SetParent(gridRoot);
 		}
+		tileMotionOrders.Clear();
 
 		/*List<Tile> tilesToAdd = (specialTiles != null) ? new List<Tile>(specialTiles) : new List<Tile>();
         int nonRandomTileCount = CoordinateUtility.GetCount(specificTiles) + ((specialTiles == null) ? 0 : specialTiles.Count);
@@ -347,10 +348,12 @@ public class GridManager : MonoBehaviour, ITileClickReceiver {
 				}
 			}
 		}*/
-		DropTiles(true);
-		BreakMatches();
+
+
+		//DropTiles(true);
+		//BreakMatches();
 		CanMove = true;
-		MoveTiles(() => { CanMove = false; });
+		//MoveTiles(() => { CanMove = false; });
 	}
 
 	Tile InstantiateTile(Tile t, int x, int y, bool toTheTop = false, HashSet<MatchType> matchTypes = null, bool typesAreExcluded = true) {
@@ -908,8 +911,7 @@ public class GridManager : MonoBehaviour, ITileClickReceiver {
 		tileMotions.Clear();
 		tileMotionOrders.Clear();
 		Moving = false;
-		if (MoveCompleted != null)
-			MoveCompleted();
+		MoveCompleted?.Invoke();
 	}
 
 	void DropTile(int x, int y) {

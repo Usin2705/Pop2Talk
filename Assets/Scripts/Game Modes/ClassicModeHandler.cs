@@ -24,9 +24,9 @@ public class ClassicModeHandler : BaseGridGameModeHandler {
 	}
 
 	public override void Activate() {
-        GameMaster.Instance.MaxProgress = movesPerRound;
-        GameMaster.Instance.RemainingProgress = movesPerRound;
 		base.Activate();
+		GameMaster.Instance.MaxProgress = movesPerRound;
+		GameMaster.Instance.RemainingProgress = movesPerRound;
 	}
 
     protected override IEnumerator StartPopping(Tile startTile, List<Dictionary<Tile, Coordinate>> touchingMatches) {

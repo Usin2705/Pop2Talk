@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 114140959481818054}
   - component: {fileID: 114123035718694282}
   m_Layer: 5
-  m_Name: Selectable Button
+  m_Name: Selectable Deselect Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -117,7 +117,9 @@ MonoBehaviour:
   selectable: 1
   insideIcon: {fileID: 0}
   repressDeselects: 1
+  canPressSelected: 1
   lockedGrayscale: 0
+  deselectGrayscale: 0
 --- !u!114 &114123035718694282
 MonoBehaviour:
   m_ObjectHideFlags: 0

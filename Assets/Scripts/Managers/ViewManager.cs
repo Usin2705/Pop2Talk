@@ -55,7 +55,7 @@ public class ViewManager : MonoBehaviour {
 			CurrentView.Deactivate();
 		}
 		CharacterManager.GetManager().HideCharacter();
-		MovingImageManager.GetManager().HideMover();
+		ShipManager.GetManager().HideShip();
 		targetView.Activate();
 		CurrentView = targetView;
 		yield return new WaitForSeconds(openDelay);

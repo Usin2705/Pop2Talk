@@ -55,7 +55,7 @@ public class ButtonEffects : MonoBehaviour {
 			return;
 		targetScale = selectedScale;
 		if (scaleDuration != 0)
-			scaleSpeed = (selectedScale - deselectedScale) / scaleDuration;
+			scaleSpeed = Mathf.Abs(selectedScale - deselectedScale) / scaleDuration;
 		else {
 			Scale();
 		}
@@ -76,7 +76,7 @@ public class ButtonEffects : MonoBehaviour {
 			return;
 		targetScale = deselectedScale;
 		if (scaleDuration != 0)
-			scaleSpeed = (selectedScale - deselectedScale) / scaleDuration;
+			scaleSpeed = Mathf.Abs(selectedScale - deselectedScale) / scaleDuration;
 		else {
 			Scale();
 		}

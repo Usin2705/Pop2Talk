@@ -279,7 +279,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
@@ -434,7 +434,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &114271424023260618
 MonoBehaviour:
@@ -900,6 +900,7 @@ MonoBehaviour:
   selectable: 0
   insideIcon: {fileID: 0}
   repressDeselects: 0
+  canPressSelected: 1
   lockedGrayscale: 0
   deselectGrayscale: 0
 --- !u!114 &114017669793085586
@@ -1277,7 +1278,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &224747121264527498
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1831,6 +1832,7 @@ MonoBehaviour:
   selectable: 0
   insideIcon: {fileID: 0}
   repressDeselects: 0
+  canPressSelected: 1
   lockedGrayscale: 0
   deselectGrayscale: 0
 --- !u!114 &114010409712068622
@@ -2765,7 +2767,7 @@ MonoBehaviour:
       - 0
       globalNormalsAngle: 0
       flipNormals: 0
-    vertexPathUpToDate: 0
+    vertexPathUpToDate: 1
     vertexPathMaxAngleError: 0.3
     vertexPathMinVertexSpacing: 0.01
     showTransformTool: 1

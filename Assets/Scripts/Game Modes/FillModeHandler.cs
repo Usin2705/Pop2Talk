@@ -32,11 +32,9 @@ public class FillModeHandler : BaseGridGameModeHandler {
     }
 
     public override void Activate() {
-        GridManager.GetManager().DropTiles(true);
-        GridManager.GetManager().BreakMatches();
-        GameMaster.Instance.MaxProgress = GridManager.GetManager().TileCount;
+		base.Activate();
+		GameMaster.Instance.MaxProgress = GridManager.GetManager().TileCount;
         GameMaster.Instance.RemainingProgress = GridManager.GetManager().TileCount - GridManager.GetManager().GetLargestMatchingGroupCount();
-        GridManager.GetManager().MoveTiles(base.Activate);
     }
 
     protected override IEnumerator StartPopping(Tile startTile, List<Dictionary<Tile, Coordinate>> touchingMatches) {
