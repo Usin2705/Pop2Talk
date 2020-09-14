@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PairCard : Interactable {
-
-
+public class FlipCard : Interactable {
 
 	[SerializeField] SpriteRenderer spriteRenderer;
 
@@ -121,5 +119,25 @@ public class PairCard : Interactable {
 
 	protected override bool ValidInteracting(InteractType type) {
 		return type == InteractType.Press;
+	}
+	
+	public static Vector3[] GetCardPositions(Vector3 center, int count) {
+		Vector3[] positions = new Vector3[count];
+		float gap = 1.75f;
+		int cardsInRow = 3;
+		float x, y;
+		float xOffset = (cardsInRow % 2 == 0) ? gap / 2f : 0;
+		float yOffset = (count / cardsInRow % 2 == 0) ? gap / 2f : 0;
+		for (int i = 0; i < positions.Length; ++i) {
+			if (i == positions.Length - 1 && (i % cardsInRow) == 0)
+				x = 0;
+			else
+				x = ((cardsInRow / 2) - (i % cardsInRow)) * gap - xOffset; //intentional int division
+			if ((i == positions.Length - 1 && (i % cardsInRow) == 1) || (i == positions.Length - 2 && (i % cardsInRow) == 0))
+				x -= gap / 2f;
+			y = (count / (cardsInRow * 2) - (i / cardsInRow)) * gap - yOffset; //intentional int division
+			positions[i] = new Vector3(x, y) + center;
+		}
+		return positions;
 	}
 }

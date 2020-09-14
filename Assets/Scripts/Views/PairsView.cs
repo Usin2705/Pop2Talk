@@ -14,13 +14,15 @@ public class PairsView : View, IMinigame {
 	[Space]
 	[SerializeField] UIButton backButton;
 
+	int maxPairs = 6;
+
 	WordData[] words;
-	Dictionary<PairCard, WordData> pairs = new Dictionary<PairCard, WordData>();
+	Dictionary<FlipCard, WordData> pairs = new Dictionary<FlipCard, WordData>();
 	int movingCards;
 	int correctCards;
-
-	PairCard cardOne;
-	PairCard cardTwo;
+	
+	FlipCard cardOne;
+	FlipCard cardTwo;
 
 	protected override void Initialize() {
 		base.Initialize();
@@ -30,7 +32,7 @@ public class PairsView : View, IMinigame {
 	public override void Activate() {
 		base.Activate();
 		string[] samples = WordMaster.Instance.GetSampleWords();
-		words = new WordData[Mathf.Min(6, samples.Length)];
+		words = new WordData[Mathf.Min(maxPairs, samples.Length)];
 		for (int i = 0; i < words.Length; ++i) {
 			words[i] = WordMaster.Instance.StringToWordData(samples[i]);
 		}
@@ -40,14 +42,14 @@ public class PairsView : View, IMinigame {
 	void PrepareCards() {
 		Transform cardRoot = null;
 		InputManager.GetManager().SendingInputs = false;
-		Vector3[] positions = GetCardPositions(words.Length * 2);
+		Vector3[] positions = FlipCard.GetCardPositions(center, words.Length * 2);
 		positions.Shuffle();
 		movingCards = positions.Length;
 		cardOne = null;
 		cardTwo = null;
 		for (int i = 0; i < words.Length; ++i) {
 			for (int j = 0; j < 2; ++j) {
-				PairCard pairCard = Instantiate(pairPrefab, cardRoot).GetComponent<PairCard>(); //nonoptimized to get around lambda weirdness
+				FlipCard pairCard = Instantiate(pairPrefab, cardRoot).GetComponent<FlipCard>(); //nonoptimized to get around lambda weirdness
 				pairCard.transform.position = center;
 				pairCard.transform.localScale = scale;
 				pairCard.SetSprites(words[i].picture, backSprite);
@@ -58,7 +60,7 @@ public class PairsView : View, IMinigame {
 		}
 	}
 
-	void CardClicked(PairCard card) {
+	void CardClicked(FlipCard card) {
 		if (cardOne != null && cardTwo != null)
 			return;
 		AudioMaster.Instance.Play(this, AudioMaster.Instance.InstancifyClip(pairs[card].pronunciations.GetRandom()));
@@ -101,29 +103,9 @@ public class PairsView : View, IMinigame {
 		}
 	}
 
-	Vector3[] GetCardPositions(int count) {
-		Vector3[] positions = new Vector3[count];
-		float gap = 1.75f;
-		int cardsInRow = 3;
-		float x, y;
-		float xOffset = (cardsInRow % 2 == 0) ? gap / 2f : 0;
-		float yOffset = (count / cardsInRow % 2 == 0) ? gap / 2f : 0;
-		for (int i = 0; i < positions.Length; ++i) {
-			if (i == positions.Length-1 && (i % cardsInRow) == 0)
-				x = 0;
-			else
-				x = ((cardsInRow / 2) - (i % cardsInRow)) * gap - xOffset; //intentional int division
-			if ((i == positions.Length - 1 && (i % cardsInRow) == 1) || (i == positions.Length - 2 && (i % cardsInRow) == 0))
-				x -= gap / 2f;
-			y = (count / (cardsInRow * 2) - (i / cardsInRow)) * gap - yOffset; //intentional int division
-			positions[i] = new Vector3(x, y) + center;
-		}
-		return positions;
-	}
-
 	public override void Deactivate() {
 		base.Deactivate();
-		foreach (PairCard pc in pairs.Keys) {
+		foreach (FlipCard pc in pairs.Keys) {
 			PoolMaster.Instance.Destroy(pc.gameObject);
 		}
 	}
