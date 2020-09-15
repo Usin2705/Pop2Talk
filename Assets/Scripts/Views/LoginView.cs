@@ -75,10 +75,28 @@ public class LoginView : View {
 
 	void GameOnline() {
 		if (usernameField.text != "" && passwordField.text != "") {
+			if (IsValidEmail(usernameField.text)) {
+				if (!PurchaseMaster.Instance.Subscribed) {
+					errorText.gameObject.SetActive(true);
+					errorText.text = "This device doesn't have an active subscription.";
+					return;
+				}
+			}
 			Online(ConnectedOnline);
 		} else {
 			errorText.gameObject.SetActive(true);
 			errorText.text = "Please enter username and password.";
+		}
+	}
+
+
+	bool IsValidEmail(string email) {
+		try {
+			var addr = new System.Net.Mail.MailAddress(email);
+			return addr.Address == email;
+		}
+		catch {
+			return false;
 		}
 	}
 
