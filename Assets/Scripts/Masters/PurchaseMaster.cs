@@ -33,13 +33,17 @@ public class PurchaseMaster : IStoreListener {
 	}
 
 	public void BeginInitialization() {
+		OpenConsole();
 		if (Initialized || attemptingInitialization)
 			return;
 		var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
 		builder.AddProduct(oneMonthSub, ProductType.Subscription);
-
 		attemptingInitialization = true;
 		UnityPurchasing.Initialize(this, builder);
+	}
+
+	void OpenConsole() {
+		Debug.LogError("Open console");
 	}
 
 	public void OnInitialized(IStoreController controller, IExtensionProvider extensions) {
@@ -62,11 +66,18 @@ public class PurchaseMaster : IStoreListener {
 	}
 
 	void CheckGoogleSubscription() {
+		DebugMaster.Instance.DebugText("");
 #if UNITY_ANDROID
 		foreach (Product p in controller.products.all) {
+			DebugMaster.Instance.DebugText("Definition: " + p.definition + 
+				"\nAvailable to purchase: " + p.availableToPurchase +
+				"\nHas receipt: " + p.hasReceipt +
+				"\nMetadata " + p.metadata);
+			if (!p.hasReceipt)
+				continue;
 			GooglePurchaseData data = new GooglePurchaseData(p.receipt);
 
-			if (p.hasReceipt && data.json.productId == oneMonthSub) {
+			if (data.json.productId == oneMonthSub) {
 				Subscribed = true;
 				return;
 			}
