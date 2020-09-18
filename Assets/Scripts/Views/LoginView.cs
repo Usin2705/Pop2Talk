@@ -15,6 +15,7 @@ public class LoginView : View {
 	[SerializeField] UIButton playButton;
 	[SerializeField] UIButton registerButton;
 	[SerializeField] UIButton resetPasswordButton;
+	[SerializeField] UIButton subscriptionButton;
 	[SerializeField] UIButton privacyPolicyButton;
 	[SerializeField] Toggle rememberToggle;
 
@@ -40,6 +41,7 @@ public class LoginView : View {
 		privacyPolicyButton.SubscribePress(OpenPrivacyPolicy);
 		registerButton.SubscribePress(Register);
 		resetPasswordButton.SubscribePress(ResetPassword);
+		subscriptionButton.SubscribePress(PurchaseMaster.Instance.PurchaseSubscription);
 		if (EncryptedPlayerPrefs.GetInt(rememberKey, 0) == 1) {
 			rememberToggle.isOn = true;
 			usernameField.text = EncryptedPlayerPrefs.GetString(usernameKey);

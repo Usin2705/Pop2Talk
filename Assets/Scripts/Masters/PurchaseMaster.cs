@@ -58,29 +58,36 @@ public class PurchaseMaster : IStoreListener {
 		attemptingInitialization = false;
 	}
 
+	public void PurchaseSubscription() {
+		controller.InitiatePurchase(oneMonthSub);
+	}
+
+	void CheckSubscription(Product p) {
+		if (Subscribed || !p.hasReceipt)
+			return;
+
+		if (p.definition.id == oneMonthSub) {
+			Subscribed = true;
+			DebugMaster.Instance.DebugText("Subscribed!");
+		}
+	}
+
 	public void OnPurchaseFailed(Product i, PurchaseFailureReason p) {
 	}
 
+
 	public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs e) {
+		CheckSubscription(e.purchasedProduct);
 		return PurchaseProcessingResult.Complete;
 	}
 
 	void CheckGoogleSubscription() {
-		DebugMaster.Instance.DebugText("");
 #if UNITY_ANDROID
 		foreach (Product p in controller.products.all) {
-			DebugMaster.Instance.DebugText("Definition: " + p.definition + 
+			DebugMaster.Instance.DebugText("Id: " + p.definition.id + 
 				"\nAvailable to purchase: " + p.availableToPurchase +
-				"\nHas receipt: " + p.hasReceipt +
-				"\nMetadata " + p.metadata);
-			if (!p.hasReceipt)
-				continue;
-			GooglePurchaseData data = new GooglePurchaseData(p.receipt);
-
-			if (data.json.productId == oneMonthSub) {
-				Subscribed = true;
-				return;
-			}
+				"\nHas receipt: " + p.hasReceipt);
+			CheckSubscription(p);
 		}
 #endif
 	}
