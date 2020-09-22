@@ -49,6 +49,11 @@ public class LoginView : View {
 		}
 	}
 
+	public override void Activate() {
+		base.Activate();
+		errorText.gameObject.SetActive(false);
+	}
+
 	void Update() {
 		bool prevOnline = canOnline;
 		if (usernameField.isFocused || passwordField.isFocused)
@@ -167,6 +172,12 @@ public class LoginView : View {
 
 	void GotoPasswordReset() {
 		ViewManager.GetManager().ShowView(passwordResetView);
+	
+	}
+
+	public override void Back() {
+		base.Back();
+		Application.Quit();
 	}
 
 	public override UIButton GetPointedButton() {

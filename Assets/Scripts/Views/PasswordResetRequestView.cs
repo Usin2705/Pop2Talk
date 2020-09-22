@@ -32,7 +32,8 @@ public class PasswordResetRequestView : View {
 		errorText.gameObject.SetActive(false);
 	}
 
-	void Back() {
+	public override void Back() {
+		base.Back();
 		doExitFluff = false;
 		ViewManager.GetManager().ShowView(loginView);
 	}

@@ -211,7 +211,8 @@ public class StoreView : View {
 		equippedImage.sprite = CosmeticManager.GetManager().GetEquippedCosmetic(CosmeticSlot.ShipTop).sprite;
 	}
 
-	void Back() {
+	public override void Back() {
+		base.Back();
 		ViewManager.GetManager().ShowView(shipHubView);
 	}
 

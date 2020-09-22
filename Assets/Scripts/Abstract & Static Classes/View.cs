@@ -37,6 +37,10 @@ public abstract class View : MonoBehaviour, IFingerPointable {
 		return sortingOrder;
 	}
 
+	public virtual void Back() {
+
+	}
+
 	public abstract UIButton GetPointedButton();
 	public abstract UIButton[] GetAllButtons();
 }

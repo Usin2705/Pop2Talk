@@ -23,7 +23,7 @@ public class CharacterSelectView : View {
 
 		Sprite[] sprites = CharacterManager.GetManager().GetCharacterSprites();
 		UIButton button;
-		backButton.SubscribePress(Exit);
+		backButton.SubscribePress(Back);
 		nextButton.SubscribePress(NextPressed);
 		buttons = new List<UIButton>();
 		
@@ -62,10 +62,12 @@ public class CharacterSelectView : View {
 		CharacterManager.GetManager().ShowCharacter(characterSelected, sortingOrder, () => { base.ExitFluff(Done); });
 	}
 
-	/*void Back() {
-		doExitFluff = false;
-		ViewManager.GetManager().ShowView(login);
-	}*/
+	public override void Back() {
+		base.Back();
+		Exit();
+		//doExitFluff = false;
+		//ViewManager.GetManager().ShowView(login);
+	}
 
 	void Exit() {
 		NetworkManager.GetManager().ControlledExit();

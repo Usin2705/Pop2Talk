@@ -43,7 +43,8 @@ public class RegistrationView : View {
 		StartCoroutine("RequestNewestTOS");
 	}
 
-	void Back() {
+	public override void Back() {
+		base.Back();
 		doExitFluff = false;
 		ViewManager.GetManager().ShowView(loginView);
 	}
