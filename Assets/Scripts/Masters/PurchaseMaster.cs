@@ -19,6 +19,10 @@ public class PurchaseMaster : IStoreListener {
 	}
 
 	public bool Subscribed { get; protected set; }
+	public bool Renewing { get; protected set; }
+
+
+	public string SubscriptionPrice { get; protected set; }
 
 	string oneMonthSub = "en_gb_monthly_3.99_and_vat";
 
@@ -32,8 +36,9 @@ public class PurchaseMaster : IStoreListener {
 		}
 	}
 
+	public IPurchaseListener Listener { get; set; }
+
 	public void BeginInitialization() {
-		OpenConsole();
 		if (Initialized || attemptingInitialization)
 			return;
 		var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
@@ -41,15 +46,17 @@ public class PurchaseMaster : IStoreListener {
 		attemptingInitialization = true;
 		UnityPurchasing.Initialize(this, builder);
 	}
-
-	void OpenConsole() {
-		Debug.LogError("Open console");
-	}
+	
 
 	public void OnInitialized(IStoreController controller, IExtensionProvider extensions) {
 		attemptingInitialization = false;
 		this.controller = controller;
 		this.extensions = extensions;
+
+		foreach (Product p in controller.products.all) {
+			if (p.definition.id == oneMonthSub)
+				SubscriptionPrice = p.metadata.localizedPriceString;
+		}
 
 		CheckGoogleSubscription();
 	}
@@ -68,25 +75,33 @@ public class PurchaseMaster : IStoreListener {
 
 		if (p.definition.id == oneMonthSub) {
 			Subscribed = true;
-			DebugMaster.Instance.DebugText("Subscribed!");
+			Renewing = true;
+#if SUBSCRIPTION_MANAGER
+			SubscriptionManager s = new SubscriptionManager(p, null);
+			Renewing = s.getSubscriptionInfo().isCancelled() != Result.True;
+#endif
+			//DebugMaster.Instance.DebugText("Subscribed!");
 		}
 	}
 
 	public void OnPurchaseFailed(Product i, PurchaseFailureReason p) {
+		Listener?.PurchaseFailed();
 	}
 
 
 	public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs e) {
 		CheckSubscription(e.purchasedProduct);
+		Listener?.PurchaseSuccesful();
 		return PurchaseProcessingResult.Complete;
 	}
 
 	void CheckGoogleSubscription() {
 #if UNITY_ANDROID
 		foreach (Product p in controller.products.all) {
-			DebugMaster.Instance.DebugText("Id: " + p.definition.id + 
+			/*DebugMaster.Instance.DebugText("Id: " + p.definition.id + 
 				"\nAvailable to purchase: " + p.availableToPurchase +
-				"\nHas receipt: " + p.hasReceipt);
+				"\nPrice " + p.metadata.localizedPriceString +
+				"\nHas receipt: " + p.hasReceipt);*/
 			CheckSubscription(p);
 		}
 #endif

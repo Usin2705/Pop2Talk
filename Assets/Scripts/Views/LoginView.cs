@@ -7,6 +7,7 @@ public class LoginView : View {
 
 	[SerializeField] View characterSelectView;
 	[SerializeField] View registrationView;
+	[SerializeField] View subscriptionView;
 	[SerializeField] View passwordResetView;
 	[SerializeField] View shipHubView;
 	[Space]
@@ -15,6 +16,7 @@ public class LoginView : View {
 	[SerializeField] UIButton playButton;
 	[SerializeField] UIButton registerButton;
 	[SerializeField] UIButton resetPasswordButton;
+	[SerializeField] GameObject subscriptionHolder;
 	[SerializeField] UIButton subscriptionButton;
 	[SerializeField] UIButton privacyPolicyButton;
 	[SerializeField] Toggle rememberToggle;
@@ -41,7 +43,7 @@ public class LoginView : View {
 		privacyPolicyButton.SubscribePress(OpenPrivacyPolicy);
 		registerButton.SubscribePress(Register);
 		resetPasswordButton.SubscribePress(ResetPassword);
-		subscriptionButton.SubscribePress(PurchaseMaster.Instance.PurchaseSubscription);
+		subscriptionButton.SubscribePress(GotoSubscription);
 		if (EncryptedPlayerPrefs.GetInt(rememberKey, 0) == 1) {
 			rememberToggle.isOn = true;
 			usernameField.text = EncryptedPlayerPrefs.GetString(usernameKey);
@@ -52,6 +54,7 @@ public class LoginView : View {
 	public override void Activate() {
 		base.Activate();
 		errorText.gameObject.SetActive(false);
+		subscriptionHolder.SetActive(!PurchaseMaster.Instance.Renewing);
 	}
 
 	void Update() {
@@ -78,6 +81,10 @@ public class LoginView : View {
 
 	void ResetPassword() {
 		GotoPasswordReset();
+	}
+
+	void GotoSubscription() {
+		ViewManager.GetManager().ShowView(subscriptionView);
 	}
 
 	void GameOnline() {
@@ -172,7 +179,7 @@ public class LoginView : View {
 
 	void GotoPasswordReset() {
 		ViewManager.GetManager().ShowView(passwordResetView);
-	
+
 	}
 
 	public override void Back() {
