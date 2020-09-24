@@ -164,12 +164,12 @@ PlayerSettings:
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
     Android: com.Hokema.Pop2Talk
-    Standalone: com.Aalto.Pop2Talk
+    Standalone: com.Hokema.Pop2Talk
     iPhone: com.Hokema.Pop2Talk
   buildNumber:
-    Standalone: 10016
-    iPhone: 10016
-  AndroidBundleVersionCode: 10016
+    Standalone: 10017
+    iPhone: 10017
+  AndroidBundleVersionCode: 10017
   AndroidMinSdkVersion: 19
   AndroidTargetSdkVersion: 0
   AndroidPreferredInstallLocation: 0
