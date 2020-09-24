@@ -46,7 +46,7 @@ public class PurchaseMaster : IStoreListener {
 		attemptingInitialization = true;
 		UnityPurchasing.Initialize(this, builder);
 	}
-	
+
 
 	public void OnInitialized(IStoreController controller, IExtensionProvider extensions) {
 		attemptingInitialization = false;
@@ -58,7 +58,7 @@ public class PurchaseMaster : IStoreListener {
 				SubscriptionPrice = p.metadata.localizedPriceString;
 		}
 
-		CheckGoogleSubscription();
+		CheckSubscriptions();
 	}
 
 	public void OnInitializeFailed(InitializationFailureReason error) {
@@ -67,6 +67,32 @@ public class PurchaseMaster : IStoreListener {
 
 	public void PurchaseSubscription() {
 		controller.InitiatePurchase(oneMonthSub);
+	}
+
+
+	public void OnPurchaseFailed(Product i, PurchaseFailureReason p) {
+		Listener?.PurchaseFailed();
+	}
+
+
+	public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs e) {
+		CheckSubscription(e.purchasedProduct);
+		Listener?.PurchaseSuccesful();
+		return PurchaseProcessingResult.Complete;
+	}
+
+	void CheckSubscriptions() {
+		foreach (Product p in controller.products.all) {
+			/*DebugMaster.Instance.DebugText("Id: " + p.definition.id + 
+				"\nAvailable to purchase: " + p.availableToPurchase +
+				"\nPrice " + p.metadata.localizedPriceString +
+				"\nHas receipt: " + p.hasReceipt);*/
+			CheckSubscription(p);
+		}
+	}
+
+	void CheckIOSSubscription() {
+
 	}
 
 	void CheckSubscription(Product p) {
@@ -81,78 +107,6 @@ public class PurchaseMaster : IStoreListener {
 			Renewing = s.getSubscriptionInfo().isCancelled() != Result.True;
 #endif
 			//DebugMaster.Instance.DebugText("Subscribed!");
-		}
-	}
-
-	public void OnPurchaseFailed(Product i, PurchaseFailureReason p) {
-		Listener?.PurchaseFailed();
-	}
-
-
-	public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs e) {
-		CheckSubscription(e.purchasedProduct);
-		Listener?.PurchaseSuccesful();
-		return PurchaseProcessingResult.Complete;
-	}
-
-	void CheckGoogleSubscription() {
-#if UNITY_ANDROID
-		foreach (Product p in controller.products.all) {
-			/*DebugMaster.Instance.DebugText("Id: " + p.definition.id + 
-				"\nAvailable to purchase: " + p.availableToPurchase +
-				"\nPrice " + p.metadata.localizedPriceString +
-				"\nHas receipt: " + p.hasReceipt);*/
-			CheckSubscription(p);
-		}
-#endif
-	}
-
-}
-
-class GooglePurchaseData {
-
-	public string inAppPurchaseData;
-	public string inAppDataSignature;
-
-	public GooglePurchaseJson json;
-
-	[System.Serializable]
-	private struct GooglePurchaseReceipt {
-		public string Payload;
-	}
-
-	[System.Serializable]
-	private struct GooglePurchasePayload {
-		public string json;
-		public string signature;
-	}
-
-	[System.Serializable]
-	public struct GooglePurchaseJson {
-		public string autoRenewing;
-		public string orderId;
-		public string packageName;
-		public string productId;
-		public string purchaseTime;
-		public string purchaseState;
-		public string developerPayload;
-		public string purchaseToken;
-	}
-
-	public GooglePurchaseData(string receipt) {
-		try {
-			var purchaseReceipt = JsonUtility.FromJson<GooglePurchaseReceipt>(receipt);
-			var purchasePayload = JsonUtility.FromJson<GooglePurchasePayload>(purchaseReceipt.Payload);
-			var inAppJsonData = JsonUtility.FromJson<GooglePurchaseJson>(purchasePayload.json);
-
-			inAppPurchaseData = purchasePayload.json;
-			inAppDataSignature = purchasePayload.signature;
-			json = inAppJsonData;
-		}
-		catch {
-			Debug.Log("Could not parse receipt: " + receipt);
-			inAppPurchaseData = "";
-			inAppDataSignature = "";
 		}
 	}
 }
