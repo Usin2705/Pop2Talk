@@ -198,7 +198,8 @@ public class TravelView : View {
 		PrepareButtons(WordMaster.Instance.LargestModuleIndex);
 	}
 
-	void Back() {
+	public override void Back() {
+		base.Back();
 		doExitFluff = false;
 		ViewManager.GetManager().ShowView(shipHubView);
 	}

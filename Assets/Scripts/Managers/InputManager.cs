@@ -49,6 +49,10 @@ public class InputManager : MonoBehaviour {
 	}
 
     void HandleInputs() {
+		if (Input.GetKeyDown(KeyCode.Escape)) {
+			ViewManager.GetManager().BackPressed();
+		}
+
         if (Input.touches.Length > 0) {
             InteractType type;
             for (int i = 0; i < Input.touches.Length; ++i) {

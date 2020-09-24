@@ -24,7 +24,7 @@ public class ShipHubView : View {
 
 	protected override void Initialize() {
 		base.Initialize();
-		backButton.SubscribePress(Exit);
+		backButton.SubscribePress(Back);
 		travelButton.SubscribePress(GotoTravelView);
 		storeButton.SubscribePress(GotoStoreView);
 		pearlButton.SubscribePress(GotoPearlView);
@@ -60,6 +60,11 @@ public class ShipHubView : View {
 
 	void GotoPearlView() {
 		ViewManager.GetManager().ShowView(wordPearlView);
+	}
+
+	public override void Back() {
+		base.Back();
+		Exit();
 	}
 
 	void Exit() {

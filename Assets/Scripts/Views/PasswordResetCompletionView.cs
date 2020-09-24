@@ -33,7 +33,8 @@ public class PasswordResetCompletionView : View {
 		resetButton.SubscribePress(Reset);
 	}
 
-	void Back() {
+	public override void Back() {
+		base.Back();
 		doExitFluff = false;
 		ViewManager.GetManager().ShowView(loginView);
 	}

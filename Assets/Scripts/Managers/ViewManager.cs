@@ -72,12 +72,16 @@ public class ViewManager : MonoBehaviour {
 			while (waiting)
 				yield return null;
 		}
-		
+
 		showViewRoutine = null;
 		if (viewsToSwitch.Count > 0)
 			ShowView(viewsToSwitch.Dequeue());
 		else
 			InputManager.GetManager().SendingInputs = true;
+	}
+
+	public void BackPressed() {
+		CurrentView.Back();
 	}
 
 	public void SendCurrentViewInputs(bool send) {

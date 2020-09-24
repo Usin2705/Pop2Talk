@@ -43,7 +43,8 @@ public class WordPearlView : View {
 		WordMaster.Instance.ShowWordCard(WordCardType.Repeat, "Word Pearl Rehearse", WordMaster.Instance.StringToWordData(currentWord), sortingOrder, Done);
 	}
 
-	void Back() {
+	public override void Back() {
+		base.Back();
 		ViewManager.GetManager().ShowView(shipHubView);
 	}
 

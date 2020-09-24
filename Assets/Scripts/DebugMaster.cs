@@ -1,10 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DebugMaster : MonoBehaviour {
 
 	[SerializeField] bool reset;
+	[SerializeField] GameObject debugScreen;
+	[SerializeField] Text debugText;
+
 	public bool skipTransitions;
 	public bool skipWords;
 	public bool skipPops;
@@ -24,5 +28,14 @@ public class DebugMaster : MonoBehaviour {
 			skipWords = false;
 			skipPops = false;
 		}
+	}
+
+	public void DebugText(string text) {
+		debugText.text += text  +"\n";
+		debugScreen.SetActive(true);
+	}
+
+	public void CloseDebug() {
+		debugScreen.SetActive(false);
 	}
 }
