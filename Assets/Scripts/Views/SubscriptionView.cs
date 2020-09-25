@@ -12,12 +12,28 @@ public class SubscriptionView : View, IPurchaseListener {
 	[SerializeField] UIButton subscriptionButton;
 	[SerializeField] Text errorText;
 	[SerializeField] Text priceText;
-	
+	[SerializeField] Text subText;
+
+	string googleText = "A subscription is required to play Pop2Talk from this device. The subscription is monthly and charged automatically, and uses the standard Google Play Store terms and conditions and cancellation policies. On your first subscription, you gain a 3-day free trial before you are charged anything. You can cancel the subscription during this free trial period and won't be charged once it ends.";
+	string iosText = "A subscription is required to play Pop2Talk from this device. The subscription is monthly and charged automatically, and uses the standard App Store terms and conditions and cancellation policies.";
+
+	int googleSize = 67;
+	int iosSize = 83;
 
 	protected override void Initialize() {
 		base.Initialize();
 		backButton.SubscribePress(Back);
 		subscriptionButton.SubscribePress(PurchaseMaster.Instance.PurchaseSubscription);
+#if UNITY_ANDROID
+		subText.text = googleText;
+		subText.fontSize = googleSize;
+		subText.text = iosText;
+		subText.fontSize = iosSize;
+#endif
+#if UNITY_IOS
+		subText.text = iosText;
+		subText.fontSize = iosSize;
+#endif
 	}
 
 	public override void Activate() {
