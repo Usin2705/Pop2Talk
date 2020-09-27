@@ -23,7 +23,10 @@ public class SubscriptionView : View, IPurchaseListener {
 	protected override void Initialize() {
 		base.Initialize();
 		backButton.SubscribePress(Back);
-		subscriptionButton.SubscribePress(PurchaseMaster.Instance.PurchaseSubscription);
+		subscriptionButton.SubscribePress(()=> {
+			PurchaseMaster.Instance.PurchaseSubscription();
+			subscriptionButton.gameObject.SetActive(false);
+		});
 #if UNITY_ANDROID
 		subText.text = googleText;
 		subText.fontSize = googleSize;
@@ -41,6 +44,7 @@ public class SubscriptionView : View, IPurchaseListener {
 		PurchaseMaster.Instance.Listener = this;
 		errorText.gameObject.SetActive(false);
 		priceText.text = PurchaseMaster.Instance.SubscriptionPrice + "/month";
+		subscriptionButton.gameObject.SetActive(true);
 	}
 
 	public override void Back() {
@@ -65,5 +69,6 @@ public class SubscriptionView : View, IPurchaseListener {
 	public void PurchaseFailed() {
 		errorText.gameObject.SetActive(true);
 		errorText.text = "There was a problem with the purchase";
+		subscriptionButton.gameObject.SetActive(true);
 	}
 }

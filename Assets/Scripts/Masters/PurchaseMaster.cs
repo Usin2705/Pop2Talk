@@ -43,6 +43,26 @@ public class PurchaseMaster : IStoreListener {
 			return;
 		var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
 		builder.AddProduct(oneMonthSub, ProductType.Subscription);
+
+#if UNITY_IOS || UNITY_STANDALONE_OSX
+		var appleConfig = builder.Configure<IAppleConfiguration>();
+		try {
+			var receiptData = System.Convert.FromBase64String(appleConfig.appReceipt);
+			AppleReceipt receipt = new AppleReceiptParser().Parse(receiptData);
+
+			foreach (AppleInAppPurchaseReceipt productReceipt in receipt.inAppPurchaseReceipts) {
+				if (productReceipt.productID == oneMonthSub) {
+					Subscribed = true;
+					if (productReceipt.cancellationDate != null && productReceipt.cancellationDate.CompareTo(System.DateTime.Now) > 0)
+						Renewing = true;
+				}
+			}
+		}
+		catch (System.FormatException e) {
+			//Receipt isn't base64, such as in editor
+		}
+#endif
+
 		attemptingInitialization = true;
 		UnityPurchasing.Initialize(this, builder);
 	}
@@ -91,10 +111,6 @@ public class PurchaseMaster : IStoreListener {
 		}
 	}
 
-	void CheckIOSSubscription() {
-
-	}
-
 	void CheckSubscription(Product p) {
 		if (Subscribed || !p.hasReceipt)
 			return;
@@ -109,4 +125,6 @@ public class PurchaseMaster : IStoreListener {
 			//DebugMaster.Instance.DebugText("Subscribed!");
 		}
 	}
+
+
 }
