@@ -167,9 +167,9 @@ PlayerSettings:
     Standalone: com.Hokema.Pop2Talk
     iPhone: com.Hokema.Pop2Talk
   buildNumber:
-    Standalone: 10020
-    iPhone: 10020
-  AndroidBundleVersionCode: 10020
+    Standalone: 10021
+    iPhone: 10021
+  AndroidBundleVersionCode: 10021
   AndroidMinSdkVersion: 19
   AndroidTargetSdkVersion: 0
   AndroidPreferredInstallLocation: 0

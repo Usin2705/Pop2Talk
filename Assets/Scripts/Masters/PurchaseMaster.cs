@@ -52,14 +52,16 @@ public class PurchaseMaster : IStoreListener {
 
 			foreach (AppleInAppPurchaseReceipt productReceipt in receipt.inAppPurchaseReceipts) {
 				if (productReceipt.productID == oneMonthSub) {
-					Subscribed = true;
-					if (productReceipt.cancellationDate == null || productReceipt.cancellationDate.CompareTo(System.DateTime.Now) > 0)
-						Renewing = true;
+					if (productReceipt.subscriptionExpirationDate.CompareTo(System.DateTime.Now) > 0) {
+						Subscribed = true;
+						if (productReceipt.cancellationDate == null || productReceipt.cancellationDate.CompareTo(System.DateTime.Now) > 0)
+							Renewing = true;
+					}
 				}
 			}
 		}
 		catch (System.FormatException e) {
-			DebugMaster.Instance.DebugText("Receipt not valid");
+			//Receipt isn't in base64, most likely because of the fake-receipt in the editor
 		}
 #endif
 
@@ -120,7 +122,7 @@ public class PurchaseMaster : IStoreListener {
 			Renewing = true;
 #if SUBSCRIPTION_MANAGER
 			SubscriptionManager s = new SubscriptionManager(p, null);
-			Renewing = s.getSubscriptionInfo().isCancelled() == Result.False;
+			Renewing = s.getSubscriptionInfo().isCancelled() != Result.True;
 #endif
 			//DebugMaster.Instance.DebugText("Subscribed!");
 		}
