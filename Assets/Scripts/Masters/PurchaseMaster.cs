@@ -52,10 +52,8 @@ public class PurchaseMaster : IStoreListener {
 
 			foreach (AppleInAppPurchaseReceipt productReceipt in receipt.inAppPurchaseReceipts) {
 				if (productReceipt.productID == oneMonthSub) {
-					if (productReceipt.subscriptionExpirationDate.CompareTo(System.DateTime.Now) > 0) {
+					if (productReceipt.subscriptionExpirationDate.CompareTo(System.DateTime.UtcNow) > 0) {
 						Subscribed = true;
-						if (productReceipt.cancellationDate == null || productReceipt.cancellationDate.CompareTo(System.DateTime.Now) > 0)
-							Renewing = true;
 					}
 				}
 			}
@@ -76,8 +74,10 @@ public class PurchaseMaster : IStoreListener {
 		this.extensions = extensions;
 
 		foreach (Product p in controller.products.all) {
-			if (p.definition.id == oneMonthSub)
+			if (p.definition.id == oneMonthSub) {
 				SubscriptionPrice = p.metadata.localizedPriceString;
+				CheckRenewal(p);
+			}
 		}
 
 		CheckSubscriptions();
@@ -114,19 +114,21 @@ public class PurchaseMaster : IStoreListener {
 	}
 
 	void CheckSubscription(Product p) {
-		if (Subscribed || !p.hasReceipt)
+		if (!p.hasReceipt)
 			return;
 
 		if (p.definition.id == oneMonthSub) {
 			Subscribed = true;
 			Renewing = true;
-#if SUBSCRIPTION_MANAGER
-			SubscriptionManager s = new SubscriptionManager(p, null);
-			Renewing = s.getSubscriptionInfo().isCancelled() != Result.True;
-#endif
+			CheckRenewal(p);
 			//DebugMaster.Instance.DebugText("Subscribed!");
 		}
 	}
 
-
+	void CheckRenewal(Product p) {
+#if SUBSCRIPTION_MANAGER
+		SubscriptionManager s = new SubscriptionManager(p, null);
+		Renewing = s.getSubscriptionInfo().isCancelled() != Result.True;
+#endif
+	}
 }
