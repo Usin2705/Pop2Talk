@@ -24,8 +24,8 @@ public class SubscriptionView : View, IPurchaseListener {
 		base.Initialize();
 		backButton.SubscribePress(Back);
 		subscriptionButton.SubscribePress(()=> {
+			NetworkManager.GetManager().ServerWait(true);
 			PurchaseMaster.Instance.PurchaseSubscription();
-			subscriptionButton.gameObject.SetActive(false);
 		});
 #if UNITY_ANDROID
 		subText.text = googleText;
@@ -63,10 +63,12 @@ public class SubscriptionView : View, IPurchaseListener {
 	}
 
 	public void PurchaseSuccesful() {
+		NetworkManager.GetManager().ServerWait(false);
 		Back();
 	}
 
 	public void PurchaseFailed() {
+		NetworkManager.GetManager().ServerWait(false);
 		errorText.gameObject.SetActive(true);
 		errorText.text = "There was a problem with the purchase";
 		subscriptionButton.gameObject.SetActive(true);
