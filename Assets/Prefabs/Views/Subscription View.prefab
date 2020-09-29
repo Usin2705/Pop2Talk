@@ -603,6 +603,7 @@ MonoBehaviour:
   subscriptionButton: {fileID: 114991884259553958}
   errorText: {fileID: 7483081184811057330}
   priceText: {fileID: 1299274523460596858}
+  subText: {fileID: 2442094656002985171}
 --- !u!1 &1915609691797634
 GameObject:
   m_ObjectHideFlags: 0

@@ -43,10 +43,30 @@ public class PurchaseMaster : IStoreListener {
 			return;
 		var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
 		builder.AddProduct(oneMonthSub, ProductType.Subscription);
+
+#if UNITY_IOS || UNITY_STANDALONE_OSX
+		var appleConfig = builder.Configure<IAppleConfiguration>();
+		try {
+			var receiptData = System.Convert.FromBase64String(appleConfig.appReceipt);
+			AppleReceipt receipt = new AppleReceiptParser().Parse(receiptData);
+
+			foreach (AppleInAppPurchaseReceipt productReceipt in receipt.inAppPurchaseReceipts) {
+				if (productReceipt.productID == oneMonthSub) {
+					if (productReceipt.subscriptionExpirationDate.CompareTo(System.DateTime.UtcNow) > 0) {
+						Subscribed = true;
+					}
+				}
+			}
+		}
+		catch (System.FormatException e) {
+			//Receipt isn't in base64, most likely because of the fake-receipt in the editor
+		}
+#endif
+
 		attemptingInitialization = true;
 		UnityPurchasing.Initialize(this, builder);
 	}
-	
+
 
 	public void OnInitialized(IStoreController controller, IExtensionProvider extensions) {
 		attemptingInitialization = false;
@@ -54,11 +74,12 @@ public class PurchaseMaster : IStoreListener {
 		this.extensions = extensions;
 
 		foreach (Product p in controller.products.all) {
-			if (p.definition.id == oneMonthSub)
+			if (p.definition.id == oneMonthSub) {
 				SubscriptionPrice = p.metadata.localizedPriceString;
+			}
 		}
 
-		CheckGoogleSubscription();
+		CheckSubscriptions();
 	}
 
 	public void OnInitializeFailed(InitializationFailureReason error) {
@@ -69,20 +90,6 @@ public class PurchaseMaster : IStoreListener {
 		controller.InitiatePurchase(oneMonthSub);
 	}
 
-	void CheckSubscription(Product p) {
-		if (Subscribed || !p.hasReceipt)
-			return;
-
-		if (p.definition.id == oneMonthSub) {
-			Subscribed = true;
-			Renewing = true;
-#if SUBSCRIPTION_MANAGER
-			SubscriptionManager s = new SubscriptionManager(p, null);
-			Renewing = s.getSubscriptionInfo().isCancelled() != Result.True;
-#endif
-			//DebugMaster.Instance.DebugText("Subscribed!");
-		}
-	}
 
 	public void OnPurchaseFailed(Product i, PurchaseFailureReason p) {
 		Listener?.PurchaseFailed();
@@ -95,8 +102,7 @@ public class PurchaseMaster : IStoreListener {
 		return PurchaseProcessingResult.Complete;
 	}
 
-	void CheckGoogleSubscription() {
-#if UNITY_ANDROID
+	void CheckSubscriptions() {
 		foreach (Product p in controller.products.all) {
 			/*DebugMaster.Instance.DebugText("Id: " + p.definition.id + 
 				"\nAvailable to purchase: " + p.availableToPurchase +
@@ -104,55 +110,35 @@ public class PurchaseMaster : IStoreListener {
 				"\nHas receipt: " + p.hasReceipt);*/
 			CheckSubscription(p);
 		}
-#endif
 	}
 
-}
+	void CheckSubscription(Product p) {
+		if (!p.hasReceipt)
+			return;
 
-class GooglePurchaseData {
-
-	public string inAppPurchaseData;
-	public string inAppDataSignature;
-
-	public GooglePurchaseJson json;
-
-	[System.Serializable]
-	private struct GooglePurchaseReceipt {
-		public string Payload;
+		if (p.definition.id == oneMonthSub) {
+			Subscribed = true;
+			Renewing = true;
+		}
 	}
 
-	[System.Serializable]
-	private struct GooglePurchasePayload {
-		public string json;
-		public string signature;
-	}
-
-	[System.Serializable]
-	public struct GooglePurchaseJson {
-		public string autoRenewing;
-		public string orderId;
-		public string packageName;
-		public string productId;
-		public string purchaseTime;
-		public string purchaseState;
-		public string developerPayload;
-		public string purchaseToken;
-	}
-
-	public GooglePurchaseData(string receipt) {
+	/*void CheckRenewal(Product p) {
+		if (!p.hasReceipt)
+			return;
+		if (Subscribed)
+			Renewing = true;
+		DebugMaster.Instance.DebugText("Checking Renewal!");
+		SubscriptionManager s = new SubscriptionManager(p, null);
+		DebugMaster.Instance.DebugText("In subscription manager!");
 		try {
-			var purchaseReceipt = JsonUtility.FromJson<GooglePurchaseReceipt>(receipt);
-			var purchasePayload = JsonUtility.FromJson<GooglePurchasePayload>(purchaseReceipt.Payload);
-			var inAppJsonData = JsonUtility.FromJson<GooglePurchaseJson>(purchasePayload.json);
-
-			inAppPurchaseData = purchasePayload.json;
-			inAppDataSignature = purchasePayload.signature;
-			json = inAppJsonData;
+			Renewing = s.getSubscriptionInfo().isCancelled() != Result.True;
+			DebugMaster.Instance.DebugText(s.getSubscriptionInfo().isCancelled().ToString());
+			if (!Renewing) {
+				Renewing = s.getSubscriptionInfo().isAutoRenewing() != Result.False;
+			}
+			DebugMaster.Instance.DebugText(s.getSubscriptionInfo().isAutoRenewing().ToString());
+		} catch(StoreSubscriptionInfoNotSupportedException e) {
+			DebugMaster.Instance.DebugText("Subscriptionmanager not supported");
 		}
-		catch {
-			Debug.Log("Could not parse receipt: " + receipt);
-			inAppPurchaseData = "";
-			inAppDataSignature = "";
-		}
-	}
+	}*/
 }
