@@ -119,16 +119,22 @@ public class PurchaseMaster : IStoreListener {
 
 		if (p.definition.id == oneMonthSub) {
 			Subscribed = true;
-			Renewing = true;
 			CheckRenewal(p);
 			//DebugMaster.Instance.DebugText("Subscribed!");
 		}
 	}
 
 	void CheckRenewal(Product p) {
+		if (Subscribed)
+			Renewing = true;
 #if SUBSCRIPTION_MANAGER
 		SubscriptionManager s = new SubscriptionManager(p, null);
 		Renewing = s.getSubscriptionInfo().isCancelled() != Result.True;
+		DebugMaster.Instance.DebugText(s.getSubscriptionInfo().isCancelled().ToString());
+		if (!Renewing) {
+			Renewing = s.getSubscriptionInfo().isAutoRenewing() != Result.False;
+		}
+		DebugMaster.Instance.DebugText(s.getSubscriptionInfo().isAutoRenewing().ToString());
 #endif
 	}
 }
