@@ -24,6 +24,7 @@ public class SubscriptionView : View, IPurchaseListener {
 		base.Initialize();
 		backButton.SubscribePress(Back);
 		subscriptionButton.SubscribePress(()=> {
+			errorText.gameObject.SetActive(false);
 			NetworkManager.GetManager().ServerWait(true);
 			PurchaseMaster.Instance.PurchaseSubscription();
 		});

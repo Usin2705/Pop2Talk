@@ -76,7 +76,6 @@ public class PurchaseMaster : IStoreListener {
 		foreach (Product p in controller.products.all) {
 			if (p.definition.id == oneMonthSub) {
 				SubscriptionPrice = p.metadata.localizedPriceString;
-				CheckRenewal(p);
 			}
 		}
 
@@ -119,24 +118,27 @@ public class PurchaseMaster : IStoreListener {
 
 		if (p.definition.id == oneMonthSub) {
 			Subscribed = true;
-			CheckRenewal(p);
-			//DebugMaster.Instance.DebugText("Subscribed!");
+			Renewing = true;
 		}
 	}
 
-	void CheckRenewal(Product p) {
+	/*void CheckRenewal(Product p) {
+		if (!p.hasReceipt)
+			return;
 		if (Subscribed)
 			Renewing = true;
 		DebugMaster.Instance.DebugText("Checking Renewal!");
-#if SUBSCRIPTION_MANAGER
 		SubscriptionManager s = new SubscriptionManager(p, null);
 		DebugMaster.Instance.DebugText("In subscription manager!");
-		Renewing = s.getSubscriptionInfo().isCancelled() != Result.True;
-		DebugMaster.Instance.DebugText(s.getSubscriptionInfo().isCancelled().ToString());
-		if (!Renewing) {
-			Renewing = s.getSubscriptionInfo().isAutoRenewing() != Result.False;
+		try {
+			Renewing = s.getSubscriptionInfo().isCancelled() != Result.True;
+			DebugMaster.Instance.DebugText(s.getSubscriptionInfo().isCancelled().ToString());
+			if (!Renewing) {
+				Renewing = s.getSubscriptionInfo().isAutoRenewing() != Result.False;
+			}
+			DebugMaster.Instance.DebugText(s.getSubscriptionInfo().isAutoRenewing().ToString());
+		} catch(StoreSubscriptionInfoNotSupportedException e) {
+			DebugMaster.Instance.DebugText("Subscriptionmanager not supported");
 		}
-		DebugMaster.Instance.DebugText(s.getSubscriptionInfo().isAutoRenewing().ToString());
-#endif
-	}
+	}*/
 }

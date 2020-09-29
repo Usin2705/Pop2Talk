@@ -54,7 +54,7 @@ public class LoginView : View {
 	public override void Activate() {
 		base.Activate();
 		errorText.gameObject.SetActive(false);
-		subscriptionHolder.SetActive(!PurchaseMaster.Instance.Renewing);
+		subscriptionHolder.SetActive(false);
 	}
 
 	void Update() {
@@ -71,6 +71,11 @@ public class LoginView : View {
 
 		if (prevOnline != canOnline) {
 			playButton.gameObject.SetActive(canOnline);
+		}
+		if (PurchaseMaster.Instance.Initialized) {
+			if (!subscriptionHolder.activeSelf && !PurchaseMaster.Instance.Renewing) {
+				subscriptionHolder.SetActive(true);
+			}
 		}
 
 	}
