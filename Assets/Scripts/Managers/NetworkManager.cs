@@ -305,9 +305,11 @@ public class NetworkManager : MonoBehaviour {
 		InitialAudioData sud = new InitialAudioData();
 		EstablishedAudioData ud = new EstablishedAudioData();
 		float a = 0;
-		socket.On("score", (data) => {
+		socket.On("score", (string data) => {
 			waitingScore = false;
-			ScoreReceived(JsonUtility.FromJson<ScoreData>((string)data).score);
+			var json = SimpleJSON.JSON.Parse(data);
+			Debug.Log(json);
+			ScoreReceived(json["stars"].AsInt);
 			//ScoreReceived((int)((JObject)JsonConvert.DeserializeObject((string)data))["score"]);
 			//Debug.Log("Score received: " + (int)((JObject)JsonConvert.DeserializeObject((string)data))["score"]);
 			socket.Off("score");

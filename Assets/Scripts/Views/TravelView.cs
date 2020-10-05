@@ -130,40 +130,45 @@ public class TravelView : View {
 		Cosmetic top = CosmeticManager.GetManager().GetEquippedCosmetic(CosmeticSlot.ShipTop);
 		Cosmetic mid = CosmeticManager.GetManager().GetEquippedCosmetic(CosmeticSlot.ShipMid);
 		Cosmetic bottom = CosmeticManager.GetManager().GetEquippedCosmetic(CosmeticSlot.ShipBottom);
-
-		ShipManager.GetManager().SetShipSprites((top != null) ? top.sprite : null, (mid != null) ? mid.sprite : null, (bottom != null) ? bottom.sprite : null);
-		travelDone = false;
-		wordsReceived = false;
-		InputManager.GetManager().SendingInputs = false;
-		yield return new WaitForSeconds(1.5f);
-		InputManager.GetManager().SendingInputs = false;
-		ShipManager.GetManager().ShowShipMovement(sortingOrder, false, new Vector3[] { shipStart.position, shipEnd.position }, new float[] { 0 },
-			new Vector3[] { shipStart.rect.size, shipEnd.rect.size }, new float[] { shipSpeed * (Screen.height / 1920f) },
-			null, () => { travelDone = true; });
 		NetworkManager.GetManager().GetWordList(WordsReceived);
-		while (!travelDone) {
-			yield return null;
-		}
 
-		ShipManager.GetManager().StartWobble(wobbleAmount * 1920f / Screen.height);
-		float a = 0, b = 0;
-		float portalTime = 0.33f;
-		float minWait = 1f;
-		float accelDuration = 1f;
-		Color staticColor = staticBack.color;
-		while (b < portalTime) {
-			if (a > accelDuration + minWait && wordsReceived)
-				b += Time.deltaTime;
-			a += Time.deltaTime;
-			staticBack.color = new Color(staticColor.r, staticColor.g, staticColor.b, Mathf.Max(0, accelDuration - a));
-			scroller.material.SetTextureOffset("_MainTex", a * Vector2.up * scrollSpeed * (Screen.height / 1920f));
-			if (a > accelDuration + minWait && wordsReceived) {
-				if (!portal.gameObject.activeSelf)
-					portal.gameObject.SetActive(true);
-				portal.rectTransform.position = Vector3.Lerp(portalStart.position, shipEnd.position, b / portalTime);
+		if (!DebugMaster.Instance.skipTransitions) {
+			ShipManager.GetManager().SetShipSprites((top != null) ? top.sprite : null, (mid != null) ? mid.sprite : null, (bottom != null) ? bottom.sprite : null);
+			travelDone = false;
+			wordsReceived = false;
+			InputManager.GetManager().SendingInputs = false;
+			yield return new WaitForSeconds(1.5f);
+			InputManager.GetManager().SendingInputs = false;
+			ShipManager.GetManager().ShowShipMovement(sortingOrder, false, new Vector3[] { shipStart.position, shipEnd.position }, new float[] { 0 },
+				new Vector3[] { shipStart.rect.size, shipEnd.rect.size }, new float[] { shipSpeed * (Screen.height / 1920f) },
+				null, () => { travelDone = true; });
+			while (!travelDone) {
+				yield return null;
 			}
-			yield return null;
-		}
+
+			ShipManager.GetManager().StartWobble(wobbleAmount * 1920f / Screen.height);
+			float a = 0, b = 0;
+			float portalTime = 0.33f;
+			float minWait = 1f;
+			float accelDuration = 1f;
+			Color staticColor = staticBack.color;
+			while (b < portalTime) {
+				if (a > accelDuration + minWait && wordsReceived)
+					b += Time.deltaTime;
+				a += Time.deltaTime;
+				staticBack.color = new Color(staticColor.r, staticColor.g, staticColor.b, Mathf.Max(0, accelDuration - a));
+				scroller.material.SetTextureOffset("_MainTex", a * Vector2.up * scrollSpeed * (Screen.height / 1920f));
+				if (a > accelDuration + minWait && wordsReceived) {
+					if (!portal.gameObject.activeSelf)
+						portal.gameObject.SetActive(true);
+					portal.rectTransform.position = Vector3.Lerp(portalStart.position, shipEnd.position, b / portalTime);
+				}
+				yield return null;
+			}
+			staticBack.color = staticColor;
+		} else
+			while (!wordsReceived)
+				yield return null;
 
 		fluffBottom.gameObject.SetActive(true);
 		fluffMid.gameObject.SetActive(true);
@@ -176,20 +181,21 @@ public class TravelView : View {
 		ShipManager.GetManager().EndWobble();
 		ShipManager.GetManager().HideShip();
 		planetScreen.SetActive(true);
-		staticBack.color = staticColor;
 		scroller.material.SetTextureOffset("_MainTex", Vector2.zero);
 		portal.rectTransform.position = portalStart.position;
 		travelScreen.SetActive(false);
-		whiteCurtain.gameObject.SetActive(true);
-		yield return new WaitForSeconds(0.5f);
-		a = 0;
-		while (a < 1) {
-			a += Time.deltaTime / 0.5f;
-			whiteCurtain.color = new Color(1, 1, 1, 1 - a);
-			yield return null;
+		if (!DebugMaster.Instance.skipTransitions) {
+			whiteCurtain.gameObject.SetActive(true);
+			float a = 0;
+			yield return new WaitForSeconds(0.5f);
+			while (a < 1) {
+				a += Time.deltaTime / 0.5f;
+				whiteCurtain.color = new Color(1, 1, 1, 1 - a);
+				yield return null;
+			}
+			whiteCurtain.gameObject.SetActive(false);
+			whiteCurtain.color = Color.white;
 		}
-		whiteCurtain.gameObject.SetActive(false);
-		whiteCurtain.color = Color.white;
 		InputManager.GetManager().SendingInputs = true;
 	}
 

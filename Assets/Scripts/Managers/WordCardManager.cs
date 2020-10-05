@@ -151,6 +151,7 @@ public class WordCardManager : MonoBehaviour {
 	}
 
 	public void ReceiveStars(int stars) {
+		Debug.Log("Received stars:" + stars);
 		this.stars = stars;
 		starsReceived = true;
 	}
