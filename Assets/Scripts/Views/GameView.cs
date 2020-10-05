@@ -55,7 +55,7 @@ public class GameView : View, IGameCaller {
 	}
 
 	IEnumerator StartDelay() {
-		while (!fluffDone)
+		while (!fluffDone && !DebugMaster.Instance.skipTransitions)
 			yield return null;
 		GameMaster.Instance.StartRound();
 	}
@@ -170,11 +170,7 @@ public class GameView : View, IGameCaller {
 	}
 
 	public override void EnterFluff(Callback Done) {
-		if (DebugMaster.Instance.skipTransitions) {
-			fluffDone = true;
-			base.EnterFluff(Done);
-		} else
-			StartCoroutine(EnterFluffRoutine(Done));
+		StartCoroutine(EnterFluffRoutine(Done));
 	}
 
 	IEnumerator EnterFluffRoutine(Callback Done) {
