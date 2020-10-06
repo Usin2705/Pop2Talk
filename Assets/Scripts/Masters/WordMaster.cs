@@ -105,6 +105,7 @@ public class WordMaster : MonoBehaviour {
 	}
 
 	public bool RecordStarAmount(string word, int stars, int type) {
+		NetworkManager.GetManager().SendBestCardStar(word, stars, type);
 		if (!allWords.Contains(word)) {
 			return false;
 		}
@@ -113,7 +114,6 @@ public class WordMaster : MonoBehaviour {
 		bool improvement = stars > bestStars[word];
 		if (improvement) {
 			bestStars[word] = stars;
-			NetworkManager.GetManager().UpdateWordScore(word, stars, type);
 		}
 		return improvement;
 	}

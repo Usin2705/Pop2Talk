@@ -577,11 +577,11 @@ public class NetworkManager : MonoBehaviour {
 		Done?.Invoke();
 	}
 
-	public void UpdateWordScore(string word, int score, int challenge) {
-		StartCoroutine(WordScoreUpdateRoutine(word, score, challenge));
+	public void SendBestCardStar(string word, int score, int challenge) {
+		StartCoroutine(BestCardStarRoutine(word, score, challenge));
 	}
 
-	IEnumerator WordScoreUpdateRoutine(string word, int score, int challenge) {
+	IEnumerator BestCardStarRoutine(string word, int score, int challenge) {
 
 		WWWForm form = new WWWForm();
 		form.AddField("word", word);
