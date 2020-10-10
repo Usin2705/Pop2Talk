@@ -22,8 +22,12 @@ public class ViewManager : MonoBehaviour {
 	}
 
 	void Start() {
-		firstView.Activate();
-		CurrentView = firstView;
+		try {
+			firstView.Activate();
+			CurrentView = firstView;
+		} catch (System.Exception e) {
+			DebugMaster.Instance.DebugText("View activation: " + e);
+		}
 	}
 
 	public void ShowView(View targetView, bool skipTransitions = false) {

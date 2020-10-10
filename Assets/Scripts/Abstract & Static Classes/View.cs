@@ -22,7 +22,12 @@ public abstract class View : MonoBehaviour, IFingerPointable {
 
 	protected virtual void Initialize() {
 		initialized = true;
-		sortingOrder = GetComponent<Canvas>().sortingOrder;
+		try {
+			sortingOrder = GetComponent<Canvas>().sortingOrder;
+		}
+		catch (System.Exception e){
+			DebugMaster.Instance.DebugText("Sorting order: " + e);
+		}
 	}
 
 	public virtual void ExitFluff(Callback Done) {

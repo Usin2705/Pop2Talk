@@ -137,7 +137,6 @@ public class UIButton : MonoBehaviour {
 	}
 
 	public void SubscribePress(Callback PressCallback) {
-		DebugMaster.Instance.DebugText("Succesfully subscribed to UI button!");
 		Subscribe(PressCallbacks, PressCallback);
 	}
 

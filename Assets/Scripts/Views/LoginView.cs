@@ -37,19 +37,58 @@ public class LoginView : View {
 	protected override void Initialize() {
 		base.Initialize();
 
-		PurchaseMaster.Instance.BeginInitialization();
-		SoundEffectManager.GetManager().PlayMusic();
-		//playButton.SubscribePress(GameOnline);
-		privacyPolicyButton.SubscribePress(OpenPrivacyPolicy);
-		registerButton.SubscribePress(Register);
-		resetPasswordButton.SubscribePress(ResetPassword);
-		subscriptionButton.SubscribePress(GotoSubscription);
-		if (EncryptedPlayerPrefs.GetInt(rememberKey, 0) == 1) {
-			rememberToggle.isOn = true;
-			usernameField.text = EncryptedPlayerPrefs.GetString(usernameKey);
-			passwordField.text = EncryptedPlayerPrefs.GetString(passwordKey);
+		try {
+			PurchaseMaster.Instance.BeginInitialization();
 		}
-		DebugMaster.Instance.DebugText("Loginview succesfully initialized!");
+		catch (System.Exception e) {
+			DebugMaster.Instance.DebugText("Begin Initialization: " + e);
+		}
+		try {
+			SoundEffectManager.GetManager().PlayMusic();
+		}
+		catch (System.Exception e) {
+			DebugMaster.Instance.DebugText("Play music: " + e);
+		}
+		try {
+			playButton.SubscribePress(GameOnline);
+		}
+		catch (System.Exception e) {
+			DebugMaster.Instance.DebugText("Play button subscribe: " + e);
+		}
+		try {
+			privacyPolicyButton.SubscribePress(OpenPrivacyPolicy);
+		}
+		catch (System.Exception e) {
+			DebugMaster.Instance.DebugText("Privacy policy button subscribe: " + e);
+		}
+		try {
+			registerButton.SubscribePress(Register);
+		}
+		catch (System.Exception e) {
+			DebugMaster.Instance.DebugText("Register button subscribe: " + e);
+		}
+		try {
+			resetPasswordButton.SubscribePress(ResetPassword);
+		}
+		catch (System.Exception e) {
+			DebugMaster.Instance.DebugText("Reset button subscribe: " + e);
+		}
+		try {
+			subscriptionButton.SubscribePress(GotoSubscription);
+		}
+		catch (System.Exception e) {
+			DebugMaster.Instance.DebugText("Subscribe button subscribe: " + e);
+		}
+		try {
+			if (EncryptedPlayerPrefs.GetInt(rememberKey, 0) == 1) {
+				rememberToggle.isOn = true;
+				usernameField.text = EncryptedPlayerPrefs.GetString(usernameKey);
+				passwordField.text = EncryptedPlayerPrefs.GetString(passwordKey);
+			}
+		}
+		catch (System.Exception e) {
+			DebugMaster.Instance.DebugText("Remember username handling: " + e);
+		}
 	}
 
 	public override void Activate() {
