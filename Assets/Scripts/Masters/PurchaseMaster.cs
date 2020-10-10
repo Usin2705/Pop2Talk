@@ -45,8 +45,8 @@ public class PurchaseMaster : IStoreListener {
 		builder.AddProduct(oneMonthSub, ProductType.Subscription);
 
 #if UNITY_IOS || UNITY_STANDALONE_OSX
-		var appleConfig = builder.Configure<IAppleConfiguration>();
 		try {
+			var appleConfig = builder.Configure<IAppleConfiguration>();
 			var receiptData = System.Convert.FromBase64String(appleConfig.appReceipt);
 			AppleReceipt receipt = new AppleReceiptParser().Parse(receiptData);
 
@@ -60,6 +60,9 @@ public class PurchaseMaster : IStoreListener {
 		}
 		catch (System.FormatException e) {
 			//Receipt isn't in base64, most likely because of the fake-receipt in the editor
+		}
+		catch (System.Exception e) {
+			DebugMaster.Instance.DebugText("Receipt validation: " + e);
 		}
 #endif
 
