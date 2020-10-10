@@ -81,22 +81,18 @@ public class LoginView : View {
 	}
 
 	void Register() {
-		DebugMaster.Instance.DebugText("Register!");
 		GotoRegistration();
 	}
 
 	void ResetPassword() {
-		DebugMaster.Instance.DebugText("Reset password!");
 		GotoPasswordReset();
 	}
 
 	void GotoSubscription() {
-		DebugMaster.Instance.DebugText("Subscribe!");
 		ViewManager.GetManager().ShowView(subscriptionView);
 	}
 
 	void GameOnline() {
-		DebugMaster.Instance.DebugText("Game Online!");
 		if (usernameField.text != "" && passwordField.text != "") {
 			if (IsValidEmail(usernameField.text)) {
 				if (!PurchaseMaster.Instance.Subscribed) {
@@ -108,7 +104,7 @@ public class LoginView : View {
 			Online(ConnectedOnline);
 		} else {
 			errorText.gameObject.SetActive(true);
-			errorText.text = "Please enter your username and password.";
+			errorText.text = "Please enter username and password.";
 		}
 	}
 
