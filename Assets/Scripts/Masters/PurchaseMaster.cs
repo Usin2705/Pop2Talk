@@ -61,6 +61,9 @@ public class PurchaseMaster : IStoreListener {
 		catch (System.FormatException e) {
 			//Receipt isn't in base64, most likely because of the fake-receipt in the editor
 		}
+		catch (System.ArgumentException) {
+			//Empty receipts from some iOS versions can cause this, fine to ignore since we don't do anything with an empty receipt anyway
+		}
 #endif
 
 		attemptingInitialization = true;

@@ -104,7 +104,7 @@ public class LoginView : View {
 			Online(ConnectedOnline);
 		} else {
 			errorText.gameObject.SetActive(true);
-			errorText.text = "Please enter username and password.";
+			errorText.text = "Please enter your username and password.";
 		}
 	}
 
