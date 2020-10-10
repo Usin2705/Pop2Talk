@@ -39,7 +39,7 @@ public class LoginView : View {
 
 		PurchaseMaster.Instance.BeginInitialization();
 		SoundEffectManager.GetManager().PlayMusic();
-		playButton.SubscribePress(GameOnline);
+		//playButton.SubscribePress(GameOnline);
 		privacyPolicyButton.SubscribePress(OpenPrivacyPolicy);
 		registerButton.SubscribePress(Register);
 		resetPasswordButton.SubscribePress(ResetPassword);
@@ -49,6 +49,7 @@ public class LoginView : View {
 			usernameField.text = EncryptedPlayerPrefs.GetString(usernameKey);
 			passwordField.text = EncryptedPlayerPrefs.GetString(passwordKey);
 		}
+		DebugMaster.Instance.DebugText("Loginview succesfully initialized!");
 	}
 
 	public override void Activate() {
@@ -92,7 +93,8 @@ public class LoginView : View {
 		ViewManager.GetManager().ShowView(subscriptionView);
 	}
 
-	void GameOnline() {
+	public void GameOnline() {
+		DebugMaster.Instance.DebugText("Game Online!");
 		if (usernameField.text != "" && passwordField.text != "") {
 			if (IsValidEmail(usernameField.text)) {
 				if (!PurchaseMaster.Instance.Subscribed) {
@@ -179,10 +181,12 @@ public class LoginView : View {
 	}
 
 	void GotoRegistration() {
+		DebugMaster.Instance.DebugText("Game Online!");
 		ViewManager.GetManager().ShowView(registrationView);
 	}
 
 	void GotoPasswordReset() {
+		DebugMaster.Instance.DebugText("Game Online!");
 		ViewManager.GetManager().ShowView(passwordResetView);
 
 	}

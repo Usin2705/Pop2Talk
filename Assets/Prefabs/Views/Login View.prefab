@@ -122,8 +122,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1029074447171076}
-        m_MethodName: 
+      - m_Target: {fileID: 114593453114787124}
+        m_MethodName: GameOnline
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

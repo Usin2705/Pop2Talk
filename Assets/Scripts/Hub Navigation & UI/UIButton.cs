@@ -45,6 +45,7 @@ public class UIButton : MonoBehaviour {
 	}
 
 	public void Press() {
+		DebugMaster.Instance.DebugText("Succesfully pressed UI button!");
 		iterating = true;
 		if (selectable) {
 			if (!Selected) {
@@ -136,6 +137,7 @@ public class UIButton : MonoBehaviour {
 	}
 
 	public void SubscribePress(Callback PressCallback) {
+		DebugMaster.Instance.DebugText("Succesfully subscribed to UI button!");
 		Subscribe(PressCallbacks, PressCallback);
 	}
 
