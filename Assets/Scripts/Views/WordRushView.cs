@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class WordRushView : View {
 
-	[SerializeField] UIButton backButton;
-	[SerializeField] UIButton cardButton;
+	[SerializeField] UIButton backButton = null;
+	[SerializeField] UIButton cardButton = null;
 
 	List<string> rushWords = new List<string>();
 	int rushIndex = 0;

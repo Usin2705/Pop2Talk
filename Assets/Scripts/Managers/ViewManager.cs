@@ -6,8 +6,9 @@ public class ViewManager : MonoBehaviour {
 
 	static ViewManager vm;
 
-	[SerializeField] View firstView;
-	[SerializeField] float openDelay;
+	[SerializeField] View firstView = null;
+	[SerializeField] float openDelay = 0;
+
 	Coroutine showViewRoutine;
 	Queue<View> viewsToSwitch = new Queue<View>();
 

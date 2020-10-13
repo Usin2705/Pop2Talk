@@ -5,10 +5,10 @@ using UnityEngine.UI;
 
 public class VolumeBars : MonoBehaviour {
 	
-	[SerializeField] float floor;
-	[SerializeField] float peak;
-	[SerializeField] Sprite normalSprite;
-	[SerializeField] Sprite quizSprite;
+	[SerializeField] float floor = 0;
+	[SerializeField] float peak = 0;
+	[SerializeField] Sprite normalSprite = null;
+	[SerializeField] Sprite quizSprite = null;
 
 	public void Awake() {
 		ResetBars();

@@ -6,7 +6,7 @@ public class StoreManager : MonoBehaviour {
 
 	static StoreManager sm;
 
-	[SerializeField] LootBoxSettings[] boxes;
+	[SerializeField] LootBoxSettings[] boxes = null;
 
 
 	public static StoreManager GetManager() {

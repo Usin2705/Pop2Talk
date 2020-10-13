@@ -5,15 +5,13 @@ using UnityEngine.UI;
 
 public class StoreView : View {
 
-	[SerializeField] View shipHubView;
-	[SerializeField] View collectionView;
-	[SerializeField] UIButton backButton;
-	[SerializeField] UIButton showCollectionButton;
-	[SerializeField] Text coinText;
+	[SerializeField] View shipHubView = null;
+	[SerializeField] View collectionView = null;
+	[SerializeField] UIButton backButton = null;
+	[SerializeField] UIButton showCollectionButton = null;
+	[SerializeField] Text coinText = null;
 	[Space]
-	[SerializeField] GameObject lootScreen;
-	[SerializeField] RectTransform lootHolder;
-	[SerializeField] GameObject storeButtonPrefab;
+	[SerializeField] RectTransform lootHolder = null;
 
 
 	List<LootBoxSettings> purchasables = new List<LootBoxSettings>();
@@ -23,7 +21,6 @@ public class StoreView : View {
 	List<StoreButton> lootboxButtons = new List<StoreButton>();
 
 	float shakeDuration = 1;
-	int chosenCollectionIndex = 0;
 
 	protected override void Initialize() {
 		base.Initialize();

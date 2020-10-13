@@ -5,25 +5,28 @@ using UnityEngine.UI;
 
 public class LoginView : View {
 
-	[SerializeField] View characterSelectView;
-	[SerializeField] View registrationView;
-	[SerializeField] View subscriptionView;
-	[SerializeField] View passwordResetView;
-	[SerializeField] View shipHubView;
+	[SerializeField] View characterSelectView = null;
+	[SerializeField] View registrationView = null;
+	[SerializeField] View subscriptionView = null;
+	[SerializeField] View passwordResetView = null;
+	[SerializeField] View shipHubView = null;
 	[Space]
-	[SerializeField] InputField usernameField;
-	[SerializeField] InputField passwordField;
-	[SerializeField] UIButton playButton;
-	[SerializeField] UIButton registerButton;
-	[SerializeField] UIButton resetPasswordButton;
-	[SerializeField] GameObject subscriptionHolder;
-	[SerializeField] UIButton subscriptionButton;
-	[SerializeField] UIButton privacyPolicyButton;
-	[SerializeField] Toggle rememberToggle;
+	[SerializeField] InputField usernameField = null;
+	[SerializeField] InputField passwordField = null;
+	[SerializeField] UIButton playButton = null;
+	[SerializeField] GameObject registrationHolder = null;
+	[SerializeField] UIButton registerButton = null;
+	[SerializeField] GameObject resetHolder = null;
+	[SerializeField] UIButton resetPasswordButton = null;
+	[SerializeField] GameObject subscriptionHolder = null;
+	[SerializeField] UIButton subscriptionButton = null;
+	[SerializeField] GameObject waitingStore = null;
+	[SerializeField] UIButton privacyPolicyButton = null;
+	[SerializeField] Toggle rememberToggle = null;
 
 	[Space]
-	[SerializeField] ConnectionStatus connectionStatus;
-	[SerializeField] Text errorText;
+	[SerializeField] ConnectionStatus connectionStatus = null;
+	[SerializeField] Text errorText = null;
 	[Space]
 	[SerializeField] string privacyPolicyUrl = "https://www.pop2talk.com/privacy-policy";
 
@@ -31,8 +34,6 @@ public class LoginView : View {
 	string rememberKey = "remember";
 	string usernameKey = "username";
 	string passwordKey = "password";
-
-	bool canOnline;
 
 	protected override void Initialize() {
 		base.Initialize();
@@ -49,32 +50,48 @@ public class LoginView : View {
 			usernameField.text = EncryptedPlayerPrefs.GetString(usernameKey);
 			passwordField.text = EncryptedPlayerPrefs.GetString(passwordKey);
 		}
+		StartCoroutine(StoreInitializationWait());
 	}
 
 	public override void Activate() {
 		base.Activate();
 		errorText.gameObject.SetActive(false);
 		subscriptionHolder.SetActive(false);
+		registrationHolder.SetActive(false);
+		resetHolder.SetActive(false);
 	}
 
 	void Update() {
-		bool prevOnline = canOnline;
 		if (usernameField.isFocused || passwordField.isFocused)
 			errorText.gameObject.SetActive(false);
-		if (usernameField.text != "" && passwordField.text != "" && PurchaseMaster.Instance.Initialized)
-			canOnline = true;
-		else {
-			canOnline = false;
-			if (errorText != null)
-				errorText.gameObject.SetActive(false);
-		}
 
-		if (prevOnline != canOnline) {
-			playButton.gameObject.SetActive(canOnline);
-		}
 		if (PurchaseMaster.Instance.Initialized) {
-			if (!subscriptionHolder.activeSelf && !PurchaseMaster.Instance.Renewing) {
-				subscriptionHolder.SetActive(true);
+			if (waitingStore.activeSelf)
+				waitingStore.SetActive(false);
+
+			if (usernameField.text == "" || IsValidEmail(usernameField.text)) {
+				if (!PurchaseMaster.Instance.Renewing) {
+					if (!subscriptionHolder.activeSelf)
+						subscriptionHolder.SetActive(true);
+					if (registrationHolder.activeSelf)
+						registrationHolder.SetActive(false);
+					if (resetHolder.activeSelf)
+						resetHolder.SetActive(false);
+				} else {
+					if (subscriptionHolder.activeSelf)
+						subscriptionHolder.SetActive(false);
+					if (!registrationHolder.activeSelf)
+						registrationHolder.SetActive(true);
+					if (!resetHolder.activeSelf)
+						resetHolder.SetActive(true);
+				}
+			} else {
+				if (subscriptionHolder.activeSelf)
+					subscriptionHolder.SetActive(false);
+				if (registrationHolder.activeSelf)
+					registrationHolder.SetActive(false);
+				if (resetHolder.activeSelf)
+					resetHolder.SetActive(false);
 			}
 		}
 
@@ -146,6 +163,16 @@ public class LoginView : View {
 			yield return null;
 		NetworkManager.GetManager().ServerWait(false);
 		Connected();
+	}
+
+	IEnumerator StoreInitializationWait() {
+		yield return new WaitForSeconds(2);
+		if (!PurchaseMaster.Instance.Initialized) {
+			NetworkManager.GetManager().ServerWait(true);
+			while (!PurchaseMaster.Instance.Initialized)
+				yield return null;
+			NetworkManager.GetManager().ServerWait(false);
+		}
 	}
 
 	void ConnectedOnline() {

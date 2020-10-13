@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class WordPearlView : View {
 
-	[SerializeField] View shipHubView;
+	[SerializeField] View shipHubView = null;
 	[Space]
-	[SerializeField] UIButton backButton;
-	[SerializeField] GameObject wordPearlPrefab;
-	[SerializeField] GridPageHandler gridHandler;
-	[Space]
-	[SerializeField] MachineCard machineCard;
+	[SerializeField] UIButton backButton = null;
+	[SerializeField] GameObject wordPearlPrefab = null;
+	[SerializeField] GridPageHandler gridHandler = null;
 
 	Dictionary<string, PearlStars> pearls = new Dictionary<string, PearlStars>();
 	string currentWord;

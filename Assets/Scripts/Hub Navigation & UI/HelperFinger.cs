@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class HelperFinger : Overlay {
 
-	[SerializeField] float noInputTime;
-	[SerializeField] RectTransform finger;
+	[SerializeField] float noInputTime = 0;
+	[SerializeField] RectTransform finger = null;
 	[SerializeField] float speed = 1.5f;
 	[SerializeField] float distance = 1;
 

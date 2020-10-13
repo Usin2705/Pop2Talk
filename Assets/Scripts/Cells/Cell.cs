@@ -7,9 +7,9 @@ using UnityEngine;
 public class Cell : MonoBehaviour, IPoolable {
 
     Tile myTile;
-    [SerializeField] SpriteRenderer spriteRenderer;
-    [SerializeField] Sprite evenSprite;
-    [SerializeField] Sprite oddSprite;
+    [SerializeField] SpriteRenderer spriteRenderer = null;
+    [SerializeField] Sprite evenSprite = null;
+    [SerializeField] Sprite oddSprite = null;
 
     public Tile MyTile {
         get {

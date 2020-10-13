@@ -6,18 +6,18 @@ using UnityEngine.UI;
 public class DataOverlayManager : Overlay, IFingerPointable {
 
 	static DataOverlayManager dom;
-	[SerializeField] float showDuration;
-	[SerializeField] GameObject root;
-	[SerializeField] Image curtain;
-	[SerializeField] RectTransform overlayRoot;
-	[SerializeField] RectTransform iconStringRoot;
-	[SerializeField] RectTransform buttonRoot;
-	[SerializeField] GameObject closeButton;
-	[SerializeField] Text titleShort;
-	[SerializeField] Text titleLong;
-	[SerializeField] GameObject iconStringPrefab;
-	[SerializeField] UIButton buttonPrefab;
-    [SerializeField] UIButton closeUIButton;
+	[SerializeField] float showDuration = 0;
+	[SerializeField] GameObject root = null;
+	[SerializeField] Image curtain = null;
+	[SerializeField] RectTransform overlayRoot = null;
+	[SerializeField] RectTransform iconStringRoot = null;
+	[SerializeField] RectTransform buttonRoot = null;
+	[SerializeField] GameObject closeButton = null;
+	[SerializeField] Text titleShort = null;
+	[SerializeField] Text titleLong = null;
+	[SerializeField] GameObject iconStringPrefab = null;
+	[SerializeField] UIButton buttonPrefab = null;
+    [SerializeField] UIButton closeUIButton = null;
 
     List<GameObject> iconStrings = new List<GameObject>();
 	List<UIButton> uiButtons = new List<UIButton>();

@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class GridPageHandler : MonoBehaviour {
 
-	[SerializeField] int itemPerGrid;
-	[SerializeField] UIButton nextButton;
-	[SerializeField] UIButton prevButton;
-	[SerializeField] GameObject gridBlueprint;
+	[SerializeField] int itemPerGrid = 1;
+	[SerializeField] UIButton nextButton = null;
+	[SerializeField] UIButton prevButton = null;
+	[SerializeField] GameObject gridBlueprint = null;
 
 	int currentCollectionIndex = 0;
 

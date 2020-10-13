@@ -7,9 +7,9 @@ public class ButtonEffects : MonoBehaviour {
 
 	[SerializeField] float selectedScale = 1;
 	[SerializeField] float deselectedScale = 1;
-	[SerializeField] float scaleDuration;
-	[SerializeField] float wobbleAmount;
-	[SerializeField] float wobbleSpeed;
+	[SerializeField] float scaleDuration = 0;
+	[SerializeField] float wobbleAmount = 0;
+	[SerializeField] float wobbleSpeed = 0;
 	[SerializeField] bool sound = true;
 
 	UIButton uib;

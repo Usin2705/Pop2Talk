@@ -7,15 +7,14 @@ using UnityEngine.UI;
 public class WordCardManager : MonoBehaviour {
 
 	static WordCardManager wordCardManager;
-	[SerializeField] BaseWordCard wordCard;
-	[SerializeField] AudioInstance recordSound;
+
+	[SerializeField] BaseWordCard wordCard = null;
 	
 	[Space]
-	[SerializeField] SpeechCollection[] starSpeeches;
-	[SerializeField] SpeechCollection timeOutSpeech;
+	[SerializeField] SpeechCollection[] starSpeeches = null;
     [Space]
     [SerializeField] [Range(0.0f, 1.0f)] float cheerChance = 0.25f;
-	[SerializeField] int backUpStar;
+	[SerializeField] int backUpStar = 0;
 
     Queue<WordCardType> cardQueue;
 

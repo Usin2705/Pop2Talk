@@ -49,7 +49,7 @@ public class NetworkManager : MonoBehaviour {
 	//    'pcm'    -- No compression
 	//    'mulaw'  -- Logarithmic compression of pcm values
 	string dataencoding = "mulaw";
-	float mu = 255f;
+	//float mu = 255f;
 
 	// datatype can be:
 	//  'int16'  16 bit signed integer (short) 'h'
@@ -61,7 +61,6 @@ public class NetworkManager : MonoBehaviour {
 	float checkOkTime;
 
 	bool connected = false;
-	bool connecting = false;
 	bool serverWaitPromptActive;
 	bool attemptingToConnect;
 
@@ -99,7 +98,6 @@ public class NetworkManager : MonoBehaviour {
 	}
 
 	public void Connect() {
-		connecting = true;
 		connectAttemptTime = Time.time;
 		attemptingToConnect = true;
 		socket = Socket.Connect(GetSocketUrl());
@@ -131,9 +129,12 @@ public class NetworkManager : MonoBehaviour {
 		socket.On(SystemEvents.connect, () => {
 			Debug.Log("Connected successfully");
 			connected = true;
-			connecting = false;
 			SimpleEvent("start");
 			SendAccessTokenToSocket(user.access_token, user.username);
+			socket.On("whoareyou", (string s) => {
+				Debug.Log("Request to resend acces token received");
+				SendAccessTokenToSocket(user.access_token, user.username);
+			});
 		});
 
 		/*socket.On(Socket.EVENT_CONNECT_ERROR, () =>
@@ -157,15 +158,13 @@ public class NetworkManager : MonoBehaviour {
 		socket.On(SystemEvents.disconnect, () => {
 			connected = false;
 			Debug.Log("Disconnect");
-			connecting = false;
 
 		});
 
-		socket.On("i_am_ok", () => {
+		/*socket.On("i_am_ok", (string s) => {
 			connected = true;
 			Debug.Log("Connected: " + (time - connectAttemptTime));
-			connecting = false;
-		});
+		});*/
 		/*
         socket.On(Socket.EVENT_RECONNECT_ERROR, () =>
         {
@@ -191,7 +190,6 @@ public class NetworkManager : MonoBehaviour {
 		socket.On(SystemEvents.reconnect, (int reconnectAttempt) => {
 			Debug.Log("Reconnect " + reconnectAttempt);
 			connected = true;
-			connecting = false;
 		});
 		/*
         socket.On(Socket.EVENT_RECONNECTING, () =>

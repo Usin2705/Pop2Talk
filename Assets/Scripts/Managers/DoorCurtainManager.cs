@@ -6,15 +6,15 @@ public class DoorCurtainManager : MonoBehaviour {
 
 	static DoorCurtainManager dcm;
 
-	[SerializeField] float openDuration;
-	[SerializeField] float openPause;
-	[SerializeField] float closeDuration;
-	[SerializeField] float closePause;
+	[SerializeField] float openDuration = 0;
+	[SerializeField] float openPause = 0;
+	[SerializeField] float closeDuration = 0;
+	[SerializeField] float closePause = 0;
 	[Space]
-	[SerializeField] RectTransform leftCurtain;
-	[SerializeField] RectTransform rightCurtain;
-	[SerializeField] RectTransform leftStart;
-	[SerializeField] RectTransform rightStart;
+	[SerializeField] RectTransform leftCurtain = null;
+	[SerializeField] RectTransform rightCurtain = null;
+	[SerializeField] RectTransform leftStart = null;
+	[SerializeField] RectTransform rightStart = null;
 
 	float openRatio = 0;
 	Coroutine openRoutine;

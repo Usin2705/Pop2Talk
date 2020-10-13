@@ -5,16 +5,16 @@ using System.Linq;
 
 public class GridManager : MonoBehaviour, ITileClickReceiver {
 
-	[SerializeField] float maxFallSpeed;
-	[SerializeField] float jumpSpeed;
-	[SerializeField] float popVisualDuration;
+	[SerializeField] float maxFallSpeed = 0;
+	[SerializeField] float jumpSpeed = 0;
+	[SerializeField] float popVisualDuration = 0;
 	[SerializeField] float preclickDuration = 0.4f;
 	[Space]
-	[SerializeField] Cell cellPrefab;
-	[SerializeField] GameObject emptyCell;
-	[SerializeField] MatchableTile matchableTilePrefab;
+	[SerializeField] Cell cellPrefab = null;
+	[SerializeField] GameObject emptyCell = null;
+	[SerializeField] MatchableTile matchableTilePrefab = null;
 
-	[SerializeField] MatchTypeSpriteDictionary matchSprites;
+	[SerializeField] MatchTypeSpriteDictionary matchSprites = null;
 
 	GridSettings gridSettings;
 	BaseGridGameModeHandler gridGameMode;

@@ -6,7 +6,7 @@ public class WordMaster : MonoBehaviour {
 
 	static WordMaster instance;
 
-	string path = "Assets/Word Data/Data Objects/Resources/";
+	//string path = "Assets/Word Data/Data Objects/Resources/";
 
 	public static WordMaster Instance {
 		get {

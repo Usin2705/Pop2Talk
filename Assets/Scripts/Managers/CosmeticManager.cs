@@ -5,8 +5,8 @@ using UnityEngine;
 public class CosmeticManager : MonoBehaviour {
 
 
-	[SerializeField] Cosmetic[] allCosmetics;
-	[SerializeField] Cosmetic[] defaultCosmetics;
+	[SerializeField] Cosmetic[] allCosmetics = null;
+	[SerializeField] Cosmetic[] defaultCosmetics = null;
 
 	Dictionary<string, Cosmetic> cosmetics = new Dictionary<string, Cosmetic>();
 	HashSet<string> unlockedCosmetics = new HashSet<string>();

@@ -5,33 +5,33 @@ using UnityEngine.UI;
 
 public class TravelView : View {
 
-	[SerializeField] View shipHubView;
-	[SerializeField] View gridGameView;
-	[SerializeField] UIButton backButton;
-	[SerializeField] GameObject planetScreen;
-	[SerializeField] GameObject travelScreen;
+	[SerializeField] View shipHubView = null;
+	[SerializeField] View gridGameView = null;
+	[SerializeField] UIButton backButton = null;
+	[SerializeField] GameObject planetScreen = null;
+	[SerializeField] GameObject travelScreen = null;
 	[Space]
-	[SerializeField] LevelBatch[] levelBatches;
-	[SerializeField] SpriteBatch[] spriteBatches;
-	[SerializeField] Sprite[] planets;
+	[SerializeField] LevelBatch[] levelBatches = null;
+	[SerializeField] SpriteBatch[] spriteBatches = null;
+	[SerializeField] Sprite[] planets = null;
 	[Space]
-	[SerializeField] UIButton upperPlanetButton;
-	[SerializeField] UIButton lowerPlanetButton;
+	[SerializeField] UIButton upperPlanetButton = null;
+	[SerializeField] UIButton lowerPlanetButton = null;
 	[Space]
-	[SerializeField] Image fluffTop;
-	[SerializeField] Image fluffMid;
-	[SerializeField] Image fluffBottom;
+	[SerializeField] Image fluffTop = null;
+	[SerializeField] Image fluffMid = null;
+	[SerializeField] Image fluffBottom = null;
 	[Space]
-	[SerializeField] Image whiteCurtain;
-	[SerializeField] Image scroller;
-	[SerializeField] Image portal;
-	[SerializeField] Image staticBack;
-	[SerializeField] float scrollSpeed;
-	[SerializeField] float shipSpeed;
-	[SerializeField] float wobbleAmount;
-	[SerializeField] RectTransform shipStart;
-	[SerializeField] RectTransform shipEnd;
-	[SerializeField] RectTransform portalStart;
+	[SerializeField] Image whiteCurtain = null;
+	[SerializeField] Image scroller = null;
+	[SerializeField] Image portal = null;
+	[SerializeField] Image staticBack = null;
+	[SerializeField] float scrollSpeed = 0;
+	[SerializeField] float shipSpeed = 0;
+	[SerializeField] float wobbleAmount = 0;
+	[SerializeField] RectTransform shipStart = null;
+	[SerializeField] RectTransform shipEnd = null;
+	[SerializeField] RectTransform portalStart = null;
 
 	LevelSettings[] chosenLevels;
 	Sprite[] chosenSprites;
@@ -43,11 +43,19 @@ public class TravelView : View {
 	[System.Serializable]
 	struct LevelBatch {
 		public LevelSettings[] settings;
+
+		public LevelBatch(LevelSettings[] settings) {
+			this.settings = settings;
+		}
 	}
 
 	[System.Serializable]
 	struct SpriteBatch {
 		public Sprite[] sprites;
+
+		public SpriteBatch(Sprite[] sprites) {
+			this.sprites = sprites;
+		}
 	}
 
 	protected override void Initialize() {

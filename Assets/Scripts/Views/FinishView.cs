@@ -5,20 +5,20 @@ using UnityEngine.UI;
 
 public class FinishView : View {
 
-	[SerializeField] View shipHub;
-	[SerializeField] View gridGame;
+	[SerializeField] View shipHub = null;
+	[SerializeField] View gridGame = null;
 	[Space]
-	[SerializeField] GameObject visualScreen;
-	[SerializeField] GameObject coinScreen;
+	[SerializeField] GameObject visualScreen = null;
+	[SerializeField] GameObject coinScreen = null;
 	[Space]
-	[SerializeField] UIButton nextButton;
-	[SerializeField] UIButton prevButton;
+	[SerializeField] UIButton nextButton = null;
+	[SerializeField] UIButton prevButton = null;
 	[Space]
-	[SerializeField] Text coinText;
-	[SerializeField] Text starText;
-	[SerializeField] Text dustText;
-	[SerializeField] FinishStar finishStar;
-	[SerializeField] Image whiteCurtain;
+	[SerializeField] Text coinText = null;
+	[SerializeField] Text starText = null;
+	[SerializeField] Text dustText = null;
+	[SerializeField] FinishStar finishStar = null;
+	[SerializeField] Image whiteCurtain = null;
 
 
 	protected override void Initialize() {

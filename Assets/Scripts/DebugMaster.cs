@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 public class DebugMaster : MonoBehaviour {
 
-	[SerializeField] bool reset;
-	[SerializeField] GameObject debugScreen;
-	[SerializeField] Text debugText;
+	[SerializeField] bool reset = false;
+	[SerializeField] GameObject debugScreen = null;
+	[SerializeField] Text debugText = null;
 
 	public bool skipTransitions;
 	public bool skipWords;
