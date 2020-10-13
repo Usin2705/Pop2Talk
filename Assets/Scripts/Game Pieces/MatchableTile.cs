@@ -6,8 +6,8 @@ public enum MatchType { None, Red, Blue, Yellow, Green, Orange, Purple, Joker = 
 
 public class MatchableTile : ClickableTile {
 
-	[SerializeField] SpriteRenderer stencilRenderer;
-	[SerializeField] SpriteRenderer regularRenderer;
+	[SerializeField] SpriteRenderer stencilRenderer = null;
+	[SerializeField] SpriteRenderer regularRenderer = null;
 
 	public MatchType MyMatchType { get; protected set; }
 

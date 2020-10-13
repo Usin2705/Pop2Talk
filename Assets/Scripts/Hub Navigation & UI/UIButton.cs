@@ -7,12 +7,12 @@ using UnityEngine.Events;
 [RequireComponent(typeof(Button))]
 public class UIButton : MonoBehaviour {
 
-	[SerializeField] bool selectable;
-	[SerializeField] Image insideIcon;
-	[SerializeField] public bool repressDeselects;
+	[SerializeField] bool selectable = false;
+	[SerializeField] Image insideIcon = null;
+	[SerializeField] public bool repressDeselects = false;
 	[SerializeField] public bool canPressSelected = true;
-	[SerializeField] bool lockedGrayscale;
-	[SerializeField] bool deselectGrayscale;
+	[SerializeField] bool lockedGrayscale = false;
+	[SerializeField] bool deselectGrayscale = false;
 
 	Button button;
 	Text text;

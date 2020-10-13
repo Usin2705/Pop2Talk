@@ -5,20 +5,18 @@ using UnityEngine.UI;
 
 public class GameView : View, IGameCaller {
 
-	[SerializeField] View shipHub;
-	[SerializeField] View finishView;
+	[SerializeField] View shipHub = null;
+	[SerializeField] View finishView = null;
 	[Space]
-	[SerializeField] Image background;
-	[SerializeField] Image fluffForeground;
-	[SerializeField] GameUIHandler gameUI;
-	[SerializeField] UIButton backButton;
+	[SerializeField] Image background = null;
+	[SerializeField] Image fluffForeground = null;
+	[SerializeField] GameUIHandler gameUI = null;
+	[SerializeField] UIButton backButton = null;
 
 	float levelDuration = 0f;
 
 	bool musicFaded;
 	bool fluffDone = false;
-
-	bool firstCheerDone = false;
 
 	void Update() {
 		if (fluffDone)

@@ -58,7 +58,7 @@ public class PurchaseMaster : IStoreListener {
 				}
 			}
 		}
-		catch (System.FormatException e) {
+		catch (System.FormatException) {
 			//Receipt isn't in base64, most likely because of the fake-receipt in the editor
 		}
 		catch (System.ArgumentException) {

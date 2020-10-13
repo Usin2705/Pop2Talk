@@ -9,10 +9,10 @@ public class PearlStars : MonoBehaviour {
 	string myWord;
 	WordPearlView view;
 
-	[SerializeField] Transform starHolder;
-	[SerializeField] Image bottom;
-	[SerializeField] Sprite[] sprites;
-	[SerializeField] Color[] colors;
+	[SerializeField] Transform starHolder = null;
+	[SerializeField] Image bottom = null;
+	[SerializeField] Sprite[] sprites = null;
+	[SerializeField] Color[] colors = null;
 
 	public int Stars { get; protected set; }
 

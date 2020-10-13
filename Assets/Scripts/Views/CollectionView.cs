@@ -5,19 +5,19 @@ using UnityEngine.UI;
 
 public class CollectionView : View {
 
-	[SerializeField] View shipHubView;
-	[SerializeField] View storeView;
-	[SerializeField] UIButton backButton;
-	[SerializeField] UIButton showStoreButton;
-	[SerializeField] Image equippedImage;
-	[SerializeField] Image[] shipImages;
+	[SerializeField] View shipHubView = null;
+	[SerializeField] View storeView = null;
+	[SerializeField] UIButton backButton = null;
+	[SerializeField] UIButton showStoreButton = null;
+	[SerializeField] Image equippedImage = null;
+	[SerializeField] Image[] shipImages = null;
 	[Space]
-	[SerializeField] GridPageHandler collectionGridPage;
-	[SerializeField] GameObject selectableButtonPrefab;
-	[SerializeField] UIButton[] collectionButtons;
-	[SerializeField] GameObject bottomButtonPrefab;
-	[SerializeField] GameObject midButtonPrefab;
-	[SerializeField] GameObject topButtonPrefab;
+	[SerializeField] GridPageHandler collectionGridPage = null;
+	[SerializeField] GameObject selectableButtonPrefab = null;
+	[SerializeField] UIButton[] collectionButtons = null;
+	[SerializeField] GameObject bottomButtonPrefab = null;
+	[SerializeField] GameObject midButtonPrefab = null;
+	[SerializeField] GameObject topButtonPrefab = null;
 
 
 	List<LootBoxSettings> purchasables = new List<LootBoxSettings>();
@@ -25,8 +25,6 @@ public class CollectionView : View {
 	Dictionary<Cosmetic, UIButton> equippedButtons = new Dictionary<Cosmetic, UIButton>();
 
 	List<StoreButton> lootboxButtons = new List<StoreButton>();
-
-	float shakeDuration = 1;
 
 	int chosenCollectionIndex = 0;
 

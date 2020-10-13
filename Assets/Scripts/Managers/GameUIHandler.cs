@@ -5,16 +5,15 @@ using UnityEngine.UI;
 
 public class GameUIHandler : MonoBehaviour {
 
-	[SerializeField] Text stars;
-	[SerializeField] Text trackedValue;
-	[SerializeField] Image trackedIcon;
-	[SerializeField] Text cardsLeft;
-	[SerializeField] MachineCard machineCard;
+	[SerializeField] Text stars = null;
+	[SerializeField] Text trackedValue = null;
+	[SerializeField] Text cardsLeft = null;
+	[SerializeField] MachineCard machineCard = null;
 	[SerializeField] float numberSpeed = 5000;
 	[SerializeField] float minNumberDuration = 0.2f;
 	[SerializeField] float maxNumberDuration = 3f;
-	[SerializeField] GameObject uiHolder;
-	[SerializeField] GameObject backButton;
+	[SerializeField] GameObject uiHolder = null;
+	[SerializeField] GameObject backButton = null;
 
 	float bulgeTime = -1;
 	float bulgeDuration = 0.5f;

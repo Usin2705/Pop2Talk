@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class HideTile : ClickableTile {
 
-	[SerializeField] SpriteRenderer tileRenderer;
-	[SerializeField] SpriteRenderer hiderRenderer;
-	[SerializeField] Sprite[] hideSprites;
+	[SerializeField] SpriteRenderer tileRenderer = null;
+	[SerializeField] SpriteRenderer hiderRenderer = null;
+	[SerializeField] Sprite[] hideSprites = null;
 
 	bool hiding;
 

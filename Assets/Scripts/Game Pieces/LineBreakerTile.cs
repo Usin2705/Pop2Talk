@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class LineBreakerTile : MatchableTile, ISpecialTile {
 
-    [SerializeField] bool horizontal;
+    [SerializeField] bool horizontal = false;
 
     public void TrySpecialPop(Coordinate c) {
         if (alreadyPopped)

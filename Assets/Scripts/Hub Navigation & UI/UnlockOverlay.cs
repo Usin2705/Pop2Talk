@@ -5,12 +5,12 @@ using UnityEngine.UI;
 
 public class UnlockOverlay : Overlay {
 
-	[SerializeField] GameObject screen;
-	[SerializeField] Image whiteCurtain;
-	[SerializeField] Image textlessImage;
-	[SerializeField] Image textImage;
-	[SerializeField] Text amountText;
-	[SerializeField] UIButton button;
+	[SerializeField] GameObject screen = null;
+	[SerializeField] Image whiteCurtain = null;
+	[SerializeField] Image textlessImage = null;
+	[SerializeField] Image textImage = null;
+	[SerializeField] Text amountText = null;
+	[SerializeField] UIButton button = null;
 
 	Callback ClickCallback;
 

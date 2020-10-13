@@ -6,8 +6,8 @@ using UnityEngine.UI;
 public class AudioBar : MonoBehaviour {
 
     [SerializeField] float timeToMax = 0.3f;
-	[SerializeField] Color normal;
-	[SerializeField] Color quiz;
+	[SerializeField] Color normal = Color.black;
+	[SerializeField] Color quiz = Color.black;
 
 	Image image;
 	float currentValue;

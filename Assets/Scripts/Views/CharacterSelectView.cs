@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class CharacterSelectView : View {
 
-	[SerializeField] View shipHub;
+	[SerializeField] View shipHub = null;
 	//[SerializeField] View login;
 	[Space]
-	[SerializeField] GameObject characterButtonPrefab;
-	[SerializeField] UIButton backButton;
-	[SerializeField] UIButton nextButton;
-	[SerializeField] Transform buttonRoot;
-	[SerializeField] SpeechCollection characterSelected;
+	[SerializeField] GameObject characterButtonPrefab = null;
+	[SerializeField] UIButton backButton = null;
+	[SerializeField] UIButton nextButton = null;
+	[SerializeField] Transform buttonRoot = null;
+	[SerializeField] SpeechCollection characterSelected = null;
 
 
 	List<UIButton> buttons;

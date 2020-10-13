@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class SoundEffectManager : MonoBehaviour {
 
-	[SerializeField] AudioInstance[] buttonEffects;
-	[SerializeField] AudioInstance[] popEffects;
-	[SerializeField] AudioInstance openEffect;
-	[SerializeField] AudioInstance closeEffect;
-	[SerializeField] AudioInstance rocketZoom;
-	[SerializeField] AudioInstance rocketLand;
-	[SerializeField] AudioInstance cardEnter;
-	[SerializeField] AudioInstance pearlCreate;
-	[SerializeField] AudioInstance music;
-	[SerializeField] AudioInstance badClick;
+	[SerializeField] AudioInstance[] buttonEffects = null;
+	[SerializeField] AudioInstance[] popEffects = null;
+	[SerializeField] AudioInstance openEffect = null;
+	[SerializeField] AudioInstance closeEffect = null;
+	[SerializeField] AudioInstance rocketZoom = null;
+	[SerializeField] AudioInstance rocketLand = null;
+	[SerializeField] AudioInstance cardEnter = null;
+	[SerializeField] AudioInstance pearlCreate = null;
+	[SerializeField] AudioInstance music = null;
+	[SerializeField] AudioInstance badClick = null;
 
 	static SoundEffectManager sem;
 

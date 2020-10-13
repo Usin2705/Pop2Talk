@@ -6,19 +6,18 @@ using UnityEngine.UI;
 
 public class PasswordResetCompletionView : View {
 
-	[SerializeField] View loginView;
-	[SerializeField] View passwordResetRequestView;
-	[SerializeField] GameObject gameHandler;
+	[SerializeField] View loginView = null;
+	[SerializeField] GameObject gameHandler = null;
 	[Space]
-	[SerializeField] InputField resetCodeField;
-	[SerializeField] InputField passwordField;
-	[SerializeField] InputField passwordConfirmationField;
-	[SerializeField] UIButton resetButton;
-	[SerializeField] UIButton backButton;
-	[SerializeField] Text errorText;
+	[SerializeField] InputField resetCodeField = null;
+	[SerializeField] InputField passwordField = null;
+	[SerializeField] InputField passwordConfirmationField = null;
+	[SerializeField] UIButton resetButton = null;
+	[SerializeField] UIButton backButton = null;
+	[SerializeField] Text errorText = null;
 	[Space]
-	[SerializeField] string serverUrl;
-	[SerializeField] string resetPath;
+	[SerializeField] string serverUrl = "";
+	[SerializeField] string resetPath = "";
 
 	string requestStatus;
 

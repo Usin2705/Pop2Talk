@@ -7,19 +7,18 @@ using UnityEngine.UI;
 
 public class RegistrationView : View {
 
-	[SerializeField] View loginView;
+	[SerializeField] View loginView = null;
 	[Space]
-	[SerializeField] InputField usernameField;
-	[SerializeField] InputField passwordField;
-	[SerializeField] InputField passwordConfirmField;
-	[SerializeField] UIButton registerButton;
-	[SerializeField] UIButton backButton;
-	[SerializeField] Toggle tosToggle;
-	[SerializeField] Toggle newsletterToggle;
-	[SerializeField] ScrollRect tosScroll;
-	[SerializeField] Text tosText;
+	[SerializeField] InputField usernameField = null;
+	[SerializeField] InputField passwordField = null;
+	[SerializeField] InputField passwordConfirmField = null;
+	[SerializeField] UIButton registerButton = null;
+	[SerializeField] UIButton backButton = null;
+	[SerializeField] Toggle tosToggle = null;
+	[SerializeField] Toggle newsletterToggle = null;
+	[SerializeField] Text tosText = null;
 	[Space]
-	[SerializeField] Text errorText;
+	[SerializeField] Text errorText = null;
 	[Space]
 	[SerializeField] string serverUrl = "https://(user_management_api_server)/api/game/";
 	[SerializeField] string userCheckPath = "checkUsername";
@@ -27,8 +26,6 @@ public class RegistrationView : View {
 	[SerializeField] string requestTosUrl = "https://(user_management_api_server)/readServiceConditions";
 
 	TermsAndConditions TOS;
-
-
 
 	bool emailIsAvailable;
 
@@ -140,7 +137,7 @@ public class RegistrationView : View {
 		yield return www.SendWebRequest();
 		if (www.isNetworkError || www.isHttpError) {
 			errorText.text = www.error;
-			Debug.LogError(www.downloadHandler.text);
+			Debug.LogError("The chosen email address already has an account!");
 			errorText.gameObject.SetActive(true);
 		} else {
 			Debug.Log(www.downloadHandler.text);
@@ -159,7 +156,7 @@ public class RegistrationView : View {
 		yield return www.SendWebRequest();
 		if (www.isNetworkError || www.isHttpError) {
 			errorText.text = www.error;
-			Debug.LogError(www.downloadHandler.text);
+			Debug.LogError("Error accessing the terms of service!");
 			errorText.gameObject.SetActive(true);
 		} else {
 			TOS = JsonUtility.FromJson<TermsAndConditions>(www.downloadHandler.text);

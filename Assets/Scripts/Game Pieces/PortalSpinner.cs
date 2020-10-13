@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PortalSpinner : MonoBehaviour {
 
-	[SerializeField] float speed;
+	[SerializeField] float speed = 0;
 	[SerializeField] float[] ratios = new float[5] { 0.6f, 0.75f, 0.9f, 1.1f, 1.2f };
 	float speedMultiplier = 1f;
 	int direction;

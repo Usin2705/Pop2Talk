@@ -6,14 +6,13 @@ using UnityEngine.UI;
 public class ShipManager : Overlay { 
 
 	static ShipManager sm;
-	[SerializeField] float pauseWobbleAmount;
-	[SerializeField] float shipSpeed;
+	[SerializeField] float pauseWobbleAmount = 0;
 	[Space]
-	[SerializeField] RectTransform mover;
-	[SerializeField] Image curtain;
-	[SerializeField] Image shipTop;
-	[SerializeField] Image shipMid;
-	[SerializeField] Image shipBottom;
+	[SerializeField] RectTransform mover = null;
+	[SerializeField] Image curtain = null;
+	[SerializeField] Image shipTop = null;
+	[SerializeField] Image shipMid = null;
+	[SerializeField] Image shipBottom = null;
 	bool wobbling = false;
 
 	public float BaseSize {

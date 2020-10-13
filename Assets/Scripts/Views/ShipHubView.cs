@@ -5,21 +5,21 @@ using UnityEngine.UI;
 
 public class ShipHubView : View {
 	
-	[SerializeField] View storeView;
-	[SerializeField] View wordPearlView;
-	[SerializeField] View travelView;
+	[SerializeField] View storeView = null;
+	[SerializeField] View wordPearlView = null;
+	[SerializeField] View travelView = null;
 
 	[Space]
-	[SerializeField] UIButton backButton;
-	[SerializeField] UIButton travelButton;
-	[SerializeField] UIButton storeButton;
-	[SerializeField] UIButton pearlButton;
-	[SerializeField] Text coins;
-	[SerializeField] Text pearls;
-	[SerializeField] Image character;
-	[SerializeField] Image backWall;
-	[SerializeField] Image backFloor;
-	[SerializeField] Image controlPanel;
+	[SerializeField] UIButton backButton = null;
+	[SerializeField] UIButton travelButton = null;
+	[SerializeField] UIButton storeButton = null;
+	[SerializeField] UIButton pearlButton = null;
+	[SerializeField] Text coins = null;
+	[SerializeField] Text pearls = null;
+	[SerializeField] Image character = null;
+	[SerializeField] Image backWall = null;
+	[SerializeField] Image backFloor = null;
+	[SerializeField] Image controlPanel = null;
 
 
 	protected override void Initialize() {

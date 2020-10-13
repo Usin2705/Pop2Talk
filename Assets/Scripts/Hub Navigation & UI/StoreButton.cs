@@ -11,8 +11,8 @@ public class StoreButton : MonoBehaviour {
 	IntCallback Clicked;
 	int index;
 
-	[SerializeField] Text priceText;
-	[SerializeField] GameObject priceHolder;
+	[SerializeField] Text priceText = null;
+	[SerializeField] GameObject priceHolder = null;
 
 	void Awake () {
 		CheckButton();

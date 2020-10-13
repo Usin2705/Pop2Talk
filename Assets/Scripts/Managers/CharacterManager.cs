@@ -5,18 +5,18 @@ using UnityEngine.UI;
 
 public class CharacterManager : Overlay {
 
-	[SerializeField] CharacterSettings[] characters;
+	[SerializeField] CharacterSettings[] characters = null;
 	[Space]
-	[SerializeField] float showDuration;
-	[SerializeField] float waitDelay;
-	[SerializeField] float talkHeight;
-	[SerializeField] float talkSpeed;
-	[SerializeField] float curtainAlpha;
+	[SerializeField] float showDuration = 0;
+	[SerializeField] float waitDelay = 0;
+	[SerializeField] float talkHeight = 0;
+	[SerializeField] float talkSpeed = 0;
+	[SerializeField] float curtainAlpha = 0;
 	[Space]
-	[SerializeField] Image character;
-	[SerializeField] Image backCurtain;
-	[SerializeField] RectTransform bottomAnchor;
-	[SerializeField] RectTransform topAnchor;
+	[SerializeField] Image character = null;
+	[SerializeField] Image backCurtain = null;
+	[SerializeField] RectTransform bottomAnchor = null;
+	[SerializeField] RectTransform topAnchor = null;
 	
 	static CharacterManager cm;
 
