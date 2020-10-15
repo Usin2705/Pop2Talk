@@ -36,11 +36,18 @@ public class SpotModeHandler : BaseGridGameModeHandler {
 			spots[c].Shrink();
 		spots.Clear();
 		Cell potentialSpot;
+		HashSet<Cell> emptyCells = new HashSet<Cell>();
 		while (spots.Count < spotCount) {
-			if (spots.Count >= GridManager.GetManager().CellCount)
+			if (spots.Count + emptyCells.Count >= GridManager.GetManager().CellCount)
 				break;
 			potentialSpot = GridManager.GetManager().GetRandomCell();
+			if (emptyCells.Contains(potentialSpot))
+				continue;
 			if (!spots.ContainsKey(potentialSpot)) {
+				if (potentialSpot.MyTile == null) {
+					emptyCells.Add(potentialSpot);
+					continue;
+				}
 				spots.Add(potentialSpot, PoolMaster.Instance.GetPooledObject(spotPrefab).GetComponent<SpotMarker>());
 				spots[potentialSpot].transform.position = potentialSpot.transform.position;
 				spots[potentialSpot].Grow(0.6f);
