@@ -114,7 +114,7 @@ public class LoginView : View {
 			if (IsValidEmail(usernameField.text)) {
 				if (!PurchaseMaster.Instance.Subscribed) {
 					errorText.gameObject.SetActive(true);
-					errorText.text = "This device doesn't have an active subscription.";
+					errorText.text = "Please start your free trial or purchase the subscription.";
 					return;
 				}
 			}
