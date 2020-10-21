@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class PasswordResetRequestView : View {
 
-	[SerializeField] View loginView = null;
+	[SerializeField] View parentView = null;
 	[SerializeField] View passwordResetCompletionView = null;
 	[SerializeField] GameObject gameHandler = null;
 	[Space]
@@ -35,7 +35,7 @@ public class PasswordResetRequestView : View {
 	public override void Back() {
 		base.Back();
 		doExitFluff = false;
-		ViewManager.GetManager().ShowView(loginView);
+		ViewManager.GetManager().ShowView(parentView);
 	}
 
 	void RequestReset() {

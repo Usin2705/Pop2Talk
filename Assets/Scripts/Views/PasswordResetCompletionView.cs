@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class PasswordResetCompletionView : View {
 
-	[SerializeField] View loginView = null;
+	[SerializeField] View parentView = null;
 	[SerializeField] GameObject gameHandler = null;
 	[Space]
 	[SerializeField] InputField resetCodeField = null;
@@ -35,7 +35,7 @@ public class PasswordResetCompletionView : View {
 	public override void Back() {
 		base.Back();
 		doExitFluff = false;
-		ViewManager.GetManager().ShowView(loginView);
+		ViewManager.GetManager().ShowView(parentView);
 	}
 
 	void Reset() {
@@ -73,7 +73,7 @@ public class PasswordResetCompletionView : View {
 		} else {
 			Debug.Log(www.downloadHandler.text);
 			requestStatus = www.downloadHandler.text;
-			ViewManager.GetManager().ShowView(loginView);
+			ViewManager.GetManager().ShowView(parentView);
 		}
 	}
 
