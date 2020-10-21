@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71511e391e529ce49bcc2f8dde81d752, type: 3}
+  m_Name: Pointy Purple Wallpaper
+  m_EditorClassIdentifier: 
+  slot: 3
+  icon: {fileID: 21300000, guid: a1061886ac525e947a1a42a8fd3b337f, type: 3}
+  sprite: {fileID: 21300000, guid: b47b27e77a75ca744941585f16a2a972, type: 3}
+  extraSprites:
+  - {fileID: 21300000, guid: 95b19a5a9c3a5e1449e8cd082260c23c, type: 3}
+  - {fileID: 21300000, guid: 7158931d14847fe4496f9eb0513c322f, type: 3}
+  idCopy: 15e8a6fb-5f3d-49a9-850c-dd34b2cc06ea
+  uniqueId: 15e8a6fb-5f3d-49a9-850c-dd34b2cc06ea
+  reset: 0

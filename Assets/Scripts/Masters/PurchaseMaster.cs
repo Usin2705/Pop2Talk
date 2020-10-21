@@ -144,4 +144,11 @@ public class PurchaseMaster : IStoreListener {
 			DebugMaster.Instance.DebugText("Subscriptionmanager not supported");
 		}
 	}*/
+
+	public void RestorePurchases(System.Action<bool> Outcome) {
+		if (Initialized)
+			extensions.GetExtension<IAppleExtensions>().RestoreTransactions(Outcome);
+		else
+			Outcome(false);
+	}
 }

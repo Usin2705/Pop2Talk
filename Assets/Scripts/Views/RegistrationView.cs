@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class RegistrationView : View {
 
-	[SerializeField] View loginView = null;
+	[SerializeField] View parentView = null;
 	[Space]
 	[SerializeField] InputField usernameField = null;
 	[SerializeField] InputField passwordField = null;
@@ -43,14 +43,14 @@ public class RegistrationView : View {
 	public override void Back() {
 		base.Back();
 		doExitFluff = false;
-		ViewManager.GetManager().ShowView(loginView);
+		ViewManager.GetManager().ShowView(parentView);
 	}
 
 	void RegisterAccount() {
 		//TODO: Add registration functionality
 		Debug.Log("Registering");
 		StartCoroutine("Register");
-		ViewManager.GetManager().ShowView(loginView);
+		ViewManager.GetManager().ShowView(parentView);
 	}
 
 	public void ValidateForm() {
