@@ -66,7 +66,7 @@ public class LoginView : View {
 			if (IsValidEmail(usernameField.text)) {
 				if (!PurchaseMaster.Instance.Subscribed) {
 					errorText.gameObject.SetActive(true);
-					errorText.text = "Please start your free trial or purchase the subscription.";
+					errorText.text = "Please open the parental options. Then start your free trial or purchase the subscription.";
 					return;
 				}
 			}
