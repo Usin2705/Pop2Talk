@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class SubscriptionView : View, IPurchaseListener {
 
-	[SerializeField] View loginView = null;
+	[SerializeField] View parentView = null;
 	[Space]
 	[SerializeField] UIButton backButton = null;
 	[SerializeField] UIButton subscriptionButton = null;
@@ -20,6 +20,8 @@ public class SubscriptionView : View, IPurchaseListener {
 	int googleSize = 67;
 	int iosSize = 67;
 
+	string priceTextBase;
+
 	protected override void Initialize() {
 		base.Initialize();
 		backButton.SubscribePress(Back);
@@ -28,6 +30,7 @@ public class SubscriptionView : View, IPurchaseListener {
 			NetworkManager.GetManager().ServerWait(true);
 			PurchaseMaster.Instance.PurchaseSubscription();
 		});
+		priceTextBase = priceText.text;
 #if UNITY_ANDROID
 		subText.text = googleText;
 		subText.fontSize = googleSize;
@@ -42,15 +45,15 @@ public class SubscriptionView : View, IPurchaseListener {
 		base.Activate();
 		PurchaseMaster.Instance.Listener = this;
 		errorText.gameObject.SetActive(false);
-		priceText.text = PurchaseMaster.Instance.SubscriptionPrice + "/month";
 		subscriptionButton.gameObject.SetActive(true);
+		priceText.text = priceTextBase + PurchaseMaster.Instance.SubscriptionPrice + "/month";
 	}
 
 	public override void Back() {
 		base.Back();
 		PurchaseMaster.Instance.Listener = null;
 		doExitFluff = false;
-		ViewManager.GetManager().ShowView(loginView);
+		ViewManager.GetManager().ShowView(parentView);
 	}
 
 	public override UIButton[] GetAllButtons() {

@@ -6,22 +6,15 @@ using UnityEngine.UI;
 public class LoginView : View {
 
 	[SerializeField] View characterSelectView = null;
-	[SerializeField] View registrationView = null;
-	[SerializeField] View subscriptionView = null;
-	[SerializeField] View passwordResetView = null;
+	[SerializeField] View parentView = null;
 	[SerializeField] View shipHubView = null;
 	[Space]
 	[SerializeField] InputField usernameField = null;
 	[SerializeField] InputField passwordField = null;
 	[SerializeField] UIButton playButton = null;
-	[SerializeField] GameObject registrationHolder = null;
-	[SerializeField] UIButton registerButton = null;
-	[SerializeField] GameObject resetHolder = null;
-	[SerializeField] UIButton resetPasswordButton = null;
-	[SerializeField] GameObject subscriptionHolder = null;
-	[SerializeField] UIButton subscriptionButton = null;
+	[SerializeField] GameObject parentHolder = null;
+	[SerializeField] UIButton parentButton = null;
 	[SerializeField] GameObject waitingStore = null;
-	[SerializeField] UIButton privacyPolicyButton = null;
 	[SerializeField] Toggle rememberToggle = null;
 
 	[Space]
@@ -41,24 +34,18 @@ public class LoginView : View {
 		PurchaseMaster.Instance.BeginInitialization();
 		SoundEffectManager.GetManager().PlayMusic();
 		playButton.SubscribePress(GameOnline);
-		privacyPolicyButton.SubscribePress(OpenPrivacyPolicy);
-		registerButton.SubscribePress(Register);
-		resetPasswordButton.SubscribePress(ResetPassword);
-		subscriptionButton.SubscribePress(GotoSubscription);
-		if (EncryptedPlayerPrefs.GetInt(rememberKey, 0) == 1) {
-			rememberToggle.isOn = true;
-			usernameField.text = EncryptedPlayerPrefs.GetString(usernameKey);
-			passwordField.text = EncryptedPlayerPrefs.GetString(passwordKey);
-		}
+		parentButton.SubscribePress(GotoParent);
 		StartCoroutine(StoreInitializationWait());
 	}
 
 	public override void Activate() {
 		base.Activate();
 		errorText.gameObject.SetActive(false);
-		subscriptionHolder.SetActive(false);
-		registrationHolder.SetActive(false);
-		resetHolder.SetActive(false);
+		if (EncryptedPlayerPrefs.GetInt(rememberKey, 0) == 1) {
+			rememberToggle.isOn = true;
+			usernameField.text = EncryptedPlayerPrefs.GetString(usernameKey);
+			passwordField.text = EncryptedPlayerPrefs.GetString(passwordKey);
+		}
 	}
 
 	void Update() {
@@ -66,47 +53,12 @@ public class LoginView : View {
 			errorText.gameObject.SetActive(false);
 
 		if (PurchaseMaster.Instance.Initialized) {
-			if (waitingStore.activeSelf)
+			if (waitingStore.activeSelf) {
 				waitingStore.SetActive(false);
-
-			if (usernameField.text == "" || IsValidEmail(usernameField.text)) {
-				if (!PurchaseMaster.Instance.Renewing) {
-					if (!subscriptionHolder.activeSelf)
-						subscriptionHolder.SetActive(true);
-					if (registrationHolder.activeSelf)
-						registrationHolder.SetActive(false);
-					if (resetHolder.activeSelf)
-						resetHolder.SetActive(false);
-				} else {
-					if (subscriptionHolder.activeSelf)
-						subscriptionHolder.SetActive(false);
-					if (!registrationHolder.activeSelf)
-						registrationHolder.SetActive(true);
-					if (!resetHolder.activeSelf)
-						resetHolder.SetActive(true);
-				}
-			} else {
-				if (subscriptionHolder.activeSelf)
-					subscriptionHolder.SetActive(false);
-				if (registrationHolder.activeSelf)
-					registrationHolder.SetActive(false);
-				if (resetHolder.activeSelf)
-					resetHolder.SetActive(false);
+				parentHolder.SetActive(true);
 			}
 		}
 
-	}
-
-	void Register() {
-		GotoRegistration();
-	}
-
-	void ResetPassword() {
-		GotoPasswordReset();
-	}
-
-	void GotoSubscription() {
-		ViewManager.GetManager().ShowView(subscriptionView);
 	}
 
 	void GameOnline() {
@@ -114,7 +66,7 @@ public class LoginView : View {
 			if (IsValidEmail(usernameField.text)) {
 				if (!PurchaseMaster.Instance.Subscribed) {
 					errorText.gameObject.SetActive(true);
-					errorText.text = "Please start your free trial or purchase the subscription.";
+					errorText.text = "Please open the parental options. Then start your free trial or purchase the subscription.";
 					return;
 				}
 			}
@@ -205,13 +157,10 @@ public class LoginView : View {
 		ViewManager.GetManager().ShowView(shipHubView);
 	}
 
-	void GotoRegistration() {
-		ViewManager.GetManager().ShowView(registrationView);
-	}
-
-	void GotoPasswordReset() {
-		ViewManager.GetManager().ShowView(passwordResetView);
-
+	void GotoParent() {
+		if (usernameField.text.ToLower() == "parent") {
+			ViewManager.GetManager().ShowView(parentView);
+		}
 	}
 
 	public override void Back() {

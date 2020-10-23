@@ -91,6 +91,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ff16cbbcc3a69b2419feacfdbfccb37f, type: 2}
   - {fileID: 11400000, guid: b66311c01b5a10d4ab20f4953a1935be, type: 2}
   - {fileID: 11400000, guid: a32c6dc6bb0324746b83b059bb02c520, type: 2}
+  - {fileID: 11400000, guid: 95fedd1d93a922c4a87be6113189e21b, type: 2}
+  - {fileID: 11400000, guid: 44d14cb1370e7f54cb207a04c4da752c, type: 2}
+  - {fileID: 11400000, guid: 8570a352a2802a74cb40788fa3b17160, type: 2}
+  - {fileID: 11400000, guid: 87c8042a4a4d5ef40b42c3052a7d429b, type: 2}
+  - {fileID: 11400000, guid: 5944157fd1ea1434ebf7bede33f200cb, type: 2}
   defaultCosmetics:
   - {fileID: 11400000, guid: 92d0e6c225015044eb4eb88411379222, type: 2}
   - {fileID: 11400000, guid: 79783e9a2745e0f43af41e4bb731ce4c, type: 2}
