@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using UnityEngine.Localization.Components;
 
 public class PasswordResetCompletionView : View {
 
@@ -40,7 +41,7 @@ public class PasswordResetCompletionView : View {
 
 	void Reset() {
 		if (passwordField.text != passwordConfirmationField.text) {
-			errorText.text = "The passwords must match!";
+			errorText.GetComponent<LocalizeStringEvent>().StringReference.TableEntryReference = "error_match";
 			errorText.gameObject.SetActive(true);
 			return;
 		}
@@ -48,7 +49,7 @@ public class PasswordResetCompletionView : View {
 		PasswordScore passwordStrength = PasswordMaster.CheckStrength(passwordField.text);
 
 		if (passwordStrength < PasswordMaster.GetRequiredScore()) {
-			errorText.text = "Password is not strong enough. Please ensure that it is longer than 4 characters.";
+			errorText.GetComponent<LocalizeStringEvent>().StringReference.TableEntryReference = "error_strength";
 			Debug.Log(passwordStrength);
 			errorText.gameObject.SetActive(true);
 			return;
@@ -68,7 +69,7 @@ public class PasswordResetCompletionView : View {
 		yield return www.SendWebRequest();
 		InputManager.GetManager().SendingInputs = true;
 		if (www.isNetworkError || www.isHttpError) {
-			errorText.text = "Reset code is not valid!";
+			errorText.GetComponent<LocalizeStringEvent>().StringReference.TableEntryReference = "error_code";
 			errorText.gameObject.SetActive(true);
 		} else {
 			Debug.Log(www.downloadHandler.text);

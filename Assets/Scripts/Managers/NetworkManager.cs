@@ -117,7 +117,7 @@ public class NetworkManager : MonoBehaviour {
 	public void ServerWait(bool wait) {
 		if (wait && !serverWaitPromptActive) {
 			serverWaitPromptActive = true;
-			DataOverlayManager.GetManager().Show(99, false, "Waiting for server...", null, null, null, null, null);
+			DataOverlayManager.GetManager().Show(99, false, "server_wait", null, null, null, null, null);
 		} else if (serverWaitPromptActive) {
 			DataOverlayManager.GetManager().Close();
 			serverWaitPromptActive = false;

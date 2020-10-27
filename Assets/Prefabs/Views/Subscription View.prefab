@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 224110200953457928}
   - component: {fileID: 222882908918596614}
   - component: {fileID: 114369525825183862}
+  - component: {fileID: 7513892617294037264}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -77,7 +78,40 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Subscribe
+  m_Text: subscribe
+--- !u!114 &7513892617294037264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1067581564097734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: GUID:975058b8289bfd14e90e19762eb07678
+    m_TableEntryReference:
+      m_KeyId: 8024072192
+      m_Key: 
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 114369525825183862}
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1269510639731498
 GameObject:
   m_ObjectHideFlags: 0
@@ -598,7 +632,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f176915fa2863f04ca5230d822e6e207, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loginView: {fileID: 0}
+  parentView: {fileID: 0}
   backButton: {fileID: 114643682279274886}
   subscriptionButton: {fileID: 114991884259553958}
   errorText: {fileID: 7483081184811057330}
@@ -656,6 +690,7 @@ GameObject:
   - component: {fileID: 6815626868133491690}
   - component: {fileID: 3799585234710991728}
   - component: {fileID: 2442094656002985171}
+  - component: {fileID: 8630913419107083955}
   m_Layer: 5
   m_Name: Subscription Info Text
   m_TagString: Untagged
@@ -722,13 +757,40 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'A subscription is required to play Pop2Talk from this device. The subscription
-    is monthly and charged automatically, and uses the standard Google Play Store
-    terms and conditions and cancellation policies . On your first subscription,
-    you gain a 3-day free trial before you are charged anything. You can cancel the
-    subscription during this free trial period and won''t be charged once it ends.
-
-'
+  m_Text: 
+--- !u!114 &8630913419107083955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1109266838351651085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: GUID:975058b8289bfd14e90e19762eb07678
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: 
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2442094656002985171}
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2148616534961085087
 GameObject:
   m_ObjectHideFlags: 0
@@ -1036,4 +1098,4 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: ERROR
+  m_Text: 
