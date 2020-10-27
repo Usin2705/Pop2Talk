@@ -19,7 +19,37 @@ MonoBehaviour:
     m_Items: []
   m_TableData:
   - m_Id: 333577560064
-    m_Localized: 
+    m_Localized: Play
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1216565693751296
+    m_Localized: Please open the parental options. Then start your free trial or
+      purchase the subscription.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1216591820070912
+    m_Localized: Please enter your username and password.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1222346904281088
+    m_Localized: Connecting to the store...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1223415612940288
+    m_Localized: To activate parental options, write the word <i>parent</i> in the
+      username field and click this text.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1224877566959616
+    m_Localized: Remember me
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1224914573303808
+    m_Localized: Password...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1224965785755648
+    m_Localized: Username/Email...
     m_Metadata:
       m_Items: []
   references:

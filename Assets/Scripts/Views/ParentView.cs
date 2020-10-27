@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using UnityEngine.Localization.Components;
 
 public class ParentView : View {
 
@@ -19,6 +20,8 @@ public class ParentView : View {
 	[SerializeField] UIButton resetButton = null;
 	[SerializeField] UIButton tosButton = null;
 	[SerializeField] UIButton privacyButton = null;
+
+	bool canRestore = true;
 
 	protected override void Initialize() {
 		base.Initialize();
@@ -38,15 +41,15 @@ public class ParentView : View {
 			restoreButton.gameObject.SetActive(false);
 			registerButton.gameObject.SetActive(true);
 			resetButton.gameObject.SetActive(true);
-			errorText.text = "This device has an active subscription.";
+			errorText.GetComponent<LocalizeStringEvent>().StringReference.TableEntryReference = "active_subscription";
 		} else {
 			subscribeButton.gameObject.SetActive(true);
 #if UNITY_IOS
-			restoreButton.gameObject.SetActive(true);
+			restoreButton.gameObject.SetActive(canRestore);
 #endif
 			registerButton.gameObject.SetActive(false);
 			resetButton.gameObject.SetActive(false);
-			errorText.text = "This device doesn't have an active subscription";
+			errorText.GetComponent<LocalizeStringEvent>().StringReference.TableEntryReference = "no_subscription";
 		}
 	}
 
@@ -66,9 +69,10 @@ public class ParentView : View {
 
 	void RestorationResult(bool result) {
 		if (result) {
+			canRestore = false;
 			ViewManager.GetManager().ShowView(this);
 		} else {
-			errorText.text = "Failed to restore purchases.";
+			errorText.GetComponent<LocalizeStringEvent>().StringReference.TableEntryReference = "restore_failed";
 		}
 	}
 }

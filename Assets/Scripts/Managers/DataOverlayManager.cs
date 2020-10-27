@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Localization.Components;
 
 public class DataOverlayManager : Overlay, IFingerPointable {
 
@@ -17,9 +18,9 @@ public class DataOverlayManager : Overlay, IFingerPointable {
 	[SerializeField] Text titleLong = null;
 	[SerializeField] GameObject iconStringPrefab = null;
 	[SerializeField] UIButton buttonPrefab = null;
-    [SerializeField] UIButton closeUIButton = null;
+	[SerializeField] UIButton closeUIButton = null;
 
-    List<GameObject> iconStrings = new List<GameObject>();
+	List<GameObject> iconStrings = new List<GameObject>();
 	List<UIButton> uiButtons = new List<UIButton>();
 
 	bool interrupt = false;
@@ -27,10 +28,9 @@ public class DataOverlayManager : Overlay, IFingerPointable {
 
 	public bool Active { get { return root.activeSelf; } }
 
-    void Start()
-    {
-        closeUIButton.SubscribePress(Close);
-    }
+	void Start() {
+		closeUIButton.SubscribePress(Close);
+	}
 
 	public static DataOverlayManager GetManager() {
 		return dom;
@@ -58,9 +58,9 @@ public class DataOverlayManager : Overlay, IFingerPointable {
 			titleLong.gameObject.SetActive(isLong);
 			titleShort.gameObject.SetActive(!isLong);
 			if (isLong)
-				titleLong.text = title;
+				titleLong.GetComponent<LocalizeStringEvent>().StringReference.TableEntryReference = title;
 			else
-				titleShort.text = title;
+				titleShort.GetComponent<LocalizeStringEvent>().StringReference.TableEntryReference = title;
 		}
 
 		int targetLength = (icons == null) ? 0 : icons.Length;
@@ -82,8 +82,8 @@ public class DataOverlayManager : Overlay, IFingerPointable {
 		targetLength = (actions == null) ? 0 : actions.Length;
 		buttonRoot.gameObject.SetActive(targetLength != 0);
 		while (uiButtons.Count > targetLength) {
-			if (uiButtons[uiButtons.Count -1] != null)
-				uiButtons[uiButtons.Count -1].Destroy();
+			if (uiButtons[uiButtons.Count - 1] != null)
+				uiButtons[uiButtons.Count - 1].Destroy();
 			uiButtons.RemoveAt(uiButtons.Count - 1);
 		}
 		while (uiButtons.Count < targetLength) {
@@ -93,7 +93,7 @@ public class DataOverlayManager : Overlay, IFingerPointable {
 			uiButtons[i].SetSprite(buttons[i]);
 			int j = i;
 			uiButtons[i].ClearOneShots();
-			uiButtons[i].OneshotPress(()=> {CloseAction(actions[j]); });
+			uiButtons[i].OneshotPress(() => { CloseAction(actions[j]); });
 		}
 	}
 
@@ -102,7 +102,7 @@ public class DataOverlayManager : Overlay, IFingerPointable {
 	}
 
 	public void CloseAction(Callback cb) {
-		StartCoroutine(ToggleRoutine(false, showDuration, () => {root.SetActive(false); if (cb != null) cb(); }));
+		StartCoroutine(ToggleRoutine(false, showDuration, () => { root.SetActive(false); if (cb != null) cb(); }));
 	}
 
 	IEnumerator ToggleRoutine(bool on, float duration, Callback Done) {
@@ -137,7 +137,7 @@ public class DataOverlayManager : Overlay, IFingerPointable {
 			curtain.color = targetColor;
 		}
 		interrupt = false;
-		routineActive = false; 
+		routineActive = false;
 	}
 
 	public UIButton GetPointedButton() {
@@ -148,10 +148,10 @@ public class DataOverlayManager : Overlay, IFingerPointable {
 
 	public UIButton[] GetAllButtons() {
 
-        UIButton[] buttons = new UIButton[uiButtons.Count + 1];
-        for(int i = 0; i < uiButtons.Count; ++i)
-            buttons[i] = uiButtons[i];
-        buttons[buttons.Length - 1] = closeUIButton;
-        return buttons;
+		UIButton[] buttons = new UIButton[uiButtons.Count + 1];
+		for (int i = 0; i < uiButtons.Count; ++i)
+			buttons[i] = uiButtons[i];
+		buttons[buttons.Length - 1] = closeUIButton;
+		return buttons;
 	}
 }

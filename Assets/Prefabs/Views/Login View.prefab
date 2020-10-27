@@ -621,6 +621,7 @@ GameObject:
   - component: {fileID: 224750572513078460}
   - component: {fileID: 222078931367306668}
   - component: {fileID: 114795849401699562}
+  - component: {fileID: 3988856609800230331}
   m_Layer: 5
   m_Name: ErrorText
   m_TagString: Untagged
@@ -687,8 +688,40 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Please open the parental options. Then start your free trial or purchase
-    the subscription.
+  m_Text: 
+--- !u!114 &3988856609800230331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1459240510777970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: GUID:9abf2e4dee815df4c89104a7998d8b47
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: 
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 114795849401699562}
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1518578369477032
 GameObject:
   m_ObjectHideFlags: 0
@@ -700,6 +733,7 @@ GameObject:
   - component: {fileID: 224208479503294610}
   - component: {fileID: 222533749409841558}
   - component: {fileID: 114516912156502500}
+  - component: {fileID: 208241597722341889}
   m_Layer: 5
   m_Name: Placeholder
   m_TagString: Untagged
@@ -766,7 +800,40 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Username/Email...
+  m_Text: username
+--- !u!114 &208241597722341889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1518578369477032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: GUID:9abf2e4dee815df4c89104a7998d8b47
+    m_TableEntryReference:
+      m_KeyId: 1224965785755648
+      m_Key: 
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 114516912156502500}
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1611012248981126
 GameObject:
   m_ObjectHideFlags: 0
@@ -856,6 +923,7 @@ GameObject:
   - component: {fileID: 224334951447440546}
   - component: {fileID: 222381403304539992}
   - component: {fileID: 114439923278494334}
+  - component: {fileID: 1048759340743315776}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -922,7 +990,40 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Play
+  m_Text: play
+--- !u!114 &1048759340743315776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1638920372596598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: GUID:9abf2e4dee815df4c89104a7998d8b47
+    m_TableEntryReference:
+      m_KeyId: 333577560064
+      m_Key: 
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 114439923278494334}
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1696237437443992
 GameObject:
   m_ObjectHideFlags: 0
@@ -934,6 +1035,7 @@ GameObject:
   - component: {fileID: 224352642819417010}
   - component: {fileID: 222644521713820502}
   - component: {fileID: 114484577946905384}
+  - component: {fileID: 1842518688632736634}
   m_Layer: 5
   m_Name: Placeholder
   m_TagString: Untagged
@@ -1000,7 +1102,40 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Password...
+  m_Text: password
+--- !u!114 &1842518688632736634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1696237437443992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: GUID:9abf2e4dee815df4c89104a7998d8b47
+    m_TableEntryReference:
+      m_KeyId: 1224914573303808
+      m_Key: 
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 114484577946905384}
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1745012150171524
 GameObject:
   m_ObjectHideFlags: 0
@@ -1521,6 +1656,7 @@ GameObject:
   - component: {fileID: 2408375812078756329}
   - component: {fileID: 8333178980637109269}
   - component: {fileID: 9054252710006295338}
+  - component: {fileID: 1410767378687621753}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -1587,7 +1723,40 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Connecting to the store...
+  m_Text: connect_store
+--- !u!114 &1410767378687621753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2496598250714082444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: GUID:9abf2e4dee815df4c89104a7998d8b47
+    m_TableEntryReference:
+      m_KeyId: 1222346904281088
+      m_Key: 
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 9054252710006295338}
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2628372554404616373
 GameObject:
   m_ObjectHideFlags: 0
@@ -1599,6 +1768,7 @@ GameObject:
   - component: {fileID: 7749984470953030875}
   - component: {fileID: 5167560746580004013}
   - component: {fileID: 4568023726725697147}
+  - component: {fileID: 2589036809512270593}
   m_Layer: 5
   m_Name: Label
   m_TagString: Untagged
@@ -1665,7 +1835,40 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Remember me
+  m_Text: remember_me
+--- !u!114 &2589036809512270593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2628372554404616373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: GUID:9abf2e4dee815df4c89104a7998d8b47
+    m_TableEntryReference:
+      m_KeyId: 1224877566959616
+      m_Key: 
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4568023726725697147}
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4632828077766532030
 GameObject:
   m_ObjectHideFlags: 0
@@ -1722,6 +1925,7 @@ GameObject:
   - component: {fileID: 4274406264780992199}
   - component: {fileID: 3877176730421530726}
   - component: {fileID: 190923938849178954}
+  - component: {fileID: 3207532909135024905}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -1788,8 +1992,40 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: To activate parental options, write the word parent to the username field
-    and click this text.
+  m_Text: parent_tip
+--- !u!114 &3207532909135024905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4896949209391669623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: GUID:9abf2e4dee815df4c89104a7998d8b47
+    m_TableEntryReference:
+      m_KeyId: 1223415612940288
+      m_Key: 
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 190923938849178954}
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &6771492431338285373
 GameObject:
   m_ObjectHideFlags: 0

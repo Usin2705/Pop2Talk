@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using UnityEngine.Localization.Components;
 
 public class SubscriptionView : View, IPurchaseListener {
 
@@ -14,8 +15,8 @@ public class SubscriptionView : View, IPurchaseListener {
 	[SerializeField] Text priceText = null;
 	[SerializeField] Text subText = null;
 
-	string googleText = "A subscription is required to play Pop2Talk from this device. The subscription is monthly and charged automatically, and uses the standard Google Play Store terms and conditions and cancellation policies. On your first subscription, you gain a 3-day free trial before you are charged anything. You can cancel the subscription during this free trial period and won't be charged once it ends.";
-	string iosText = "A subscription is required to play Pop2Talk from this device. The subscription is monthly and charged automatically, and uses the standard App Store terms and conditions and cancellation policies. On your first subscription, you gain a 3-day free trial before you are charged anything. You can cancel the subscription during this free trial period and won't be charged once it ends.";
+	string googleEntry = "google_entry";
+	string iosEntry = "ios_entry";
 
 	int googleSize = 67;
 	int iosSize = 67;
@@ -32,12 +33,12 @@ public class SubscriptionView : View, IPurchaseListener {
 		});
 		priceTextBase = priceText.text;
 #if UNITY_ANDROID
-		subText.text = googleText;
-		subText.fontSize = googleSize;
+		subText.fontSize = iosSize;
+		subText.GetComponent<LocalizeStringEvent>().StringReference.TableEntryReference = googleEntry;
 #endif
 #if UNITY_IOS
-		subText.text = iosText;
 		subText.fontSize = iosSize;
+		subText.GetComponent<LocalizeStringEvent>().StringReference.TableEntryReference = iosEntry;
 #endif
 	}
 

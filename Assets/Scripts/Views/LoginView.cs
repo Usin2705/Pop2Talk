@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Localization.Components;
 
 public class LoginView : View {
 
@@ -65,15 +66,13 @@ public class LoginView : View {
 		if (usernameField.text != "" && passwordField.text != "") {
 			if (IsValidEmail(usernameField.text)) {
 				if (!PurchaseMaster.Instance.Subscribed) {
-					errorText.gameObject.SetActive(true);
-					errorText.text = "Please open the parental options. Then start your free trial or purchase the subscription.";
+					ShowError("error_parent");
 					return;
 				}
 			}
 			Online(ConnectedOnline);
 		} else {
-			errorText.gameObject.SetActive(true);
-			errorText.text = "Please enter your username and password.";
+			ShowError("error_name");
 		}
 	}
 
@@ -161,6 +160,11 @@ public class LoginView : View {
 		if (usernameField.text.ToLower() == "parent") {
 			ViewManager.GetManager().ShowView(parentView);
 		}
+	}
+
+	void ShowError(string key) {
+		errorText.gameObject.SetActive(true);
+		errorText.GetComponent<LocalizeStringEvent>().StringReference.TableEntryReference = key;
 	}
 
 	public override void Back() {

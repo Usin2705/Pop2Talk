@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: ParentViewTable_en-GB
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en-GB
+  m_SharedData: {fileID: 11400000, guid: 5322ebed412b1694a943dda2d0fc4006, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 9852788736
+    m_Localized: Parental Options
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45969940480
+    m_Localized: Terms of Service
+    m_Metadata:
+      m_Items: []
+  - m_Id: 149388894208
+    m_Localized: Privacy Policy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 231366565888
+    m_Localized: Restore Purchases
+    m_Metadata:
+      m_Items: []
+  - m_Id: 344461778944
+    m_Localized: Subscribe or Start Free Trial
+    m_Metadata:
+      m_Items: []
+  - m_Id: 583193174016
+    m_Localized: Create an Account
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1329980612608
+    m_Localized: Reset Password
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1373165166592
+    m_Localized: This device has an active subscription.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 189164100624384
+    m_Localized: This device doesn't have an active subscription
+    m_Metadata:
+      m_Items: []
+  - m_Id: 189603441385472
+    m_Localized: Failed to restore purchases.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 235537932066816
+    m_Localized: Password is not strong enough. Please ensure that it is longer than
+      4 characters.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 235516394315776
+    m_Localized: The passwords must match!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 236365757652992
+    m_Localized: Reset code is not valid!
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 1
