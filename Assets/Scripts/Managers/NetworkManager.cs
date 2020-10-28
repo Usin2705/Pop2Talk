@@ -6,6 +6,7 @@ using System;
 using UnityEngine.UI;
 using System.Reflection;
 using socket.io;
+using UnityEngine.Localization.Components;
 
 public class NetworkManager : MonoBehaviour {
 
@@ -469,15 +470,16 @@ public class NetworkManager : MonoBehaviour {
 
 			if (www.downloadHandler.text == "invalid credentials") {
 				Debug.Log("invalid credentials");
-				errorText.text = "Invalid username/password";
 				errorText.gameObject.SetActive(true);
+				errorText.GetComponent<LocalizeStringEvent>().StringReference.TableEntryReference = "error_invalid";
+				
 				yield break;
 			}
 
 			if (www.downloadHandler.text == "this account uses auth0") {
 				Debug.Log("this account uses auth0");
-				errorText.text = "User account not found. Please log in using Google";
 				errorText.gameObject.SetActive(true);
+				errorText.GetComponent<LocalizeStringEvent>().StringReference.TableEntryReference = "error_auth0";
 				yield break;
 			}
 

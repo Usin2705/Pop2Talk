@@ -25,9 +25,7 @@ public class DoorCurtainManager : MonoBehaviour {
 
 	void Awake() {
 		dcm = this;
-		leftCurtain.gameObject.SetActive(true);
-		rightCurtain.gameObject.SetActive(true);
-		OpenDoors(null);
+		CloseDoors(() => { OpenDoors(null); }, 0, 0.1f);
 	}
 
 	public void CloseDoors(Callback Done) {
@@ -62,7 +60,10 @@ public class DoorCurtainManager : MonoBehaviour {
 			AudioMaster.Instance.Play(this, (open) ? SoundEffectManager.GetManager().GetOpenSound() : SoundEffectManager.GetManager().GetCloseSound());
 
 		while (openRatio != targetAmount) {
-			openRatio = Mathf.MoveTowards(openRatio, targetAmount, Time.deltaTime / duration);
+			if (duration < 0)
+				openRatio = targetAmount;
+			else
+				openRatio = Mathf.MoveTowards(openRatio, targetAmount, Time.deltaTime / duration);
 			leftCurtain.localPosition = Vector3.Lerp(leftStart.localPosition, Vector3.zero, openRatio);
 			rightCurtain.localPosition = Vector3.Lerp(rightStart.localPosition, Vector3.zero, openRatio);
 			yield return null;

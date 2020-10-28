@@ -47,6 +47,14 @@ MonoBehaviour:
     m_Key: username
     m_Metadata:
       m_Items: []
+  - m_Id: 1848751224627200
+    m_Key: error_invalid
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1848864005267456
+    m_Key: error_auth0
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

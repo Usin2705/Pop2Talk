@@ -52,5 +52,13 @@ MonoBehaviour:
     m_Localized: Username/Email...
     m_Metadata:
       m_Items: []
+  - m_Id: 1848751224627200
+    m_Localized: Invalid username or password.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1848864005267456
+    m_Localized: User account not found.
+    m_Metadata:
+      m_Items: []
   references:
     version: 1
