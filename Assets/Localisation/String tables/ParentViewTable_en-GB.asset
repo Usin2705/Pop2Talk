@@ -51,7 +51,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 189164100624384
-    m_Localized: This device doesn't have an active subscription
+    m_Localized: This device doesn't have an active subscription.
     m_Metadata:
       m_Items: []
   - m_Id: 189603441385472

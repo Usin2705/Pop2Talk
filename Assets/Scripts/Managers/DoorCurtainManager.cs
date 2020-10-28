@@ -16,7 +16,7 @@ public class DoorCurtainManager : MonoBehaviour {
 	[SerializeField] RectTransform leftStart = null;
 	[SerializeField] RectTransform rightStart = null;
 
-	float openRatio = 0;
+	float openRatio = 1;
 	Coroutine openRoutine;
 
 	public static DoorCurtainManager GetManager() {
@@ -25,6 +25,9 @@ public class DoorCurtainManager : MonoBehaviour {
 
 	void Awake() {
 		dcm = this;
+		leftCurtain.gameObject.SetActive(true);
+		rightCurtain.gameObject.SetActive(true);
+		OpenDoors(null);
 	}
 
 	public void CloseDoors(Callback Done) {
@@ -49,12 +52,12 @@ public class DoorCurtainManager : MonoBehaviour {
 
 	IEnumerator DoorRoutine(bool open, Callback Done, float duration, float pause) {
 		float targetAmount = (open) ? 0 : 1;
+		yield return null;
 		if (!open) {
 			leftCurtain.gameObject.SetActive(true);
 			rightCurtain.gameObject.SetActive(true);
 
 		}
-
 		if (SoundEffectManager.GetManager() != null)
 			AudioMaster.Instance.Play(this, (open) ? SoundEffectManager.GetManager().GetOpenSound() : SoundEffectManager.GetManager().GetCloseSound());
 
@@ -69,6 +72,6 @@ public class DoorCurtainManager : MonoBehaviour {
 			rightCurtain.gameObject.SetActive(false);
 		}
 		yield return new WaitForSeconds (pause);
-		Done();
+		Done?.Invoke();
 	}
 }
