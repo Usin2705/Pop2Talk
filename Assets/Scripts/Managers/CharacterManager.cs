@@ -37,7 +37,6 @@ public class CharacterManager : Overlay {
 			} else {
 				CurrentCharacter = characters[index];
 				character.sprite = CurrentCharacter.characterSprite;
-				NetworkManager.GetManager().UpdateCharacter(index);
 				if (sendToServer)
 					NetworkManager.GetManager().UpdateCharacter(index);
 			}
