@@ -10,8 +10,8 @@ public class CurrencyMaster : MonoBehaviour {
 
 	public int LootLevel { get; set; }
 
-	public float minGamesToChest = 3;
-	public float maxGamesToChest = 8;
+	public float minGamesToChest = 2;
+	public float maxGamesToChest = 6;
 
 	public static CurrencyMaster Instance {
 		get {

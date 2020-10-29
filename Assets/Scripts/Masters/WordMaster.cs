@@ -152,7 +152,7 @@ public class WordMaster : MonoBehaviour {
 		if (data != null) {
 			stringWordDataDictionary.Add(word, data);
 		} else {
-			Debug.Log(word);
+			Debug.Log("Word not found: " + word);
 		}
 		return data;
 	}
@@ -184,5 +184,9 @@ public class WordMaster : MonoBehaviour {
 	public void SetLargestModuleIndex(int module) {
 		if (module > LargestModuleIndex)
 			LargestModuleIndex = module;
+	}
+
+	public string[] GetSampleWords() {
+		return sampleWords;
 	}
 }
