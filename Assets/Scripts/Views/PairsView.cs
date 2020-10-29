@@ -16,7 +16,7 @@ public class PairsView : View, IMinigame {
 
 	int maxPairs = 6;
 
-	WordData[] words;
+	List<WordData> words;
 	Dictionary<FlipCard, WordData> pairs = new Dictionary<FlipCard, WordData>();
 	int movingCards;
 	int correctCards;
@@ -32,9 +32,14 @@ public class PairsView : View, IMinigame {
 	public override void Activate() {
 		base.Activate();
 		string[] samples = WordMaster.Instance.GetSampleWords();
-		words = new WordData[Mathf.Min(maxPairs, samples.Length)];
-		for (int i = 0; i < words.Length; ++i) {
-			words[i] = WordMaster.Instance.StringToWordData(samples[i]);
+		Debug.Log("Samples length: " + samples.Length);
+		words = new List<WordData>();
+		WordData data;
+		int pairs = Mathf.Min(maxPairs, samples.Length);
+		for (int i = 0; i < pairs; ++i) {
+			data = WordMaster.Instance.StringToWordData(samples[i]);
+			if (data != null)
+				words.Add(data);
 		}
 		PrepareCards();
 	}
@@ -42,12 +47,12 @@ public class PairsView : View, IMinigame {
 	void PrepareCards() {
 		Transform cardRoot = null;
 		InputManager.GetManager().SendingInputs = false;
-		Vector3[] positions = FlipCard.GetCardPositions(center, words.Length * 2);
+		Vector3[] positions = FlipCard.GetCardPositions(center, words.Count * 2);
 		positions.Shuffle();
 		movingCards = positions.Length;
 		cardOne = null;
 		cardTwo = null;
-		for (int i = 0; i < words.Length; ++i) {
+		for (int i = 0; i < words.Count; ++i) {
 			for (int j = 0; j < 2; ++j) {
 				FlipCard pairCard = Instantiate(pairPrefab, cardRoot).GetComponent<FlipCard>(); //nonoptimized to get around lambda weirdness
 				pairCard.transform.position = center;
@@ -58,6 +63,8 @@ public class PairsView : View, IMinigame {
 				pairs.Add(pairCard, words[i]);
 			}
 		}
+		if (words.Count == 0)
+			ShowCoins();
 	}
 
 	void CardClicked(FlipCard card) {
@@ -82,10 +89,7 @@ public class PairsView : View, IMinigame {
 			correctCards += 2;
 			if (correctCards == pairs.Count) {
 				yield return new WaitForSeconds(0.5f);
-				int coins = CurrencyMaster.Instance.GetLootLevelCoins(CurrencyMaster.Instance.LootLevel);
-				CurrencyMaster.Instance.ModifyCoins(coins);
-				GameMaster.Instance.CompleteCount = 0;
-				UnlockOverlay.Instance.ShowUnlock(sortingOrder, IconManager.GetManager().coinIcon, coins.ToString(), GotoShipHub);
+				ShowCoins();
 			}
 			cardOne = null;
 			cardTwo = null;
@@ -94,6 +98,13 @@ public class PairsView : View, IMinigame {
 			cardOne.Rotate(false, () => { cardOne = null; });
 			cardTwo.Rotate(false, () => { cardTwo = null; });
 		}
+	}
+
+	void ShowCoins() {
+		int coins = CurrencyMaster.Instance.GetLootLevelCoins(CurrencyMaster.Instance.LootLevel);
+		CurrencyMaster.Instance.ModifyCoins(coins);
+		GameMaster.Instance.CompleteCount = 0;
+		UnlockOverlay.Instance.ShowUnlock(sortingOrder, IconManager.GetManager().coinIcon, coins.ToString(), GotoShipHub);
 	}
 
 	void CardTargetReached() {

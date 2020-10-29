@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FlipCard : Interactable {
 
-	[SerializeField] SpriteRenderer spriteRenderer;
+	[SerializeField] SpriteRenderer spriteRenderer = null;
 
 	Sprite frontSprite;
 	Sprite backSprite;
@@ -36,12 +36,7 @@ public class FlipCard : Interactable {
 		backSprite = back;
 		UpdateSprite();
 	}
-
-	void Awake() {
-		if (spriteRenderer == null)
-			spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-	}
-
+	
 	void Update() {
 		if (!targetReached && speed > 0) {
 			if (delay > 0)

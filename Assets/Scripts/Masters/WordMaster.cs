@@ -152,7 +152,7 @@ public class WordMaster : MonoBehaviour {
 		if (data != null) {
 			stringWordDataDictionary.Add(word, data);
 		} else {
-			Debug.Log(word);
+			Debug.Log("Word not found: " + word);
 		}
 		return data;
 	}

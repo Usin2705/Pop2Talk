@@ -58,7 +58,7 @@ public class TravelView : View {
 		backButton.SubscribePress(Back);
 		upperPlanetButton.SubscribePress(() => { PlanetPressed(0); });
 		lowerPlanetButton.SubscribePress(() => { PlanetPressed(1); });
-		GameMaster.Instance.CompleteCount = minigameThreshold;//Random.Range(0, 3);
+		GameMaster.Instance.CompleteCount = Random.Range(0, Mathf.CeilToInt(minigameThreshold/2f));
 	}
 
 	public override void Activate() {
