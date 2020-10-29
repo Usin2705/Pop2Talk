@@ -5,14 +5,14 @@ using UnityEngine.UI;
 
 public class PairsView : View, IMinigame {
 
-	[SerializeField] View shipHub;
-	[SerializeField] GameObject pairPrefab;
-	[SerializeField] Sprite backSprite;
-	[SerializeField] float moveSpeed;
-	[SerializeField] Vector3 scale;
-	[SerializeField] Vector3 center;
+	[SerializeField] View shipHub = null;
+	[SerializeField] GameObject pairPrefab = null;
+	[SerializeField] Sprite backSprite = null;
+	[SerializeField] float moveSpeed = 0;
+	[SerializeField] Vector3 scale = Vector3.zero;
+	[SerializeField] Vector3 center = Vector3.zero;
 	[Space]
-	[SerializeField] UIButton backButton;
+	[SerializeField] UIButton backButton = null;
 
 	int maxPairs = 6;
 

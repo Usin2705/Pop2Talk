@@ -5,12 +5,14 @@ using UnityEngine.UI;
 
 public class UnlockOverlay : Overlay {
 
-	[SerializeField] GameObject screen;
-	[SerializeField] Image whiteCurtain;
-	[SerializeField] Image textlessImage;
-	[SerializeField] Image textImage;
-	[SerializeField] Text amountText;
-	[SerializeField] UIButton button;
+	[SerializeField] GameObject screen = null;
+	[SerializeField] Image whiteCurtain = null;
+	[SerializeField] Image midImage = null;
+	[SerializeField] Image topImage = null;
+	[SerializeField] Image botImage = null;
+	[SerializeField] Image textImage = null;
+	[SerializeField] Text amountText = null;
+	[SerializeField] UIButton button = null;
 
 	Callback ClickCallback;
 
@@ -23,19 +25,39 @@ public class UnlockOverlay : Overlay {
 		button.SubscribePress(ButtonPressed);
 	}
 
-	public void ShowUnlock(int order, Sprite sprite, Callback Click) {
+	public void ShowUnlock(int order, Sprite sprite, Callback click) {
+		botImage.gameObject.SetActive(false);
+		topImage.gameObject.SetActive(false);
+		ShowUnlock(order, sprite, click, midImage);
+	}
+
+	public void ShowTopUnlock(int order, Sprite sprite, Callback click) {
+		botImage.gameObject.SetActive(false);
+		midImage.gameObject.SetActive(false);
+		ShowUnlock(order, sprite, click, topImage);
+	}
+
+	public void ShowBotUnlock(int order, Sprite sprite, Callback click) {
+		topImage.gameObject.SetActive(false);
+		midImage.gameObject.SetActive(false);
+		ShowUnlock(order, sprite, click, botImage);
+	}
+
+	void ShowUnlock(int order, Sprite sprite, Callback Click, Image image) {
 		SetOrder(order);
-		textlessImage.gameObject.SetActive(true);
+		image.gameObject.SetActive(true);
 		textImage.gameObject.SetActive(false);
 		amountText.gameObject.SetActive(false);
-		textlessImage.sprite = sprite;
+		image.sprite = sprite;
 		ClickCallback = Click;
 		StartCoroutine(ShowUnlockRoutine());
 	}
 
 	public void ShowUnlock(int order, Sprite sprite, string text, Callback Click) {
 		SetOrder(order);
-		textlessImage.gameObject.SetActive(false);
+		topImage.gameObject.SetActive(false);
+		midImage.gameObject.SetActive(false);
+		botImage.gameObject.SetActive(false);
 		textImage.gameObject.SetActive(true);
 		amountText.gameObject.SetActive(true);
 		amountText.text = text;

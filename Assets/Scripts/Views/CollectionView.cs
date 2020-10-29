@@ -133,7 +133,7 @@ public class CollectionView : View {
 		equippedButtons.Remove(current);
 		equippedButtons.Add(cosmetic, collectedButtons[cosmetic]);
 		CosmeticManager.GetManager().EquipCosmetic(cosmetic.Id);
-		equippedImage.sprite = CosmeticManager.GetManager().GetEquippedCosmetic(CosmeticSlot.ShipTop).sprite;
+		UpdateEquippedImages();
 	}
 
 	public override void Back() {

@@ -71,8 +71,14 @@ public class StoreView : View {
 			box.transform.position = start;
 			//lootboxButtons[index].TogglePrice(true);
 		}
+		Cosmetic c = CosmeticManager.GetManager().UnlockCosmeticFromBox(StoreManager.GetManager().GetBoxes()[index]);
 
-		UnlockOverlay.Instance.ShowUnlock(sortingOrder, CosmeticManager.GetManager().UnlockCosmeticFromBox(StoreManager.GetManager().GetBoxes()[index]), null);
+		if (c.slot == CosmeticSlot.ShipBottom)
+			UnlockOverlay.Instance.ShowBotUnlock(sortingOrder, c.icon, null);
+		else if (c.slot == CosmeticSlot.ShipTop)
+			UnlockOverlay.Instance.ShowTopUnlock(sortingOrder, c.icon, null);
+		else
+			UnlockOverlay.Instance.ShowUnlock(sortingOrder, c.icon, null);
 	}
 
 	public override void Back() {

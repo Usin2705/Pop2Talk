@@ -89,10 +89,10 @@ public class CosmeticManager : MonoBehaviour {
 		}
 	}
 
-	public Sprite UnlockCosmeticFromBox(LootBoxSettings box) {
+	public Cosmetic UnlockCosmeticFromBox(LootBoxSettings box) {
 		string id = box.cosmeticIds.GetRandom();
 		UnlockCosmetic(id);
-		return GetCosmetic(id).sprite;
+		return GetCosmetic(id);
 	}
 
 	public void UnlockCosmetic(string[] ids) {

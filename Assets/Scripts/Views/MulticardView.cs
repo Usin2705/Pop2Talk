@@ -5,13 +5,13 @@ using UnityEngine.UI;
 
 public class MulticardView : View, IMinigame {
 
-	[SerializeField] View shipHub;
-	[SerializeField] GameObject cardPrefab;
-	[SerializeField] Vector3 scale;
-	[SerializeField] Vector3 center;
-	[SerializeField] Sprite[] cardBacks;
+	[SerializeField] View shipHub = null;
+	//[SerializeField] GameObject cardPrefab = null;
+	[SerializeField] Vector3 scale = Vector3.zero;
+	[SerializeField] Vector3 center = Vector3.zero;
+	[SerializeField] Sprite[] cardBacks = null;
 	[Space]
-	[SerializeField] UIButton backButton;
+	[SerializeField] UIButton backButton = null;
 	
 
 	protected override void Initialize() {
