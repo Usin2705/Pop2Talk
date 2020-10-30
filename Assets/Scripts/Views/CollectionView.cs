@@ -41,7 +41,6 @@ public class CollectionView : View {
 
 	void ShowCollections() {
 		Dictionary<CosmeticSlot, string> equippedIDs = CosmeticManager.GetManager().GetEquippedIDs();
-		equippedButtons = new Dictionary<Cosmetic, UIButton>();
 
 		Cosmetic[] cosmetics = CosmeticManager.GetManager().GetUnlockedCosmetics();
 		for (int i = 0; i < cosmetics.Length; ++i) {
@@ -56,7 +55,7 @@ public class CollectionView : View {
 				prefab = bottomButtonPrefab;
 
 			UIButton button = Instantiate(prefab, collectionGridPage.GetNextParent((int)cosmetics[i].slot)).GetComponent<UIButton>();
-				collectedButtons.Add(cosmetics[i], button);
+			collectedButtons.Add(cosmetics[i], button);
 			if (equippedIDs[cosmetics[i].slot] == cosmetics[i].Id) {
 				button.Press();
 				equippedButtons.Add(cosmetics[i], button);
@@ -129,10 +128,13 @@ public class CollectionView : View {
 				break;
 			}
 		}
+		Debug.Log(current);
+		Debug.Log(equippedButtons[current]);
 		equippedButtons[current].Deselect();
 		equippedButtons.Remove(current);
 		equippedButtons.Add(cosmetic, collectedButtons[cosmetic]);
 		CosmeticManager.GetManager().EquipCosmetic(cosmetic.Id);
+		//Debug.Log(equipped)
 		UpdateEquippedImages();
 	}
 
