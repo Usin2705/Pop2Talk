@@ -25,30 +25,30 @@ public class DoorCurtainManager : MonoBehaviour {
 
 	void Awake() {
 		dcm = this;
-		CloseDoors(() => { OpenDoors(null); }, 0, 0.1f);
+		CloseDoors(() => { OpenDoors(null, false); }, 0, 0.1f, false);
 	}
 
-	public void CloseDoors(Callback Done) {
-		CloseDoors(Done, closeDuration, closePause);
+	public void CloseDoors(Callback Done, bool playSound = true) {
+		CloseDoors(Done, closeDuration, closePause, playSound);
 	}
 
-	public void CloseDoors(Callback Done, float duration, float pause) {
-		ToggleDoor(false, Done, duration, pause);
+	public void CloseDoors(Callback Done, float duration, float pause, bool playSound) {
+		ToggleDoor(false, Done, duration, pause, playSound);
 	}
 
-	public void OpenDoors(Callback Done) {
-		OpenDoors(Done, openDuration, openPause);
+	public void OpenDoors(Callback Done, bool playSound = true) {
+		OpenDoors(Done, openDuration, openPause, playSound);
 	}
 
-	public void OpenDoors(Callback Done, float duration, float pause) {
-		ToggleDoor(true, Done, duration, pause);
+	public void OpenDoors(Callback Done, float duration, float pause, bool playSound) {
+		ToggleDoor(true, Done, duration, pause, playSound);
 	}
 
-	void ToggleDoor(bool open, Callback Done, float duration, float pause) {
-		StartCoroutine(DoorRoutine(open, Done, duration, pause));
+	void ToggleDoor(bool open, Callback Done, float duration, float pause, bool playSound) {
+		StartCoroutine(DoorRoutine(open, Done, duration, pause, playSound));
 	}
 
-	IEnumerator DoorRoutine(bool open, Callback Done, float duration, float pause) {
+	IEnumerator DoorRoutine(bool open, Callback Done, float duration, float pause, bool playSound) {
 		float targetAmount = (open) ? 0 : 1;
 		yield return null;
 		if (!open) {
@@ -56,7 +56,7 @@ public class DoorCurtainManager : MonoBehaviour {
 			rightCurtain.gameObject.SetActive(true);
 
 		}
-		if (SoundEffectManager.GetManager() != null)
+		if (playSound && SoundEffectManager.GetManager() != null)
 			AudioMaster.Instance.Play(this, (open) ? SoundEffectManager.GetManager().GetOpenSound() : SoundEffectManager.GetManager().GetCloseSound());
 
 		while (openRatio != targetAmount) {

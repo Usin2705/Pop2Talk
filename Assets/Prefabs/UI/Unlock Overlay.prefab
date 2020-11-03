@@ -161,6 +161,7 @@ GameObject:
   - component: {fileID: 4656326917191271195}
   - component: {fileID: 4790014061752264550}
   - component: {fileID: 3400551303043760066}
+  - component: {fileID: 6862266469172813044}
   m_Layer: 5
   m_Name: Unlock Overlay
   m_TagString: Untagged
@@ -221,12 +222,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1080, y: 1920}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -268,6 +269,18 @@ MonoBehaviour:
   textImage: {fileID: 4213504141941191396}
   amountText: {fileID: 2704565275956767028}
   button: {fileID: 1354685166952266531}
+--- !u!114 &6862266469172813044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1629117011814320700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a1aa3e46dde693448cfbea917a9d6c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1829635287806667957
 GameObject:
   m_ObjectHideFlags: 0
