@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71511e391e529ce49bcc2f8dde81d752, type: 3}
   m_Name: Default Green Mid
   m_EditorClassIdentifier: 
-  slot: 2
+  slot: 1
   icon: {fileID: 21300000, guid: cbbe3d2d9cee6544daf79f443f23947d, type: 3}
   sprite: {fileID: 21300000, guid: cbbe3d2d9cee6544daf79f443f23947d, type: 3}
   extraSprites: []
-  uniqueId: b6d0111a-8bbc-473e-9a36-db6a4d4d6706
   idCopy: b6d0111a-8bbc-473e-9a36-db6a4d4d6706
+  uniqueId: b6d0111a-8bbc-473e-9a36-db6a4d4d6706
   reset: 0

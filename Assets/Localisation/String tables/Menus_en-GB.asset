@@ -23,8 +23,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1216565693751296
-    m_Localized: Please open the parental options. Then start your free trial or
-      purchase the subscription.
+    m_Localized: Start your free trial or purchase the subscription.
     m_Metadata:
       m_Items: []
   - m_Id: 1216591820070912
@@ -36,8 +35,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1223415612940288
-    m_Localized: To activate parental options, write the word <i>parent</i> in the
-      username field and click this text.
+    m_Localized: To register and manage subscriptions, write the word <i>parent</i>
+      in the username field and click this text.
     m_Metadata:
       m_Items: []
   - m_Id: 1224877566959616

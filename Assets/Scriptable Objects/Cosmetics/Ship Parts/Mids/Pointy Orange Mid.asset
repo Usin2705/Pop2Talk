@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71511e391e529ce49bcc2f8dde81d752, type: 3}
   m_Name: Pointy Orange Mid
   m_EditorClassIdentifier: 
-  slot: 2
+  slot: 1
   icon: {fileID: 21300000, guid: 5cdd7ef4c0517a740a2dc052e5df6cd9, type: 3}
   sprite: {fileID: 21300000, guid: 5cdd7ef4c0517a740a2dc052e5df6cd9, type: 3}
   extraSprites: []

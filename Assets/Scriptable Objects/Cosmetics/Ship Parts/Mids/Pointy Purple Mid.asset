@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71511e391e529ce49bcc2f8dde81d752, type: 3}
   m_Name: Pointy Purple Mid
   m_EditorClassIdentifier: 
-  slot: 2
+  slot: 1
   icon: {fileID: 21300000, guid: bbc906fe807b1e444a5058b50161c73f, type: 3}
   sprite: {fileID: 21300000, guid: bbc906fe807b1e444a5058b50161c73f, type: 3}
   extraSprites: []

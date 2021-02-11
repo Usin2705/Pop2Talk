@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71511e391e529ce49bcc2f8dde81d752, type: 3}
   m_Name: Maneki Gold Top
   m_EditorClassIdentifier: 
-  slot: 2
+  slot: 0
   icon: {fileID: 21300000, guid: 80f233803c65df04e959fe39c03a9503, type: 3}
   sprite: {fileID: 21300000, guid: 80f233803c65df04e959fe39c03a9503, type: 3}
-  uniqueId: 88483070-0643-4698-8c54-d11be3d5dd5f
+  extraSprites: []
   idCopy: 88483070-0643-4698-8c54-d11be3d5dd5f
+  uniqueId: 88483070-0643-4698-8c54-d11be3d5dd5f
   reset: 0

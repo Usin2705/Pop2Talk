@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71511e391e529ce49bcc2f8dde81d752, type: 3}
   m_Name: Maneki White Top
   m_EditorClassIdentifier: 
-  slot: 2
+  slot: 0
   icon: {fileID: 21300000, guid: 781cea63e9e10fa4c8847df0fef4e5b7, type: 3}
   sprite: {fileID: 21300000, guid: 781cea63e9e10fa4c8847df0fef4e5b7, type: 3}
-  uniqueId: e8d29fcc-de3b-4ee5-a557-0a96222fc06d
+  extraSprites: []
   idCopy: e8d29fcc-de3b-4ee5-a557-0a96222fc06d
+  uniqueId: e8d29fcc-de3b-4ee5-a557-0a96222fc06d
   reset: 0

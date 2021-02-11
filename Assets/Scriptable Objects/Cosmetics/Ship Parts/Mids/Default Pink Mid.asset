@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71511e391e529ce49bcc2f8dde81d752, type: 3}
   m_Name: Default Pink Mid
   m_EditorClassIdentifier: 
-  slot: 2
+  slot: 1
   icon: {fileID: 21300000, guid: ad6173c21123a3d409c124a4a5a5c762, type: 3}
   sprite: {fileID: 21300000, guid: ad6173c21123a3d409c124a4a5a5c762, type: 3}
   extraSprites: []
-  uniqueId: c0053a14-998a-4abe-8786-ee9440e0dc65
   idCopy: c0053a14-998a-4abe-8786-ee9440e0dc65
+  uniqueId: c0053a14-998a-4abe-8786-ee9440e0dc65
   reset: 0

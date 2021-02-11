@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71511e391e529ce49bcc2f8dde81d752, type: 3}
   m_Name: Pointy Pink Top
   m_EditorClassIdentifier: 
-  slot: 2
+  slot: 0
   icon: {fileID: 21300000, guid: dbe681ce8744f85408f31bbfc73e86b7, type: 3}
   sprite: {fileID: 21300000, guid: dbe681ce8744f85408f31bbfc73e86b7, type: 3}
   extraSprites: []
