@@ -29,6 +29,18 @@ public class LoginView : View {
 	string usernameKey = "username";
 	string passwordKey = "password";
 
+	bool usedDeepLink;
+	bool tryingToConnect;
+	string delayOpenDeepLink;
+
+	void Awake() {
+		if (!string.IsNullOrEmpty(Application.absoluteURL)) {
+			DeepLinkOpen(Application.absoluteURL);
+		}
+
+		Application.deepLinkActivated += DeepLinkDelayedOpen;
+	}
+
 	protected override void Initialize() {
 		base.Initialize();
 
@@ -42,7 +54,7 @@ public class LoginView : View {
 	public override void Activate() {
 		base.Activate();
 		errorText.gameObject.SetActive(false);
-		if (EncryptedPlayerPrefs.GetInt(rememberKey, 0) == 1) {
+		if (!usedDeepLink && EncryptedPlayerPrefs.GetInt(rememberKey, 0) == 1) {
 			rememberToggle.isOn = true;
 			usernameField.text = EncryptedPlayerPrefs.GetString(usernameKey);
 			passwordField.text = EncryptedPlayerPrefs.GetString(passwordKey);
@@ -60,6 +72,9 @@ public class LoginView : View {
 			}
 		}
 
+		if (delayOpenDeepLink != "") {
+			DeepLinkOpen(delayOpenDeepLink);
+		}
 	}
 
 	void GameOnline() {
@@ -109,10 +124,12 @@ public class LoginView : View {
 	}
 
 	IEnumerator ConnectWait(Callback Connected) {
+		tryingToConnect = true;
 		NetworkManager.GetManager().ServerWait(true);
 		while (!NetworkManager.GetManager().Connected)
 			yield return null;
 		NetworkManager.GetManager().ServerWait(false);
+		tryingToConnect = false;
 		Connected();
 	}
 
@@ -139,7 +156,7 @@ public class LoginView : View {
 			EncryptedPlayerPrefs.SetInt(rememberKey, 1);
 			EncryptedPlayerPrefs.SetString(usernameKey, usernameField.text);
 			EncryptedPlayerPrefs.SetString(passwordKey, passwordField.text);
-		} else {
+		} else if (!usedDeepLink) {
 			EncryptedPlayerPrefs.SetInt(rememberKey, 0);
 			if (EncryptedPlayerPrefs.HasKey(usernameKey))
 				EncryptedPlayerPrefs.DeleteKey(usernameKey);
@@ -165,6 +182,27 @@ public class LoginView : View {
 	void ShowError(string key) {
 		errorText.gameObject.SetActive(true);
 		errorText.GetComponent<LocalizeStringEvent>().StringReference.TableEntryReference = key;
+	}
+	
+	void DeepLinkDelayedOpen(string url) {//Updating text from non-main thread doesn't update the visuals correctly
+		delayOpenDeepLink = url;
+	}
+
+	void DeepLinkOpen(string url) {
+		delayOpenDeepLink = "";
+		StartCoroutine(DeepLinkRoutine(url));
+	}
+
+	IEnumerator DeepLinkRoutine(string url) {
+		usedDeepLink = true;
+		while (!initialized || tryingToConnect || NetworkManager.GetManager().Connected)
+			yield return null;
+		string[] loginData = url.Split('?');
+		if (loginData.Length >= 1)
+			usernameField.text = loginData[1];
+		if (loginData.Length >= 2)
+			passwordField.text = loginData[2];
+		rememberToggle.isOn = false;
 	}
 
 	public override void Back() {

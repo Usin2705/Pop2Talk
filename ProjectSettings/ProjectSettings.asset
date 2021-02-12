@@ -119,8 +119,9 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: 1.1.5
-  preloadedAssets: []
+  bundleVersion: 1.1.6
+  preloadedAssets:
+  - {fileID: 11400000, guid: c99cd6a036de86745bbcd45d0d2c1384, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -167,9 +168,9 @@ PlayerSettings:
     Standalone: com.Hokema.Pop2Talk
     iPhone: com.Hokema.Pop2Talk
   buildNumber:
-    Standalone: 10045
-    iPhone: 10045
-  AndroidBundleVersionCode: 10045
+    Standalone: 10046
+    iPhone: 10046
+  AndroidBundleVersionCode: 10046
   AndroidMinSdkVersion: 19
   AndroidTargetSdkVersion: 0
   AndroidPreferredInstallLocation: 0
@@ -241,7 +242,8 @@ PlayerSettings:
   iOSUseLaunchScreenStoryboard: 0
   iOSLaunchScreenCustomStoryboardPath: 
   iOSDeviceRequirements: []
-  iOSURLSchemes: []
+  iOSURLSchemes:
+  - pop2talk
   iOSBackgroundModes: 0
   iOSMetalForceHardShadows: 0
   metalEditorSupport: 1
