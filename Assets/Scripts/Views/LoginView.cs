@@ -62,8 +62,9 @@ public class LoginView : View {
 	}
 
 	void Update() {
-		if (usernameField.isFocused || passwordField.isFocused)
+		if (usernameField.isFocused || passwordField.isFocused) {
 			errorText.gameObject.SetActive(false);
+		}
 
 		if (PurchaseMaster.Instance.Initialized) {
 			if (waitingStore.activeSelf) {
@@ -72,7 +73,7 @@ public class LoginView : View {
 			}
 		}
 
-		if (delayOpenDeepLink != "") {
+		if (!string.IsNullOrEmpty(delayOpenDeepLink)) {
 			DeepLinkOpen(delayOpenDeepLink);
 		}
 	}
@@ -189,18 +190,18 @@ public class LoginView : View {
 	}
 
 	void DeepLinkOpen(string url) {
-		delayOpenDeepLink = "";
+		delayOpenDeepLink = null;
 		StartCoroutine(DeepLinkRoutine(url));
 	}
 
 	IEnumerator DeepLinkRoutine(string url) {
 		usedDeepLink = true;
-		while (!initialized || tryingToConnect || NetworkManager.GetManager().Connected)
+		while (!initialized || tryingToConnect || (NetworkManager.GetManager() != null && NetworkManager.GetManager().Connected))
 			yield return null;
 		string[] loginData = url.Split('?');
-		if (loginData.Length >= 1)
-			usernameField.text = loginData[1];
 		if (loginData.Length >= 2)
+			usernameField.text = loginData[1];
+		if (loginData.Length >= 3)
 			passwordField.text = loginData[2];
 		rememberToggle.isOn = false;
 	}

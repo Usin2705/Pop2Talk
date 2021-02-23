@@ -20,7 +20,6 @@ public class FinishView : View {
 	[SerializeField] FinishStar finishStar = null;
 	[SerializeField] Image whiteCurtain = null;
 
-
 	protected override void Initialize() {
 		base.Initialize();
 		nextButton.SubscribePress(GotoShipHub);
@@ -40,10 +39,11 @@ public class FinishView : View {
 			GameMaster.Instance.GetDustRatio(GameMaster.Instance.SpaceDust));
 		if (increase == 0) {
 			prevButton.gameObject.SetActive(true);
+			NetworkManager.GetManager().LevelCompleted(GameMaster.Instance.CurrentLevel.name, false, false);
 		} else {
 			prevButton.gameObject.SetActive(false);
 			GameMaster.Instance.CompleteCount++;
-
+			NetworkManager.GetManager().LevelCompleted(GameMaster.Instance.CurrentLevel.name, true, false);
 		}
 		coinText.text = increase.ToString();
 	}
