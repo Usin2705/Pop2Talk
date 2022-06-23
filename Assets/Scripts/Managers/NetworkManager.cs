@@ -452,90 +452,92 @@ public class NetworkManager : MonoBehaviour {
 		form.AddField("username", username);
 		form.AddField("password", password);
 
-		UnityWebRequest www = UnityWebRequest.Post(url + login, form);
-		yield return www.SendWebRequest();
+		//UnityWebRequest www = UnityWebRequest.Post(url + login, form);
+		// yield return www.SendWebRequest();
+		yield return true;
 
+		// if (www.isNetworkError || www.isHttpError) {
+		// 	Debug.Log(www.error);
+		// 	if (www.downloadHandler.text != "") {
+		// 		errorText.text = www.downloadHandler.text;
+		// 	} else {
+		// 		errorText.text = "Network error: " + www.error;
+		// 	}
+		// 	errorText.gameObject.SetActive(true);
+		// 	throw new System.Exception(www.downloadHandler.text ?? www.error);
+		// } else {
+		// 	Debug.Log("Form upload complete!");
 
-		if (www.isNetworkError || www.isHttpError) {
-			Debug.Log(www.error);
-			if (www.downloadHandler.text != "") {
-				errorText.text = www.downloadHandler.text;
-			} else {
-				errorText.text = "Network error: " + www.error;
-			}
-			errorText.gameObject.SetActive(true);
-			throw new System.Exception(www.downloadHandler.text ?? www.error);
-		} else {
-			Debug.Log("Form upload complete!");
-
-			if (www.downloadHandler.text == "invalid credentials") {
-				Debug.Log("invalid credentials");
-				errorText.gameObject.SetActive(true);
-				errorText.GetComponent<LocalizeStringEvent>().StringReference.TableEntryReference = "error_invalid";
+		// 	if (www.downloadHandler.text == "invalid credentials") {
+		// 		Debug.Log("invalid credentials");
+		// 		errorText.gameObject.SetActive(true);
+		// 		errorText.GetComponent<LocalizeStringEvent>().StringReference.TableEntryReference = "error_invalid";
 				
-				yield break;
-			}
+		// 		yield break;
+		// 	}
 
-			if (www.downloadHandler.text == "this account uses auth0") {
-				Debug.Log("this account uses auth0");
-				errorText.gameObject.SetActive(true);
-				errorText.GetComponent<LocalizeStringEvent>().StringReference.TableEntryReference = "error_auth0";
-				yield break;
-			}
+		// 	if (www.downloadHandler.text == "this account uses auth0") {
+		// 		Debug.Log("this account uses auth0");
+		// 		errorText.gameObject.SetActive(true);
+		// 		errorText.GetComponent<LocalizeStringEvent>().StringReference.TableEntryReference = "error_auth0";
+		// 		yield break;
+		// 	}
 
-			user = JsonUtility.FromJson<UserData>(www.downloadHandler.text);
-			Debug.Log(www.downloadHandler.text);
-			var json = SimpleJSON.JSON.Parse(www.downloadHandler.text);
+			//user = JsonUtility.FromJson<UserData>(www.downloadHandler.text);
+			//Debug.Log(www.downloadHandler.text);
+			//var json = SimpleJSON.JSON.Parse(www.downloadHandler.text);
 			
 			WordMaster.Instance.ClearWords();
 
-			for (int i = 0; i < json["words"].Count; ++i) {
-				WordMaster.Instance.AddWord(json["words"][i]["word"].Value);
-			}
+			// for (int i = 0; i < json["words"].Count; ++i) {
+			// 	WordMaster.Instance.AddWord(json["words"][i]["word"].Value);
+			// }
 
-			for (int i = 0; i < json["game_state"]["wordHighscores"].Count; ++i) {
-				WordMaster.Instance.SetStarAmount(json["game_state"]["wordHighscores"][i]["word"].Value, json["game_state"]["wordHighscores"][i]["maxstars"].AsInt);
-			}
+			// for (int i = 0; i < json["game_state"]["wordHighscores"].Count; ++i) {
+			// 	WordMaster.Instance.SetStarAmount(json["game_state"]["wordHighscores"][i]["word"].Value, json["game_state"]["wordHighscores"][i]["maxstars"].AsInt);
+			// }
 
-			int module = 1;
-			for (int i = 0; i < json["game_state"]["availableModules"].Count; ++i) {
-				module = Mathf.Max(module, json["game_state"]["availableModules"][i]["module"].AsInt);
-			}
+			// int module = 1;
+			// for (int i = 0; i < json["game_state"]["availableModules"].Count; ++i) {
+			// 	module = Mathf.Max(module, json["game_state"]["availableModules"][i]["module"].AsInt);
+			// }
 
-			json["game_state"]["availableModules"] = "";
-			json["game_state"]["wordHighscores"] = "";
-			json["words"] = "";
+			// json["game_state"]["availableModules"] = "";
+			// json["game_state"]["wordHighscores"] = "";
+			// json["words"] = "";
 
-			Debug.Log(json);
+			//Debug.Log(json);
 
-			WordMaster.Instance.SetLargestModuleIndex(module);
+			//WordMaster.Instance.SetLargestModuleIndex(module);
+			WordMaster.Instance.SetLargestModuleIndex(1);
 
-			if (json["game_state"]["character"].ToString() != "")
-				CharacterManager.GetManager().SetCharacter(json["game_state"]["character"].AsInt, false);
+			// if (json["game_state"]["character"].ToString() != "")
+			// 	CharacterManager.GetManager().SetCharacter(json["game_state"]["character"].AsInt, false);
 
-			CurrencyMaster.Instance.SetCoins(json["game_state"]["coins"].AsInt);
+			//CurrencyMaster.Instance.SetCoins(json["game_state"]["coins"].AsInt);
+			CurrencyMaster.Instance.SetCoins(5);
 			
-			if (json["game_state"]["unlocked_cosmetics"].ToString() != "") {
-				for (int i = 0; i < json["game_state"]["unlocked_cosmetics"].Count; ++i) {
-					CosmeticManager.GetManager().UnlockCosmetic(json["game_state"]["unlocked_cosmetics"][i], false);
-				}
-			}
+			// if (json["game_state"]["unlocked_cosmetics"].ToString() != "") {
+			// 	for (int i = 0; i < json["game_state"]["unlocked_cosmetics"].Count; ++i) {
+			// 		CosmeticManager.GetManager().UnlockCosmetic(json["game_state"]["unlocked_cosmetics"][i], false);
+			// 	}
+			// }
 
-			if (json["game_state"]["equipped_cosmetics"].ToString() != "") {
-				for (int i = 0; i < json["game_state"]["equipped_cosmetics"].Count; ++i) {
-					CosmeticManager.GetManager().EquipCosmetic(json["game_state"]["equipped_cosmetics"][i], false);
-				}
-			}
+			// if (json["game_state"]["equipped_cosmetics"].ToString() != "") {
+			// 	for (int i = 0; i < json["game_state"]["equipped_cosmetics"].Count; ++i) {
+			// 		CosmeticManager.GetManager().EquipCosmetic(json["game_state"]["equipped_cosmetics"][i], false);
+			// 	}
+			// }
 
 			CosmeticManager.GetManager().CheckDefaultCosmetics();
 
-			if (user.consent) {
+			if (false) {
 				Connect();
 				StartCoroutine(CoroutineCallback);
 			} else {
 				Connected();
 			}
-		}
+		//}
 	}
 
 	public void UpdateCoins(int coins) {
@@ -546,9 +548,10 @@ public class NetworkManager : MonoBehaviour {
 
 		WWWForm form = new WWWForm();
 		form.AddField("coins", coins);
-		UnityWebRequest www = UnityWebRequest.Post(url + coinUpdate, form);
-		www.SetRequestHeader("Authorization", "Bearer " + user.access_token);
-		yield return www.SendWebRequest();
+		//UnityWebRequest www = UnityWebRequest.Post(url + coinUpdate, form);
+		//www.SetRequestHeader("Authorization", "Bearer " + user.access_token);
+		//yield return www.SendWebRequest();
+		yield return true;
 	}
 
 	public void GetWordList(Callback Done) {
@@ -558,27 +561,34 @@ public class NetworkManager : MonoBehaviour {
 	IEnumerator WordListRoutine(Callback Done) {
 
 		WWWForm form = new WWWForm();
-		UnityWebRequest www = UnityWebRequest.Post(url + getWordList, form);
-		www.SetRequestHeader("Authorization", "Bearer " + user.access_token);
-		yield return www.SendWebRequest();
-		Debug.Log(www.downloadHandler.text);
-		var json = SimpleJSON.JSON.Parse(www.downloadHandler.text);
+		//UnityWebRequest www = UnityWebRequest.Post(url + getWordList, form);
+		//www.SetRequestHeader("Authorization", "Bearer " + user.access_token);
+		//yield return www.SendWebRequest();
+		yield return true;
+		//Debug.Log(www.downloadHandler.text);
+		//var json = SimpleJSON.JSON.Parse(www.downloadHandler.text);
 
-		string[] words = new string[json["chosenWords"].Count];
+		//string[] words = new string[json["chosenWords"].Count];
+		string[] words = new string[1];
 		WordCardType[] types = new WordCardType[words.Length];
 
-		WordMaster.Instance.SetLargestModuleIndex(json["module"].AsInt);
+		//WordMaster.Instance.SetLargestModuleIndex(json["module"].AsInt);
+		WordMaster.Instance.SetLargestModuleIndex(1);
 
-		for (int i = 0; i < words.Length; ++i) {
-			words[i] = json["chosenWords"][i];
-			types[i] = (WordCardType) json["cardType"][i].AsInt;
-		}
+		// for (int i = 0; i < words.Length; ++i) {
+		// 	//words[i] = json["chosenWords"][i];
+		// 	//types[i] = (WordCardType) json["cardType"][i].AsInt;
+		// 	words[i] = json["chosenWords"][i];
+		// 	types[i] = (WordCardType) json["cardType"][i].AsInt;
+		// }
+		words[0] = "en_gb_animal";
+		types[0] = (WordCardType) 1;
 		WordMaster.Instance.SetSamples(types, words);
 		Done?.Invoke();
 	}
 
 	public void SendBestCardStar(string word, int score, int challenge) {
-		StartCoroutine(BestCardStarRoutine(word, score, challenge));
+		//StartCoroutine(BestCardStarRoutine(word, score, challenge));
 	}
 
 	IEnumerator BestCardStarRoutine(string word, int score, int challenge) {
@@ -593,7 +603,7 @@ public class NetworkManager : MonoBehaviour {
 	}
 
 	public void UpdateCharacter(int character) {
-		StartCoroutine(CharacterUpdateRoutine(character));
+		//StartCoroutine(CharacterUpdateRoutine(character));
 	}
 
 	IEnumerator CharacterUpdateRoutine(int character) {

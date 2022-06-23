@@ -80,15 +80,17 @@ public class LoginView : View {
 
 	void GameOnline() {
 		if (usernameField.text != "" && passwordField.text != "") {
+			/*
 			if (IsValidEmail(usernameField.text)) {
 				if (!PurchaseMaster.Instance.Subscribed) {
 					ShowError("error_parent");
 					return;
 				}
-			}
+			}*/
 			Online(ConnectedOnline);
 		} else {
-			ShowError("error_name");
+			Online(ConnectedOnline);
+			//ShowError("error_name");
 		}
 	}
 
