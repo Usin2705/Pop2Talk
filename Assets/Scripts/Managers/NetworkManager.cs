@@ -12,8 +12,8 @@ public class NetworkManager : MonoBehaviour
 
     static NetworkManager netWorkManager;
 
-    [SerializeField] string url = "/api/game/login";
-    [SerializeField] string socketUrl = "/api/game/recognizer";
+    [SerializeField] string url = "http://84.253.229.86:52705/api/game/login";
+    [SerializeField] string socketUrl = "http://84.253.229.86:52705/api/game/recognizer";
     [SerializeField] string socketPath = "/recognizer";
 
     Socket socket;
@@ -472,7 +472,7 @@ public class NetworkManager : MonoBehaviour
 
     /* public UserData Login(string username, string password)
      {
-
+url
          StartCoroutine(SendLoginRequest(username, password));
 
          return user;

@@ -21,10 +21,10 @@ public class RegistrationView : View {
 	[Space]
     [SerializeField] Text errorText;
     [Space]
-	[SerializeField] string serverUrl = "https://(user_management_api_server)/api/game/";
+	[SerializeField] string serverUrl = "http://84.253.229.86:52705/api/game/";
 	[SerializeField] string userCheckPath = "checkUsername";
 	[SerializeField] string registerPath = "register";
-	[SerializeField] string requestTosUrl = "https://(user_management_api_server)/readServiceConditions";
+	[SerializeField] string requestTosUrl = "http://84.253.229.86:52705/readServiceConditions";
 
 	TermsAndConditions TOS;
 
@@ -143,7 +143,9 @@ public class RegistrationView : View {
 
 	public static PasswordScore CheckStrength(string password)
 	{
-		int score = 0;
+		// TODO Change this back to normal
+		//TODO Change this back to normal
+		int score = 2; // Should be 0, using 2 for debug only
 		
 		if (string.IsNullOrEmpty(password)||string.IsNullOrWhiteSpace(password))
 			score = (int)PasswordScore.Blank;
@@ -178,7 +180,7 @@ public class RegistrationView : View {
 		WWWForm form = new WWWForm();
 		form.AddField("email", usernameField.text);
 		form.AddField("password", passwordField.text);
-		form.AddField("newsletter", newsletterToggle.isOn.ToString());
+		form.AddField("consent", newsletterToggle.isOn.ToString());
 		UnityWebRequest www = UnityWebRequest.Post(serverUrl + registerPath, form);
 		yield return www.SendWebRequest();
 		if (www.isNetworkError || www.isHttpError)
@@ -197,6 +199,7 @@ public class RegistrationView : View {
 	{
 		WWWForm form = new WWWForm();
 		form.AddField("email", email);
+		Debug.Log("EmailIsAvailable: " + serverUrl + userCheckPath);
 		UnityWebRequest www = UnityWebRequest.Post(serverUrl + userCheckPath, form);
 		yield return www.SendWebRequest();
 		if (www.isNetworkError || www.isHttpError)
@@ -223,6 +226,7 @@ public class RegistrationView : View {
 
 	IEnumerator RequestNewestTOS()
 	{
+		Debug.Log(requestTosUrl);
 		UnityWebRequest www = UnityWebRequest.Get(requestTosUrl);
 		yield return www.SendWebRequest();
 		if (www.isNetworkError || www.isHttpError)
@@ -232,8 +236,8 @@ public class RegistrationView : View {
 			errorText.gameObject.SetActive(true);
 		}
 		else
-		{
-			TOS = JsonUtility.FromJson<TermsAndConditions>(www.downloadHandler.text);
+		{			
+			TOS = JsonUtility.FromJson<TermsAndConditions>(www.downloadHandler.text);		
 			Debug.Log(www.downloadHandler.text);
 			tosText.text = TOS.termsOfService + "\n" + TOS.privacyPolicy;
 		}

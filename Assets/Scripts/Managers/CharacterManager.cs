@@ -32,8 +32,10 @@ public class CharacterManager : Overlay {
 
 	public void SetCharacter(int index) {
 		if (index < characters.Length) {
+			Debug.Log("Character manager: " + index);
 			if (index == -1) {
 				CurrentCharacter = null;
+				Debug.LogError("Index out of bound, character is null: " + index);
 				ShipManager.GetManager().SetShip(null);
 			} else {
 				CurrentCharacter = characters[index];
