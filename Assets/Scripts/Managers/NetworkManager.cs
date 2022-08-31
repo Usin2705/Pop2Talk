@@ -12,9 +12,9 @@ public class NetworkManager : MonoBehaviour
 
     static NetworkManager netWorkManager;
 
-    [SerializeField] string url = "https://(user_management_api_server)/api/game/login";
-    [SerializeField] string socketUrl = "http://pop8.fastparrots.com/(websocket_path)";
-    [SerializeField] string socketPath = "/(websocket_path)";
+    [SerializeField] string url = "/api/game/login";
+    [SerializeField] string socketUrl = "/api/game/recognizer";
+    [SerializeField] string socketPath = "/recognizer";
 
     Socket socket;
     bool waitingScore;
@@ -195,7 +195,7 @@ public class NetworkManager : MonoBehaviour
         });*/
         socket.On(SystemEvents.reconnect, (int reconnectAttempt) =>
         {
-            Debug.Log("Reconnect " + reconnectAttempt);
+                    // I'd like to have the following here, is that easily
             connected = true;
             connecting = false;
         });
