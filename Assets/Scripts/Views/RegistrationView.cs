@@ -20,10 +20,16 @@ public class RegistrationView : View {
 	[Space]
 	[SerializeField] Text errorText = null;
 	[Space]
+<<<<<<< Updated upstream
 	[SerializeField] string serverUrl = "https://(user_management_api_server)/api/game/";
+=======
+    [SerializeField] Text errorText;
+    [Space]
+	[SerializeField] string serverUrl = "http://84.253.229.86:52705/api/game/";
+>>>>>>> Stashed changes
 	[SerializeField] string userCheckPath = "checkUsername";
 	[SerializeField] string registerPath = "register";
-	[SerializeField] string requestTosUrl = "https://(user_management_api_server)/readServiceConditions";
+	[SerializeField] string requestTosUrl = "http://84.253.229.86:52705/readServiceConditions";
 
 	TermsAndConditions TOS;
 
@@ -114,11 +120,48 @@ public class RegistrationView : View {
 		}
 	}
 
+<<<<<<< Updated upstream
 	IEnumerator Register() {
+=======
+	public static PasswordScore CheckStrength(string password)
+	{
+		int score = 2;
+		
+		if (string.IsNullOrEmpty(password)||string.IsNullOrWhiteSpace(password))
+			score = (int)PasswordScore.Blank;
+		if (password.Length < 4)
+			score = (int)PasswordScore.VeryWeak;
+		if (password.Length >= 8)
+			score++;
+		if (password.Length >= 12)
+			score++;
+		if (Regex.IsMatch(password, @"[0-9]+(\.[0-9][0-9]?)?", RegexOptions.ECMAScript))
+		{
+			Debug.Log("Password has numbers");
+			score++;
+		}
+		if (Regex.IsMatch(password, @"^(?=.*[a-z])(?=.*[A-Z]).+$", RegexOptions.ECMAScript))
+		{
+			Debug.Log("Password has upper- and lowercase");
+			score++;
+		}
+		if (Regex.IsMatch(password, @"[!,@,#,$,%,^,&,*,?,_,~,-,£,(,)]", RegexOptions.ECMAScript))
+		{
+			Debug.Log("Password has special symbol");
+			score++;
+		}
+		
+		Debug.Log(score);
+		return (PasswordScore)score;
+	}
+
+	IEnumerator Register()
+	{
+>>>>>>> Stashed changes
 		WWWForm form = new WWWForm();
 		form.AddField("email", usernameField.text);
 		form.AddField("password", passwordField.text);
-		form.AddField("newsletter", newsletterToggle.isOn.ToString());
+		form.AddField("consent", newsletterToggle.isOn.ToString());
 		UnityWebRequest www = UnityWebRequest.Post(serverUrl + registerPath, form);
 		yield return www.SendWebRequest();
 		if (www.isNetworkError || www.isHttpError) {

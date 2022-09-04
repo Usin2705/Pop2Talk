@@ -12,7 +12,7 @@ public class NetworkManager : MonoBehaviour {
 
 	static NetworkManager netWorkManager;
 
-	string url = "https://(user_management_api_server)/";
+	string url = "http://84.253.229.86:52705/";
 
 	string login = "api/game/login";
 	string coinUpdate = "api/game/update/coins";
@@ -24,8 +24,8 @@ public class NetworkManager : MonoBehaviour {
 
 	string devAccount = "devel";
 
-	string liveSocketUrl = "https://(speech_processing_production_server)/";
-	string devSocketUrl = "https://(speech_processing_development_server)/";
+	string liveSocketUrl = "http://84.253.229.86:52705/recognizer/";
+	string devSocketUrl = "http://84.253.229.86:52705/recognizer/";
 
 	Socket socket;
 	bool waitingScore;
@@ -40,7 +40,6 @@ public class NetworkManager : MonoBehaviour {
 	bool reconnecting = false;
 
 	UserData user;
-
 	int fs = 16000;
 	float packetGap = 0.125f;
 	float okGap = 1f;
@@ -452,9 +451,11 @@ public class NetworkManager : MonoBehaviour {
 		form.AddField("username", username);
 		form.AddField("password", password);
 
-		//UnityWebRequest www = UnityWebRequest.Post(url + login, form);
-		// yield return www.SendWebRequest();
-		yield return true;
+        Debug.Log(url + login);
+
+
+		UnityWebRequest www = UnityWebRequest.Post(url + login, form);
+		yield return www.SendWebRequest();
 
 		// if (www.isNetworkError || www.isHttpError) {
 		// 	Debug.Log(www.error);
@@ -514,14 +515,9 @@ public class NetworkManager : MonoBehaviour {
 			// if (json["game_state"]["character"].ToString() != "")
 			// 	CharacterManager.GetManager().SetCharacter(json["game_state"]["character"].AsInt, false);
 
-			//CurrencyMaster.Instance.SetCoins(json["game_state"]["coins"].AsInt);
-			CurrencyMaster.Instance.SetCoins(5);
-			
-			// if (json["game_state"]["unlocked_cosmetics"].ToString() != "") {
-			// 	for (int i = 0; i < json["game_state"]["unlocked_cosmetics"].Count; ++i) {
-			// 		CosmeticManager.GetManager().UnlockCosmetic(json["game_state"]["unlocked_cosmetics"][i], false);
-			// 	}
-			// }
+            Debug.Log("number of module " + module);
+
+			WordMaster.Instance.SetLargestModuleIndex(module);
 
 			// if (json["game_state"]["equipped_cosmetics"].ToString() != "") {
 			// 	for (int i = 0; i < json["game_state"]["equipped_cosmetics"].Count; ++i) {
@@ -568,12 +564,16 @@ public class NetworkManager : MonoBehaviour {
 		//Debug.Log(www.downloadHandler.text);
 		//var json = SimpleJSON.JSON.Parse(www.downloadHandler.text);
 
-		//string[] words = new string[json["chosenWords"].Count];
-		string[] words = new string[1];
+        Debug.Log("json string: " + json);
+
+		string[] words = new string[json["chosenWords"].Count];
+        Debug.Log("chosenWords : " + words);
+
 		WordCardType[] types = new WordCardType[words.Length];
 
-		//WordMaster.Instance.SetLargestModuleIndex(json["module"].AsInt);
-		WordMaster.Instance.SetLargestModuleIndex(1);
+        Debug.Log("types : " + types);
+
+		WordMaster.Instance.SetLargestModuleIndex(json["module"].AsInt);
 
 		// for (int i = 0; i < words.Length; ++i) {
 		// 	//words[i] = json["chosenWords"][i];

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.35872743, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2480,9 +2480,14 @@ PrefabInstance:
       objectReference: {fileID: 2122168507}
     - target: {fileID: 114124500219781094, guid: 9962964da2357a047ad5b2941688bacc,
         type: 3}
-      propertyPath: parentView
-      value: 
-      objectReference: {fileID: 624136511}
+      propertyPath: serverUrl
+      value: http://84.253.229.86:52705/api/game/
+      objectReference: {fileID: 0}
+    - target: {fileID: 114124500219781094, guid: 9962964da2357a047ad5b2941688bacc,
+        type: 3}
+      propertyPath: requestTosUrl
+      value: http://84.253.229.86:52705/readServiceConditions
+      objectReference: {fileID: 0}
     - target: {fileID: 224403425446983410, guid: 9962964da2357a047ad5b2941688bacc,
         type: 3}
       propertyPath: m_SizeDelta.y
