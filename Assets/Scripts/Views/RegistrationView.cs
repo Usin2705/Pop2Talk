@@ -22,10 +22,11 @@ public class RegistrationView : View {
 	[Space]
 	[SerializeField] Text errorText = null;
 	[Space]
-	[SerializeField] string serverUrl = "https://(user_management_api_server)/api/game/";
+	[SerializeField] string serverUrl = http://84.253.229.86:52705/api/game/";
+
 	[SerializeField] string userCheckPath = "checkUsername";
 	[SerializeField] string registerPath = "register";
-	[SerializeField] string requestTosUrl = "https://(user_management_api_server)/readServiceConditions";
+	[SerializeField] string requestTosUrl = "http://84.253.229.86:52705/readServiceConditions";
 
 	TermsAndConditions TOS;
 
@@ -122,7 +123,7 @@ public class RegistrationView : View {
 		form.AddField("user", addr.User);
 		form.AddField("email", addr.Address);
 		form.AddField("password", passwordField.text);
-		form.AddField("newsletter", newsletterToggle.isOn.ToString());
+		form.AddField("consent", newsletterToggle.isOn.ToString());
 		UnityWebRequest www = UnityWebRequest.Post(serverUrl + registerPath, form);
 		yield return www.SendWebRequest();
 		if (www.isNetworkError || www.isHttpError) {

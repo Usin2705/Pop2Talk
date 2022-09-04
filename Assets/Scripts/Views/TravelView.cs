@@ -85,6 +85,7 @@ public class TravelView : View {
 		int wordCount = WordMaster.Instance.MaxCards;
 
 		Debug.Log("TravelView-LargestMOduleIndex: " + largestModuleIndex);
+    
 		for (int i = 0; i <= largestModuleIndex; ++i) {
 			suitableLevels.Add(new List<LevelSettings>());
 			bool applicable = false;

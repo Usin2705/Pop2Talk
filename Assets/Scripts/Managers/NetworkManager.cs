@@ -23,7 +23,6 @@ public class NetworkManager : MonoBehaviour {
 	string equipCosmetic = "api/game/equip/cosmetic";
 
 	string devAccount = "devel";
-
 	string liveSocketUrl = "http://84.253.229.86:52705/recognizer";
 	string devSocketUrl = "http://84.253.229.86:52705/recognizer";
 
@@ -40,7 +39,6 @@ public class NetworkManager : MonoBehaviour {
 	bool reconnecting = false;
 
 	UserData user;
-
 	int fs = 16000;
 	float packetGap = 0.125f;
 	float okGap = 1f;
@@ -452,26 +450,28 @@ public class NetworkManager : MonoBehaviour {
 		form.AddField("username", username);
 		form.AddField("password", password);
 
+        Debug.Log(url + login);
+
+
 		UnityWebRequest www = UnityWebRequest.Post(url + login, form);
 		yield return www.SendWebRequest();
 
+		// if (www.isNetworkError || www.isHttpError) {
+		// 	Debug.Log(www.error);
+		// 	if (www.downloadHandler.text != "") {
+		// 		errorText.text = www.downloadHandler.text;
+		// 	} else {
+		// 		errorText.text = "Network error: " + www.error;
+		// 	}
+		// 	errorText.gameObject.SetActive(true);
+		// 	throw new System.Exception(www.downloadHandler.text ?? www.error);
+		// } else {
+		// 	Debug.Log("Form upload complete!");
 
-		if (www.isNetworkError || www.isHttpError) {
-			Debug.Log(www.error);
-			if (www.downloadHandler.text != "") {
-				errorText.text = www.downloadHandler.text;
-			} else {
-				errorText.text = "Network error: " + www.error;
-			}
-			errorText.gameObject.SetActive(true);
-			throw new System.Exception(www.downloadHandler.text ?? www.error);
-		} else {
-			Debug.Log("Form upload complete!");
-
-			if (www.downloadHandler.text == "invalid credentials") {
-				Debug.Log("invalid credentials");
-				errorText.gameObject.SetActive(true);
-				errorText.GetComponent<LocalizeStringEvent>().StringReference.TableEntryReference = "error_invalid";
+		// 	if (www.downloadHandler.text == "invalid credentials") {
+		// 		Debug.Log("invalid credentials");
+		// 		errorText.gameObject.SetActive(true);
+		// 		errorText.GetComponent<LocalizeStringEvent>().StringReference.TableEntryReference = "error_invalid";
 				
 				yield break;
 			}
@@ -505,16 +505,18 @@ public class NetworkManager : MonoBehaviour {
 				Debug.Log("Login module: " + json["game_state"]["availableModules"][i]["module"].ToString() + module.ToString());
 			}
 
-			json["game_state"]["availableModules"] = "";
-			json["game_state"]["wordHighscores"] = "";
-			json["words"] = "";
 
-			Debug.Log(json);
+			// json["game_state"]["availableModules"] = "";
+			// json["game_state"]["wordHighscores"] = "";
+			// json["words"] = "";
 
-			WordMaster.Instance.SetLargestModuleIndex(module);
+			//Debug.Log(json);
 
-			if (json["game_state"]["character"].ToString() != "")
-				CharacterManager.GetManager().SetCharacter(json["game_state"]["character"].AsInt, false);
+			//WordMaster.Instance.SetLargestModuleIndex(module);
+			WordMaster.Instance.SetLargestModuleIndex(1);
+
+			// if (json["game_state"]["character"].ToString() != "")
+			// 	CharacterManager.GetManager().SetCharacter(json["game_state"]["character"].AsInt, false);
 
 			CurrencyMaster.Instance.SetCoins(json["game_state"]["coins"].AsInt);
 			
@@ -524,6 +526,7 @@ public class NetworkManager : MonoBehaviour {
 			// 	}
 			// }
 
+
 			// if (json["game_state"]["equipped_cosmetics"].ToString() != "") {
 			// 	for (int i = 0; i < json["game_state"]["equipped_cosmetics"].Count; ++i) {
 			// 		CosmeticManager.GetManager().EquipCosmetic(json["game_state"]["equipped_cosmetics"][i], false);
@@ -532,13 +535,13 @@ public class NetworkManager : MonoBehaviour {
 
 			CosmeticManager.GetManager().CheckDefaultCosmetics();
 
-			if (user.consent) {
+			if (false) {
 				Connect();
 				StartCoroutine(CoroutineCallback);
 			} else {
 				Connected();
 			}
-		}
+		//}
 	}
 
 	public void UpdateCoins(int coins) {
@@ -549,9 +552,10 @@ public class NetworkManager : MonoBehaviour {
 
 		WWWForm form = new WWWForm();
 		form.AddField("coins", coins);
-		UnityWebRequest www = UnityWebRequest.Post(url + coinUpdate, form);
-		www.SetRequestHeader("Authorization", "Bearer " + user.access_token);
-		yield return www.SendWebRequest();
+		//UnityWebRequest www = UnityWebRequest.Post(url + coinUpdate, form);
+		//www.SetRequestHeader("Authorization", "Bearer " + user.access_token);
+		//yield return www.SendWebRequest();
+		yield return true;
 	}
 
 	public void GetWordList(Callback Done) {
@@ -561,13 +565,18 @@ public class NetworkManager : MonoBehaviour {
 	IEnumerator WordListRoutine(Callback Done) {
 
 		WWWForm form = new WWWForm();
-		UnityWebRequest www = UnityWebRequest.Post(url + getWordList, form);
-		www.SetRequestHeader("Authorization", "Bearer " + user.access_token);
-		yield return www.SendWebRequest();
-		Debug.Log(www.downloadHandler.text);
-		var json = SimpleJSON.JSON.Parse(www.downloadHandler.text);
+		//UnityWebRequest www = UnityWebRequest.Post(url + getWordList, form);
+		//www.SetRequestHeader("Authorization", "Bearer " + user.access_token);
+		//yield return www.SendWebRequest();
+		yield return true;
+		//Debug.Log(www.downloadHandler.text);
+		//var json = SimpleJSON.JSON.Parse(www.downloadHandler.text);
+
+        Debug.Log("json string: " + json);
 
 		string[] words = new string[json["chosenWords"].Count];
+        Debug.Log("chosenWords : " + words);
+
 		WordCardType[] types = new WordCardType[words.Length];
 
 		Debug.Log("WordList json: " + www.downloadHandler.text);
@@ -581,12 +590,13 @@ public class NetworkManager : MonoBehaviour {
 			types[i] = (WordCardType) json["cardType"][i].AsInt;
 			//Debug.Log("loop to find: " + words[i] + types[i]);
 		}
+
 		WordMaster.Instance.SetSamples(types, words);
 		Done?.Invoke();
 	}
 
 	public void SendBestCardStar(string word, int score, int challenge) {
-		StartCoroutine(BestCardStarRoutine(word, score, challenge));
+		//StartCoroutine(BestCardStarRoutine(word, score, challenge));
 	}
 
 	IEnumerator BestCardStarRoutine(string word, int score, int challenge) {
@@ -601,7 +611,7 @@ public class NetworkManager : MonoBehaviour {
 	}
 
 	public void UpdateCharacter(int character) {
-		StartCoroutine(CharacterUpdateRoutine(character));
+		//StartCoroutine(CharacterUpdateRoutine(character));
 	}
 
 	IEnumerator CharacterUpdateRoutine(int character) {
