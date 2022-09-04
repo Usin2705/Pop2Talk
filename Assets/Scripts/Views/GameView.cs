@@ -117,7 +117,10 @@ public class GameView : View, IGameCaller {
 		WordData currentWord = WordMaster.Instance.PeekNextWord();
 		WordMaster.Instance.Dequeue();
 		if (currentWord == null)
+		{
+			Debug.Log("Card get 0");
 			CardDone(0);
+		}
 		else
 			WordMaster.Instance.ShowWordCard(nextType, GameMaster.Instance.CurrentLevel.name, currentWord, sortingOrder, CardDone);
 	}

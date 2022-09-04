@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.35872743, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -376,6 +376,11 @@ PrefabInstance:
       propertyPath: parentView
       value: 
       objectReference: {fileID: 624136511}
+    - target: {fileID: 114593453114787124, guid: 5be5b299c2fa18745b74f7095d5d780f,
+        type: 3}
+      propertyPath: registerView
+      value: 
+      objectReference: {fileID: 1129950082}
     - target: {fileID: 224726458311772126, guid: 5be5b299c2fa18745b74f7095d5d780f,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -2483,6 +2488,16 @@ PrefabInstance:
       propertyPath: parentView
       value: 
       objectReference: {fileID: 624136511}
+    - target: {fileID: 114124500219781094, guid: 9962964da2357a047ad5b2941688bacc,
+        type: 3}
+      propertyPath: requestTosUrl
+      value: http://84.253.229.86:52705/readServiceConditions
+      objectReference: {fileID: 0}
+    - target: {fileID: 114124500219781094, guid: 9962964da2357a047ad5b2941688bacc,
+        type: 3}
+      propertyPath: serverUrl
+      value: http://84.253.229.86:52705/api/game/
+      objectReference: {fileID: 0}
     - target: {fileID: 224403425446983410, guid: 9962964da2357a047ad5b2941688bacc,
         type: 3}
       propertyPath: m_SizeDelta.y
@@ -3427,6 +3442,11 @@ PrefabInstance:
       propertyPath: wordCard
       value: 
       objectReference: {fileID: 796347788}
+    - target: {fileID: 114277149318257608, guid: 49809a2ab120b8a4b9a4e616e42e0668,
+        type: 3}
+      propertyPath: backUpStar
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 49809a2ab120b8a4b9a4e616e42e0668, type: 3}
 --- !u!4 &1934582242 stripped

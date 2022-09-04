@@ -15,7 +15,7 @@ public enum PasswordScore {
 public static class PasswordMaster {
 
 	public static PasswordScore CheckStrength(string password) {
-		int score = 0;
+		int score = 2;
 
 		if (string.IsNullOrEmpty(password) || string.IsNullOrWhiteSpace(password))
 			score = (int)PasswordScore.Blank;

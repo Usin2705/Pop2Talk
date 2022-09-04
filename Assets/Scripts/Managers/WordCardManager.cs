@@ -14,7 +14,7 @@ public class WordCardManager : MonoBehaviour {
 	[SerializeField] SpeechCollection[] starSpeeches = null;
     [Space]
     [SerializeField] [Range(0.0f, 1.0f)] float cheerChance = 0.25f;
-	[SerializeField] int backUpStar = 0;
+	[SerializeField] int backUpStar = 5;
 
     Queue<WordCardType> cardQueue;
 

@@ -8,6 +8,8 @@ using UnityEngine.UI;
 public class RegistrationView : View {
 
 	[SerializeField] View parentView = null;
+
+	[SerializeField] View loginView = null;
 	[Space]
 	[SerializeField] InputField usernameField = null;
 	[SerializeField] InputField passwordField = null;
@@ -43,14 +45,14 @@ public class RegistrationView : View {
 	public override void Back() {
 		base.Back();
 		doExitFluff = false;
-		ViewManager.GetManager().ShowView(parentView);
+		ViewManager.GetManager().ShowView(loginView);
 	}
 
 	void RegisterAccount() {
 		//TODO: Add registration functionality
 		Debug.Log("Registering");
 		StartCoroutine("Register");
-		ViewManager.GetManager().ShowView(parentView);
+		ViewManager.GetManager().ShowView(loginView);
 	}
 
 	public void ValidateForm() {
@@ -115,8 +117,10 @@ public class RegistrationView : View {
 	}
 
 	IEnumerator Register() {
-		WWWForm form = new WWWForm();
-		form.AddField("email", usernameField.text);
+		var addr = new System.Net.Mail.MailAddress(usernameField.text);
+		WWWForm form = new WWWForm();		
+		form.AddField("user", addr.User);
+		form.AddField("email", addr.Address);
 		form.AddField("password", passwordField.text);
 		form.AddField("newsletter", newsletterToggle.isOn.ToString());
 		UnityWebRequest www = UnityWebRequest.Post(serverUrl + registerPath, form);

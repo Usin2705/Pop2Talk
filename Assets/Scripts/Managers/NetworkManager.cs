@@ -12,7 +12,7 @@ public class NetworkManager : MonoBehaviour {
 
 	static NetworkManager netWorkManager;
 
-	string url = "https://(user_management_api_server)/";
+	string url = "http://84.253.229.86:52705/";
 
 	string login = "api/game/login";
 	string coinUpdate = "api/game/update/coins";
@@ -24,8 +24,8 @@ public class NetworkManager : MonoBehaviour {
 
 	string devAccount = "devel";
 
-	string liveSocketUrl = "https://(speech_processing_production_server)/";
-	string devSocketUrl = "https://(speech_processing_development_server)/";
+	string liveSocketUrl = "http://84.253.229.86:52705/recognizer";
+	string devSocketUrl = "http://84.253.229.86:52705/recognizer";
 
 	Socket socket;
 	bool waitingScore;
@@ -142,19 +142,16 @@ public class NetworkManager : MonoBehaviour {
         {
             Debug.Log("Connect error");
             connecting = false;
-
         });
         socket.On(Socket.EVENT_CONNECT_TIMEOUT, () =>
         {
             Debug.Log("Connect timeout");
             connecting = false;
-
         });
         socket.On(Socket.EVENT_ERROR, () =>
         {
             Debug.Log("error");
             connecting = false;
-
         });*/
 		socket.On(SystemEvents.disconnect, () => {
 			connected = false;
@@ -172,21 +169,18 @@ public class NetworkManager : MonoBehaviour {
             connected = false;
             Debug.Log("Reconnect error");
             connecting = false;
-
         });
         socket.On(Socket.EVENT_RECONNECT_FAILED, () =>
         {
             connected = false;
             Debug.Log("Reconnect failed");
             connecting = false;
-
         });
         socket.On(Socket.EVENT_RECONNECT_ATTEMPT, () =>
         {
             Debug.Log("Reconnect attempt");
             reconnecting = true;
             connecting = false;
-
         });*/
 		socket.On(SystemEvents.reconnect, (int reconnectAttempt) => {
 			Debug.Log("Reconnect " + reconnectAttempt);
@@ -198,7 +192,6 @@ public class NetworkManager : MonoBehaviour {
             Debug.Log("Reconnecting");
             reconnecting = true;
             connecting = false;
-
         });*/
 
 	}
@@ -351,7 +344,6 @@ public class NetworkManager : MonoBehaviour {
                     // Add the data encoding and data types: 
                     sud.datatype = datatype;
                     sud.dataencoding = dataencoding;
-
                     // I'd like to have the following here, is that easily done?:
                     
                     sud.gameversion = "";
@@ -361,7 +353,6 @@ public class NetworkManager : MonoBehaviour {
                     sud.microphone = microphone;
                     sud.challengetype = "";
                     sud.level = "";
-
                     sud.packetnr = packets;
                     sud.data = System.Convert.ToBase64String(voiceData);
                     socket.Emit("start_upload", JsonConvert.SerializeObject(sud));
@@ -438,9 +429,7 @@ public class NetworkManager : MonoBehaviour {
 
 	/* public UserData Login(string username, string password)
      {
-
          StartCoroutine(SendLoginRequest(username, password));
-
          return user;
      }*/
 
@@ -452,70 +441,71 @@ public class NetworkManager : MonoBehaviour {
 		form.AddField("username", username);
 		form.AddField("password", password);
 
-		//UnityWebRequest www = UnityWebRequest.Post(url + login, form);
-		// yield return www.SendWebRequest();
-		yield return true;
+		UnityWebRequest www = UnityWebRequest.Post(url + login, form);
+		yield return www.SendWebRequest();
 
-		// if (www.isNetworkError || www.isHttpError) {
-		// 	Debug.Log(www.error);
-		// 	if (www.downloadHandler.text != "") {
-		// 		errorText.text = www.downloadHandler.text;
-		// 	} else {
-		// 		errorText.text = "Network error: " + www.error;
-		// 	}
-		// 	errorText.gameObject.SetActive(true);
-		// 	throw new System.Exception(www.downloadHandler.text ?? www.error);
-		// } else {
-		// 	Debug.Log("Form upload complete!");
 
-		// 	if (www.downloadHandler.text == "invalid credentials") {
-		// 		Debug.Log("invalid credentials");
-		// 		errorText.gameObject.SetActive(true);
-		// 		errorText.GetComponent<LocalizeStringEvent>().StringReference.TableEntryReference = "error_invalid";
+		if (www.isNetworkError || www.isHttpError) {
+			Debug.Log(www.error);
+			if (www.downloadHandler.text != "") {
+				errorText.text = www.downloadHandler.text;
+			} else {
+				errorText.text = "Network error: " + www.error;
+			}
+			errorText.gameObject.SetActive(true);
+			throw new System.Exception(www.downloadHandler.text ?? www.error);
+		} else {
+			Debug.Log("Form upload complete!");
+
+			if (www.downloadHandler.text == "invalid credentials") {
+				Debug.Log("invalid credentials");
+				errorText.gameObject.SetActive(true);
+				errorText.GetComponent<LocalizeStringEvent>().StringReference.TableEntryReference = "error_invalid";
 				
-		// 		yield break;
-		// 	}
+				yield break;
+			}
 
-		// 	if (www.downloadHandler.text == "this account uses auth0") {
-		// 		Debug.Log("this account uses auth0");
-		// 		errorText.gameObject.SetActive(true);
-		// 		errorText.GetComponent<LocalizeStringEvent>().StringReference.TableEntryReference = "error_auth0";
-		// 		yield break;
-		// 	}
+			if (www.downloadHandler.text == "this account uses auth0") {
+				Debug.Log("this account uses auth0");
+				errorText.gameObject.SetActive(true);
+				errorText.GetComponent<LocalizeStringEvent>().StringReference.TableEntryReference = "error_auth0";
+				yield break;
+			}
 
-			//user = JsonUtility.FromJson<UserData>(www.downloadHandler.text);
-			//Debug.Log(www.downloadHandler.text);
-			//var json = SimpleJSON.JSON.Parse(www.downloadHandler.text);
+			user = JsonUtility.FromJson<UserData>(www.downloadHandler.text);
+			Debug.Log("Login json: " + www.downloadHandler.text);
+			var json = SimpleJSON.JSON.Parse(www.downloadHandler.text);
 			
 			WordMaster.Instance.ClearWords();
 
-			// for (int i = 0; i < json["words"].Count; ++i) {
-			// 	WordMaster.Instance.AddWord(json["words"][i]["word"].Value);
-			// }
+			for (int i = 0; i < json["words"].Count; ++i) {
+				WordMaster.Instance.AddWord(json["words"][i]["word"].Value);
+				Debug.Log("WordMaster Addword: " + json["words"][i]["word"].Value.ToString());
+			}
 
-			// for (int i = 0; i < json["game_state"]["wordHighscores"].Count; ++i) {
-			// 	WordMaster.Instance.SetStarAmount(json["game_state"]["wordHighscores"][i]["word"].Value, json["game_state"]["wordHighscores"][i]["maxstars"].AsInt);
-			// }
+			for (int i = 0; i < json["game_state"]["wordHighscores"].Count; ++i) {
+				WordMaster.Instance.SetStarAmount(json["game_state"]["wordHighscores"][i]["word"].Value, json["game_state"]["wordHighscores"][i]["maxstars"].AsInt);
+				Debug.Log("WordMaster SetStar: " + json["game_state"]["wordHighscores"][i]["word"].Value.ToString()+ json["game_state"]["wordHighscores"][i]["maxstars"].ToString());
+			}
 
-			// int module = 1;
-			// for (int i = 0; i < json["game_state"]["availableModules"].Count; ++i) {
-			// 	module = Mathf.Max(module, json["game_state"]["availableModules"][i]["module"].AsInt);
-			// }
+			int module = 1;
+			for (int i = 0; i < json["game_state"]["availableModules"].Count; ++i) {
+				module = Mathf.Max(module, json["game_state"]["availableModules"][i]["module"].AsInt);
+				Debug.Log("Login module: " + json["game_state"]["availableModules"][i]["module"].ToString() + module.ToString());
+			}
 
-			// json["game_state"]["availableModules"] = "";
-			// json["game_state"]["wordHighscores"] = "";
-			// json["words"] = "";
+			json["game_state"]["availableModules"] = "";
+			json["game_state"]["wordHighscores"] = "";
+			json["words"] = "";
 
-			//Debug.Log(json);
+			Debug.Log(json);
 
-			//WordMaster.Instance.SetLargestModuleIndex(module);
-			WordMaster.Instance.SetLargestModuleIndex(1);
+			WordMaster.Instance.SetLargestModuleIndex(module);
 
-			// if (json["game_state"]["character"].ToString() != "")
-			// 	CharacterManager.GetManager().SetCharacter(json["game_state"]["character"].AsInt, false);
+			if (json["game_state"]["character"].ToString() != "")
+				CharacterManager.GetManager().SetCharacter(json["game_state"]["character"].AsInt, false);
 
-			//CurrencyMaster.Instance.SetCoins(json["game_state"]["coins"].AsInt);
-			CurrencyMaster.Instance.SetCoins(5);
+			CurrencyMaster.Instance.SetCoins(json["game_state"]["coins"].AsInt);
 			
 			// if (json["game_state"]["unlocked_cosmetics"].ToString() != "") {
 			// 	for (int i = 0; i < json["game_state"]["unlocked_cosmetics"].Count; ++i) {
@@ -531,13 +521,13 @@ public class NetworkManager : MonoBehaviour {
 
 			CosmeticManager.GetManager().CheckDefaultCosmetics();
 
-			if (false) {
+			if (user.consent) {
 				Connect();
 				StartCoroutine(CoroutineCallback);
 			} else {
 				Connected();
 			}
-		//}
+		}
 	}
 
 	public void UpdateCoins(int coins) {
@@ -548,10 +538,9 @@ public class NetworkManager : MonoBehaviour {
 
 		WWWForm form = new WWWForm();
 		form.AddField("coins", coins);
-		//UnityWebRequest www = UnityWebRequest.Post(url + coinUpdate, form);
-		//www.SetRequestHeader("Authorization", "Bearer " + user.access_token);
-		//yield return www.SendWebRequest();
-		yield return true;
+		UnityWebRequest www = UnityWebRequest.Post(url + coinUpdate, form);
+		www.SetRequestHeader("Authorization", "Bearer " + user.access_token);
+		yield return www.SendWebRequest();
 	}
 
 	public void GetWordList(Callback Done) {
@@ -561,34 +550,32 @@ public class NetworkManager : MonoBehaviour {
 	IEnumerator WordListRoutine(Callback Done) {
 
 		WWWForm form = new WWWForm();
-		//UnityWebRequest www = UnityWebRequest.Post(url + getWordList, form);
-		//www.SetRequestHeader("Authorization", "Bearer " + user.access_token);
-		//yield return www.SendWebRequest();
-		yield return true;
-		//Debug.Log(www.downloadHandler.text);
-		//var json = SimpleJSON.JSON.Parse(www.downloadHandler.text);
+		UnityWebRequest www = UnityWebRequest.Post(url + getWordList, form);
+		www.SetRequestHeader("Authorization", "Bearer " + user.access_token);
+		yield return www.SendWebRequest();
+		Debug.Log(www.downloadHandler.text);
+		var json = SimpleJSON.JSON.Parse(www.downloadHandler.text);
 
-		//string[] words = new string[json["chosenWords"].Count];
-		string[] words = new string[1];
+		string[] words = new string[json["chosenWords"].Count];
 		WordCardType[] types = new WordCardType[words.Length];
 
-		//WordMaster.Instance.SetLargestModuleIndex(json["module"].AsInt);
-		WordMaster.Instance.SetLargestModuleIndex(1);
+		Debug.Log("WordList json: " + www.downloadHandler.text);
 
-		// for (int i = 0; i < words.Length; ++i) {
-		// 	//words[i] = json["chosenWords"][i];
-		// 	//types[i] = (WordCardType) json["cardType"][i].AsInt;
-		// 	words[i] = json["chosenWords"][i];
-		// 	types[i] = (WordCardType) json["cardType"][i].AsInt;
-		// }
-		words[0] = "en_gb_animal";
-		types[0] = (WordCardType) 1;
+		WordMaster.Instance.SetLargestModuleIndex(json["module"].AsInt);
+
+		Debug.Log("WordList-Number of module: " + json["module"].AsInt);
+
+		for (int i = 0; i < words.Length; ++i) {
+			words[i] = json["chosenWords"][i];
+			types[i] = (WordCardType) json["cardType"][i].AsInt;
+			//Debug.Log("loop to find: " + words[i] + types[i]);
+		}
 		WordMaster.Instance.SetSamples(types, words);
 		Done?.Invoke();
 	}
 
 	public void SendBestCardStar(string word, int score, int challenge) {
-		//StartCoroutine(BestCardStarRoutine(word, score, challenge));
+		StartCoroutine(BestCardStarRoutine(word, score, challenge));
 	}
 
 	IEnumerator BestCardStarRoutine(string word, int score, int challenge) {
@@ -603,7 +590,7 @@ public class NetworkManager : MonoBehaviour {
 	}
 
 	public void UpdateCharacter(int character) {
-		//StartCoroutine(CharacterUpdateRoutine(character));
+		StartCoroutine(CharacterUpdateRoutine(character));
 	}
 
 	IEnumerator CharacterUpdateRoutine(int character) {
@@ -616,8 +603,8 @@ public class NetworkManager : MonoBehaviour {
 	}
 	
 	public void UnlockCosmetic(string id) {
-		Debug.Log("Trying to unlock: " + id);
-		StartCoroutine(CosmeticUnlockRoutine(id));
+		//Debug.Log("Trying to unlock: " + id);
+		//StartCoroutine(CosmeticUnlockRoutine(id));
 	}
 
 	IEnumerator CosmeticUnlockRoutine(string id) {
@@ -630,8 +617,8 @@ public class NetworkManager : MonoBehaviour {
 	}
 
 	public void EquipCosmetic(string id, int index) {
-		Debug.Log("Trying to equip: " + id);
-		StartCoroutine(CosmeticEquipRoutine(id, index));
+		//Debug.Log("Trying to equip: " + id);
+		//StartCoroutine(CosmeticEquipRoutine(id, index));
 	}
 
 	IEnumerator CosmeticEquipRoutine(string id, int index) {
@@ -751,15 +738,17 @@ public class NetworkManager : MonoBehaviour {
 
 		ae.serverurl = GetSocketUrl();
 
-		socket.EmitJson("loggable_event", JsonUtility.ToJson(ae));
+		//socket.EmitJson("loggable_event", JsonUtility.ToJson(ae));
 		yield return null;
 
-		Debug.Log("Event " + ae.eventname + " sent");
+		if (ae.eventname!="sample_played")
+			Debug.Log("Event " + ae.eventname + " sent");
+		
 	}
 
 	string GetSocketUrl() {
-		if (user.username.ToLower().StartsWith(devAccount.ToLower()) && !user.username.Contains("@"))
-			return devSocketUrl;
+		// if (user.username.ToLower().StartsWith(devAccount.ToLower()) && !user.username.Contains("@"))
+		// 	return devSocketUrl;
 		return liveSocketUrl;
 	}
 
