@@ -8,6 +8,9 @@ public class LoginView : View {
 
 	[SerializeField] View characterSelectView = null;
 	[SerializeField] View parentView = null;
+
+	[SerializeField] View registerView = null;
+	
 	[SerializeField] View shipHubView = null;
 	[Space]
 	[SerializeField] InputField usernameField = null;
@@ -44,11 +47,14 @@ public class LoginView : View {
 	protected override void Initialize() {
 		base.Initialize();
 
-		PurchaseMaster.Instance.BeginInitialization();
+		//urchaseMaster.Instance.BeginInitialization();
+		// Remove the store warning text
+		waitingStore.SetActive(false);
+		
 		SoundEffectManager.GetManager().PlayMusic();
 		playButton.SubscribePress(GameOnline);
 		parentButton.SubscribePress(GotoParent);
-		StartCoroutine(StoreInitializationWait());
+		//StartCoroutine(StoreInitializationWait());
 	}
 
 	public override void Activate() {
@@ -66,12 +72,12 @@ public class LoginView : View {
 			errorText.gameObject.SetActive(false);
 		}
 
-		if (PurchaseMaster.Instance.Initialized) {
-			if (waitingStore.activeSelf) {
-				waitingStore.SetActive(false);
-				parentHolder.SetActive(true);
-			}
-		}
+		// if (PurchaseMaster.Instance.Initialized) {
+		// 	if (waitingStore.activeSelf) {
+		// 		waitingStore.SetActive(false);
+		// 		parentHolder.SetActive(true);
+		// 	}
+		// }
 
 		if (!string.IsNullOrEmpty(delayOpenDeepLink)) {
 			DeepLinkOpen(delayOpenDeepLink);
@@ -81,10 +87,10 @@ public class LoginView : View {
 	void GameOnline() {
 		if (usernameField.text != "" && passwordField.text != "") {
 			if (IsValidEmail(usernameField.text)) {
-				if (!PurchaseMaster.Instance.Subscribed) {
-					ShowError("error_parent");
-					return;
-				}
+				// if (!PurchaseMaster.Instance.Subscribed) {
+				// 	ShowError("error_parent");
+				// 	return;
+				// }
 			}
 			Online(ConnectedOnline);
 		} else {
@@ -176,13 +182,14 @@ public class LoginView : View {
 
 	void GotoParent() {
 		if (usernameField.text.ToLower() == "parent") {
-			ViewManager.GetManager().ShowView(parentView);
+			ViewManager.GetManager().ShowView(registerView);
+			//ViewManager.GetManager().ShowView(parentView);
 		}
 	}
 
 	void ShowError(string key) {
-		errorText.gameObject.SetActive(true);
-		errorText.GetComponent<LocalizeStringEvent>().StringReference.TableEntryReference = key;
+		//errorText.gameObject.SetActive(true);
+		//errorText.GetComponent<LocalizeStringEvent>().StringReference.TableEntryReference = key;
 	}
 	
 	void DeepLinkDelayedOpen(string url) {//Updating text from non-main thread doesn't update the visuals correctly

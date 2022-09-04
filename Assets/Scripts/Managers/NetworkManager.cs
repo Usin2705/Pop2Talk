@@ -12,7 +12,7 @@ public class NetworkManager : MonoBehaviour {
 
 	static NetworkManager netWorkManager;
 
-	string url = "https://(user_management_api_server)/";
+	string url = "http://84.253.229.86:52705/";
 
 	string login = "api/game/login";
 	string coinUpdate = "api/game/update/coins";
@@ -24,8 +24,8 @@ public class NetworkManager : MonoBehaviour {
 
 	string devAccount = "devel";
 
-	string liveSocketUrl = "https://(speech_processing_production_server)/";
-	string devSocketUrl = "https://(speech_processing_development_server)/";
+	string liveSocketUrl = "http://84.253.229.86:52705/recognizer";
+	string devSocketUrl = "http://84.253.229.86:52705/recognizer";
 
 	Socket socket;
 	bool waitingScore;
@@ -484,22 +484,25 @@ public class NetworkManager : MonoBehaviour {
 			}
 
 			user = JsonUtility.FromJson<UserData>(www.downloadHandler.text);
-			Debug.Log(www.downloadHandler.text);
+			Debug.Log("Login json: " + www.downloadHandler.text);
 			var json = SimpleJSON.JSON.Parse(www.downloadHandler.text);
 			
 			WordMaster.Instance.ClearWords();
 
 			for (int i = 0; i < json["words"].Count; ++i) {
 				WordMaster.Instance.AddWord(json["words"][i]["word"].Value);
+				Debug.Log("WordMaster Addword: " + json["words"][i]["word"].Value.ToString());
 			}
 
 			for (int i = 0; i < json["game_state"]["wordHighscores"].Count; ++i) {
 				WordMaster.Instance.SetStarAmount(json["game_state"]["wordHighscores"][i]["word"].Value, json["game_state"]["wordHighscores"][i]["maxstars"].AsInt);
+				Debug.Log("WordMaster SetStar: " + json["game_state"]["wordHighscores"][i]["word"].Value.ToString()+ json["game_state"]["wordHighscores"][i]["maxstars"].ToString());
 			}
 
 			int module = 1;
 			for (int i = 0; i < json["game_state"]["availableModules"].Count; ++i) {
 				module = Mathf.Max(module, json["game_state"]["availableModules"][i]["module"].AsInt);
+				Debug.Log("Login module: " + json["game_state"]["availableModules"][i]["module"].ToString() + module.ToString());
 			}
 
 			json["game_state"]["availableModules"] = "";
@@ -515,17 +518,17 @@ public class NetworkManager : MonoBehaviour {
 
 			CurrencyMaster.Instance.SetCoins(json["game_state"]["coins"].AsInt);
 			
-			if (json["game_state"]["unlocked_cosmetics"].ToString() != "") {
-				for (int i = 0; i < json["game_state"]["unlocked_cosmetics"].Count; ++i) {
-					CosmeticManager.GetManager().UnlockCosmetic(json["game_state"]["unlocked_cosmetics"][i], false);
-				}
-			}
+			// if (json["game_state"]["unlocked_cosmetics"].ToString() != "") {
+			// 	for (int i = 0; i < json["game_state"]["unlocked_cosmetics"].Count; ++i) {
+			// 		CosmeticManager.GetManager().UnlockCosmetic(json["game_state"]["unlocked_cosmetics"][i], false);
+			// 	}
+			// }
 
-			if (json["game_state"]["equipped_cosmetics"].ToString() != "") {
-				for (int i = 0; i < json["game_state"]["equipped_cosmetics"].Count; ++i) {
-					CosmeticManager.GetManager().EquipCosmetic(json["game_state"]["equipped_cosmetics"][i], false);
-				}
-			}
+			// if (json["game_state"]["equipped_cosmetics"].ToString() != "") {
+			// 	for (int i = 0; i < json["game_state"]["equipped_cosmetics"].Count; ++i) {
+			// 		CosmeticManager.GetManager().EquipCosmetic(json["game_state"]["equipped_cosmetics"][i], false);
+			// 	}
+			// }
 
 			CosmeticManager.GetManager().CheckDefaultCosmetics();
 
@@ -567,11 +570,16 @@ public class NetworkManager : MonoBehaviour {
 		string[] words = new string[json["chosenWords"].Count];
 		WordCardType[] types = new WordCardType[words.Length];
 
+		Debug.Log("WordList json: " + www.downloadHandler.text);
+
 		WordMaster.Instance.SetLargestModuleIndex(json["module"].AsInt);
+
+		Debug.Log("WordList-Number of module: " + json["module"].AsInt);
 
 		for (int i = 0; i < words.Length; ++i) {
 			words[i] = json["chosenWords"][i];
 			types[i] = (WordCardType) json["cardType"][i].AsInt;
+			//Debug.Log("loop to find: " + words[i] + types[i]);
 		}
 		WordMaster.Instance.SetSamples(types, words);
 		Done?.Invoke();
@@ -606,8 +614,8 @@ public class NetworkManager : MonoBehaviour {
 	}
 	
 	public void UnlockCosmetic(string id) {
-		Debug.Log("Trying to unlock: " + id);
-		StartCoroutine(CosmeticUnlockRoutine(id));
+		//Debug.Log("Trying to unlock: " + id);
+		//StartCoroutine(CosmeticUnlockRoutine(id));
 	}
 
 	IEnumerator CosmeticUnlockRoutine(string id) {
@@ -620,8 +628,8 @@ public class NetworkManager : MonoBehaviour {
 	}
 
 	public void EquipCosmetic(string id, int index) {
-		Debug.Log("Trying to equip: " + id);
-		StartCoroutine(CosmeticEquipRoutine(id, index));
+		//Debug.Log("Trying to equip: " + id);
+		//StartCoroutine(CosmeticEquipRoutine(id, index));
 	}
 
 	IEnumerator CosmeticEquipRoutine(string id, int index) {
@@ -741,15 +749,17 @@ public class NetworkManager : MonoBehaviour {
 
 		ae.serverurl = GetSocketUrl();
 
-		socket.EmitJson("loggable_event", JsonUtility.ToJson(ae));
+		//socket.EmitJson("loggable_event", JsonUtility.ToJson(ae));
 		yield return null;
 
-		Debug.Log("Event " + ae.eventname + " sent");
+		if (ae.eventname!="sample_played")
+			Debug.Log("Event " + ae.eventname + " sent");
+		
 	}
 
 	string GetSocketUrl() {
-		if (user.username.ToLower().StartsWith(devAccount.ToLower()) && !user.username.Contains("@"))
-			return devSocketUrl;
+		// if (user.username.ToLower().StartsWith(devAccount.ToLower()) && !user.username.Contains("@"))
+		// 	return devSocketUrl;
 		return liveSocketUrl;
 	}
 
