@@ -92,7 +92,7 @@ public class LoginView : View {
 				// 	return;
 				// }
 			}
-			Online(ConnectedOnline);
+			StartOnlineCoroutine(CallBackConnected);
 		} else {
 			ShowError("error_name");
 		}
@@ -124,7 +124,7 @@ public class LoginView : View {
 		Application.OpenURL(url);
 	}
 
-	void Online(Callback Connected) {
+	void StartOnlineCoroutine(Callback Connected) {
 		NetworkManager.GetManager().SetPlayer(usernameField.text);
 		StartCoroutine(NetworkManager.GetManager().Login(usernameField.text, passwordField.text, errorText, ConnectWait(Connected), Connected));
 
@@ -150,7 +150,7 @@ public class LoginView : View {
 		}
 	}
 
-	void ConnectedOnline() {
+	void CallBackConnected() {
 		CheckRemember();
 		connectionStatus.SetIngameName(NetworkManager.GetManager().Player);
 		connectionStatus.ShowName(true);
