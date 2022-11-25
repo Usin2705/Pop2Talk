@@ -63,3 +63,5 @@ Assets/Scripts/Utils/Secret.cs
 user.keystore
 *BackUpThisFolder_ButDontShipItWithYourGame*
 Pop2TalkNordic_mapping.txt
+
+Logs/AssetImportWorker2.log
