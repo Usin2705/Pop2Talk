@@ -31,26 +31,28 @@ public class ParentView : View {
 		resetButton.SubscribePress(() => { ViewManager.GetManager().ShowView(resetView); });
 		tosButton.SubscribePress(() => { Application.OpenURL("https://www.pop2talk.com/terms-of-use"); });
 		privacyButton.SubscribePress(() => { Application.OpenURL("https://www.pop2talk.com/privacy-policy"); });
-		restoreButton.SubscribePress(() => { PurchaseMaster.Instance.RestorePurchases(RestorationResult); });
+		
+		//restoreButton.SubscribePress(() => { PurchaseMaster.Instance.RestorePurchases(RestorationResult); });
 	}
 
 	public override void Activate() {
 		base.Activate();
-		if (PurchaseMaster.Instance.Renewing) {
-			subscribeButton.gameObject.SetActive(false);
-			restoreButton.gameObject.SetActive(false);
-			registerButton.gameObject.SetActive(true);
-			resetButton.gameObject.SetActive(true);
-			errorText.GetComponent<LocalizeStringEvent>().StringReference.TableEntryReference = "active_subscription";
-		} else {
-			subscribeButton.gameObject.SetActive(true);
-#if UNITY_IOS
-			restoreButton.gameObject.SetActive(canRestore);
-#endif
-			registerButton.gameObject.SetActive(false);
-			resetButton.gameObject.SetActive(false);
-			errorText.GetComponent<LocalizeStringEvent>().StringReference.TableEntryReference = "no_subscription";
-		}
+// We don't need purchase master for this version		
+// 		if (PurchaseMaster.Instance.Renewing) {
+// 			subscribeButton.gameObject.SetActive(false);
+// 			restoreButton.gameObject.SetActive(false);
+// 			registerButton.gameObject.SetActive(true);
+// 			resetButton.gameObject.SetActive(true);
+// 			errorText.GetComponent<LocalizeStringEvent>().StringReference.TableEntryReference = "active_subscription";
+// 		} else {
+// 			subscribeButton.gameObject.SetActive(true);
+// #if UNITY_IOS
+// 			restoreButton.gameObject.SetActive(canRestore);
+// #endif
+// 			registerButton.gameObject.SetActive(false);
+// 			resetButton.gameObject.SetActive(false);
+// 			errorText.GetComponent<LocalizeStringEvent>().StringReference.TableEntryReference = "no_subscription";
+// 		}
 	}
 
 	public override void Back() {

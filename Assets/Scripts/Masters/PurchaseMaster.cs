@@ -1,154 +1,154 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Purchasing;
-using UnityEngine.Purchasing.Security;
+﻿// using System.Collections;
+// using System.Collections.Generic;
+// using UnityEngine;
+// using UnityEngine.Purchasing;
+// using UnityEngine.Purchasing.Security;
 
-public class PurchaseMaster : IStoreListener {
+// public class PurchaseMaster : IStoreListener {
 
-	static PurchaseMaster instance;
+// 	static PurchaseMaster instance;
 
-	public static PurchaseMaster Instance {
-		get {
-			if (instance == null) {
-				instance = new PurchaseMaster();
+// 	public static PurchaseMaster Instance {
+// 		get {
+// 			if (instance == null) {
+// 				instance = new PurchaseMaster();
 
-			}
-			return instance;
-		}
-	}
+// 			}
+// 			return instance;
+// 		}
+// 	}
 
-	public bool Subscribed { get; protected set; }
-	public bool Renewing { get; protected set; }
-
-
-	public string SubscriptionPrice { get; protected set; }
-
-	string oneMonthSub = "en_gb_monthly_3.99_and_vat";
-
-	bool attemptingInitialization;
-	IStoreController controller;
-	IExtensionProvider extensions;
-
-	public bool Initialized {
-		get {
-			return controller != null && extensions != null;
-		}
-	}
-
-	public IPurchaseListener Listener { get; set; }
-
-	public void BeginInitialization() {
-		if (Initialized || attemptingInitialization)
-			return;
-		var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
-		builder.AddProduct(oneMonthSub, ProductType.Subscription);
-
-#if UNITY_IOS || UNITY_STANDALONE_OSX
-		var appleConfig = builder.Configure<IAppleConfiguration>();
-		try {
-			var receiptData = System.Convert.FromBase64String(appleConfig.appReceipt);
-			AppleReceipt receipt = new AppleReceiptParser().Parse(receiptData);
-
-			foreach (AppleInAppPurchaseReceipt productReceipt in receipt.inAppPurchaseReceipts) {
-				if (productReceipt.productID == oneMonthSub) {
-					if (productReceipt.subscriptionExpirationDate.CompareTo(System.DateTime.UtcNow) > 0) {
-						Subscribed = true;
-					}
-				}
-			}
-		}
-		catch (System.FormatException) {
-			//Receipt isn't in base64, most likely because of the fake-receipt in the editor
-		}
-		catch (System.ArgumentException) {
-			//Empty receipts from some iOS versions can cause this, fine to ignore since we don't do anything with an empty receipt anyway
-		}
-#endif
-
-		attemptingInitialization = true;
-		UnityPurchasing.Initialize(this, builder);
-	}
+// 	public bool Subscribed { get; protected set; }
+// 	public bool Renewing { get; protected set; }
 
 
-	public void OnInitialized(IStoreController controller, IExtensionProvider extensions) {
-		attemptingInitialization = false;
-		this.controller = controller;
-		this.extensions = extensions;
+// 	public string SubscriptionPrice { get; protected set; }
 
-		foreach (Product p in controller.products.all) {
-			if (p.definition.id == oneMonthSub) {
-				SubscriptionPrice = p.metadata.localizedPriceString;
-			}
-		}
+// 	string oneMonthSub = "en_gb_monthly_3.99_and_vat";
 
-		CheckSubscriptions();
-	}
+// 	bool attemptingInitialization;
+// 	IStoreController controller;
+// 	IExtensionProvider extensions;
 
-	public void OnInitializeFailed(InitializationFailureReason error) {
-		attemptingInitialization = false;
-	}
+// 	public bool Initialized {
+// 		get {
+// 			return controller != null && extensions != null;
+// 		}
+// 	}
 
-	public void PurchaseSubscription() {
-		controller.InitiatePurchase(oneMonthSub);
-	}
+// 	public IPurchaseListener Listener { get; set; }
+
+// 	public void BeginInitialization() {
+// 		if (Initialized || attemptingInitialization)
+// 			return;
+// 		var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
+// 		builder.AddProduct(oneMonthSub, ProductType.Subscription);
+
+// #if UNITY_IOS || UNITY_STANDALONE_OSX
+// 		var appleConfig = builder.Configure<IAppleConfiguration>();
+// 		try {
+// 			var receiptData = System.Convert.FromBase64String(appleConfig.appReceipt);
+// 			AppleReceipt receipt = new AppleReceiptParser().Parse(receiptData);
+
+// 			foreach (AppleInAppPurchaseReceipt productReceipt in receipt.inAppPurchaseReceipts) {
+// 				if (productReceipt.productID == oneMonthSub) {
+// 					if (productReceipt.subscriptionExpirationDate.CompareTo(System.DateTime.UtcNow) > 0) {
+// 						Subscribed = true;
+// 					}
+// 				}
+// 			}
+// 		}
+// 		catch (System.FormatException) {
+// 			//Receipt isn't in base64, most likely because of the fake-receipt in the editor
+// 		}
+// 		catch (System.ArgumentException) {
+// 			//Empty receipts from some iOS versions can cause this, fine to ignore since we don't do anything with an empty receipt anyway
+// 		}
+// #endif
+
+// 		attemptingInitialization = true;
+// 		UnityPurchasing.Initialize(this, builder);
+// 	}
 
 
-	public void OnPurchaseFailed(Product i, PurchaseFailureReason p) {
-		Listener?.PurchaseFailed();
-	}
+// 	public void OnInitialized(IStoreController controller, IExtensionProvider extensions) {
+// 		attemptingInitialization = false;
+// 		this.controller = controller;
+// 		this.extensions = extensions;
+
+// 		foreach (Product p in controller.products.all) {
+// 			if (p.definition.id == oneMonthSub) {
+// 				SubscriptionPrice = p.metadata.localizedPriceString;
+// 			}
+// 		}
+
+// 		CheckSubscriptions();
+// 	}
+
+// 	public void OnInitializeFailed(InitializationFailureReason error) {
+// 		attemptingInitialization = false;
+// 	}
+
+// 	public void PurchaseSubscription() {
+// 		controller.InitiatePurchase(oneMonthSub);
+// 	}
 
 
-	public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs e) {
-		CheckSubscription(e.purchasedProduct);
-		Listener?.PurchaseSuccesful();
-		return PurchaseProcessingResult.Complete;
-	}
+// 	public void OnPurchaseFailed(Product i, PurchaseFailureReason p) {
+// 		Listener?.PurchaseFailed();
+// 	}
 
-	void CheckSubscriptions() {
-		foreach (Product p in controller.products.all) {
-			/*DebugMaster.Instance.DebugText("Id: " + p.definition.id + 
-				"\nAvailable to purchase: " + p.availableToPurchase +
-				"\nPrice " + p.metadata.localizedPriceString +
-				"\nHas receipt: " + p.hasReceipt);*/
-			CheckSubscription(p);
-		}
-	}
 
-	void CheckSubscription(Product p) {
-		if (!p.hasReceipt)
-			return;
+// 	public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs e) {
+// 		CheckSubscription(e.purchasedProduct);
+// 		Listener?.PurchaseSuccesful();
+// 		return PurchaseProcessingResult.Complete;
+// 	}
 
-		if (p.definition.id == oneMonthSub) {
-			Subscribed = true;
-			Renewing = true;
-		}
-	}
+// 	void CheckSubscriptions() {
+// 		foreach (Product p in controller.products.all) {
+// 			/*DebugMaster.Instance.DebugText("Id: " + p.definition.id + 
+// 				"\nAvailable to purchase: " + p.availableToPurchase +
+// 				"\nPrice " + p.metadata.localizedPriceString +
+// 				"\nHas receipt: " + p.hasReceipt);*/
+// 			CheckSubscription(p);
+// 		}
+// 	}
 
-	/*void CheckRenewal(Product p) {
-		if (!p.hasReceipt)
-			return;
-		if (Subscribed)
-			Renewing = true;
-		DebugMaster.Instance.DebugText("Checking Renewal!");
-		SubscriptionManager s = new SubscriptionManager(p, null);
-		DebugMaster.Instance.DebugText("In subscription manager!");
-		try {
-			Renewing = s.getSubscriptionInfo().isCancelled() != Result.True;
-			DebugMaster.Instance.DebugText(s.getSubscriptionInfo().isCancelled().ToString());
-			if (!Renewing) {
-				Renewing = s.getSubscriptionInfo().isAutoRenewing() != Result.False;
-			}
-			DebugMaster.Instance.DebugText(s.getSubscriptionInfo().isAutoRenewing().ToString());
-		} catch(StoreSubscriptionInfoNotSupportedException e) {
-			DebugMaster.Instance.DebugText("Subscriptionmanager not supported");
-		}
-	}*/
+// 	void CheckSubscription(Product p) {
+// 		if (!p.hasReceipt)
+// 			return;
 
-	public void RestorePurchases(System.Action<bool> Outcome) {
-		if (Initialized)
-			extensions.GetExtension<IAppleExtensions>().RestoreTransactions(Outcome);
-		else
-			Outcome(false);
-	}
-}
+// 		if (p.definition.id == oneMonthSub) {
+// 			Subscribed = true;
+// 			Renewing = true;
+// 		}
+// 	}
+
+// 	/*void CheckRenewal(Product p) {
+// 		if (!p.hasReceipt)
+// 			return;
+// 		if (Subscribed)
+// 			Renewing = true;
+// 		DebugMaster.Instance.DebugText("Checking Renewal!");
+// 		SubscriptionManager s = new SubscriptionManager(p, null);
+// 		DebugMaster.Instance.DebugText("In subscription manager!");
+// 		try {
+// 			Renewing = s.getSubscriptionInfo().isCancelled() != Result.True;
+// 			DebugMaster.Instance.DebugText(s.getSubscriptionInfo().isCancelled().ToString());
+// 			if (!Renewing) {
+// 				Renewing = s.getSubscriptionInfo().isAutoRenewing() != Result.False;
+// 			}
+// 			DebugMaster.Instance.DebugText(s.getSubscriptionInfo().isAutoRenewing().ToString());
+// 		} catch(StoreSubscriptionInfoNotSupportedException e) {
+// 			DebugMaster.Instance.DebugText("Subscriptionmanager not supported");
+// 		}
+// 	}*/
+
+// 	public void RestorePurchases(System.Action<bool> Outcome) {
+// 		if (Initialized)
+// 			extensions.GetExtension<IAppleExtensions>().RestoreTransactions(Outcome);
+// 		else
+// 			Outcome(false);
+// 	}
+// }

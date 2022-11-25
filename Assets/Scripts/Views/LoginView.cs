@@ -142,12 +142,13 @@ public class LoginView : View {
 
 	IEnumerator StoreInitializationWait() {
 		yield return new WaitForSeconds(2);
-		if (!PurchaseMaster.Instance.Initialized) {
-			NetworkManager.GetManager().ServerWait(true);
-			while (!PurchaseMaster.Instance.Initialized)
-				yield return null;
-			NetworkManager.GetManager().ServerWait(false);
-		}
+		// We don't need purchase master for this version
+		// if (!PurchaseMaster.Instance.Initialized) {
+		// 	NetworkManager.GetManager().ServerWait(true);
+		// 	while (!PurchaseMaster.Instance.Initialized)
+		// 		yield return null;
+		// 	NetworkManager.GetManager().ServerWait(false);
+		// }
 	}
 
 	void CallBackConnected() {

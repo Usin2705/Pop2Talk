@@ -19,11 +19,11 @@ MonoBehaviour:
   m_SerializeEntries:
   - m_GUID: 04533516c76ef29458c04f791fd8992b
     m_Address: PasswordResetTable Shared Data
-    m_ReadOnly: 0
+    m_ReadOnly: 1
     m_SerializedLabels: []
   - m_GUID: 33eb7638b7b1d6446a081126fb0de3c5
     m_Address: DataOverlay Shared Data
-    m_ReadOnly: 0
+    m_ReadOnly: 1
     m_SerializedLabels: []
   - m_GUID: 5322ebed412b1694a943dda2d0fc4006
     m_Address: ParentViewTable Shared Data
@@ -31,11 +31,11 @@ MonoBehaviour:
     m_SerializedLabels: []
   - m_GUID: 7387da0c5f3b8ec4881ee4e823fe4b10
     m_Address: RegistrationViewTable Shared Data
-    m_ReadOnly: 0
+    m_ReadOnly: 1
     m_SerializedLabels: []
   - m_GUID: 975058b8289bfd14e90e19762eb07678
     m_Address: SubscriptionViewTable Shared Data
-    m_ReadOnly: 0
+    m_ReadOnly: 1
     m_SerializedLabels: []
   - m_GUID: 9abf2e4dee815df4c89104a7998d8b47
     m_Address: Everything Shared Data
