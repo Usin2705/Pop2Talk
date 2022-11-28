@@ -22,10 +22,10 @@ public class NetworkManager : MonoBehaviour {
 	string unlockCosmetic = "api/game/unlock/cosmetic";
 	string equipCosmetic = "api/game/equip/cosmetic";
 
-	string devAccount = "devel";
-
 	string liveSocketUrl = "http://84.253.229.86:52705/recognizer";
-	string devSocketUrl = "http://84.253.229.86:52705/recognizer";
+
+	//string devAccount = "devel"; No longer used dev one
+	//string devSocketUrl = ""; 
 
 	Socket socket;
 	bool waitingScore;
@@ -436,98 +436,106 @@ public class NetworkManager : MonoBehaviour {
 
 	public IEnumerator Login(string username, string password, Text errorText, IEnumerator CoroutineCallback, Callback Connected) {
 
-		WWWForm form = new WWWForm();
-
-		form.AddField("username", username);
-		form.AddField("password", password);
-
-		UnityWebRequest www = UnityWebRequest.Post(url + login, form);
-		yield return www.SendWebRequest();
-
-
-		if (www.isNetworkError || www.isHttpError) {
-			Debug.Log(www.error);
-			if (www.downloadHandler.text != "") {
-				errorText.text = www.downloadHandler.text;
-			} else {
-				errorText.text = "Network error: " + www.error;
-			}
-			errorText.gameObject.SetActive(true);
-			throw new System.Exception(www.downloadHandler.text ?? www.error);
-		} else {
-			Debug.Log("Form upload complete!");
-
-			if (www.downloadHandler.text == "invalid credentials") {
-				Debug.Log("invalid credentials");
-				errorText.gameObject.SetActive(true);
-				errorText.GetComponent<LocalizeStringEvent>().StringReference.TableEntryReference = "error_invalid";
-				
-				yield break;
-			}
-
-			if (www.downloadHandler.text == "this account uses auth0") {
-				Debug.Log("this account uses auth0");
-				errorText.gameObject.SetActive(true);
-				errorText.GetComponent<LocalizeStringEvent>().StringReference.TableEntryReference = "error_auth0";
-				yield break;
-			}
-
-			user = JsonUtility.FromJson<UserData>(www.downloadHandler.text);
-			Debug.Log("Login json: " + www.downloadHandler.text);
-			var json = SimpleJSON.JSON.Parse(www.downloadHandler.text);
-			
-			WordMaster.Instance.ClearWords();
-
-			for (int i = 0; i < json["words"].Count; ++i) {
-				WordMaster.Instance.AddWord(json["words"][i]["word"].Value);
-				Debug.Log("WordMaster Addword: " + json["words"][i]["word"].Value.ToString());
-			}
-
-			for (int i = 0; i < json["game_state"]["wordHighscores"].Count; ++i) {
-				WordMaster.Instance.SetStarAmount(json["game_state"]["wordHighscores"][i]["word"].Value, json["game_state"]["wordHighscores"][i]["maxstars"].AsInt);
-				Debug.Log("WordMaster SetStar: " + json["game_state"]["wordHighscores"][i]["word"].Value.ToString()+ json["game_state"]["wordHighscores"][i]["maxstars"].ToString());
-			}
-
-			int module = 1;
-			for (int i = 0; i < json["game_state"]["availableModules"].Count; ++i) {
-				module = Mathf.Max(module, json["game_state"]["availableModules"][i]["module"].AsInt);
-				Debug.Log("Login module: " + json["game_state"]["availableModules"][i]["module"].ToString() + module.ToString());
-			}
-
-			json["game_state"]["availableModules"] = "";
-			json["game_state"]["wordHighscores"] = "";
-			json["words"] = "";
-
-			Debug.Log(json);
-
-			WordMaster.Instance.SetLargestModuleIndex(module);
-
-			if (json["game_state"]["character"].ToString() != "")
-				CharacterManager.GetManager().SetCharacter(json["game_state"]["character"].AsInt, false);
-
-			CurrencyMaster.Instance.SetCoins(json["game_state"]["coins"].AsInt);
-			
-			// if (json["game_state"]["unlocked_cosmetics"].ToString() != "") {
-			// 	for (int i = 0; i < json["game_state"]["unlocked_cosmetics"].Count; ++i) {
-			// 		CosmeticManager.GetManager().UnlockCosmetic(json["game_state"]["unlocked_cosmetics"][i], false);
-			// 	}
-			// }
-
-			// if (json["game_state"]["equipped_cosmetics"].ToString() != "") {
-			// 	for (int i = 0; i < json["game_state"]["equipped_cosmetics"].Count; ++i) {
-			// 		CosmeticManager.GetManager().EquipCosmetic(json["game_state"]["equipped_cosmetics"][i], false);
-			// 	}
-			// }
-
+		if ((username == Secret.DEV_ACCOUNT) && (password == Secret.DEV_PASSWORD)) 
+		{ 
 			CosmeticManager.GetManager().CheckDefaultCosmetics();
+			Connected();
+		} else {
+			WWWForm form = new WWWForm();
 
-			if (user.consent) {
-				Connect();
-				StartCoroutine(CoroutineCallback);
+			form.AddField("username", username);
+			form.AddField("password", password);
+
+			UnityWebRequest www = UnityWebRequest.Post(url + login, form);
+			yield return www.SendWebRequest();
+
+
+			if ((www.result == UnityWebRequest.Result.ConnectionError) || (www.result == UnityWebRequest.Result.ProtocolError)) {
+				Debug.Log(www.error);
+				if (www.downloadHandler.text != "") {
+					errorText.text = www.downloadHandler.text;
+				} else {
+					errorText.text = "Network error: " + www.error;
+				}
+				errorText.gameObject.SetActive(true);
+				throw new System.Exception(www.downloadHandler.text ?? www.error);
 			} else {
-				Connected();
+				Debug.Log("Form upload complete!");
+
+				if (www.downloadHandler.text == "invalid credentials") {
+					Debug.Log("invalid credentials");
+					errorText.gameObject.SetActive(true);
+					errorText.GetComponent<LocalizeStringEvent>().StringReference.TableEntryReference = "error_invalid";
+					
+					yield break;
+				}
+
+				if (www.downloadHandler.text == "this account uses auth0") {
+					Debug.Log("this account uses auth0");
+					errorText.gameObject.SetActive(true);
+					errorText.GetComponent<LocalizeStringEvent>().StringReference.TableEntryReference = "error_auth0";
+					yield break;
+				}
+
+				user = JsonUtility.FromJson<UserData>(www.downloadHandler.text);
+				Debug.Log("Login json: " + www.downloadHandler.text);
+				var json = SimpleJSON.JSON.Parse(www.downloadHandler.text);
+				
+				WordMaster.Instance.ClearWords();
+
+				for (int i = 0; i < json["words"].Count; ++i) {
+					WordMaster.Instance.AddWord(json["words"][i]["word"].Value);
+					Debug.Log("WordMaster Addword: " + json["words"][i]["word"].Value.ToString());
+				}
+
+				for (int i = 0; i < json["game_state"]["wordHighscores"].Count; ++i) {
+					WordMaster.Instance.SetStarAmount(json["game_state"]["wordHighscores"][i]["word"].Value, json["game_state"]["wordHighscores"][i]["maxstars"].AsInt);
+					Debug.Log("WordMaster SetStar: " + json["game_state"]["wordHighscores"][i]["word"].Value.ToString()+ json["game_state"]["wordHighscores"][i]["maxstars"].ToString());
+				}
+
+				int module = 1;
+				for (int i = 0; i < json["game_state"]["availableModules"].Count; ++i) {
+					module = Mathf.Max(module, json["game_state"]["availableModules"][i]["module"].AsInt);
+					Debug.Log("Login module: " + json["game_state"]["availableModules"][i]["module"].ToString() + module.ToString());
+				}
+
+				json["game_state"]["availableModules"] = "";
+				json["game_state"]["wordHighscores"] = "";
+				json["words"] = "";
+
+				Debug.Log(json);
+
+				WordMaster.Instance.SetLargestModuleIndex(module);
+
+				if (json["game_state"]["character"].ToString() != "")
+					CharacterManager.GetManager().SetCharacter(json["game_state"]["character"].AsInt, false);
+
+				CurrencyMaster.Instance.SetCoins(json["game_state"]["coins"].AsInt);
+				
+				// if (json["game_state"]["unlocked_cosmetics"].ToString() != "") {
+				// 	for (int i = 0; i < json["game_state"]["unlocked_cosmetics"].Count; ++i) {
+				// 		CosmeticManager.GetManager().UnlockCosmetic(json["game_state"]["unlocked_cosmetics"][i], false);
+				// 	}
+				// }
+
+				// if (json["game_state"]["equipped_cosmetics"].ToString() != "") {
+				// 	for (int i = 0; i < json["game_state"]["equipped_cosmetics"].Count; ++i) {
+				// 		CosmeticManager.GetManager().EquipCosmetic(json["game_state"]["equipped_cosmetics"][i], false);
+				// 	}
+				// }
+
+				// This get default cosmetics first
+				// Without this line of code there's no default cosmetics for user
+				CosmeticManager.GetManager().CheckDefaultCosmetics();
+
+				if (user.consent) {
+					Connect();
+					StartCoroutine(CoroutineCallback);
+				} else {
+					Connected();
+				}
 			}
-		}
+		} 
 	}
 
 	public void UpdateCoins(int coins) {

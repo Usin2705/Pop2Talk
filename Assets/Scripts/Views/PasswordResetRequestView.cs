@@ -51,7 +51,8 @@ public class PasswordResetRequestView : View {
 		errorText.gameObject.SetActive(false);
 		yield return www.SendWebRequest();
 		InputManager.GetManager().SendingInputs = true;
-		if (www.isNetworkError || www.isHttpError) {
+		
+		if ((www.result == UnityWebRequest.Result.ConnectionError) || (www.result == UnityWebRequest.Result.ProtocolError)) {
 			//errorText.text = www.error;
 			errorText.gameObject.SetActive(true);
 			emailField.text = "";

@@ -4,10 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Localization.Components;
 
+
 public class LoginView : View {
 
 	[SerializeField] View characterSelectView = null;
-	[SerializeField] View parentView = null;
+	// [SerializeField] View parentView = null; No longer use parent view
 
 	[SerializeField] View registerView = null;
 	
@@ -16,7 +17,7 @@ public class LoginView : View {
 	[SerializeField] InputField usernameField = null;
 	[SerializeField] InputField passwordField = null;
 	[SerializeField] UIButton playButton = null;
-	[SerializeField] GameObject parentHolder = null;
+	// [SerializeField] GameObject parentHolder = null; No longer use this one, as we register for parent on different platform
 	[SerializeField] UIButton parentButton = null;
 	[SerializeField] GameObject waitingStore = null;
 	[SerializeField] Toggle rememberToggle = null;
@@ -25,7 +26,7 @@ public class LoginView : View {
 	[SerializeField] ConnectionStatus connectionStatus = null;
 	[SerializeField] Text errorText = null;
 	[Space]
-	[SerializeField] string privacyPolicyUrl = "https://www.pop2talk.com/privacy-policy";
+	[SerializeField] string privacyPolicyUrl = "https://wiki.aalto.fi/display/ASRPP/Pop2Talk+privacy+policy";
 
 
 	string rememberKey = "remember";
@@ -52,7 +53,7 @@ public class LoginView : View {
 		waitingStore.SetActive(false);
 		
 		SoundEffectManager.GetManager().PlayMusic();
-		playButton.SubscribePress(GameOnline);
+		playButton.SubscribePress(OnPlayButtonClick);
 		parentButton.SubscribePress(GotoParent);
 		//StartCoroutine(StoreInitializationWait());
 	}
@@ -84,14 +85,18 @@ public class LoginView : View {
 		}
 	}
 
-	void GameOnline() {
+	void OnPlayButtonClick() {
+	/*
+	*	Execute when click the PLAY button
+	*/
+
 		if (usernameField.text != "" && passwordField.text != "") {
-			if (IsValidEmail(usernameField.text)) {
-				// if (!PurchaseMaster.Instance.Subscribed) {
-				// 	ShowError("error_parent");
-				// 	return;
-				// }
-			}
+			// if (IsValidEmail(usernameField.text)) {
+			// 	if (!PurchaseMaster.Instance.Subscribed) {
+			// 		ShowError("error_parent");
+			// 		return;
+			// 	}
+			// }
 			StartOnlineCoroutine(CallBackConnected);
 		} else {
 			ShowError("error_name");
@@ -124,10 +129,9 @@ public class LoginView : View {
 		Application.OpenURL(url);
 	}
 
-	void StartOnlineCoroutine(Callback Connected) {
+	void StartOnlineCoroutine(Callback callbackConnected) {
 		NetworkManager.GetManager().SetPlayer(usernameField.text);
-		StartCoroutine(NetworkManager.GetManager().Login(usernameField.text, passwordField.text, errorText, ConnectWait(Connected), Connected));
-
+		StartCoroutine(NetworkManager.GetManager().Login(usernameField.text, passwordField.text, errorText, ConnectWait(callbackConnected), callbackConnected));
 	}
 
 	IEnumerator ConnectWait(Callback Connected) {

@@ -12,16 +12,18 @@ public class ParentView : View {
 	[SerializeField] View registerView = null;
 	[SerializeField] View resetView = null;
 	[Space]
-	[SerializeField] Text errorText = null;
+	// No longer use ParentView and RestorationResult
+	//[SerializeField] Text errorText = null;
 	[SerializeField] UIButton backButton = null;
-	[SerializeField] UIButton restoreButton = null;
+	// [SerializeField] UIButton restoreButton = null; No longer use ParentView
 	[SerializeField] UIButton subscribeButton = null;
 	[SerializeField] UIButton registerButton = null;
 	[SerializeField] UIButton resetButton = null;
 	[SerializeField] UIButton tosButton = null;
 	[SerializeField] UIButton privacyButton = null;
 
-	bool canRestore = true;
+	// No longer use ParentView and RestorationResult
+	// bool canRestore = true; 
 
 	protected override void Initialize() {
 		base.Initialize();
@@ -69,12 +71,13 @@ public class ParentView : View {
 		return null;
 	}
 
-	void RestorationResult(bool result) {
-		if (result) {
-			canRestore = false;
-			ViewManager.GetManager().ShowView(this);
-		} else {
-			errorText.GetComponent<LocalizeStringEvent>().StringReference.TableEntryReference = "restore_failed";
-		}
-	}
+	// No longer use ParentView and RestorationResult
+	// void RestorationResult(bool result) {
+	// 	if (result) {
+	// 		canRestore = false;
+	// 		ViewManager.GetManager().ShowView(this);
+	// 	} else {
+	// 		errorText.GetComponent<LocalizeStringEvent>().StringReference.TableEntryReference = "restore_failed";
+	// 	}
+	// }
 }

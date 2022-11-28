@@ -60,8 +60,11 @@ sysinfo.txt
 crashlytics-build.properties
 
 Assets/Scripts/Utils/Secret.cs
+Assets/Scripts/Utils/Secret.cs.meta
+
 user.keystore
 *BackUpThisFolder_ButDontShipItWithYourGame*
 Pop2TalkNordic_mapping.txt
 
 Logs/AssetImportWorker2.log
+

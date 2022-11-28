@@ -1,11 +1,12 @@
-﻿// using System.Collections;
-// using System.Collections.Generic;
-// using UnityEngine;
-// using UnityEngine.Networking;
-// using UnityEngine.UI;
-// using UnityEngine.Localization.Components;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Networking;
+using UnityEngine.UI;
+using UnityEngine.Localization.Components;
 
-// public class SubscriptionView : View, IPurchaseListener {
+//public class SubscriptionView : View, IPurchaseListener {
+    public class SubscriptionView : View{
 
 // 	[SerializeField] View parentView = null;
 // 	[Space]
@@ -57,13 +58,13 @@
 // 		ViewManager.GetManager().ShowView(parentView);
 // 	}
 
-// 	public override UIButton[] GetAllButtons() {
-// 		return null;
-// 	}
+	public override UIButton[] GetAllButtons() {
+		return null;
+	}
 
-// 	public override UIButton GetPointedButton() {
-// 		return null;
-// 	}
+	public override UIButton GetPointedButton() {
+		return null;
+	}
 
 // 	public void PurchaseSuccesful() {
 // 		NetworkManager.GetManager().ServerWait(false);
@@ -76,4 +77,4 @@
 // 		errorText.text = "There was a problem with the purchase";
 // 		subscriptionButton.gameObject.SetActive(true);
 // 	}
-// }
+}

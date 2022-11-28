@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class RegistrationView : View {
 
-	[SerializeField] View parentView = null;
+	// [SerializeField] View parentView = null; // We no longer allow register using this game
 
 	[SerializeField] View loginView = null;
 	[Space]
@@ -125,7 +125,8 @@ public class RegistrationView : View {
 		form.AddField("newsletter", newsletterToggle.isOn.ToString());
 		UnityWebRequest www = UnityWebRequest.Post(serverUrl + registerPath, form);
 		yield return www.SendWebRequest();
-		if (www.isNetworkError || www.isHttpError) {
+		
+		if ((www.result == UnityWebRequest.Result.ConnectionError) || (www.result == UnityWebRequest.Result.ProtocolError)) {
 			errorText.text = www.error;
 			Debug.LogError(www.downloadHandler.text);
 			errorText.gameObject.SetActive(true);
@@ -139,7 +140,8 @@ public class RegistrationView : View {
 		form.AddField("email", email);
 		UnityWebRequest www = UnityWebRequest.Post(serverUrl + userCheckPath, form);
 		yield return www.SendWebRequest();
-		if (www.isNetworkError || www.isHttpError) {
+		
+		if ((www.result == UnityWebRequest.Result.ConnectionError) || (www.result == UnityWebRequest.Result.ProtocolError)) {
 			errorText.text = www.error;
 			Debug.LogError("The chosen email address already has an account!");
 			errorText.gameObject.SetActive(true);
@@ -158,7 +160,8 @@ public class RegistrationView : View {
 	IEnumerator RequestNewestTOS() {
 		UnityWebRequest www = UnityWebRequest.Get(requestTosUrl);
 		yield return www.SendWebRequest();
-		if (www.isNetworkError || www.isHttpError) {
+		
+		if ((www.result == UnityWebRequest.Result.ConnectionError) || (www.result == UnityWebRequest.Result.ProtocolError)) {
 			errorText.text = www.error;
 			Debug.LogError("Error accessing the terms of service!");
 			errorText.gameObject.SetActive(true);

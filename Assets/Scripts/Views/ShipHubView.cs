@@ -28,6 +28,13 @@ public class ShipHubView : View {
 		travelButton.SubscribePress(GotoTravelView);
 		storeButton.SubscribePress(GotoStoreView);
 		pearlButton.SubscribePress(GotoPearlView);
+
+		// TODO 
+		// We temporarily remove all those function for testing purpose
+		backButton.gameObject.SetActive(false);
+		storeButton.gameObject.SetActive(false);
+		pearlButton.gameObject.SetActive(false);
+
 	}
 
 	public override void Activate() {

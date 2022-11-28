@@ -68,7 +68,8 @@ public class PasswordResetCompletionView : View {
 		UnityWebRequest www = UnityWebRequest.Post(serverUrl + resetPath, form);
 		yield return www.SendWebRequest();
 		InputManager.GetManager().SendingInputs = true;
-		if (www.isNetworkError || www.isHttpError) {
+		
+		if ((www.result == UnityWebRequest.Result.ConnectionError) || (www.result == UnityWebRequest.Result.ProtocolError)) {
 			errorText.GetComponent<LocalizeStringEvent>().StringReference.TableEntryReference = "error_code";
 			errorText.gameObject.SetActive(true);
 		} else {

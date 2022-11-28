@@ -37,8 +37,9 @@ public class CharacterManager : Overlay {
 			} else {
 				CurrentCharacter = characters[index];
 				character.sprite = CurrentCharacter.characterSprite;
-				if (sendToServer)
-					NetworkManager.GetManager().UpdateCharacter(index);
+				// TODO: maybe we should save the character, but for now we turn it off for offline version
+				//if (sendToServer)					
+					//NetworkManager.GetManager().UpdateCharacter(index);
 			}
 		} else {
 			Debug.LogError("Trying to set character out of index");
