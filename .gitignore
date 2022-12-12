@@ -8,6 +8,8 @@
 /[Bb]uild/
 /[Bb]uilds/
 /[Ll]ogs/
+[Ll]ogs/
+
 /[Mm]emoryCaptures/
 
 # Never ignore Asset meta data
@@ -65,10 +67,3 @@ Assets/Scripts/Utils/Secret.cs.meta
 user.keystore
 *BackUpThisFolder_ButDontShipItWithYourGame*
 Pop2TalkNordic_mapping.txt
-
-Logs/AssetImportWorker2.log
-
-
-Logs/AssetImportWorker3.log
-
-Logs/

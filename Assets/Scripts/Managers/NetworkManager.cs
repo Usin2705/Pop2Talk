@@ -8,6 +8,8 @@ using System.Reflection;
 using socket.io;
 using UnityEngine.Localization.Components;
 
+
+
 public class NetworkManager : MonoBehaviour {
 
 	static NetworkManager netWorkManager;
@@ -18,7 +20,9 @@ public class NetworkManager : MonoBehaviour {
 	string coinUpdate = "api/game/update/coins";
 	string updateCharacter = "api/game/update/character";
 	string updateHighscore = "api/game/update/highscore";
-	string getWordList = "api/game/create/wordlist";
+	
+	// we skip this part for now
+	//string getWordList = "api/game/create/wordlist";
 	string unlockCosmetic = "api/game/unlock/cosmetic";
 	string equipCosmetic = "api/game/equip/cosmetic";
 
@@ -440,6 +444,33 @@ public class NetworkManager : MonoBehaviour {
 		{ 
 			CosmeticManager.GetManager().CheckDefaultCosmetics();
 			Connected();
+
+			// UPDATE USER INFO
+	 		//user.id = "dev";
+			user.username = Secret.DEV_ACCOUNT;
+			user.consent = true;
+			user.role = "dev";
+			user.access_token = "none";
+			
+			// RESET WORDMASTER DATA
+			WordMaster.Instance.ClearWords();
+
+			// ADD WORD to WordMaster			
+			for (int i = 0; i < Const.WORD_LIST.Length; ++i) {
+				WordMaster.Instance.AddWord(Const.WORD_LIST[i]);
+				Debug.Log("WordMaster Addword: " + Const.WORD_LIST[i]);
+			}
+			
+			// UPDATE HIGHSCORE FOR EACH WORDS
+			for (int i = 0; i < Const.WORD_LIST.Length; ++i) {
+				WordMaster.Instance.SetStarAmount(Const.WORD_LIST[i], (int) 0);
+			}
+
+			// UPDATE ALL POSSIBLE MODULES
+			// MAX MODULE NUMBER = 16
+			int module = 16;
+			WordMaster.Instance.SetLargestModuleIndex(module);
+
 		} else {
 			WWWForm form = new WWWForm();
 
@@ -544,11 +575,15 @@ public class NetworkManager : MonoBehaviour {
 
 	IEnumerator CoinUpdateRoutine(int coins) {
 
-		WWWForm form = new WWWForm();
-		form.AddField("coins", coins);
-		UnityWebRequest www = UnityWebRequest.Post(url + coinUpdate, form);
-		www.SetRequestHeader("Authorization", "Bearer " + user.access_token);
-		yield return www.SendWebRequest();
+		// TODO skip update internet
+		yield return 0;
+
+		// WWWForm form = new WWWForm();
+		// form.AddField("coins", coins);
+		// UnityWebRequest www = UnityWebRequest.Post(url + coinUpdate, form);
+		// www.SetRequestHeader("Authorization", "Bearer " + user.access_token);
+		// yield return www.SendWebRequest();
+		
 	}
 
 	public void GetWordList(Callback Done) {
@@ -556,7 +591,40 @@ public class NetworkManager : MonoBehaviour {
 	}
 
 	IEnumerator WordListRoutine(Callback Done) {
+	/*
+	*	This return the word list from server
+	*	The word list served as a series of exercise?
+	*	where user can play next or back?
+	*   It's in the form of a json file
+	*     - chosensWords [words]
+	*	  - cardType [int card type] 0 is repeat 1 is memory
+	*	  - module integer	
+	*/	
 
+	yield return 0;
+
+	// For testing, always use 4 words	
+	string[] words = new string[4];
+
+	WordCardType[] types = new WordCardType[words.Length];
+	WordMaster.Instance.SetLargestModuleIndex(16);
+
+	List<string> selectedWordList = new List<string>(Const.WORD_LIST);
+
+	for (int i = 0; i < words.Length; ++i) {
+		int index = UnityEngine.Random.Range(0, selectedWordList.Count);
+		words[i] = selectedWordList[index];
+		selectedWordList.RemoveAt(index);
+		types[i] = (WordCardType)  UnityEngine.Random.Range(0, 2);
+	}
+
+	WordMaster.Instance.SetSamples(types, words);
+	Done?.Invoke();
+
+
+
+	// We do not use this part in offline
+	/*
 		WWWForm form = new WWWForm();
 		UnityWebRequest www = UnityWebRequest.Post(url + getWordList, form);
 		www.SetRequestHeader("Authorization", "Bearer " + user.access_token);
@@ -580,21 +648,25 @@ public class NetworkManager : MonoBehaviour {
 		}
 		WordMaster.Instance.SetSamples(types, words);
 		Done?.Invoke();
+	*/
 	}
 
 	public void SendBestCardStar(string word, int score, int challenge) {
+		
 		StartCoroutine(BestCardStarRoutine(word, score, challenge));
 	}
 
 	IEnumerator BestCardStarRoutine(string word, int score, int challenge) {
-
-		WWWForm form = new WWWForm();
-		form.AddField("word", word);
-		form.AddField("score", score);
-		form.AddField("challenge", challenge);
-		UnityWebRequest www = UnityWebRequest.Post(url + updateHighscore, form);
-		www.SetRequestHeader("Authorization", "Bearer " + user.access_token);
-		yield return www.SendWebRequest();
+		// TODO skip update internet
+		yield return 0;
+		// WWWForm form = new WWWForm();
+		// form.AddField("word", word);
+		// form.AddField("score", score);
+		// form.AddField("challenge", challenge);
+		// UnityWebRequest www = UnityWebRequest.Post(url + updateHighscore, form);
+		// www.SetRequestHeader("Authorization", "Bearer " + user.access_token);
+		// yield return www.SendWebRequest();
+		
 	}
 
 	public void UpdateCharacter(int character) {
@@ -715,7 +787,8 @@ public class NetworkManager : MonoBehaviour {
 			player = Player,
 			sessionid = sessionId,
 		};
-		StartCoroutine(SendLoggableEvent(ae));
+		// TODO WE skip this event for now
+		//StartCoroutine(SendLoggableEvent(ae));
 	}
 
 	public void SwipeEvent(string name) {

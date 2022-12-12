@@ -156,6 +156,7 @@ public class GameView : View, IGameCaller {
 
 	public override void Back() {
 		base.Back();
+		Debug.Log("GameView Back Button pressed");
 		NetworkManager.GetManager().LevelAbortEvent("level_abort", GameMaster.Instance.CurrentLevel.name, GameMaster.Instance.CurrentLevel.gameMode.ToString(), levelDuration,
 			WordMaster.Instance.MaxCards - WordMaster.Instance.CardsRemaining, WordMaster.Instance.TotalStars / WordMaster.Instance.MaxCards, WordMaster.Instance.TotalStars, GameMaster.Instance.SpaceDust);
 		doExitFluff = false;

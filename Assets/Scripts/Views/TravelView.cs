@@ -101,18 +101,26 @@ public class TravelView : View {
 		}
 
 		Debug.Log("TravelView-availableIndices.Count: " + availableIndices.Count);
-		int[] chosenBatches = ChooseBatches(availableIndices);
+		int[] chosenBatches = ChooseBatches(availableIndices);		
+		Debug.Log("TravelView-chosenBatches: " + chosenBatches[0] + chosenBatches[1]);
 
 		chosenLevels = new LevelSettings[] { suitableLevels[chosenBatches[0]].GetRandom(), suitableLevels[chosenBatches[1]].GetRandom() };
+		Debug.Log("TravelView-chosenLevels: " + chosenLevels[0] + chosenLevels[1]);
+		
 		chosenSprites = new Sprite[] { spriteBatches[chosenBatches[0]].sprites.GetRandom(), spriteBatches[chosenBatches[1]].sprites.GetRandom() };
 		upperPlanetButton.SetSprite(planets[chosenBatches[0]]);
 		lowerPlanetButton.SetSprite(planets[chosenBatches[1]]);
 
-		if (GameMaster.Instance.CompleteCount >= minigameThreshold) {
-			minigameIndex = Random.Range(0, 2);
+		Debug.Log("TravelView-Instance.CompleteCount: " + GameMaster.Instance.CompleteCount);
+		if (GameMaster.Instance.CompleteCount + 3 >= minigameThreshold) {
+			//minigameIndex = Random.Range(0, 2);
+			// Always play mini game
+			minigameIndex = 0;
 			chosenMinigameIndex = Random.Range(0, minigameViews.Length);
-			if (minigameIndex == 0)
+			if (minigameIndex == 0) {
+				Debug.Log("TravelView-Play mini game");
 				upperPlanetButton.SetSprite(minigameViews[chosenMinigameIndex].GetComponent<IMinigame>().GetIcon());
+			}
 			else
 				lowerPlanetButton.SetSprite(minigameViews[chosenMinigameIndex].GetComponent<IMinigame>().GetIcon());
 		} else
