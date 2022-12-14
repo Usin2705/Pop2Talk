@@ -1,7 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class ShipHubView : View {
 	
@@ -21,20 +21,46 @@ public class ShipHubView : View {
 	[SerializeField] Image backFloor = null;
 	[SerializeField] Image controlPanel = null;
 
+	[SerializeField] TMP_Dropdown levelDD = null;
+
+	[SerializeField] TMP_Dropdown settingsDD = null;
+
+	[SerializeField] Toggle miniToggle = null;
+
+	[SerializeField] public int levelIndex = 0;
+	[SerializeField] public int settingsIndex = 0;
+	[SerializeField] public bool isMinigame = false;
+	List<string> lvSettingsName = new List<string>() {"Classic 1 - 6x6", "Classic 2 - 6x8", "Clear 1 - 6x6 - 4 types", "Clear 2 - 6x8 - 4 types"};
 
 	protected override void Initialize() {
 		base.Initialize();
-		backButton.SubscribePress(Back);
+
+
 		travelButton.SubscribePress(GotoTravelView);
 		storeButton.SubscribePress(GotoStoreView);
 		pearlButton.SubscribePress(GotoPearlView);
+
+		//Add listener for when the value of the Dropdown changes, to take action
+		levelDD.onValueChanged.AddListener(delegate {
+            LevelDDValueChanged(levelDD);
+        });
+
+		settingsDD.onValueChanged.AddListener(delegate {
+            LevelSettingsDDValueChanged(settingsDD);
+        });
+		settingsDD.ClearOptions();
+		settingsDD.AddOptions(lvSettingsName);
+
+		miniToggle.isOn = false;
+		miniToggle.onValueChanged.AddListener(delegate {
+            MinigameToggleChanged(miniToggle);
+		});
 
 		// TODO 
 		// We temporarily remove all those function for testing purpose
 		backButton.gameObject.SetActive(false);
 		storeButton.gameObject.SetActive(false);
 		pearlButton.gameObject.SetActive(false);
-
 	}
 
 	public override void Activate() {
@@ -56,6 +82,37 @@ public class ShipHubView : View {
 		uiButtons[3] = pearlButton;
 		return uiButtons;
 	}
+
+	void LevelDDValueChanged(TMP_Dropdown dd)
+    {
+		levelIndex = dd.value;		
+        		
+		//TravelView.LevelBatch[] test = travelView.GetComponent<TravelView>().levelBatches;
+		//Debug.Log(test[0].settings[0].ToString());
+		// This will setup the second dropdown options
+		settingsIndex = 0;
+		settingsDD.ClearOptions();
+		lvSettingsName.Clear();
+		foreach (LevelSettings levelSettings in travelView.GetComponent<TravelView>().levelBatches[levelIndex].settings) 
+		//settingsDD
+		{
+			string dropName = levelSettings.ToString();
+			lvSettingsName.Add(dropName.Remove(dropName.Length - 16));	
+			//Debug.Log(dropName.Remove(dropName.Length - 16));
+		}		
+
+		settingsDD.AddOptions(lvSettingsName);
+    }
+
+	void LevelSettingsDDValueChanged(TMP_Dropdown dd)
+    {
+		settingsIndex = dd.value;		
+    }	
+
+	void MinigameToggleChanged(Toggle toggle)
+    {
+		isMinigame = toggle.isOn;		
+    }	
 
 	void GotoTravelView() {
 		ViewManager.GetManager().ShowView(travelView);
@@ -81,5 +138,5 @@ public class ShipHubView : View {
 
 	public override UIButton GetPointedButton() {
 		return travelButton;
-	}
+	}	
 }

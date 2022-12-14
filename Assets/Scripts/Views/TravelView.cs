@@ -11,7 +11,7 @@ public class TravelView : View {
 	[SerializeField] GameObject planetScreen = null;
 	[SerializeField] GameObject travelScreen = null;
 	[Space]
-	[SerializeField] LevelBatch[] levelBatches = null;
+	[SerializeField] public LevelBatch[] levelBatches = null;
 	[SerializeField] SpriteBatch[] spriteBatches = null;
 	[SerializeField] Sprite[] planets = null;
 	[SerializeField] View[] minigameViews = null;
@@ -34,7 +34,7 @@ public class TravelView : View {
 	[SerializeField] RectTransform shipEnd = null;
 	[SerializeField] RectTransform portalStart = null;
 
-	LevelSettings[] chosenLevels;
+	LevelSettings[] chosenLevelSetting;
 	Sprite[] chosenSprites;
 
 	bool travelDone;
@@ -46,7 +46,7 @@ public class TravelView : View {
 	int chosenMinigameIndex;
 
 	[System.Serializable]
-	struct LevelBatch {
+	public struct LevelBatch {
 		public LevelSettings[] settings;
 
 		public LevelBatch(LevelSettings[] settings) {
@@ -68,6 +68,10 @@ public class TravelView : View {
 		backButton.SubscribePress(Back);
 		upperPlanetButton.SubscribePress(() => { PlanetPressed(0); });
 		lowerPlanetButton.SubscribePress(() => { PlanetPressed(1); });
+		
+		// We do not use lower planet for now		
+		lowerPlanetButton.gameObject.SetActive(false);
+
 		GameMaster.Instance.CompleteCount = Random.Range(0, Mathf.CeilToInt(minigameThreshold/2f));
 	}
 
@@ -80,39 +84,59 @@ public class TravelView : View {
 	void PrepareButtons(int largestModuleIndex) {
 		largestModuleIndex = Mathf.Min(levelBatches.Length - 1, largestModuleIndex);
 
-		List<int> availableIndices = new List<int>();
-		List<List<LevelSettings>> suitableLevels = new List<List<LevelSettings>>();
-		int wordCount = WordMaster.Instance.MaxCards;
-
-		Debug.Log("TravelView-LargestMOduleIndex: " + largestModuleIndex);
-    
-		for (int i = 0; i <= largestModuleIndex; ++i) {
-			suitableLevels.Add(new List<LevelSettings>());
-			bool applicable = false;
-			foreach (LevelSettings ls in levelBatches[i].settings) {
-				if (ls.minWords <= wordCount && ls.maxWords >= wordCount) {
-					if (!applicable) {
-						applicable = true;
-						availableIndices.Add(i);
-					}
-					suitableLevels[suitableLevels.Count - 1].Add(ls);
-				}
-			}
-		}
-
-		Debug.Log("TravelView-availableIndices.Count: " + availableIndices.Count);
-		int[] chosenBatches = ChooseBatches(availableIndices);		
-		Debug.Log("TravelView-chosenBatches: " + chosenBatches[0] + chosenBatches[1]);
-
-		chosenLevels = new LevelSettings[] { suitableLevels[chosenBatches[0]].GetRandom(), suitableLevels[chosenBatches[1]].GetRandom() };
-		Debug.Log("TravelView-chosenLevels: " + chosenLevels[0] + chosenLevels[1]);
+		// TODO we no longer choose level randomly
+		int levelIndex = shipHubView.GetComponent<ShipHubView>().levelIndex;		
+		int settingsIndex = shipHubView.GetComponent<ShipHubView>().settingsIndex;		
 		
-		chosenSprites = new Sprite[] { spriteBatches[chosenBatches[0]].sprites.GetRandom(), spriteBatches[chosenBatches[1]].sprites.GetRandom() };
-		upperPlanetButton.SetSprite(planets[chosenBatches[0]]);
-		lowerPlanetButton.SetSprite(planets[chosenBatches[1]]);
+		chosenLevelSetting = new LevelSettings[] {levelBatches[levelIndex].settings[settingsIndex], levelBatches[levelIndex].settings[settingsIndex]};
+		chosenSprites = new Sprite[] { spriteBatches[levelIndex].sprites.GetRandom(), spriteBatches[levelIndex].sprites.GetRandom() };
+		upperPlanetButton.SetSprite(planets[levelIndex]);
+		lowerPlanetButton.SetSprite(planets[levelIndex]);
+		// List<int> availableIndices = new List<int>();
+		
+		// List<List<LevelSettings>> suitableLevels = new List<List<LevelSettings>>();
+		// int wordCount = WordMaster.Instance.MaxCards;
 
-		Debug.Log("TravelView-Instance.CompleteCount: " + GameMaster.Instance.CompleteCount);
-		if (GameMaster.Instance.CompleteCount + 3 >= minigameThreshold) {
+		// Debug.Log("TravelView-LargestMOduleIndex: " + largestModuleIndex);
+    
+		// for (int i = 0; i <= largestModuleIndex; ++i) {
+		// 	suitableLevels.Add(new List<LevelSettings>());
+		// 	bool applicable = false;
+		// 	foreach (LevelSettings ls in levelBatches[i].settings) {
+		// 		if (ls.minWords <= wordCount && ls.maxWords >= wordCount) {
+		// 			if (!applicable) {
+		// 				applicable = true;
+		// 				availableIndices.Add(i);
+		// 			}
+		// 			suitableLevels[suitableLevels.Count - 1].Add(ls);
+		// 		}
+		// 	}
+		// }
+
+		// Debug.Log("TravelView-availableIndices.Count: " + availableIndices.Count);
+		// Debug.Log("TravelView-suitableLevels.Count: " + suitableLevels.Count);
+
+		// // This will choose (with probability) from two batches
+		// // so that the lower the level the lower the probability (by half)
+		// // The first batch decide the upper planet
+		// // The second batch decide the lower planet		
+		// int[] chosenBatches = ChooseBatches(availableIndices);		
+		// Debug.Log("TravelView-chosenBatches: " + chosenBatches[0] + chosenBatches[1]);
+
+		// // This wil randomly choose two level settings from suitable levels at [chosen batch]
+		// //
+		// chosenLevelSetting = new LevelSettings[] { suitableLevels[chosenBatches[0]].GetRandom(), suitableLevels[chosenBatches[1]].GetRandom() };
+		// Debug.Log("TravelView-chosenLevels: " + chosenLevelSetting[0] + chosenLevelSetting[1]);
+		
+		// chosenSprites = new Sprite[] { spriteBatches[chosenBatches[0]].sprites.GetRandom(), spriteBatches[chosenBatches[1]].sprites.GetRandom() };
+		// upperPlanetButton.SetSprite(planets[chosenBatches[0]]);
+		// lowerPlanetButton.SetSprite(planets[chosenBatches[1]]);
+
+
+		
+		// TODO We do not randomize minigame in the test
+		bool isMinigame = shipHubView.GetComponent<ShipHubView>().isMinigame;				
+		if (isMinigame) {
 			//minigameIndex = Random.Range(0, 2);
 			// Always play mini game
 			minigameIndex = 0;
@@ -125,6 +149,22 @@ public class TravelView : View {
 				lowerPlanetButton.SetSprite(minigameViews[chosenMinigameIndex].GetComponent<IMinigame>().GetIcon());
 		} else
 			minigameIndex = -1;
+
+
+		// Debug.Log("TravelView-Instance.CompleteCount: " + GameMaster.Instance.CompleteCount);
+		// if (GameMaster.Instance.CompleteCount >= minigameThreshold) {
+		// 	//minigameIndex = Random.Range(0, 2);
+		// 	// Always play mini game
+		// 	minigameIndex = 0;
+		// 	chosenMinigameIndex = Random.Range(0, minigameViews.Length);
+		// 	if (minigameIndex == 0) {
+		// 		Debug.Log("TravelView-Play mini game");
+		// 		upperPlanetButton.SetSprite(minigameViews[chosenMinigameIndex].GetComponent<IMinigame>().GetIcon());
+		// 	}
+		// 	else
+		// 		lowerPlanetButton.SetSprite(minigameViews[chosenMinigameIndex].GetComponent<IMinigame>().GetIcon());
+		// } else
+		// 	minigameIndex = -1;
 	}
 
 	void PlanetPressed(int index) {
@@ -132,7 +172,7 @@ public class TravelView : View {
 		if (index == minigameIndex) {
 			ViewManager.GetManager().ShowView(minigameViews[chosenMinigameIndex]);
 		} else {
-			GameMaster.Instance.SetLevel(chosenLevels[index]);
+			GameMaster.Instance.SetLevel(chosenLevelSetting[index]);
 			GameMaster.Instance.Background = chosenSprites[index];
 			ViewManager.GetManager().ShowView(gridGameView);
 		}

@@ -14,19 +14,20 @@ public class NetworkManager : MonoBehaviour {
 
 	static NetworkManager netWorkManager;
 
-	string url = "http://84.253.229.86:52705/";
+	string url = Secret.URL;
 
-	string login = "api/game/login";
-	string coinUpdate = "api/game/update/coins";
+	string login = "api/game/login";	
 	string updateCharacter = "api/game/update/character";
-	string updateHighscore = "api/game/update/highscore";
+	
 	
 	// we skip this part for now
+	//string coinUpdate = "api/game/update/coins";
+	//string updateHighscore = "api/game/update/highscore";
 	//string getWordList = "api/game/create/wordlist";
 	string unlockCosmetic = "api/game/unlock/cosmetic";
 	string equipCosmetic = "api/game/equip/cosmetic";
 
-	string liveSocketUrl = "http://84.253.229.86:52705/recognizer";
+	string liveSocketUrl = "/recognizer";
 
 	//string devAccount = "devel"; No longer used dev one
 	//string devSocketUrl = ""; 
@@ -440,17 +441,13 @@ public class NetworkManager : MonoBehaviour {
 
 	public IEnumerator Login(string username, string password, Text errorText, IEnumerator CoroutineCallback, Callback Connected) {
 
-		if ((username == Secret.DEV_ACCOUNT) && (password == Secret.DEV_PASSWORD)) 
+		if (((username == Secret.DEV_ACCOUNT) || (username == Secret.DEV_ACCOUNT_SV)) && (password == Secret.DEV_PASSWORD)) 
 		{ 
 			CosmeticManager.GetManager().CheckDefaultCosmetics();
 			Connected();
 
 			// UPDATE USER INFO
-	 		//user.id = "dev";
-			user.username = Secret.DEV_ACCOUNT;
-			user.consent = true;
-			user.role = "dev";
-			user.access_token = "none";
+			user = new UserData(_id:"dev", _username:Secret.DEV_ACCOUNT, _consent:true, _role:"dev", "none");
 			
 			// RESET WORDMASTER DATA
 			WordMaster.Instance.ClearWords();
@@ -458,7 +455,7 @@ public class NetworkManager : MonoBehaviour {
 			// ADD WORD to WordMaster			
 			for (int i = 0; i < Const.WORD_LIST.Length; ++i) {
 				WordMaster.Instance.AddWord(Const.WORD_LIST[i]);
-				Debug.Log("WordMaster Addword: " + Const.WORD_LIST[i]);
+				//Debug.Log("WordMaster Addword: " + Const.WORD_LIST[i]);
 			}
 			
 			// UPDATE HIGHSCORE FOR EACH WORDS
@@ -467,8 +464,8 @@ public class NetworkManager : MonoBehaviour {
 			}
 
 			// UPDATE ALL POSSIBLE MODULES
-			// MAX MODULE NUMBER = 16
-			int module = 16;
+			// MAX MODULE NUMBER = 15 (16 module from 0 to 15)
+			int module = 15;
 			WordMaster.Instance.SetLargestModuleIndex(module);
 
 		} else {
@@ -593,7 +590,7 @@ public class NetworkManager : MonoBehaviour {
 	IEnumerator WordListRoutine(Callback Done) {
 	/*
 	*	This return the word list from server
-	*	The word list served as a series of exercise?
+	*	The word list served as a series of exercise
 	*	where user can play next or back?
 	*   It's in the form of a json file
 	*     - chosensWords [words]
@@ -620,8 +617,6 @@ public class NetworkManager : MonoBehaviour {
 
 	WordMaster.Instance.SetSamples(types, words);
 	Done?.Invoke();
-
-
 
 	// We do not use this part in offline
 	/*
