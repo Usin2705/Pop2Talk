@@ -55,13 +55,18 @@ MonoBehaviour:
     m_Key: error_auth0
     m_Metadata:
       m_Items: []
+  - m_Id: 285403475255083008
+    m_Key: app_name
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
-    id: 0
+    rid: 0
   references:
-    version: 1
-    00000000:
+    version: 2
+    RefIds:
+    - rid: 0
       type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables,
         asm: Unity.Localization}
       data:

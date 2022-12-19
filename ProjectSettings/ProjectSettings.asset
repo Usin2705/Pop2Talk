@@ -134,7 +134,7 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: 0.1.0
+  bundleVersion: 0.1.1
   preloadedAssets:
   - {fileID: 11400000, guid: c99cd6a036de86745bbcd45d0d2c1384, type: 2}
   metroInputSource: 0
@@ -160,11 +160,11 @@ PlayerSettings:
     Standalone: com.Teflon.Pop2TalkNordic
     iPhone: com.Teflon.Pop2TalkNordic
   buildNumber:
-    Standalone: 2
+    Standalone: 3
     iPhone: 1
     tvOS: 0
   overrideDefaultApplicationIdentifier: 1
-  AndroidBundleVersionCode: 1
+  AndroidBundleVersionCode: 3
   AndroidMinSdkVersion: 22
   AndroidTargetSdkVersion: 31
   AndroidPreferredInstallLocation: 0
@@ -810,7 +810,7 @@ PlayerSettings:
   allowUnsafeCode: 0
   useDeterministicCompilation: 1
   enableRoslynAnalyzers: 1
-  selectedPlatform: 0
+  selectedPlatform: 2
   additionalIl2CppArgs: 
   scriptingRuntimeVersion: 1
   gcIncremental: 0
@@ -878,8 +878,14 @@ PlayerSettings:
   XboxOneOverrideIdentityPublisher: 
   vrEditorSettings: {}
   cloudServicesEnabled:
-    Build: 1
+    Build: 0
+    Collab: 0
+    Game Performance: 0
+    Legacy Analytics: 0
+    Purchasing: 0
+    UDP: 0
     UNet: 1
+    Unity Ads: 0
   luminIcon:
     m_Name: 
     m_ModelFolderPath: 
@@ -894,11 +900,11 @@ PlayerSettings:
   apiCompatibilityLevel: 3
   activeInputHandler: 0
   windowsGamepadBackendHint: 0
-  cloudProjectId: e7cf3baa-a227-4c3a-b33a-35837a78dbea
+  cloudProjectId: 
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: Pop2Talk
-  organizationId: hokema-oy
+  projectName: 
+  organizationId: 
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 1
   playerDataPath: 

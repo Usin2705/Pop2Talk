@@ -27,4 +27,6 @@ The scriptable object WordData name must be in the format: (language code)_(us o
 The scriptable object must be located under Resources folder, otherwise it can't be loaded with the script.
 
 
-
+## Localisation
+Addressable need to be rebuild for EACH platform after you make change.
+(Windows\Asset Management\Addressables\Groups: select Play Mode Script\Use existing build, and select Build\Default Build Script)
