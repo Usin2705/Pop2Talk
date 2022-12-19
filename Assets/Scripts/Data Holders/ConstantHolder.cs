@@ -16,7 +16,7 @@ public enum Direction { Down, Up, Left, Right };
 
 public enum SpecialTileType { None, Exploding, Horizontal, Vertical, Joker};
 
-public enum Language { None, Finnish, EnglishGB };
+public enum Language { None, Finnish, EnglishGB, Swedish};
 
 public enum CosmeticSlot {ShipTop, ShipMid, ShipBottom, Wallpaper };
 

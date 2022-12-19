@@ -3578,7 +3578,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1595297811011918, guid: f836d58a5811aca458ce7e881b0ec392, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114482468174547504, guid: f836d58a5811aca458ce7e881b0ec392,
         type: 3}
@@ -3613,12 +3613,12 @@ PrefabInstance:
     - target: {fileID: 224187950450721236, guid: f836d58a5811aca458ce7e881b0ec392,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224187950450721236, guid: f836d58a5811aca458ce7e881b0ec392,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224187950450721236, guid: f836d58a5811aca458ce7e881b0ec392,
         type: 3}
@@ -3693,17 +3693,17 @@ PrefabInstance:
     - target: {fileID: 224645969753670384, guid: f836d58a5811aca458ce7e881b0ec392,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224645969753670384, guid: f836d58a5811aca458ce7e881b0ec392,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224645969753670384, guid: f836d58a5811aca458ce7e881b0ec392,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224645969753670384, guid: f836d58a5811aca458ce7e881b0ec392,
         type: 3}
@@ -6067,6 +6067,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 2090295396}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2094240590 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9013765606214718374, guid: 475578a94fe40bf428c2be2c68babdaa,
+    type: 3}
+  m_PrefabInstance: {fileID: 8669725079548368216}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2100810779
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6885,6 +6897,11 @@ PrefabInstance:
       propertyPath: m_text
       value: 'Dev option: select a level!'
       objectReference: {fileID: 0}
+    - target: {fileID: 3699592172154393006, guid: 475578a94fe40bf428c2be2c68babdaa,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -162.3003
+      objectReference: {fileID: 0}
     - target: {fileID: 4360276153996954952, guid: 475578a94fe40bf428c2be2c68babdaa,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -7085,6 +7102,11 @@ PrefabInstance:
       propertyPath: storeView
       value: 
       objectReference: {fileID: 830440959671336238}
+    - target: {fileID: 9158645135679619410, guid: 475578a94fe40bf428c2be2c68babdaa,
+        type: 3}
+      propertyPath: miniToggle
+      value: 
+      objectReference: {fileID: 2094240590}
     - target: {fileID: 9158645135679619410, guid: 475578a94fe40bf428c2be2c68babdaa,
         type: 3}
       propertyPath: travelView

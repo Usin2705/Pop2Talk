@@ -147,7 +147,7 @@ public class WordMaster : MonoBehaviour {
 
 	public WordData StringToWordData(string word) {
 		if (stringWordDataDictionary.ContainsKey(word))
-			return stringWordDataDictionary[word];
+			return stringWordDataDictionary[word];		
 		WordData data = (Resources.Load(word) as WordData);
 		if (data != null) {
 			stringWordDataDictionary.Add(word, data);

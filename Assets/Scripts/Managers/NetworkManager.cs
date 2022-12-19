@@ -447,20 +447,29 @@ public class NetworkManager : MonoBehaviour {
 			Connected();
 
 			// UPDATE USER INFO
-			user = new UserData(_id:"dev", _username:Secret.DEV_ACCOUNT, _consent:true, _role:"dev", "none");
+			user = new UserData(_id:"dev", _username:username, _consent:true, _role:"dev", "none");
 			
 			// RESET WORDMASTER DATA
 			WordMaster.Instance.ClearWords();
 
+			string[] wordlist;
+
+			if (username==Secret.DEV_ACCOUNT_SV) {
+				wordlist = Const.WORD_LIST_SV;
+
+			} else {
+				wordlist = Const.WORD_LIST_EN;
+			}
+
 			// ADD WORD to WordMaster			
-			for (int i = 0; i < Const.WORD_LIST.Length; ++i) {
-				WordMaster.Instance.AddWord(Const.WORD_LIST[i]);
+			for (int i = 0; i < wordlist.Length; ++i) {
+				WordMaster.Instance.AddWord(wordlist[i]);
 				//Debug.Log("WordMaster Addword: " + Const.WORD_LIST[i]);
 			}
 			
 			// UPDATE HIGHSCORE FOR EACH WORDS
-			for (int i = 0; i < Const.WORD_LIST.Length; ++i) {
-				WordMaster.Instance.SetStarAmount(Const.WORD_LIST[i], (int) 0);
+			for (int i = 0; i < wordlist.Length; ++i) {
+				WordMaster.Instance.SetStarAmount(wordlist[i], (int) 0);
 			}
 
 			// UPDATE ALL POSSIBLE MODULES
@@ -600,19 +609,34 @@ public class NetworkManager : MonoBehaviour {
 
 	yield return 0;
 
-	// For testing, always use 4 words	
-	string[] words = new string[4];
+	// For testing, always use 6 words	
+	string[] words = new string[6];
 
 	WordCardType[] types = new WordCardType[words.Length];
 	WordMaster.Instance.SetLargestModuleIndex(16);
 
-	List<string> selectedWordList = new List<string>(Const.WORD_LIST);
+	string[] wordlist;
+
+	Debug.Log("User name: " + user.username);
+	if (user.username==Secret.DEV_ACCOUNT_SV) {
+		
+		wordlist = Const.WORD_LIST_SV;
+
+	} else {
+		wordlist = Const.WORD_LIST_EN;
+	}
+
+	List<string> selectedWordList = new List<string>(wordlist);
 
 	for (int i = 0; i < words.Length; ++i) {
 		int index = UnityEngine.Random.Range(0, selectedWordList.Count);
 		words[i] = selectedWordList[index];
 		selectedWordList.RemoveAt(index);
-		types[i] = (WordCardType)  UnityEngine.Random.Range(0, 2);
+
+		
+		int rWCT = UnityEngine.Random.Range(0, 4);
+		if (rWCT >= 2) rWCT = 0;
+		types[i] = (WordCardType)  rWCT;
 	}
 
 	WordMaster.Instance.SetSamples(types, words);
