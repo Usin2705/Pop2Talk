@@ -37,14 +37,20 @@ public class FinishView : View {
 	void MakeCoins() {
 		int increase = CurrencyMaster.Instance.IncreaseCoins(WordMaster.Instance.GetStarRatio(WordMaster.Instance.TotalStars / (float)WordMaster.Instance.MaxCards),
 			GameMaster.Instance.GetDustRatio(GameMaster.Instance.SpaceDust));
-		if (increase == 0) {
-			prevButton.gameObject.SetActive(true);
-			NetworkManager.GetManager().LevelCompleted(GameMaster.Instance.CurrentLevel.name, false, false);
-		} else {
-			prevButton.gameObject.SetActive(false);
-			GameMaster.Instance.CompleteCount++;
-			NetworkManager.GetManager().LevelCompleted(GameMaster.Instance.CurrentLevel.name, true, false);
-		}
+
+		// TODO Always pass the level			
+		// if (increase == 0) {
+		// 	prevButton.gameObject.SetActive(true);
+		// 	NetworkManager.GetManager().LevelCompleted(GameMaster.Instance.CurrentLevel.name, false, false);
+		// } else {
+		// 	prevButton.gameObject.SetActive(false);
+		// 	GameMaster.Instance.CompleteCount++;
+		// 	NetworkManager.GetManager().LevelCompleted(GameMaster.Instance.CurrentLevel.name, true, false);
+		// }
+
+		prevButton.gameObject.SetActive(false);
+		GameMaster.Instance.CompleteCount++;
+		NetworkManager.GetManager().LevelCompleted();
 		coinText.text = increase.ToString();
 	}
 
