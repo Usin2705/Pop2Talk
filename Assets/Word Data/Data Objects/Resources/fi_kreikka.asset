@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: fi_kreikka
   m_EditorClassIdentifier: 
-  picture: {fileID: 0}
-  language: 0
-  spelling: 
-  pronunciations: []
+  picture: {fileID: 21300000, guid: dc4af3022fd095e4180bef0aaad20912, type: 3}
+  language: 1
+  spelling: kreikka
+  pronunciations:
+  - {fileID: 8300000, guid: e632744b69990b7408ae692fca3ce5f4, type: 3}

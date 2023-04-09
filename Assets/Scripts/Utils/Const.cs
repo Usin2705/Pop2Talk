@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 public static class Const
 {
-    public static readonly string[] PATH_TO_WORDDATA_SO = {""};
     public static readonly string[] WORD_LIST_EN = {
     "en_gb_breathe", "en_gb_animal", "en_gb_love", "en_gb_toy en_gb_car", "en_gb_eagle", "en_gb_kitten", "en_gb_glacier", "en_gb_writing", 
     "en_gb_marker", "en_gb_shy", "en_gb_couch", "en_gb_pencil", "en_gb_teacher", "en_gb_cookie", "en_gb_willow en_gb_flute", "en_gb_chest", 
@@ -25,5 +24,5 @@ public static class Const
 
     public static readonly string[] WORD_LIST_SV = {"sv_glödlampa", "sv_kollision", "sv_sjuk", "sv_stjärna", "sv_ugn", "sv_väska"};
 
-
+    public const int TIME_OUT_SECS = 20;
 }

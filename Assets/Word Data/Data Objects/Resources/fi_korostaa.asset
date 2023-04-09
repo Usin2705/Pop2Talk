@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: fi_korostaa
   m_EditorClassIdentifier: 
-  picture: {fileID: 0}
-  language: 0
-  spelling: 
-  pronunciations: []
+  picture: {fileID: 21300000, guid: 3ed5e4603fcfdda40a8b40f12ce0acc5, type: 3}
+  language: 1
+  spelling: korostaa
+  pronunciations:
+  - {fileID: 8300000, guid: 23c57d314e65d7a4f9c78c91ff7c93dd, type: 3}

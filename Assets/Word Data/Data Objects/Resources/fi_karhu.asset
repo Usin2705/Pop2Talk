@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: fi_karhu
   m_EditorClassIdentifier: 
-  picture: {fileID: 0}
-  language: 0
-  spelling: 
-  pronunciations: []
+  picture: {fileID: 21300000, guid: eee12ef3448628d49b668f5bfeeb6eac, type: 3}
+  language: 1
+  spelling: karhu
+  pronunciations:
+  - {fileID: 8300000, guid: 75ec7d79a8e2d2f479cf13f9b678d1bd, type: 3}

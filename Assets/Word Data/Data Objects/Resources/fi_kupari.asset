@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: fi_kupari
   m_EditorClassIdentifier: 
-  picture: {fileID: 0}
-  language: 0
-  spelling: 
-  pronunciations: []
+  picture: {fileID: 21300000, guid: c0d6ff131dd9b4646aa0e94428d2bb4a, type: 3}
+  language: 1
+  spelling: kupari
+  pronunciations:
+  - {fileID: 8300000, guid: 44b793fe71f24ab4184f04dac5ac88cc, type: 3}

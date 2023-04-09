@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: fi_eskari
   m_EditorClassIdentifier: 
-  picture: {fileID: 0}
-  language: 0
+  picture: {fileID: 21300000, guid: 55b4a82622f9091479bd3fdf98100810, type: 3}
+  language: 1
   spelling: 
-  pronunciations: []
+  pronunciations:
+  - {fileID: 8300000, guid: 41cdda5e733e3304191701825df9ecc3, type: 3}

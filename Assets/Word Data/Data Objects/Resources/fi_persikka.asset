@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: fi_persikka
   m_EditorClassIdentifier: 
-  picture: {fileID: 0}
-  language: 0
-  spelling: 
-  pronunciations: []
+  picture: {fileID: 21300000, guid: d3847f1abac44a74d8b6bbd0f68f5fd2, type: 3}
+  language: 1
+  spelling: persikka
+  pronunciations:
+  - {fileID: 8300000, guid: 4146242dd2d58f3419714dbc18aee468, type: 3}

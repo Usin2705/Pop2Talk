@@ -43,7 +43,9 @@ public abstract class BaseWordCardHandler {
 	}
 
     public virtual void SetStars(int stars) {
-		this.stars = Mathf.Max(this.stars, stars);
+		//this.stars = Mathf.Max(this.stars, stars);
+		// We provide the correct star amount, so we don't need to check for the max
+		this.stars = stars;
     }
 
 	protected abstract WordCardType GetCardType();

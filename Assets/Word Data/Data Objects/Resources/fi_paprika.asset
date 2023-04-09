@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: fi_paprika
   m_EditorClassIdentifier: 
-  picture: {fileID: 0}
-  language: 0
-  spelling: 
-  pronunciations: []
+  picture: {fileID: 21300000, guid: f373ba50562620a40be34961052edfce, type: 3}
+  language: 1
+  spelling: paprika
+  pronunciations:
+  - {fileID: 8300000, guid: 6767dcbc5b9235947a1d73184ace9c6e, type: 3}

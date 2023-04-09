@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: fi_makkara
   m_EditorClassIdentifier: 
-  picture: {fileID: 0}
-  language: 0
-  spelling: 
-  pronunciations: []
+  picture: {fileID: 21300000, guid: 278e46d9ae778a646b163fe69b8bc2ae, type: 3}
+  language: 1
+  spelling: makkara
+  pronunciations:
+  - {fileID: 8300000, guid: 51de1ad33e3f15c4a84aa45cead63344, type: 3}

@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: fi_rahka
   m_EditorClassIdentifier: 
-  picture: {fileID: 0}
-  language: 0
-  spelling: 
-  pronunciations: []
+  picture: {fileID: 21300000, guid: 7d9b31619969e074b96abe8fa2a0ad74, type: 3}
+  language: 1
+  spelling: rahka
+  pronunciations:
+  - {fileID: 8300000, guid: c756b0e34dee7f34897edf042607e1c5, type: 3}

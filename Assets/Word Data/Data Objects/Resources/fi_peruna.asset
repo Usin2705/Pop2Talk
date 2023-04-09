@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: fi_peruna
   m_EditorClassIdentifier: 
-  picture: {fileID: 0}
-  language: 0
-  spelling: 
-  pronunciations: []
+  picture: {fileID: 21300000, guid: 75b77ee185f6a524da33351955a9a28f, type: 3}
+  language: 1
+  spelling: peruna
+  pronunciations:
+  - {fileID: 8300000, guid: 85716a8d8b5626c43b82e72a2d8dab98, type: 3}

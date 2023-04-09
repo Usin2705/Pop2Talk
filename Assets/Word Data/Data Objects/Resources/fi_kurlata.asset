@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: fi_kurlata
   m_EditorClassIdentifier: 
-  picture: {fileID: 0}
-  language: 0
-  spelling: 
-  pronunciations: []
+  picture: {fileID: 21300000, guid: 69631e73cef212c48b317da1f94ba9e5, type: 3}
+  language: 1
+  spelling: kurlata
+  pronunciations:
+  - {fileID: 8300000, guid: c644920165292f443a8cfb7831449802, type: 3}

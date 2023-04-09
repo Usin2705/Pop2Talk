@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: fi_komero
   m_EditorClassIdentifier: 
-  picture: {fileID: 0}
-  language: 0
-  spelling: 
-  pronunciations: []
+  picture: {fileID: 21300000, guid: 6baa872f154a23b42b39dfb516919f9b, type: 3}
+  language: 1
+  spelling: komero
+  pronunciations:
+  - {fileID: 8300000, guid: 9f48d4b0a170c4b4cbf5d05ab72ca617, type: 3}

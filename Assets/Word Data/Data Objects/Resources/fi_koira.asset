@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: fi_koira
   m_EditorClassIdentifier: 
-  picture: {fileID: 0}
-  language: 0
-  spelling: 
-  pronunciations: []
+  picture: {fileID: 21300000, guid: b5aceb3aa05c407468104b4d1f01795b, type: 3}
+  language: 1
+  spelling: koira
+  pronunciations:
+  - {fileID: 8300000, guid: cf1ab808d595dd4469f0756bf275b207, type: 3}

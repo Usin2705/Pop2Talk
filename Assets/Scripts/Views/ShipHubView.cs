@@ -35,7 +35,6 @@ public class ShipHubView : View {
 	protected override void Initialize() {
 		base.Initialize();
 
-
 		travelButton.SubscribePress(GotoTravelView);
 		storeButton.SubscribePress(GotoStoreView);
 		pearlButton.SubscribePress(GotoPearlView);

@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: fi_rosvo
   m_EditorClassIdentifier: 
-  picture: {fileID: 0}
-  language: 0
-  spelling: 
-  pronunciations: []
+  picture: {fileID: 21300000, guid: 551c4c0d2613029438ce3390d62f1e49, type: 3}
+  language: 1
+  spelling: rosvo
+  pronunciations:
+  - {fileID: 8300000, guid: 698a239cbe0c74f41befc3b1f336e993, type: 3}

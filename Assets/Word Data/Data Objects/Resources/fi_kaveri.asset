@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: fi_kaveri
   m_EditorClassIdentifier: 
-  picture: {fileID: 0}
-  language: 0
-  spelling: 
-  pronunciations: []
+  picture: {fileID: 21300000, guid: 7f00f73311344d64893ec1629c5a5f73, type: 3}
+  language: 1
+  spelling: kaveri
+  pronunciations:
+  - {fileID: 8300000, guid: 01cba39c68653bb4abc4a46c7eabd5d4, type: 3}

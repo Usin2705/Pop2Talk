@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: fi_historia
   m_EditorClassIdentifier: 
-  picture: {fileID: 0}
-  language: 0
-  spelling: 
-  pronunciations: []
+  picture: {fileID: 21300000, guid: 3789700e3a6df8f4b8492f60ac4a0c3a, type: 3}
+  language: 1
+  spelling: historia
+  pronunciations:
+  - {fileID: 8300000, guid: 88efd668d70fe5645b98c43524f38908, type: 3}

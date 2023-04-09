@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: fi_liukuri
   m_EditorClassIdentifier: 
-  picture: {fileID: 0}
-  language: 0
-  spelling: 
-  pronunciations: []
+  picture: {fileID: 21300000, guid: 6e33732b45ec013438eb102749f75dac, type: 3}
+  language: 1
+  spelling: liukuri
+  pronunciations:
+  - {fileID: 8300000, guid: 2f76288545a97ea4697ea78595a75c3b, type: 3}

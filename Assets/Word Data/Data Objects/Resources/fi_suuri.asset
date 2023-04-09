@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: fi_suuri
   m_EditorClassIdentifier: 
-  picture: {fileID: 0}
-  language: 0
-  spelling: 
-  pronunciations: []
+  picture: {fileID: 21300000, guid: 92edaa9e573ab414ba8d3f81e54efa85, type: 3}
+  language: 1
+  spelling: suuri
+  pronunciations:
+  - {fileID: 8300000, guid: e281c4269f5682e44adc14cbc0bc08a4, type: 3}

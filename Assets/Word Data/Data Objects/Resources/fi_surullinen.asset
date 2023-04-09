@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: fi_surullinen
   m_EditorClassIdentifier: 
-  picture: {fileID: 0}
-  language: 0
-  spelling: 
-  pronunciations: []
+  picture: {fileID: 21300000, guid: 99896bd1c93e63d44ae938fa5ceebbfc, type: 3}
+  language: 1
+  spelling: surullinen
+  pronunciations:
+  - {fileID: 8300000, guid: fe8d58787530097418068cefe63a2427, type: 3}

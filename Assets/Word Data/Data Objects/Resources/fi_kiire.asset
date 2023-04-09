@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: fi_kiire
   m_EditorClassIdentifier: 
-  picture: {fileID: 0}
-  language: 0
-  spelling: 
-  pronunciations: []
+  picture: {fileID: 21300000, guid: 2e59dd63a3047b4428baabc8b81f32a9, type: 3}
+  language: 1
+  spelling: kiire
+  pronunciations:
+  - {fileID: 8300000, guid: 58a6147cb3b70ff43b514f564a51380d, type: 3}

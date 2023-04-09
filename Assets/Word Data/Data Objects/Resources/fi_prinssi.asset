@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: fi_prinssi
   m_EditorClassIdentifier: 
-  picture: {fileID: 0}
-  language: 0
-  spelling: 
-  pronunciations: []
+  picture: {fileID: 21300000, guid: 541d7a331111b5d4998140cc02f1c6cc, type: 3}
+  language: 1
+  spelling: prinssi
+  pronunciations:
+  - {fileID: 8300000, guid: 552fc8d4357616748ae3009f82e539e9, type: 3}

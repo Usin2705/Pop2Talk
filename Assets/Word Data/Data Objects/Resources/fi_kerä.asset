@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: "fi_ker\xE4"
   m_EditorClassIdentifier: 
-  picture: {fileID: 0}
-  language: 0
-  spelling: 
-  pronunciations: []
+  picture: {fileID: 21300000, guid: f23cff1d391e0c346b9be90728c79688, type: 3}
+  language: 1
+  spelling: "ker\xE4"
+  pronunciations:
+  - {fileID: 8300000, guid: 4c4ddf9d875c0db4999afa6f1e788f95, type: 3}

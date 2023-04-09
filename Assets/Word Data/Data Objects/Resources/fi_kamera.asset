@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: fi_kamera
   m_EditorClassIdentifier: 
-  picture: {fileID: 0}
-  language: 0
-  spelling: 
-  pronunciations: []
+  picture: {fileID: 21300000, guid: 8eac0a75cf0223b4cb39c2fc2a6f0ec6, type: 3}
+  language: 1
+  spelling: kamera
+  pronunciations:
+  - {fileID: 8300000, guid: 6bb1c23dc59c2c84297d0195d3a0bb91, type: 3}

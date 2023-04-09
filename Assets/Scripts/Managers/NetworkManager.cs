@@ -192,160 +192,50 @@ public class NetworkManager : MonoBehaviour {
 	}
 
 	public void SendMicrophone(string microphone, string word, AudioClip clip, float duration, IntCallback ScoreReceived, string challengetype, int retryAmount) {
-		if (socket != null && connected)
-			StartCoroutine(UploadMicrophone(microphone, word, clip, duration, ScoreReceived, challengetype, retryAmount));
+		StartCoroutine(UploadMicrophone(microphone, word, clip, duration, ScoreReceived, challengetype, retryAmount));
 	}
 
 	IEnumerator UploadMicrophone(string microphone, string word, AudioClip clip, float duration, IntCallback ScoreReceived, string challengetype, int retryAmount) {
-		while (!connected || waitingScore)
-			yield return null;
-		waitingScore = true;
-		int packets = 0;
-		int packetSize = Mathf.RoundToInt(fs * packetGap);
-		float[] rawSamples = new float[packetSize];
-		// samples array should be same datatype as used for transfer:
-		switch (datatype) {
-			case "int16":
-				samplesShort = new short[packetSize];
-				voiceData = new byte[2 * packetSize];
-				break;
-			case "int8":
-				samplesSbyte = new sbyte[packetSize];
-				voiceData = new byte[1 * packetSize];
-				break;
-		}
-		string token = "Mitä tähän halutaan? Tässä randomia: " + UnityEngine.Random.value;
-		InitialAudioData sud = new InitialAudioData();
-		EstablishedAudioData ud = new EstablishedAudioData();
-		float a = 0;
-		socket.On("score", (string data) => {
-			waitingScore = false;
-			var json = SimpleJSON.JSON.Parse(data);
-			Debug.Log(json);
-			ScoreReceived(json["stars"].AsInt);
-			//ScoreReceived((int)((JObject)JsonConvert.DeserializeObject((string)data))["score"]);
-			//Debug.Log("Score received: " + (int)((JObject)JsonConvert.DeserializeObject((string)data))["score"]);
-			socket.Off("score");
-		});
-		Debug.Log("Starting sound upload");
-		while (packets < Mathf.CeilToInt(duration / packetGap)) {
-			if (Microphone.GetPosition(microphone) >= packetSize + packetSize * packets) {
-				clip.GetData(rawSamples, packetSize * packets);
+	    // IMultipartFormSection & MultipartFormFileSection  could be another solution,
+		// but apparent it also require raw byte data to upload
+		byte[] wavBuffer = SavWav.GetWav(clip, out uint length, trim:true);
 
-				switch (datatype) {
-					case "int16":
-						for (int i = 0; i < rawSamples.Length; ++i) {
-							samplesShort[i] = (short)(short.MaxValue * rawSamples[i]);
-						}
-						Buffer.BlockCopy(samplesShort, 0, voiceData, 0, voiceData.Length);
-						break;
-					case "int8":
-						for (int i = 0; i < rawSamples.Length; ++i) {
-							// Decoding in Python:
-							// np.sign(compressed_val)*(1/mu)*(np.power(1+mu, np.abs(compressed_val)/127)-1).tolist()
-							// So encoding is: round (sign * ln(1 + mu *abs(x) / ln(1+mu) * 127)  
-							samplesSbyte[i] = (sbyte)Math.Round(
-							Math.Sign(rawSamples[i]) * sbyte.MaxValue * (Math.Log(1 + 255 * Math.Abs(rawSamples[i])) / Math.Log(1 + 255))
-											);
-						}
-						Buffer.BlockCopy(samplesSbyte, 0, voiceData, 0, voiceData.Length);
-						break;
-				}
+		WWWForm form = new WWWForm();
+        form.AddBinaryData("file", wavBuffer, fileName:"speech_sample", mimeType: "audio/wav");
+        form.AddField("word", word);
+		form.AddField("user_id", user.id);
 
+        UnityWebRequest www = UnityWebRequest.Post(url + scoreUrl, form);
 
-#if UNITY_STANDALONE_WIN || UNITY_EDITOR
-				/*
-                if (packets == 0)
-                {
-                    sud.player = Player;
-                    sud.word = word;
-                    sud.gameversion = "0.2";
-                    sud.authenticationtoken = token;
-                    sud.dataencoding = "base64";
-                    // Add the data encoding and data types: 
-                    sud.datatype = datatype;
-                    sud.dataencoding = dataencoding;
-                    // I'd like to have the following here, is that easily done?:
-                    
-                    sud.gameversion = "";
-                    sud.build = "";
-                    sud.builddate = "";
-                    sud.device = "";
-                    sud.microphone = microphone;
-                    sud.challengetype = "";
-                    sud.level = "";
-                    sud.packetnr = packets;
-                    sud.data = System.Convert.ToBase64String(voiceData);
-                    socket.Emit("start_upload", JsonConvert.SerializeObject(sud));
-                }
-                else if (packets == Mathf.CeilToInt(duration / packetGap) - 1)
-                {
-                    ud.player = Player;
-                    ud.authenticationtoken = token;
-                    ud.packetnr = packets;
-                    ud.data = System.Convert.ToBase64String(voiceData);
-                    socket.Emit("finish_upload", JsonConvert.SerializeObject(ud));
-                }
-                else
-                {
-                    ud.player = Player;
-                    ud.authenticationtoken = token;
-                    ud.packetnr = packets;
-                    ud.data = System.Convert.ToBase64String(voiceData);
-                    socket.Emit("continue_upload", JsonConvert.SerializeObject(ud));
-                }*/
-#endif
+		www.timeout = Const.TIME_OUT_SECS;
+		yield return www.SendWebRequest();
 
-				//#if UNITY_ANDROID || UNITY_IOS
-				if (packets == 0) {
-					sud.player = Player;
-					sud.word = word;
-					sud.gameversion = "0.2";
-					sud.authenticationtoken = token;
-					sud.dataencoding = "base64";
-					// Add the data encoding and data types: 
-					sud.datatype = datatype;
-					sud.dataencoding = dataencoding;
+		Debug.Log(www.result);
 
-					// I'd like to have the following here, is that easily done?:
-					//sud.gameversion = "";
-					sud.build = Assembly.GetExecutingAssembly().GetName().Version.Build.ToString();
+        if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError) {
+			Debug.Log(www.error);
+			throw new System.Exception(www.downloadHandler.text ?? www.error);
+		} else {
+			Debug.Log("Form upload complete!");
 
-					System.Version version = Assembly.GetExecutingAssembly().GetName().Version;
-					System.DateTime startDate = new System.DateTime(2000, 1, 1, 0, 0, 0);
-					System.TimeSpan span = new System.TimeSpan(version.Build, 0, 0, version.Revision * 2);
-					System.DateTime buildDate = startDate.Add(span);
-					sud.builddate = buildDate;
-					sud.device = SystemInfo.deviceName.ToString();
-					sud.microphone = microphone;
-					sud.challengetype = challengetype;
-					sud.retryCount = retryAmount;
-					//sud.level = "";
-
-					sud.packetnr = packets;
-					sud.data = System.Convert.ToBase64String(voiceData);
-					socket.EmitJson("start_upload", JsonUtility.ToJson(sud));
-				} else if (packets == Mathf.CeilToInt(duration / packetGap) - 1) {
-					ud.player = Player;
-					ud.authenticationtoken = token;
-					ud.packetnr = packets;
-					ud.data = System.Convert.ToBase64String(voiceData);
-					socket.EmitJson("finish_upload", JsonUtility.ToJson(ud));
-				} else {
-					ud.player = Player;
-					ud.authenticationtoken = token;
-					ud.packetnr = packets;
-					ud.data = System.Convert.ToBase64String(voiceData);
-					socket.EmitJson("continue_upload", JsonUtility.ToJson(ud));
-				}
-				//#endif
-				packets++;
-			} else {
-				a += Time.deltaTime;
-				yield return null;
+			if (www.downloadHandler.text == "invalid credentials") {
+				Debug.Log("invalid credentials");
+				yield break;
 			}
-		}
-		Debug.Log("Record duration: " + a);
+
+			if (www.downloadHandler.text == "this account uses auth0") {
+				Debug.Log("this account uses auth0");
+				yield break;
+			}
+        }
+
+		var json = SimpleJSON.JSON.Parse(www.downloadHandler.text);
+
+		// Since we are connected, we can register the network status
+		connected = true;
+		
+		// Trigger the score received callback
+		ScoreReceived(json["stars"].AsInt);		
 	}
 
 	public IEnumerator Login(string username, string password, Text errorText, IEnumerator CoroutineCallback, Callback Connected) {
@@ -386,6 +276,9 @@ public class NetworkManager : MonoBehaviour {
 				errorText.GetComponent<LocalizeStringEvent>().StringReference.TableEntryReference = "error_auth0";
 				yield break;
 			}
+			
+			// Since we are connected, we can register the network status
+			connected = true;
 
 			user = JsonUtility.FromJson<UserData>(www.downloadHandler.text);			
 			Debug.Log("Login json: " + www.downloadHandler.text);
@@ -459,6 +352,9 @@ public class NetworkManager : MonoBehaviour {
 		yield return www.SendWebRequest();		
 		
 		Debug.Log(www.downloadHandler.text);
+
+		// Since we are connected, we can register the network status
+		connected = true;
 
 		var json = SimpleJSON.JSON.Parse(www.downloadHandler.text);
 

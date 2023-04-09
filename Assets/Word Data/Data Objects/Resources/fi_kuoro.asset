@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: fi_kuoro
   m_EditorClassIdentifier: 
-  picture: {fileID: 0}
-  language: 0
-  spelling: 
-  pronunciations: []
+  picture: {fileID: 21300000, guid: 11ffc598f010537419c9d9d7a6c5236e, type: 3}
+  language: 1
+  spelling: kuoro
+  pronunciations:
+  - {fileID: 8300000, guid: 77b1d075f8101bd46b7d4e7ee9fc8272, type: 3}

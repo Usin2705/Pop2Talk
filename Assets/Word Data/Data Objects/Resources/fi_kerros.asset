@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: fi_kerros
   m_EditorClassIdentifier: 
-  picture: {fileID: 0}
-  language: 0
-  spelling: 
-  pronunciations: []
+  picture: {fileID: 21300000, guid: 796b6febe66d6e4488b527874164cbaa, type: 3}
+  language: 1
+  spelling: kerros
+  pronunciations:
+  - {fileID: 8300000, guid: 3d64c5881c30fc049aceeb1eff10e681, type: 3}

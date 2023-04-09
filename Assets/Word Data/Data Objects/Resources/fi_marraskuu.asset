@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: fi_marraskuu
   m_EditorClassIdentifier: 
-  picture: {fileID: 0}
-  language: 0
-  spelling: 
-  pronunciations: []
+  picture: {fileID: 21300000, guid: 7d393cc7f491c254c94fb1a051bdb744, type: 3}
+  language: 1
+  spelling: marraskuu
+  pronunciations:
+  - {fileID: 8300000, guid: a2de01cc884003347b9635c8c8f989c7, type: 3}

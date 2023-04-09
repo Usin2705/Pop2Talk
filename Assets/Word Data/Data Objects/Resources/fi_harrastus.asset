@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: fi_harrastus
   m_EditorClassIdentifier: 
-  picture: {fileID: 0}
-  language: 0
-  spelling: 
-  pronunciations: []
+  picture: {fileID: 21300000, guid: 2a2dd13c6617ef449bd7751132cadee3, type: 3}
+  language: 1
+  spelling: harrastus
+  pronunciations:
+  - {fileID: 8300000, guid: 022681db1ce39924e8fe0d79370e797c, type: 3}

@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: "fi_t\xE4rke\xE4"
   m_EditorClassIdentifier: 
-  picture: {fileID: 0}
-  language: 0
-  spelling: 
-  pronunciations: []
+  picture: {fileID: 21300000, guid: da1a3560148449644a947da016023451, type: 3}
+  language: 1
+  spelling: "t\xE4rke\xE4"
+  pronunciations:
+  - {fileID: 8300000, guid: 34f4eb0b08b54c945bc8580fd933fb51, type: 3}

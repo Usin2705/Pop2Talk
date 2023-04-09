@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: fi_farkut
   m_EditorClassIdentifier: 
-  picture: {fileID: 0}
-  language: 0
-  spelling: 
-  pronunciations: []
+  picture: {fileID: 21300000, guid: 8055b6fdacf16b145b296a07ef4bf76f, type: 3}
+  language: 1
+  spelling: farkut
+  pronunciations:
+  - {fileID: 8300000, guid: 99f4cfc5450e9274ea62a55f9f1c77d5, type: 3}

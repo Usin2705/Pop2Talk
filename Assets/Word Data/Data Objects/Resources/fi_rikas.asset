@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: fi_rikas
   m_EditorClassIdentifier: 
-  picture: {fileID: 0}
-  language: 0
-  spelling: 
-  pronunciations: []
+  picture: {fileID: 21300000, guid: 424dc5f190e175645a8b38c927a6a4bc, type: 3}
+  language: 1
+  spelling: rikas
+  pronunciations:
+  - {fileID: 8300000, guid: 8f4b699cd29c2634c96c49cda4773410, type: 3}

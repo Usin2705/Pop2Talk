@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: fi_rasia
   m_EditorClassIdentifier: 
-  picture: {fileID: 0}
-  language: 0
-  spelling: 
-  pronunciations: []
+  picture: {fileID: 21300000, guid: 176295ca1be56214cb0ecbd24a7c2654, type: 3}
+  language: 1
+  spelling: rasia
+  pronunciations:
+  - {fileID: 8300000, guid: 340eda728361f8947aa48aa2d1e61805, type: 3}

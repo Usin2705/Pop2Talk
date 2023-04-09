@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: fi_dinosaurus
   m_EditorClassIdentifier: 
-  picture: {fileID: 0}
-  language: 0
+  picture: {fileID: 21300000, guid: c71ec583df320e144bf3f8a87e7b04fa, type: 3}
+  language: 1
   spelling: 
-  pronunciations: []
+  pronunciations:
+  - {fileID: 8300000, guid: a91c39cb91b239241a921447e9f6967d, type: 3}

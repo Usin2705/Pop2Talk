@@ -123,7 +123,6 @@ public class WordCardManager : MonoBehaviour {
 		AudioClip recording = Microphone.Start(Microphone.devices[0], false, recordDuration, 16000);
 		yield return new WaitForSeconds(micExtra);
 
-		NetworkManager.GetManager().SendMicrophone(Microphone.devices[0], currentWord.name, recording, recordDuration, ReceiveStars, challengeType, retryCount);
 		bool enoughRecording;
 		starsReceived = false;
 		float a = 0;
@@ -144,6 +143,8 @@ public class WordCardManager : MonoBehaviour {
 		}
 		audioSource.clip = recording;
 		wordCard.ToggleMic(false);
+		NetworkManager.GetManager().SendMicrophone(Microphone.devices[0], currentWord.name, recording, recordDuration, ReceiveStars, challengeType, retryCount);
+		
 		yield return new WaitForSeconds(gap);
 		audioSource.Play();
 		yield return new WaitForSeconds(audioSource.clip.length);
@@ -170,7 +171,11 @@ public class WordCardManager : MonoBehaviour {
 				yield return null;
 			}
 			NetworkManager.GetManager().ServerWait(false);
-		}
+		}		
+
+		// If we are online, we want to use the stars we received from the server
+		// However, we do not use socket but resful api
+		// So the check for connection may be not necessary???		
 		if (!timeOut && NetworkManager.GetManager().Connected) {
 			stars = Mathf.Max(0, stars);
 			wordCard.SetOnlineStars();

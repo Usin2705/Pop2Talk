@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: fi_rakennus
   m_EditorClassIdentifier: 
-  picture: {fileID: 0}
-  language: 0
-  spelling: 
-  pronunciations: []
+  picture: {fileID: 21300000, guid: f6dd2215e73088040baa68b385879179, type: 3}
+  language: 1
+  spelling: rakennus
+  pronunciations:
+  - {fileID: 8300000, guid: 9e20afaafdd3b7c40b715c2f87df745b, type: 3}

@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: fi_manner
   m_EditorClassIdentifier: 
-  picture: {fileID: 0}
-  language: 0
-  spelling: 
-  pronunciations: []
+  picture: {fileID: 21300000, guid: 5345531e68b712740b754b142f82f7c9, type: 3}
+  language: 1
+  spelling: manner
+  pronunciations:
+  - {fileID: 8300000, guid: 82947a00006d49643b0bcd2d6c892444, type: 3}
