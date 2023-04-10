@@ -58,7 +58,8 @@ public class CharacterSelectView : View {
 	}
 
 	public override void ExitFluff(Callback Done) {
-		NetworkManager.GetManager().CharacterSelectEvent("character_selection", CharacterManager.GetManager().CurrentCharacter.name);
+		// TODO we do not update the character select events anymore
+		// NetworkManager.GetManager().CharacterSelectEvent("character_selection", CharacterManager.GetManager().CurrentCharacter.name);
 		CharacterManager.GetManager().ShowCharacter(characterSelected, sortingOrder, () => { base.ExitFluff(Done); });
 	}
 

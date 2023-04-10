@@ -204,7 +204,9 @@ public class NetworkManager : MonoBehaviour {
         form.AddBinaryData("file", wavBuffer, fileName:"speech_sample", mimeType: "audio/wav");
         form.AddField("word", word);
 		form.AddField("user_id", user.id);
-
+		form.AddField("session_id", user.session_id);
+		form.AddField("timestamp", (DateTime.Now.Ticks/10000000).ToString());
+		
         UnityWebRequest www = UnityWebRequest.Post(url + scoreUrl, form);
 
 		www.timeout = Const.TIME_OUT_SECS;
@@ -287,7 +289,8 @@ public class NetworkManager : MonoBehaviour {
 			// There is 16 level --> largest module index = 15
 			WordMaster.Instance.SetLargestModuleIndex(15);
 
-			if (json["game_state"]["character"].ToString() != "")
+			// Check if data is null by using IsNull
+			if (!json["game_state"]["character"].IsNull)
 				CharacterManager.GetManager().SetCharacter(json["game_state"]["character"].AsInt, false);
 
 			CurrencyMaster.Instance.SetCoins(json["game_state"]["coins"].AsInt);
@@ -454,18 +457,6 @@ public class NetworkManager : MonoBehaviour {
 		StartCoroutine(SendLoggableEvent(ae));
 	}
 
-	public void CharacterSelectEvent(string name, string character) {
-
-
-		AnalyticsEvent ae = new AnalyticsEvent {
-			eventname = name,
-			eventtarget = character,
-			player = Player,
-			sessionid = sessionId,
-		};
-		StartCoroutine(SendLoggableEvent(ae));
-	}
-
 	public void LevelAbortEvent(string name, string stageName, string stageType, float levelDuration, int cardsCompleted, int averageStars, int totalStarsCollected, int stonesCollected) {
 
 
@@ -496,7 +487,6 @@ public class NetworkManager : MonoBehaviour {
 		};
 		StartCoroutine(SendLoggableEvent(ae));
 	}
-
 
 	IEnumerator SendLoggableEvent(AnalyticsEvent ae) {
 
