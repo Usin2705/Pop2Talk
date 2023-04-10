@@ -27,6 +27,7 @@ public class LoginView : View {
 	[SerializeField] Text errorText = null;
 	[Space]
 	[SerializeField] string privacyPolicyUrl = "https://wiki.aalto.fi/display/ASRPP/Pop2Talk+privacy+policy";
+	[SerializeField] UIButton privacyButton = null;
 
 
 	string rememberKey = "remember";
@@ -55,6 +56,7 @@ public class LoginView : View {
 		SoundEffectManager.GetManager().PlayMusic();
 		playButton.SubscribePress(OnPlayButtonClick);
 		parentButton.SubscribePress(GotoParent);
+		privacyButton.SubscribePress(() => { Application.OpenURL("https://wiki.aalto.fi/display/ASRPP/Pop2TalkNordic+privacy+policy"); });
 		//StartCoroutine(StoreInitializationWait());
 	}
 
