@@ -81,17 +81,14 @@ public class TravelView : View {
 		StartCoroutine(TravelRoutine());
 	}
 
-	void PrepareButtons(int largestModuleIndex) {
+	void PrepareButtons(int largestModuleIndex, int level_index, int setting_index) {
 		largestModuleIndex = Mathf.Min(levelBatches.Length - 1, largestModuleIndex);
 
 		// TODO we no longer choose level randomly
-		int levelIndex = shipHubView.GetComponent<ShipHubView>().levelIndex;		
-		int settingsIndex = shipHubView.GetComponent<ShipHubView>().settingsIndex;		
-		
-		chosenLevelSetting = new LevelSettings[] {levelBatches[levelIndex].settings[settingsIndex], levelBatches[levelIndex].settings[settingsIndex]};
-		chosenSprites = new Sprite[] { spriteBatches[levelIndex].sprites.GetRandom(), spriteBatches[levelIndex].sprites.GetRandom() };
-		upperPlanetButton.SetSprite(planets[levelIndex]);
-		lowerPlanetButton.SetSprite(planets[levelIndex]);
+		chosenLevelSetting = new LevelSettings[] {levelBatches[level_index].settings[setting_index], levelBatches[level_index].settings[setting_index]};
+		chosenSprites = new Sprite[] { spriteBatches[level_index].sprites.GetRandom(), spriteBatches[level_index].sprites.GetRandom() };
+		upperPlanetButton.SetSprite(planets[level_index]);
+		lowerPlanetButton.SetSprite(planets[level_index]);
 		// List<int> availableIndices = new List<int>();
 		
 		// List<List<LevelSettings>> suitableLevels = new List<List<LevelSettings>>();
@@ -278,7 +275,7 @@ public class TravelView : View {
 
 	public void WordsReceived() {
 		wordsReceived = true;
-		PrepareButtons(WordMaster.Instance.LargestModuleIndex);
+		PrepareButtons(WordMaster.Instance.LargestModuleIndex, WordMaster.Instance.level_index, WordMaster.Instance.setting_index);
 	}
 
 	public override void Back() {

@@ -38,6 +38,10 @@ public class WordMaster : MonoBehaviour {
 
 	public int LargestModuleIndex { get; protected set; } = 1;
 
+	public int level_index { get; protected set; } = 1;
+	public int setting_index { get; protected set; } = 1;
+
+
 	public int TotalStars { get; set; }
 	public bool OnlyMemory { get; protected set; }
 
@@ -46,7 +50,7 @@ public class WordMaster : MonoBehaviour {
 
 	WordCardType[] sampleTypes;
 	string[] sampleWords;
-
+	
 	Dictionary<string, int> bestStars = new Dictionary<string, int>();
 	HashSet<string> allWords = new HashSet<string>();
 
@@ -133,9 +137,11 @@ public class WordMaster : MonoBehaviour {
 		}
 	}
 
-	public void SetSamples(WordCardType[] types, string[] words) {
+	public void SetSamples(WordCardType[] types, string[] words, int level, int setting) {
 		sampleTypes = types;
 		sampleWords = words;
+		level_index = level;
+		setting_index = setting;
 		OnlyMemory = true;
 		foreach(WordCardType wct in types) {
 			if (wct != WordCardType.Memory) {

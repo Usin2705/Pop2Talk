@@ -373,7 +373,11 @@ public class NetworkManager : MonoBehaviour {
 			types[i] = (WordCardType) json["cardType"][i].AsInt;
 			//Debug.Log("loop to find: " + words[i] + types[i]);
 		}
-		WordMaster.Instance.SetSamples(types, words);
+
+		int level_index = json["level_index"].AsInt;
+		int setting_index = json["setting_index"].AsInt;
+
+		WordMaster.Instance.SetSamples(types, words, level_index, setting_index);
 		Done?.Invoke();	
 	}
 

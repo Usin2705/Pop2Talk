@@ -105,7 +105,6 @@ public class LoginView : View {
 		}
 	}
 
-
 	bool IsValidEmail(string email) {
 		try {
 			var addr = new System.Net.Mail.MailAddress(email);
