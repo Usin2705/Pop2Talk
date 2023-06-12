@@ -84,8 +84,11 @@ public class TravelView : View {
 	void PrepareButtons(int largestModuleIndex, int level_index, int setting_index) {
 		largestModuleIndex = Mathf.Min(levelBatches.Length - 1, largestModuleIndex);
 
+		
+		
 		// TODO we no longer choose level randomly
 		chosenLevelSetting = new LevelSettings[] {levelBatches[level_index].settings[setting_index], levelBatches[level_index].settings[setting_index]};
+		// Debug.Log("TravelView-chosenLevels: " + chosenLevelSetting[0] + chosenLevelSetting[1]);
 		chosenSprites = new Sprite[] { spriteBatches[level_index].sprites.GetRandom(), spriteBatches[level_index].sprites.GetRandom() };
 		upperPlanetButton.SetSprite(planets[level_index]);
 		lowerPlanetButton.SetSprite(planets[level_index]);

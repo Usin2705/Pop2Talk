@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
-  m_Name: "sv_stj\xE4rna"
+  m_Name: sv_stjärna
   m_EditorClassIdentifier: 
   picture: {fileID: 21300000, guid: e380e01f6fb553645a998d70818892db, type: 3}
   language: 3
-  spelling: "Stj\xE4rna"
+  spelling: Stjärna
   pronunciations:
   - {fileID: 8300000, guid: 9efc32041f4d918479b9dad24ec0b76a, type: 3}

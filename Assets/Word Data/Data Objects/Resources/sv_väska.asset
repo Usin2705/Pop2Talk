@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
-  m_Name: "sv_v\xE4ska"
+  m_Name: sv_väska
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: 02295f38565501a41b3c503116e75465, type: 3}
+  picture: {fileID: 21300000, guid: 6cc9653960df00247a3d85b88f19423c, type: 3}
   language: 3
-  spelling: "V\xE4ska"
+  spelling: Väska
   pronunciations:
   - {fileID: 8300000, guid: 593b87a04d7aaf043866b16677dda497, type: 3}

@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
-  m_Name: "sv_gl\xF6dlampa"
+  m_Name: sv_glödlampa
   m_EditorClassIdentifier: 
   picture: {fileID: 21300000, guid: c6045183417e3354eaba1044d713cb6a, type: 3}
   language: 3
-  spelling: "Gl\xF6dlampa"
+  spelling: Glödlampa
   pronunciations:
   - {fileID: 8300000, guid: ab710f1b81b906d4b90a3cf6a3cf06e3, type: 3}

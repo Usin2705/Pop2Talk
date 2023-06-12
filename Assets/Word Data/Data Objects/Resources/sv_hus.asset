@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
+  m_Name: sv_hus
+  m_EditorClassIdentifier: 
+  picture: {fileID: 21300000, guid: dcb1d6e23daab964e8bdca0832910396, type: 3}
+  language: 3
+  spelling: Hus
+  pronunciations:
+  - {fileID: 8300000, guid: cc8a1e5361712e0498d9a3f66f98bc88, type: 3}
