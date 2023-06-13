@@ -403,6 +403,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 22f92f11aa4a4e0489e2f71aab92a8a4,
         type: 3}
+    - target: {fileID: 223716039711124506, guid: 5be5b299c2fa18745b74f7095d5d780f,
+        type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 224218646732319200, guid: 5be5b299c2fa18745b74f7095d5d780f,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 224726458311772126, guid: 5be5b299c2fa18745b74f7095d5d780f,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -572,6 +582,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4370239538255409462, guid: 5be5b299c2fa18745b74f7095d5d780f,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5485156517154504729, guid: 5be5b299c2fa18745b74f7095d5d780f,
         type: 3}
