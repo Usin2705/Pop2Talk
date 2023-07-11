@@ -84,7 +84,10 @@ public class TravelView : View {
 	void PrepareButtons(int largestModuleIndex, int level_index, int setting_index) {
 		largestModuleIndex = Mathf.Min(levelBatches.Length - 1, largestModuleIndex);
 
-		
+		// Adjust level_index and setting_index to be within the valid range
+		// Here, Mathf.Clamp(value, min, max) is used to ensure that level_index and setting_index are within the valid range. 
+    	level_index = Mathf.Clamp(level_index, 0, levelBatches.Length - 1);
+    	setting_index = Mathf.Clamp(setting_index, 0, levelBatches[level_index].settings.Length - 1);
 		
 		// TODO we no longer choose level randomly
 		chosenLevelSetting = new LevelSettings[] {levelBatches[level_index].settings[setting_index], levelBatches[level_index].settings[setting_index]};
@@ -214,7 +217,7 @@ public class TravelView : View {
 			travelDone = false;
 			wordsReceived = false;
 			InputManager.GetManager().SendingInputs = false;
-			yield return new WaitForSeconds(1.5f);
+			yield return new WaitForSeconds(Const.SHIP_START_DELAY);
 			InputManager.GetManager().SendingInputs = false;
 			ShipManager.GetManager().ShowShipMovement(sortingOrder, false, new Vector3[] { shipStart.position, shipEnd.position }, new float[] { 0 },
 				new Vector3[] { shipStart.rect.size, shipEnd.rect.size }, new float[] { shipSpeed * (Screen.height / 1920f) },
@@ -225,9 +228,9 @@ public class TravelView : View {
 
 			ShipManager.GetManager().StartWobble(wobbleAmount * 1920f / Screen.height);
 			float a = 0, b = 0;
-			float portalTime = 0.33f;
-			float minWait = 1f;
-			float accelDuration = 1f;
+			float portalTime = Const.PORTAL_TIME;
+			float minWait = Const.MIN_WAIT;
+			float accelDuration = Const.ACCEL_DURATION;
 			Color staticColor = staticBack.color;
 			while (b < portalTime) {
 				if (a > accelDuration + minWait && wordsReceived)

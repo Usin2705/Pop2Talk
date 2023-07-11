@@ -20,12 +20,20 @@ public class MemoryCardHandler : BaseWordCardHandler {
         base.Retry();
     }
 
-    IEnumerator CardRoutine() {
-		yield return new WaitForSeconds(phaseGap);
-		yield return WordCardManager.GetManager().StartingAnimation();
-		yield return WordCardManager.GetManager().StartCoroutine(WordCardManager.GetManager().RecordAndPlay(phaseGap, "MemoryChallenge"));
-        yield return new WaitForSeconds(phaseGap);
-        WordCardManager.GetManager().StartCoroutine(WordCardManager.GetManager().GiveStars(phaseGap));
+    IEnumerator CardRoutine() {		
+        if (WordMaster.Instance.is_feedback) {		
+			yield return new WaitForSeconds(phaseGap);
+			yield return WordCardManager.GetManager().StartingAnimation();
+			yield return WordCardManager.GetManager().StartCoroutine(WordCardManager.GetManager().RecordAndPlay(phaseGap, "MemoryChallenge"));
+			yield return new WaitForSeconds(phaseGap);
+			WordCardManager.GetManager().StartCoroutine(WordCardManager.GetManager().GiveStars(phaseGap));
+		} else {
+			yield return new WaitForSeconds(phaseGap);
+			yield return WordCardManager.GetManager().StartingAnimation();
+			yield return WordCardManager.GetManager().StartCoroutine(WordCardManager.GetManager().RecordAndPlay(phaseGap, "MemoryChallenge", false));
+			yield return new WaitForSeconds(phaseGap);
+			WordCardManager.GetManager().StartCoroutine(WordCardManager.GetManager().SkipStars());
+		}
     }
 
 	protected override WordCardType GetCardType() {

@@ -40,7 +40,7 @@ public class WordMaster : MonoBehaviour {
 
 	public int level_index { get; protected set; } = 1;
 	public int setting_index { get; protected set; } = 1;
-
+	public bool is_feedback { get; protected set; } = true;
 
 	public int TotalStars { get; set; }
 	public bool OnlyMemory { get; protected set; }
@@ -137,11 +137,12 @@ public class WordMaster : MonoBehaviour {
 		}
 	}
 
-	public void SetSamples(WordCardType[] types, string[] words, int level, int setting) {
+	public void SetSamples(WordCardType[] types, string[] words, int level, int setting, bool feedback) {
 		sampleTypes = types;
 		sampleWords = words;
 		level_index = level;
 		setting_index = setting;
+		is_feedback = feedback;
 		OnlyMemory = true;
 		foreach(WordCardType wct in types) {
 			if (wct != WordCardType.Memory) {

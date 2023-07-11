@@ -13,14 +13,14 @@ using UnityEngine.Localization.Components;
 public class NetworkManager : MonoBehaviour {
 
 	static NetworkManager netWorkManager;
-
+	
 	string url = Secret.URL;
 
 	string loginUrl = "api/game/login";	
 	string updateCharacterUrl = "api/game/update/character";	
 
-	string scoreUrl = "api/game/model/score";
-	
+	string asr_url = Secret.ASR_URL;
+
 	// we skip this part for now
 	//string coinUpdate = "api/game/update/coins";
 	
@@ -191,11 +191,11 @@ public class NetworkManager : MonoBehaviour {
 		StartCoroutine(SendLoggableEvent(ae));
 	}
 
-	public void SendMicrophone(string microphone, string word, AudioClip clip, float duration, IntCallback ScoreReceived, string challengetype, int retryAmount) {
-		StartCoroutine(UploadMicrophone(microphone, word, clip, duration, ScoreReceived, challengetype, retryAmount));
+	public void SendMicrophone(string microphone, string word, AudioClip clip, IntCallback ScoreReceived, string challengetype, int retryAmount) {
+		StartCoroutine(UploadMicrophone(microphone, word, clip, ScoreReceived, challengetype, retryAmount));
 	}
 
-	IEnumerator UploadMicrophone(string microphone, string word, AudioClip clip, float duration, IntCallback ScoreReceived, string challengetype, int retryAmount) {
+	IEnumerator UploadMicrophone(string microphone, string word, AudioClip clip, IntCallback ScoreReceived, string challengetype, int retryAmount) {
 	    // IMultipartFormSection & MultipartFormFileSection  could be another solution,
 		// but apparent it also require raw byte data to upload
 		byte[] wavBuffer = SavWav.GetWav(clip, out uint length, trim:true);
@@ -207,12 +207,13 @@ public class NetworkManager : MonoBehaviour {
 		form.AddField("session_id", user.session_id);
 		form.AddField("timestamp", (DateTime.Now.Ticks/10000000).ToString());
 		
-        UnityWebRequest www = UnityWebRequest.Post(url + scoreUrl, form);
+        Debug.Log(asr_url);
+		UnityWebRequest www = UnityWebRequest.Post(asr_url, form);
 
 		www.timeout = Const.TIME_OUT_SECS;
 		yield return www.SendWebRequest();
 
-		Debug.Log(www.result);
+		//Debug.Log(www.result);
 
         if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError) {
 			Debug.Log(www.error);
@@ -251,24 +252,46 @@ public class NetworkManager : MonoBehaviour {
 		UnityWebRequest www = UnityWebRequest.Post(url + loginUrl, form);
 		yield return www.SendWebRequest();
 
-
-		if ((www.result == UnityWebRequest.Result.ConnectionError) || (www.result == UnityWebRequest.Result.ProtocolError)) {
+		if (www.result == UnityWebRequest.Result.ConnectionError) 
+		{
 			Debug.Log(www.error);
-			if (www.downloadHandler.text != "") {
-				errorText.text = www.downloadHandler.text;
-			} else {
-				errorText.text = "Network error: " + www.error;
-			}
+			if(www.error.Length <= 40)
+				errorText.text = www.error;
+			else
+				errorText.text = "Network connection not available.";
+			
+			// Display simple error message for network errors			
 			errorText.gameObject.SetActive(true);
-			throw new System.Exception(www.downloadHandler.text ?? www.error);
-		} else {
-			Debug.Log("Form upload complete!");
+			throw new System.Exception(www.error);
+		} 		
+		else if (www.result == UnityWebRequest.Result.ProtocolError) 
+		{
+			Debug.Log(www.error);
 
+			if(www.error.Length <= 40)
+				errorText.text = www.error;
+			else if (www.responseCode == 404)
+			{
+				errorText.text = "The requested page could not be found.";
+			}
+			else
+			{
+			errorText.text = "A server error occurred.";
+			}
+			// Check status code and display a specific error message
+
+			errorText.gameObject.SetActive(true);
+			throw new System.Exception(www.error);
+		} 
+		
+		else 
+		
+		{
+			Debug.Log("Form upload complete!");
 			if (www.downloadHandler.text == "invalid credentials") {
 				Debug.Log("invalid credentials");
 				errorText.gameObject.SetActive(true);
-				errorText.GetComponent<LocalizeStringEvent>().StringReference.TableEntryReference = "error_invalid";
-				
+				errorText.GetComponent<LocalizeStringEvent>().StringReference.TableEntryReference = "error_invalid";				
 				yield break;
 			}
 
@@ -359,7 +382,7 @@ public class NetworkManager : MonoBehaviour {
 		// Since we are connected, we can register the network status
 		connected = true;
 
-		var json = SimpleJSON.JSON.Parse(www.downloadHandler.text);
+        SimpleJSON.JSONNode json = SimpleJSON.JSON.Parse(www.downloadHandler.text);
 
 		string[] words = new string[json["chosenWords"].Count];
 		WordCardType[] types = new WordCardType[words.Length];
@@ -371,13 +394,21 @@ public class NetworkManager : MonoBehaviour {
 		for (int i = 0; i < words.Length; ++i) {
 			words[i] = json["chosenWords"][i];
 			types[i] = (WordCardType) json["cardType"][i].AsInt;
-			//Debug.Log("loop to find: " + words[i] + types[i]);
+			Debug.Log("loop to find: " + words[i] + " Type: " + types[i]);
 		}
 
 		int level_index = json["level_index"].AsInt;
 		int setting_index = json["setting_index"].AsInt;
+		
+		// This feedback settings is mainly for norwegian project
+		int is_feedback_int = 1; // default value
+		if (json.HasKey("is_feedback"))
+		{
+			is_feedback_int = json["is_feedback"].AsInt;
+		}
+		bool is_feedback = (is_feedback_int != 0); // convert to bool 0 is false, 1 is true		
 
-		WordMaster.Instance.SetSamples(types, words, level_index, setting_index);
+		WordMaster.Instance.SetSamples(types, words, level_index, setting_index, is_feedback);
 		Done?.Invoke();	
 	}
 

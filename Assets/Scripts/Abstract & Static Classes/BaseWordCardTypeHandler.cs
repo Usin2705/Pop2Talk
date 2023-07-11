@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class BaseWordCardHandler {
 
-    protected static float phaseGap = 0.66f;
+    protected static float phaseGap = 0.1f;
 
 	protected IntCallback Done;
 

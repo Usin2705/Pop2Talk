@@ -20,13 +20,23 @@ public class RepeatCardHandler : BaseWordCardHandler {
     }
 
     IEnumerator CardRoutine() {
-        yield return new WaitForSeconds(phaseGap);
-		yield return WordCardManager.GetManager().StartingAnimation();
-		yield return WordCardManager.GetManager().StartCoroutine(WordCardManager.GetManager().SayWord());
-        yield return WordCardManager.GetManager().StartCoroutine(WordCardManager.GetManager().RecordAndPlay(phaseGap, "RepeatChallenge"));
-        yield return new WaitForSeconds(phaseGap);
-        yield return WordCardManager.GetManager().StartCoroutine(WordCardManager.GetManager().SayWord());
-        WordCardManager.GetManager().StartCoroutine(WordCardManager.GetManager().GiveStars(phaseGap));
+        if (WordMaster.Instance.is_feedback) {
+            yield return new WaitForSeconds(phaseGap);
+            yield return WordCardManager.GetManager().StartingAnimation();
+            yield return WordCardManager.GetManager().StartCoroutine(WordCardManager.GetManager().SayWord());
+            yield return WordCardManager.GetManager().StartCoroutine(WordCardManager.GetManager().RecordAndPlay(phaseGap, "RepeatChallenge"));
+            yield return new WaitForSeconds(phaseGap*3);
+            yield return WordCardManager.GetManager().StartCoroutine(WordCardManager.GetManager().SayWord());
+            WordCardManager.GetManager().StartCoroutine(WordCardManager.GetManager().GiveStars(phaseGap));
+        } else {
+            yield return new WaitForSeconds(phaseGap);            
+            yield return WordCardManager.GetManager().StartingAnimation();
+            yield return WordCardManager.GetManager().StartCoroutine(WordCardManager.GetManager().SayWord());
+            yield return WordCardManager.GetManager().StartCoroutine(WordCardManager.GetManager().RecordAndPlay(phaseGap, "RepeatChallenge", false));
+            yield return new WaitForSeconds(phaseGap*3);
+            yield return WordCardManager.GetManager().StartCoroutine(WordCardManager.GetManager().SayWord());
+            WordCardManager.GetManager().StartCoroutine(WordCardManager.GetManager().SkipStars());
+        }
     }
 
 	protected override WordCardType GetCardType() {

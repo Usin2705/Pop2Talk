@@ -29,7 +29,6 @@ public class WordCardManager : MonoBehaviour {
 
 	float introDuration = 0.75f;
 	float hideDuration = 1.5f;
-	int recordDuration = 3;
 	float starDuration = 0.3f;
 	float micExtra = 0.15f;
 
@@ -116,11 +115,13 @@ public class WordCardManager : MonoBehaviour {
 		yield return new WaitForSeconds(audioSource.clip.length);
 	}
 	
-
 	public IEnumerator RecordAndPlay(float gap, string challengeType) {
+		yield return RecordAndPlay(gap, challengeType, true);
+	}
+	public IEnumerator RecordAndPlay(float gap, string challengeType, bool feedback) {
 		stars = 0;
 		wordCard.ToggleMic(true);
-		AudioClip recording = Microphone.Start(Microphone.devices[0], false, recordDuration, 16000);
+		AudioClip recording = Microphone.Start(Microphone.devices[0], false, Const.RECORD_DURATION, 16000);
 		yield return new WaitForSeconds(micExtra);
 
 		bool enoughRecording;
@@ -128,7 +129,8 @@ public class WordCardManager : MonoBehaviour {
 		float a = 0;
 		float[] samples = new float[512];
 		int offset = -samples.Length;
-		while (a < recordDuration) {
+				
+		while (a < Const.RECORD_DURATION) {
 			enoughRecording = false;
 			a += Time.deltaTime;
 			while (Microphone.GetPosition(Microphone.devices[0]) - offset >= samples.Length * 2) {
@@ -143,7 +145,9 @@ public class WordCardManager : MonoBehaviour {
 		}
 		audioSource.clip = recording;
 		wordCard.ToggleMic(false);
-		NetworkManager.GetManager().SendMicrophone(Microphone.devices[0], currentWord.name, recording, recordDuration, ReceiveStars, challengeType, retryCount);
+		if (feedback) 
+			NetworkManager.GetManager().SendMicrophone(Microphone.devices[0], currentWord.name, recording, ReceiveStars, challengeType, retryCount);
+		
 		
 		yield return new WaitForSeconds(gap);
 		audioSource.Play();
@@ -156,6 +160,12 @@ public class WordCardManager : MonoBehaviour {
 		starsReceived = true;
 	}
 
+	public IEnumerator SkipStars() {
+		stars = backUpStar;
+		wordCard.SetOfflineStars();
+		yield return wordCard.SetStars(0, 0f);
+		StartCoroutine(FinishCard());
+	}
 
 	public IEnumerator GiveStars(float phaseGap) {
 		bool timeOut = false;

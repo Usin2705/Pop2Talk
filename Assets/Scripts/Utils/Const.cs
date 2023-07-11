@@ -24,5 +24,15 @@ public static class Const
 
     public static readonly string[] WORD_LIST_SV = {"sv_glödlampa", "sv_kollision", "sv_sjuk", "sv_stjärna", "sv_ugn", "sv_väska"};
 
-    public const int TIME_OUT_SECS = 20;
+    public const int TIME_OUT_SECS = 30;
+
+    public const int RECORD_DURATION = 3;
+
+    // ############### WORD CARD TIME ###############
+        
+    // ############### SHIP TRAVEL TIME CONSTANT ###############
+    public const float SHIP_START_DELAY = 0.1f;
+    public const float PORTAL_TIME = 0.2f;
+    public const float MIN_WAIT = 0.66f;
+    public const float ACCEL_DURATION = 0.66f;
 }
