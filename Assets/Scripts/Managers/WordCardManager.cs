@@ -231,7 +231,8 @@ public class WordCardManager : MonoBehaviour {
 		action = WordCardAction.Continue;
 	}
 
-	public void HideCard(Callback Done, bool instantly = false) {
+	// TODO: Default is  bool instantly = false
+	public void HideCard(Callback Done, bool instantly = true) {
 		if (instantly || DebugMaster.Instance.skipTransitions) {
 			wordCard.HideInstantly();
 			Done?.Invoke();

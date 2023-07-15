@@ -307,7 +307,20 @@ public class NetworkManager : MonoBehaviour {
 
 			user = JsonUtility.FromJson<UserData>(www.downloadHandler.text);			
 			Debug.Log("Login json: " + www.downloadHandler.text);
-			var json = SimpleJSON.JSON.Parse(www.downloadHandler.text);
+			SimpleJSON.JSONNode json = SimpleJSON.JSON.Parse(www.downloadHandler.text);
+
+			// #####################################################################################
+			// TODO Start to record the words and stars
+			// WordMaster.Instance.ClearWords();
+
+			// for (int i = 0; i < json["words"].Count; ++i) {
+			// 	WordMaster.Instance.AddWord(json["words"][i]["word"].Value);
+			// }
+
+			// for (int i = 0; i < json["game_state"]["wordHighscores"].Count; ++i) {
+			// 	WordMaster.Instance.SetStarAmount(json["game_state"]["wordHighscores"][i]["word"].Value, json["game_state"]["wordHighscores"][i]["maxstars"].AsInt);
+			// }
+			// #####################################################################################
 			
 			// There is 16 level --> largest module index = 15
 			WordMaster.Instance.SetLargestModuleIndex(15);
