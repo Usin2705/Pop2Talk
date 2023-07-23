@@ -1,5 +1,5 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 using System;
@@ -16,14 +16,15 @@ public class NetworkManager : MonoBehaviour {
 	
 	string url = Secret.URL;
 
-	string loginUrl = "api/game/login";	
+	string loginUrl = Secret.LOGIN_URL;	
 	string updateCharacterUrl = "api/game/update/character";	
 
-	string asr_url = Secret.ASR_URL;
+	string asrURL = Secret.ASR_URL;
 
 	// we skip this part for now
 	//string coinUpdate = "api/game/update/coins";
 	
+	string uploadAudio = "api/game/upload/audio";
 	string updateHighscore = "api/game/update/highscore";
 	string getWordList = "api/game/create/wordlist";
 	
@@ -38,55 +39,17 @@ public class NetworkManager : MonoBehaviour {
 	//string devSocketUrl = ""; 
 
 	Socket socket;
-	bool waitingScore;
-
+	
 	string sessionId;
 
-	private sbyte[] samplesSbyte;
-	private short[] samplesShort;
-
-	private byte[] voiceData;
-
-	bool reconnecting = false;
-
 	UserData user;
-
-	int fs = 16000;
-	float packetGap = 0.125f;
-	float okGap = 1f;
-
-	// Add data transfer defaults:
-	// dataencoding can be
-	//    'pcm'    -- No compression
-	//    'mulaw'  -- Logarithmic compression of pcm values
-	string dataencoding = "mulaw";
-	//float mu = 255f;
-
-	// datatype can be:
-	//  'int16'  16 bit signed integer (short) 'h'
-	//   'int8'   8 bit signed char    (sbyte) 'b'
-	string datatype = "int8";
-
-	float time;
-	float connectAttemptTime;
-	float checkOkTime;
-
 	bool connected = false;
 	bool serverWaitPromptActive;
-	bool attemptingToConnect;
-
 	float secondsSinceStartup;
-
-	public float secondsSinceStart { get { return secondsSinceStartup; } }
-
 	float timeoutDuration = 4f;
-
 	public float TimeoutDuration { get { return timeoutDuration; } }
-
 	public bool Connected { get { return connected; } }
-
 	string player = "Player not set";
-
 	public string Player {
 		get {
 			return player;
@@ -128,23 +91,6 @@ public class NetworkManager : MonoBehaviour {
 
 	public void SetPlayer(string player) {
 		Player = player;
-	}
-
-	private void Update() {
-		time = Time.time; // Time.time isn't threadsafe
-		if (connected && attemptingToConnect) {
-			attemptingToConnect = false;
-			//socket.Off("i_am_ok");
-		} else if (socket != null && !connected && time > checkOkTime) {
-			checkOkTime = time + okGap;
-			//socket.Emit("are_you_ok");
-			/*if (!connecting)
-                Reconnect();*/
-		} else if (reconnecting) {
-			//Reconnect();
-		}
-
-		secondsSinceStartup = Time.realtimeSinceStartup;
 	}
 
 	public void ControlledExit() {
@@ -191,29 +137,60 @@ public class NetworkManager : MonoBehaviour {
 		StartCoroutine(SendLoggableEvent(ae));
 	}
 
-	public void SendMicrophone(string microphone, string word, AudioClip clip, IntCallback ScoreReceived, string challengetype, int retryAmount) {
-		StartCoroutine(UploadMicrophone(microphone, word, clip, ScoreReceived, challengetype, retryAmount));
+	public void SendMicrophone(string microphone, string word, AudioClip clip, IntCallback ScoreReceived, string challengetype, int retryAmount, bool feedback) {
+		StartCoroutine(UploadMicrophone(microphone, word, clip, ScoreReceived, challengetype, retryAmount, feedback));
 	}
 
-	IEnumerator UploadMicrophone(string microphone, string word, AudioClip clip, IntCallback ScoreReceived, string challengetype, int retryAmount) {
+	IEnumerator UploadMicrophone(string microphone, string word, AudioClip clip, IntCallback ScoreReceived, string challengetype, int retryAmount, bool feedback) {
 	    // IMultipartFormSection & MultipartFormFileSection  could be another solution,
 		// but apparent it also require raw byte data to upload
 		byte[] wavBuffer = SavWav.GetWav(clip, out uint length, trim:true);
 
-		WWWForm form = new WWWForm();
-        form.AddBinaryData("file", wavBuffer, fileName:"speech_sample", mimeType: "audio/wav");
-        form.AddField("word", word);
+		WWWForm form = new WWWForm();		
 		form.AddField("user_id", user.id);
 		form.AddField("session_id", user.session_id);
 		form.AddField("timestamp", (DateTime.Now.Ticks/10000000).ToString());
+		form.AddField("word", word);
 		
-        Debug.Log(asr_url);
-		UnityWebRequest www = UnityWebRequest.Post(asr_url, form);
+		// If user gives consent, add audio data
+		if (user.consent) {
+			form.AddBinaryData("file", wavBuffer, fileName:"speech_sample", mimeType: "audio/wav");
+		}
 
-		www.timeout = Const.TIME_OUT_SECS;
+		UnityWebRequest www = UnityWebRequest.Post(url + uploadAudio, form);
+
 		yield return www.SendWebRequest();
 
-		//Debug.Log(www.result);
+		// for (int i = 0; i < 50; ++i) {			
+		// 	if (feedback) StartCoroutine(UploadAudioToASRServer(wavBuffer, word, ScoreReceived));
+
+		// 	float randomDelay = UnityEngine.Random.Range(1.0f, 2.0f);
+        // 	yield return new WaitForSeconds(randomDelay);
+		// }		
+		
+		if (feedback) StartCoroutine(UploadAudioToASRServer(wavBuffer, word, ScoreReceived));
+	}
+
+	IEnumerator UploadAudioToASRServer(byte[] wavBuffer, string word, IntCallback ScoreReceived) {
+
+		WWWForm form = new WWWForm();
+		form.AddBinaryData("file", wavBuffer, fileName:"speech_sample", mimeType: "audio/wav");
+		form.AddField("word", word);		
+		form.AddField("user_id", user.id);			
+		
+		// Choose ASR URL based on project ID
+		if ((user.project_id == 5) || (user.project_id == 6)) {
+			asrURL = Secret.ASR_URL2;
+		} else {
+			asrURL = Secret.ASR_URL;
+		}
+
+		Debug.Log("ASR URL: " + asrURL);		
+		
+		UnityWebRequest www = UnityWebRequest.Post(asrURL, form);		
+		www.timeout = Const.TIME_OUT_SECS;
+
+		yield return www.SendWebRequest();	
 
         if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError) {
 			Debug.Log(www.error);
@@ -241,33 +218,50 @@ public class NetworkManager : MonoBehaviour {
 		ScoreReceived(json["stars"].AsInt);		
 	}
 
+	/// <summary>
+	/// Logs in to the game server using the given username and password.
+	/// </summary>
+	/// <param name="username">The username of the player.</param>
+	/// <param name="password">The password of the player.</param>
+	/// <param name="errorText">A UI Text component to display error messages.</param>
+	/// <param name="CoroutineCallback">The coroutine callback.</param>
+	/// <param name="Connected">The callback method to be executed after a successful connection.</param>
+	/// <returns>An IEnumerator for Unity's Coroutine system.</returns>
 	public IEnumerator Login(string username, string password, Text errorText, IEnumerator CoroutineCallback, Callback Connected) {
 
+		// // Check server account and set URLs accordingly
+		// if (!Secret.SERVER_1_ACCOUNT.Contains(username)) {
+		// 	url = Secret.URL2;
+		// 	loginUrl = Secret.LOGIN_URL2;
+		// } else {
+		// 	url = Secret.URL;
+		// 	loginUrl = Secret.LOGIN_URL;
+		// }
+		
+		// Create a WWWForm and add fields for the username, password and local time
 		WWWForm form = new WWWForm();
-
 		form.AddField("username", username);
 		form.AddField("password", password);
 		form.AddField("timelocal", (DateTime.Now.Ticks/10000000).ToString());
 
-		UnityWebRequest www = UnityWebRequest.Post(url + loginUrl, form);
-		yield return www.SendWebRequest();
+		// Send POST request
+		UnityWebRequest www = UnityWebRequest.Post(loginUrl, form);
+		yield return www.SendWebRequest();		
 
+		// Check if there was a connection error
 		if (www.result == UnityWebRequest.Result.ConnectionError) 
 		{
+			// Log and handle connection error
 			Debug.Log(www.error);
-			if(www.error.Length <= 40)
-				errorText.text = www.error;
-			else
-				errorText.text = "Network connection not available.";
-			
-			// Display simple error message for network errors			
+			errorText.text = www.error.Length <= 40 ? www.error : "Network connection not available.";			
 			errorText.gameObject.SetActive(true);
 			throw new System.Exception(www.error);
-		} 		
+		} 	
+		// Check if there was a protocol error	
 		else if (www.result == UnityWebRequest.Result.ProtocolError) 
 		{
+			// Log and handle protocol error
 			Debug.Log(www.error);
-
 			if(www.error.Length <= 40)
 				errorText.text = www.error;
 			else if (www.responseCode == 404)
@@ -278,17 +272,15 @@ public class NetworkManager : MonoBehaviour {
 			{
 			errorText.text = "A server error occurred.";
 			}
-			// Check status code and display a specific error message
-
 			errorText.gameObject.SetActive(true);
 			throw new System.Exception(www.error);
-		} 
-		
-		else 
-		
+		} 		
+		else 		
 		{
+			// If there are no errors, process the response
 			Debug.Log("Form upload complete!");
 			if (www.downloadHandler.text == "invalid credentials") {
+				// Handle invalid credentials
 				Debug.Log("invalid credentials");
 				errorText.gameObject.SetActive(true);
 				errorText.GetComponent<LocalizeStringEvent>().StringReference.TableEntryReference = "error_invalid";				
@@ -296,6 +288,7 @@ public class NetworkManager : MonoBehaviour {
 			}
 
 			if (www.downloadHandler.text == "this account uses auth0") {
+				// Handle Auth0 accounts
 				Debug.Log("this account uses auth0");
 				errorText.gameObject.SetActive(true);
 				errorText.GetComponent<LocalizeStringEvent>().StringReference.TableEntryReference = "error_auth0";
@@ -305,6 +298,7 @@ public class NetworkManager : MonoBehaviour {
 			// Since we are connected, we can register the network status
 			connected = true;
 
+			// Parse the response into a UserData object
 			user = JsonUtility.FromJson<UserData>(www.downloadHandler.text);			
 			Debug.Log("Login json: " + www.downloadHandler.text);
 			SimpleJSON.JSONNode json = SimpleJSON.JSON.Parse(www.downloadHandler.text);
@@ -346,6 +340,8 @@ public class NetworkManager : MonoBehaviour {
 			// This get default cosmetics first
 			// Without this line of code there's no default cosmetics for user
 			CosmeticManager.GetManager().CheckDefaultCosmetics();
+
+			// Trigger the Connected callback
 			Connected();
 		}
 		
@@ -407,7 +403,7 @@ public class NetworkManager : MonoBehaviour {
 		for (int i = 0; i < words.Length; ++i) {
 			words[i] = json["chosenWords"][i];
 			types[i] = (WordCardType) json["cardType"][i].AsInt;
-			Debug.Log("loop to find: " + words[i] + " Type: " + types[i]);
+			// Debug.Log("loop to find: " + words[i] + " Type: " + types[i]);
 		}
 
 		int level_index = json["level_index"].AsInt;

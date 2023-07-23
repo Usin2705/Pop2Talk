@@ -22,9 +22,7 @@ public static class Const
     "en_gb_juice", "en_gb_bag", "en_gb_belly", "en_gb_train", "en_gb_stove", "en_gb_human en_gb_body", "en_gb_armchair", "en_gb_mom", 
     "en_gb_flute"};
 
-    public static readonly string[] WORD_LIST_SV = {"sv_glödlampa", "sv_kollision", "sv_sjuk", "sv_stjärna", "sv_ugn", "sv_väska"};
-
-    public const int TIME_OUT_SECS = 30;
+    public const int TIME_OUT_SECS = 40;
 
     public const int RECORD_DURATION = 3;
 

@@ -145,8 +145,8 @@ public class WordCardManager : MonoBehaviour {
 		}
 		audioSource.clip = recording;
 		wordCard.ToggleMic(false);
-		if (feedback) 
-			NetworkManager.GetManager().SendMicrophone(Microphone.devices[0], currentWord.name, recording, ReceiveStars, challengeType, retryCount);
+		
+		NetworkManager.GetManager().SendMicrophone(Microphone.devices[0], currentWord.name, recording, ReceiveStars, challengeType, retryCount, feedback);
 		
 		
 		yield return new WaitForSeconds(gap);
