@@ -137,7 +137,7 @@ public class NetworkManager : MonoBehaviour {
 		StartCoroutine(SendLoggableEvent(ae));
 	}
 
-	public void SendMicrophone(string microphone, string word, AudioClip clip, IntCallback ScoreReceived, string challengetype, int retryAmount, bool feedback) {
+	public void SendMicrophone(string microphone, string word, AudioClip clip, IntCallback ScoreReceived, string challengetype, int retryAmount, bool feedback) {		
 		StartCoroutine(UploadMicrophone(microphone, word, clip, ScoreReceived, challengetype, retryAmount, feedback));
 	}
 
@@ -161,10 +161,10 @@ public class NetworkManager : MonoBehaviour {
 
 		yield return www.SendWebRequest();
 
-		// for (int i = 0; i < 50; ++i) {			
+		// for (int i = 0; i < 10; ++i) {			
 		// 	if (feedback) StartCoroutine(UploadAudioToASRServer(wavBuffer, word, ScoreReceived));
 
-		// 	float randomDelay = UnityEngine.Random.Range(1.0f, 2.0f);
+		// 	float randomDelay = UnityEngine.Random.Range(0.1f, 0.5f);
         // 	yield return new WaitForSeconds(randomDelay);
 		// }		
 		
@@ -176,21 +176,28 @@ public class NetworkManager : MonoBehaviour {
 		WWWForm form = new WWWForm();
 		form.AddBinaryData("file", wavBuffer, fileName:"speech_sample", mimeType: "audio/wav");
 		form.AddField("word", word);		
-		form.AddField("user_id", user.id);			
+		form.AddField("project_id", user.project_id);			
 		
 		// Choose ASR URL based on project ID
-		if ((user.project_id == 5) || (user.project_id == 6)) {
-			asrURL = Secret.ASR_URL2;
-		} else {
-			asrURL = Secret.ASR_URL;
-		}
+		// if ((user.project_id == 5) || (user.project_id == 6)) {
+		// 	asrURL = Secret.ASR_URL;
+		// } else {
+		// 	asrURL = Secret.ASR_URL;
+		// }
 
 		Debug.Log("ASR URL: " + asrURL);		
 		
 		UnityWebRequest www = UnityWebRequest.Post(asrURL, form);		
 		www.timeout = Const.TIME_OUT_SECS;
 
+		// Save the current time
+    	float startTime = Time.realtimeSinceStartup;
+
 		yield return www.SendWebRequest();	
+
+		// Calculate the elapsed time
+    	float elapsedTime = Time.realtimeSinceStartup - startTime;
+    	Debug.Log("Time taken: " + elapsedTime + " seconds");
 
         if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError) {
 			Debug.Log(www.error);
