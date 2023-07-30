@@ -63,7 +63,7 @@ public class GameView : View, IGameCaller {
 		if (WordMaster.Instance.PeekNextType() != WordCardType.Memory && word != null) {
 			ToggleMusic(0.25f, false);
 			musicFaded = true;
-			NetworkManager.GetManager().SamplePlayed(GameMaster.Instance.CurrentLevel.name, word.name, true);
+			// NetworkManager.GetManager().SamplePlayed(GameMaster.Instance.CurrentLevel.name, word.name, true);
 			GameMaster.Instance.SetCustomClip(word.pronunciations.GetRandom());
 		} else
 			GameMaster.Instance.SetCustomClip(null);

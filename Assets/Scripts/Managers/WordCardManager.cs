@@ -111,7 +111,7 @@ public class WordCardManager : MonoBehaviour {
 		if (audioSource.clip == null)
 			yield break;
 		audioSource.Play();
-		NetworkManager.GetManager().SamplePlayed(levelName, currentWord.name, false);
+		// NetworkManager.GetManager().SamplePlayed(levelName, currentWord.name, false);
 		yield return new WaitForSeconds(audioSource.clip.length);
 	}
 	

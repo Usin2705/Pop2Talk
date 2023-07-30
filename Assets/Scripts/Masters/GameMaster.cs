@@ -108,7 +108,9 @@ public class GameMaster : MonoBehaviour {
 	}
 
     public void PlayPopSound(int frequency) {
-        AudioMaster.Instance.Play(this, GetPopSound(), 1 + Mathf.Log(frequency + 1, 1.5f) * popSoundFrequencyIncrease);
+        // TODO remove the pitch change by use this instead of the below commented line
+        AudioMaster.Instance.Play(this, GetPopSound());        
+        //AudioMaster.Instance.Play(this, GetPopSound(), 1 + Mathf.Log(frequency + 1, 1.5f) * popSoundFrequencyIncrease);
     }
 
     public AudioInstance GetPopSound() {

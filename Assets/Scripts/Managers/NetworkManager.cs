@@ -125,17 +125,16 @@ public class NetworkManager : MonoBehaviour {
 		Debug.Log(www.downloadHandler.text);
 	}
 
-
-	public void SamplePlayed(string level, string word, bool fromPop) {
-		AnalyticsEvent ae = new AnalyticsEvent {
-			eventname = "sample_played",
-			level = level,
-			sessionid = sessionId,
-			word = word,
-			fromPop = fromPop,
-		};
-		StartCoroutine(SendLoggableEvent(ae));
-	}
+	// public void SamplePlayed(string level, string word, bool fromPop) {
+	// 	AnalyticsEvent ae = new AnalyticsEvent {
+	// 		eventname = "sample_played",
+	// 		level = level,
+	// 		sessionid = sessionId,
+	// 		word = word,
+	// 		fromPop = fromPop,
+	// 	};
+	// 	StartCoroutine(SendLoggableEvent(ae));
+	// }
 
 	public void SendMicrophone(string microphone, string word, AudioClip clip, IntCallback ScoreReceived, string challengetype, int retryAmount, bool feedback) {		
 		StartCoroutine(UploadMicrophone(microphone, word, clip, ScoreReceived, challengetype, retryAmount, feedback));
@@ -161,7 +160,7 @@ public class NetworkManager : MonoBehaviour {
 
 		yield return www.SendWebRequest();
 
-		// for (int i = 0; i < 10; ++i) {			
+		// for (int i = 0; i < 20; ++i) {			
 		// 	if (feedback) StartCoroutine(UploadAudioToASRServer(wavBuffer, word, ScoreReceived));
 
 		// 	float randomDelay = UnityEngine.Random.Range(0.1f, 0.5f);

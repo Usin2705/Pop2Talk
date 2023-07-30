@@ -22,7 +22,7 @@ public static class Const
     "en_gb_juice", "en_gb_bag", "en_gb_belly", "en_gb_train", "en_gb_stove", "en_gb_human en_gb_body", "en_gb_armchair", "en_gb_mom", 
     "en_gb_flute"};
 
-    public const int TIME_OUT_SECS = 30;
+    public const int TIME_OUT_SECS = 40;
 
     public const int RECORD_DURATION = 3;
 
