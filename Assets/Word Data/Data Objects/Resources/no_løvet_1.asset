@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
+  m_Name: no_løvet_1
+  m_EditorClassIdentifier: 
+  picture: {fileID: 21300000, guid: 81da821cce674e74ab5d912f9de6bbec, type: 3}
+  language: 4
+  spelling: Løvet
+  pronunciations:
+  - {fileID: 8300000, guid: 924d661c664fd1646a65454f53634cba, type: 3}

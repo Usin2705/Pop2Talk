@@ -16,37 +16,7 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: c5fab24b5ad34604395c3e86dbe18ec0
-  m_SerializeEntries:
-  - m_GUID: f3a6230e293896f458a2d4a627b1f964
-    m_Address: ParentViewTable_en-GB
-    m_ReadOnly: 1
-    m_SerializedLabels:
-    - Locale-en-GB
-  - m_GUID: ccfbc9516c1e7dd4f8c9b38c2f702645
-    m_Address: DataOverlayTable_en-GB
-    m_ReadOnly: 1
-    m_SerializedLabels:
-    - Locale-en-GB
-  - m_GUID: 996c3cac59d0b034aa42cde8f39c618e
-    m_Address: RegistrationViewTable_en-GB
-    m_ReadOnly: 1
-    m_SerializedLabels:
-    - Locale-en-GB
-  - m_GUID: fdd1768c3eadbae448f82f5077f93372
-    m_Address: PasswordResetTable_en-GB
-    m_ReadOnly: 1
-    m_SerializedLabels:
-    - Locale-en-GB
-  - m_GUID: 9392d1a4beec9774bada1d3cb3a73f4a
-    m_Address: SubscriptionViewTable_en-GB
-    m_ReadOnly: 1
-    m_SerializedLabels:
-    - Locale-en-GB
-  - m_GUID: e5f78e707dde2b24ab9926abe2b970b8
-    m_Address: LoginViewTable_en-GB
-    m_ReadOnly: 1
-    m_SerializedLabels:
-    - Locale-en-GB
+  m_SerializeEntries: []
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: 8e33fa60abba0db4ca96d48bba87e4ee, type: 2}
   m_SchemaSet:
