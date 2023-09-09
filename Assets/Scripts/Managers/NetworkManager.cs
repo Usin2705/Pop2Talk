@@ -186,7 +186,7 @@ public class NetworkManager : MonoBehaviour {
 
 		Debug.Log("ASR URL: " + asrURL);		
 		
-		UnityWebRequest www = UnityWebRequest.Post(asrURL, form);		
+		UnityWebRequest www = UnityWebRequest.Post(asrURL, form);
 		www.timeout = Const.TIME_OUT_SECS;
 
 		// Save the current time
@@ -200,7 +200,10 @@ public class NetworkManager : MonoBehaviour {
 
         if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError) {
 			Debug.Log(www.error);
+			Debug.Log("Response Code: " + www.responseCode);
+    		Debug.Log("Response Headers: " + www.GetResponseHeaders());
 			throw new System.Exception(www.downloadHandler.text ?? www.error);
+    throw new System.Exception(www.downloadHandler.text ?? www.error);
 		} else {
 			Debug.Log("Form upload complete!");
 
