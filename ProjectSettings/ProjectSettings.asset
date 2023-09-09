@@ -133,7 +133,7 @@ PlayerSettings:
   vulkanEnableLateAcquireNextImage: 0
   vulkanEnableCommandBufferRecycling: 1
   loadStoreDebugModeEnabled: 0
-  bundleVersion: 1.1.0
+  bundleVersion: 1.1.1
   preloadedAssets:
   - {fileID: 11400000, guid: c99cd6a036de86745bbcd45d0d2c1384, type: 2}
   metroInputSource: 0
@@ -159,7 +159,7 @@ PlayerSettings:
     Standalone: com.Teflon.Pop2TalkNordic
     iPhone: com.Teflon.Pop2TalkNordic
   buildNumber:
-    Standalone: 3
+    Standalone: 4
     VisionOS: 0
     iPhone: 1
     tvOS: 0
@@ -936,11 +936,11 @@ PlayerSettings:
   apiCompatibilityLevel: 3
   activeInputHandler: 0
   windowsGamepadBackendHint: 0
-  cloudProjectId: 
+  cloudProjectId: fee9e031-62ca-4516-a8be-1870b74d38bb
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: 
-  organizationId: 
+  projectName: Pop2Talk Nordic (1)
+  organizationId: nhan_phan
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 1
   hmiLoadingImage: {fileID: 0}

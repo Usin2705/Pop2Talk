@@ -5,7 +5,6 @@ using UnityEngine.Networking;
 using System;
 using UnityEngine.UI;
 using System.Reflection;
-using socket.io;
 using UnityEngine.Localization.Components;
 
 
@@ -38,7 +37,6 @@ public class NetworkManager : MonoBehaviour {
 	//string devAccount = "devel"; No longer used dev one
 	//string devSocketUrl = ""; 
 
-	Socket socket;
 	
 	string sessionId;
 
@@ -46,7 +44,7 @@ public class NetworkManager : MonoBehaviour {
 	bool connected = false;
 	bool serverWaitPromptActive;
 	float secondsSinceStartup;
-	float timeoutDuration = 4f;
+	float timeoutDuration = Const.TIME_OUT_SECS;
 	public float TimeoutDuration { get { return timeoutDuration; } }
 	public bool Connected { get { return connected; } }
 	string player = "Player not set";
@@ -94,22 +92,20 @@ public class NetworkManager : MonoBehaviour {
 	}
 
 	public void ControlledExit() {
-		if (socket != null && connected) {
+		if (connected) {
 			PlayerEvent pe = new PlayerEvent();
 			pe.player = Player;
-			socket.EmitJson("controlled_exit", JsonUtility.ToJson(pe));
 			connected = false;
 		}
 	}
 
 	public void LevelStarted(string level, bool passed, bool medal) {
-		if (socket != null && connected) {
+		if (connected) {
 			LevelEvent le = new LevelEvent();
 			le.player = Player;
 			le.level = level;
 			le.passed = passed;
-			le.medal = medal;
-			socket.EmitJson("start_level", JsonUtility.ToJson(le));
+			le.medal = medal;			
 		}
 	}
 
@@ -144,6 +140,7 @@ public class NetworkManager : MonoBehaviour {
 	    // IMultipartFormSection & MultipartFormFileSection  could be another solution,
 		// but apparent it also require raw byte data to upload
 		byte[] wavBuffer = SavWav.GetWav(clip, out uint length, trim:true);
+		
 
 		WWWForm form = new WWWForm();		
 		form.AddField("user_id", user.id);
@@ -187,7 +184,8 @@ public class NetworkManager : MonoBehaviour {
 		Debug.Log("ASR URL: " + asrURL);		
 		
 		UnityWebRequest www = UnityWebRequest.Post(asrURL, form);
-		www.timeout = Const.TIME_OUT_SECS;
+		
+		www.timeout = (int)timeoutDuration;
 
 		// Save the current time
     	float startTime = Time.realtimeSinceStartup;
@@ -203,7 +201,6 @@ public class NetworkManager : MonoBehaviour {
 			Debug.Log("Response Code: " + www.responseCode);
     		Debug.Log("Response Headers: " + www.GetResponseHeaders());
 			throw new System.Exception(www.downloadHandler.text ?? www.error);
-    throw new System.Exception(www.downloadHandler.text ?? www.error);
 		} else {
 			Debug.Log("Form upload complete!");
 
@@ -530,9 +527,6 @@ public class NetworkManager : MonoBehaviour {
 	}
 
 	public void SwipeEvent(string name) {
-		if (socket == null)
-			return;
-
 		AnalyticsEvent ae = new AnalyticsEvent {
 			eventname = name,
 			player = Player,
