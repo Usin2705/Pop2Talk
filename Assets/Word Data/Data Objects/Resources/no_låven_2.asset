@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
-  m_Name: no_låven_2
+  m_Name: "no_la\u030Aven_2"
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: 8f2cf3c054092dd4ea334bd2de826279, type: 3}
+  picture: {fileID: 21300000, guid: 61bfd02d45286a44a88f9ec2b7b42c57, type: 3}
   language: 4
-  spelling: Låven
+  spelling: "La\u030Aven"
   pronunciations:
-  - {fileID: 8300000, guid: cd06c7e773874f14f85ba0df72ebeddb, type: 3}
+  - {fileID: 8300000, guid: a872d89f8c8c4f74599dd61083cdc2a3, type: 3}
