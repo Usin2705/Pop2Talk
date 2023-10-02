@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_bror_2
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: fe7713947b1c52d468cd1e5974632ea2, type: 3}
+  picture: {fileID: 21300000, guid: 8002453fc9fd34e469c2156611c1e4a9, type: 3}
   language: 4
   spelling: Bror
   pronunciations:
-  - {fileID: 8300000, guid: 0b536973cf0759545b7d8f8eebb81f89, type: 3}
+  - {fileID: 8300000, guid: 07493d9c99ec8fa4e902af37a4d66538, type: 3}

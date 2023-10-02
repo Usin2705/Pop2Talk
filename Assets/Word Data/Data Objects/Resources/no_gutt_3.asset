@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_gutt_3
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: ed2e58cff0534b946a0e8df244c95faf, type: 3}
+  picture: {fileID: 21300000, guid: 1244da56b9c199740b9438c43df6cde7, type: 3}
   language: 4
   spelling: Gutt
   pronunciations:
-  - {fileID: 8300000, guid: 4fc246361b10ed541ae1c24c32e11d6d, type: 3}
+  - {fileID: 8300000, guid: b617349287a8a0948ab865710a9f7079, type: 3}

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_svømme_3
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: c97809f72dfa4b642b7536d1e90874e2, type: 3}
+  picture: {fileID: 21300000, guid: 0df8db0eef7c7c046aaaaa6fadf460a9, type: 3}
   language: 4
   spelling: Svømme
   pronunciations:
-  - {fileID: 8300000, guid: 73828d3faed3b0848bb19b52fb11f7ed, type: 3}
+  - {fileID: 8300000, guid: d13af8886da23974f868ddb84685acd8, type: 3}

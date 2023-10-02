@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_lyn_1
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: 2e9db752e4fa1a64cb224f3a7d99f066, type: 3}
+  picture: {fileID: 21300000, guid: a0ae6b37351701e4aa8c7a6be7e03d21, type: 3}
   language: 4
   spelling: Lyn
   pronunciations:
-  - {fileID: 8300000, guid: 1e29596d3b6b4b94ba3540ba20e4e3ea, type: 3}
+  - {fileID: 8300000, guid: 70c15cca9aa27cf4cace213865a66558, type: 3}

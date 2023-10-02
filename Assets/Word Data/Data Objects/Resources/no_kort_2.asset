@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_kort_2
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: bcbb0a3d2c6147d44862d3f92517a11a, type: 3}
+  picture: {fileID: 21300000, guid: 62d02ed213c8eaf4b8214e39a1a0e309, type: 3}
   language: 4
   spelling: Kort
   pronunciations:
-  - {fileID: 8300000, guid: 6d1b371e5964069409dae680ba542af8, type: 3}
+  - {fileID: 8300000, guid: 0dc059d47e37acd4bb82ca0b8bca83ae, type: 3}

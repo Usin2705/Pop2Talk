@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_flue_2
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: 7aa3d88c9e49088468768b5075f2b4bd, type: 3}
+  picture: {fileID: 21300000, guid: 53b4d178f0973f84aacace26f6fc3e8e, type: 3}
   language: 4
   spelling: Flue
   pronunciations:
-  - {fileID: 8300000, guid: 42889811cfa9e5e4db949f4fe329088e, type: 3}
+  - {fileID: 8300000, guid: c88db9ff0c12c774683b521b9405afa7, type: 3}

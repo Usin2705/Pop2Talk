@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_klem_1
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: 65428603d42a9d34e8cb2f28350fd44f, type: 3}
+  picture: {fileID: 21300000, guid: 53ce054e91a0ca043a8211303746cf62, type: 3}
   language: 4
   spelling: Klem
   pronunciations:
-  - {fileID: 8300000, guid: 9e0f9dd3d872b9248bca8a9dede17a97, type: 3}
+  - {fileID: 8300000, guid: e185a24a01d00074aa9d8e029a88d421, type: 3}

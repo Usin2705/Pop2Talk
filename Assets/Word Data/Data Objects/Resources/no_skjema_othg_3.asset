@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_skjema_othg_3
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: 9b41de7be09f724459e2b0c45eedaeec, type: 3}
+  picture: {fileID: 21300000, guid: 8c6eebcd33e4f6f4c9c7aa95abd80e82, type: 3}
   language: 4
   spelling: Skjema
   pronunciations:
-  - {fileID: 8300000, guid: fc4759ad937ca9c47856c4a556b3d4b0, type: 3}
+  - {fileID: 8300000, guid: 4e824b4df7dcf7545bb4fa918a3ebca9, type: 3}

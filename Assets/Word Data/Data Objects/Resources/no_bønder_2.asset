@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_bønder_2
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: 5c40808a2c855a141a6bbb0eb0fbee22, type: 3}
+  picture: {fileID: 21300000, guid: 80d62f604e1e039478afc8dae078d6ab, type: 3}
   language: 4
   spelling: Bønder
   pronunciations:
-  - {fileID: 8300000, guid: 1720eacde3dcadb4a9372a9487d1bbb6, type: 3}
+  - {fileID: 8300000, guid: 8b02e61804d7ae846ad4332b64219be9, type: 3}

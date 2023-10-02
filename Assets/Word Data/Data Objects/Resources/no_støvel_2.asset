@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_støvel_2
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: 54343845c6c8ac4478383d57c3fcb34e, type: 3}
+  picture: {fileID: 21300000, guid: fff3be9e9f86fcb45a8f3ec23b79c1bb, type: 3}
   language: 4
   spelling: Støvel
   pronunciations:
-  - {fileID: 8300000, guid: 4a7eda8409d152f4ca20ce86e9d96d2f, type: 3}
+  - {fileID: 8300000, guid: 1a72c054ce5070041a4cd334e6fb5cda, type: 3}

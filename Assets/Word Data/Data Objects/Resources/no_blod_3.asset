@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_blod_3
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: e14d93843b58a5e468840ecb8af80235, type: 3}
+  picture: {fileID: 21300000, guid: 7a05e41e74672de4cbc1baeac5365afb, type: 3}
   language: 4
   spelling: Blod
   pronunciations:
-  - {fileID: 8300000, guid: 22275e18ac77e6041aa414991280eb46, type: 3}
+  - {fileID: 8300000, guid: d5e7c749b9ff481468a542d2ee708c0d, type: 3}

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_knar_othg_3
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: d7e7f1d2b87032c43b3fd6f265215336, type: 3}
+  picture: {fileID: 21300000, guid: 9199fd6d415ba7f4282f8e7fa95c2552, type: 3}
   language: 4
   spelling: Knar
   pronunciations:
-  - {fileID: 8300000, guid: dd55c7567b7cb3f4ea74485c7f8b0f5a, type: 3}
+  - {fileID: 8300000, guid: fcc534d3babf495448359054e20200fa, type: 3}

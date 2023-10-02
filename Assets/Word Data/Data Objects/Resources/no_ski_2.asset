@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_ski_2
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: a50decce91aa8c84bb46044fa8370945, type: 3}
+  picture: {fileID: 21300000, guid: c1371ada748f5bd4c9584342f6e2e97d, type: 3}
   language: 4
   spelling: Ski
   pronunciations:
-  - {fileID: 8300000, guid: 664dae69653e33f45af110053463b7c7, type: 3}
+  - {fileID: 8300000, guid: 75a9412ea78067b41b3fb7b848e290c4, type: 3}

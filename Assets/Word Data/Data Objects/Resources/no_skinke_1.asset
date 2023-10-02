@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_skinke_1
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: 879819599b71c8e4f9f075b762883225, type: 3}
+  picture: {fileID: 21300000, guid: d93ad3661d0b8cb489e0e231e7df44ec, type: 3}
   language: 4
   spelling: Skinke
   pronunciations:
-  - {fileID: 8300000, guid: ccb2a90389f5926438146b9cc31c25f3, type: 3}
+  - {fileID: 8300000, guid: 4e8ae0a129b8cf344bacacfdb905d483, type: 3}

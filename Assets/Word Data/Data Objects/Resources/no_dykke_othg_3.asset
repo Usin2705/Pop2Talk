@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_dykke_othg_3
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: a0013d68009c7354e867027d2c948b7b, type: 3}
+  picture: {fileID: 21300000, guid: 19e6ee92943a2ea4a99cbe74266b2f10, type: 3}
   language: 4
   spelling: Dykke
   pronunciations:
-  - {fileID: 8300000, guid: 64ce664fbdb5dc648a4cf5e27312a5f1, type: 3}
+  - {fileID: 8300000, guid: dcda276acf417de419604903b18a08c6, type: 3}

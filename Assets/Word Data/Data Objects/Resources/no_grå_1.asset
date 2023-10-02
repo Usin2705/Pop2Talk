@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
-  m_Name: no_grå_1
+  m_Name: no_grå_1
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: 9530d825e5637c641b13243e42f1c06c, type: 3}
+  picture: {fileID: 21300000, guid: 093c4b267099f3f4095fe58c58c12ba8, type: 3}
   language: 4
-  spelling: Grå
+  spelling: Grå
   pronunciations:
-  - {fileID: 8300000, guid: 7955f0b0ff33fdd418957eabd444ef2f, type: 3}
+  - {fileID: 8300000, guid: d72222ec0e70e8f40b6e9b4985498811, type: 3}

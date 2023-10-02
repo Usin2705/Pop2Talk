@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
-  m_Name: no_tårn_2
+  m_Name: no_tårn_2
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: 72056090c0a128c42b3d899490436ae3, type: 3}
+  picture: {fileID: 21300000, guid: 9741806977900bb4daff753309b64f3b, type: 3}
   language: 4
-  spelling: Tårn
+  spelling: Tårn
   pronunciations:
-  - {fileID: 8300000, guid: 7a69bc2a1c173be4294e061b867b8f38, type: 3}
+  - {fileID: 8300000, guid: a28a3b8d0745e9347a88fc2c59b6100a, type: 3}

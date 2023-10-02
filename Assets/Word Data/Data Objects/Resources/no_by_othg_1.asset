@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_by_othg_1
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: 394d50fda095c024dbc72898e88ff181, type: 3}
+  picture: {fileID: 21300000, guid: 75e7313545c1a9d47b2475d92ba50a86, type: 3}
   language: 4
   spelling: By
   pronunciations:
-  - {fileID: 8300000, guid: 7d1941937cae16946a42549df1d1473d, type: 3}
+  - {fileID: 8300000, guid: e189a56fa12ef2745bf11cc555ccb4c2, type: 3}

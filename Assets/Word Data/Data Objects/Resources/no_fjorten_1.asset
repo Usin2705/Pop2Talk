@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_fjorten_1
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: 085bf199d6e989a42a26392560c50873, type: 3}
+  picture: {fileID: 21300000, guid: f10c2c84506b1a3438f20be458fb0e76, type: 3}
   language: 4
   spelling: Fjorten
   pronunciations:
-  - {fileID: 8300000, guid: f900982669c8fa4488164a061b19e527, type: 3}
+  - {fileID: 8300000, guid: 60c3765eafc41164a9bd19561cff5ab3, type: 3}

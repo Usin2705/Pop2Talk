@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_klo_3
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: 163a6aa2c88b1df46812206d8a9285aa, type: 3}
+  picture: {fileID: 21300000, guid: b8c6a136b86bf2e419925b9fa777b3d8, type: 3}
   language: 4
   spelling: Klo
   pronunciations:
-  - {fileID: 8300000, guid: 6ff2259019cad6449a848d3c445b574d, type: 3}
+  - {fileID: 8300000, guid: c0b275924595958468ad61a94201015a, type: 3}

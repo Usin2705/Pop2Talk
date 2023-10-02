@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_skjørt_2
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: 74661634b02d688419be73163a407491, type: 3}
+  picture: {fileID: 21300000, guid: 72a54cb6ec501c643be0f552dc272854, type: 3}
   language: 4
   spelling: Skjørt
   pronunciations:
-  - {fileID: 8300000, guid: 8e1d945f47415ba4b95203bbeaeef4c5, type: 3}
+  - {fileID: 8300000, guid: 54346f8dbde88f74c9b652853dde2b55, type: 3}

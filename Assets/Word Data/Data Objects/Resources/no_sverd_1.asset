@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_sverd_1
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: ada63e822d183304885004ef1c3d6691, type: 3}
+  picture: {fileID: 21300000, guid: ad8f5d631616b504aafd1bdd6ed58351, type: 3}
   language: 4
   spelling: Sverd
   pronunciations:
-  - {fileID: 8300000, guid: d4409883e8215a34293f8a29374034fe, type: 3}
+  - {fileID: 8300000, guid: 3af66aaa38d4fb9428de1f80b0b38fe5, type: 3}

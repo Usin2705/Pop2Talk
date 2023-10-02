@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_vindu_othg_1
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: d1deba715c0ef404d8409fae42cfe2b2, type: 3}
+  picture: {fileID: 21300000, guid: 905f9d9629f8f914cb363da6ba763363, type: 3}
   language: 4
   spelling: Vindu
   pronunciations:
-  - {fileID: 8300000, guid: 1c8cbbcd216ab0b449d2a4d16c463766, type: 3}
+  - {fileID: 8300000, guid: aca03c2fd91d9974bb0e66383d92f699, type: 3}

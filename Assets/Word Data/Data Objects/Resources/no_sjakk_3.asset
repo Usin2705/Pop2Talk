@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_sjakk_3
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: 90ae5b8ef82ab304fb926fffac534468, type: 3}
+  picture: {fileID: 21300000, guid: 226aa4e192a6c54488b70de6b830ebae, type: 3}
   language: 4
   spelling: Sjakk
   pronunciations:
-  - {fileID: 8300000, guid: 273eaf489dbcc0a4caf6268fe342d650, type: 3}
+  - {fileID: 8300000, guid: f631574814216754992fa8c5e89be6cf, type: 3}

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_koffert_3
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: 8da5e1a71ad2f1644b5b59b81f505962, type: 3}
+  picture: {fileID: 21300000, guid: e6f1d32992c6e5345a771b0536e70493, type: 3}
   language: 4
   spelling: Koffert
   pronunciations:
-  - {fileID: 8300000, guid: 645fe88b328a141409f5ae30d6dd63b8, type: 3}
+  - {fileID: 8300000, guid: 9d4d4e46f223f5741ac3c0620af72409, type: 3}

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_grønn_3
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: 2d3ee2ed5f8fd8545b2c236f7861c781, type: 3}
+  picture: {fileID: 21300000, guid: 4442dcff4d55f0f47b237194c7ed74d8, type: 3}
   language: 4
   spelling: Grønn
   pronunciations:
-  - {fileID: 8300000, guid: 32a1c3e84d92c2b47b0a66688a376911, type: 3}
+  - {fileID: 8300000, guid: 761cc523c93a0c146a4e55ae37c4c196, type: 3}

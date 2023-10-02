@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_sølv_1
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: 3a56f53016b082a4a9f1eed73a93a832, type: 3}
+  picture: {fileID: 21300000, guid: b89f60c4169c8d04cb92c72909899e52, type: 3}
   language: 4
   spelling: Sølv
   pronunciations:
-  - {fileID: 8300000, guid: 611c0ecb682ff1c47a09b7e103889e44, type: 3}
+  - {fileID: 8300000, guid: 09f887a4ee5992f4da8986b465a7dc14, type: 3}

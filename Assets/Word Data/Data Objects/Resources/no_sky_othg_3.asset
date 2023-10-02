@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_sky_othg_3
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: f63774f3599968549a889cd539fa6ce6, type: 3}
+  picture: {fileID: 21300000, guid: 8891067cd377bf0438eae9650c59a997, type: 3}
   language: 4
   spelling: Sky
   pronunciations:
-  - {fileID: 8300000, guid: d394e4ca910405a46bcc5d281156ad10, type: 3}
+  - {fileID: 8300000, guid: 17702be0e82ae1e42b2a85349d97ccbf, type: 3}

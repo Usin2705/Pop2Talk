@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_loven_3
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: d96250d9adee55346ae26c39100113de, type: 3}
+  picture: {fileID: 21300000, guid: 6d1a0310924daab4c94e20aaaf18e604, type: 3}
   language: 4
   spelling: Loven
   pronunciations:
-  - {fileID: 8300000, guid: a1ace4ac837f3a54db9f33b93c071293, type: 3}
+  - {fileID: 8300000, guid: d19389a53c2b8624fb551595ccccc60e, type: 3}

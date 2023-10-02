@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_skjorte_3
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: 06d164b00646d9449a1c998e33162840, type: 3}
+  picture: {fileID: 21300000, guid: c2a478325b2e5e445b75502abea7a075, type: 3}
   language: 4
   spelling: Skjorte
   pronunciations:
-  - {fileID: 8300000, guid: ef7ea4b2df03d6a4f95fbcb7657ee0a0, type: 3}
+  - {fileID: 8300000, guid: 4f15d4530a61e8642ac8255ba144d3ab, type: 3}

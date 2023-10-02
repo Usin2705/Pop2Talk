@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_vanne_othg_1
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: ddff942eda4a6da49953b414476f2409, type: 3}
+  picture: {fileID: 21300000, guid: 9cd336af41af47c42993aa22e664c80b, type: 3}
   language: 4
   spelling: Vanne
   pronunciations:
-  - {fileID: 8300000, guid: 01ae6d768b99dc54da705c0718e0b5ca, type: 3}
+  - {fileID: 8300000, guid: e4e950cfc320cfa429c7874c33788ae6, type: 3}

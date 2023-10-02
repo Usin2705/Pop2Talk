@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_hjerne_othg_2
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: dbfa1452fdbdc574fa3484c7d90b49ef, type: 3}
+  picture: {fileID: 21300000, guid: a13051d4b176d2d41a4820b4d5fc2fb8, type: 3}
   language: 4
   spelling: Hjerne
   pronunciations:
-  - {fileID: 8300000, guid: bba1b3eebe41ce041a1e900bcd867587, type: 3}
+  - {fileID: 8300000, guid: 4b65b89545932c3419b519a0f71857b6, type: 3}

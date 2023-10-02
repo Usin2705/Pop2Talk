@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_fort_2
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: afec3b4ed42494f469314ee2621bf031, type: 3}
+  picture: {fileID: 21300000, guid: 5e55b17cf8744b840a65758b58f1ef1c, type: 3}
   language: 4
   spelling: Fort
   pronunciations:
-  - {fileID: 8300000, guid: 2d9bfe6989640304a8dcbd42015ef231, type: 3}
+  - {fileID: 8300000, guid: a303f5ef599a0a2419a62e684aca0743, type: 3}

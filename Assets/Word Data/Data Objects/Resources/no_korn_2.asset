@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_korn_2
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: 94bdbd8f7fc96d340b42aca317ce8285, type: 3}
+  picture: {fileID: 21300000, guid: 342140ca7743c0e4db2d2f0b3b92658d, type: 3}
   language: 4
   spelling: Korn
   pronunciations:
-  - {fileID: 8300000, guid: 6d9a0b598e67daf4e91e2fa3a56abcdf, type: 3}
+  - {fileID: 8300000, guid: 8a4110a0bc105bc49b7eb5cb6b733834, type: 3}

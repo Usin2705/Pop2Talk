@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_mur_3
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: 9e071818d222c6148b5d8a270f7f4c1d, type: 3}
+  picture: {fileID: 21300000, guid: 0fb2e5ab27d6e3c40adef74f46f578b9, type: 3}
   language: 4
   spelling: Mur
   pronunciations:
-  - {fileID: 8300000, guid: 43b6f9b29cd824a478c31e82198f6412, type: 3}
+  - {fileID: 8300000, guid: 9e0f4260c87d3a247a20f1cade32546f, type: 3}

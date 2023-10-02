@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_ni_2
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: 081cca3ceea5b5443947c42eca52f54e, type: 3}
+  picture: {fileID: 21300000, guid: 7a0cd1e676c074e45bf810a3c9aaab32, type: 3}
   language: 4
   spelling: Ni
   pronunciations:
-  - {fileID: 8300000, guid: 6961a1b64c2275e4f9ff686420d67fcc, type: 3}
+  - {fileID: 8300000, guid: 2d10196ed78527c4f938e2cd185361e6, type: 3}

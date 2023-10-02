@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_vær_othg_3
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: ca65d75acb5a8084aae03ea4531b4cb9, type: 3}
+  picture: {fileID: 21300000, guid: d073a3369ce5e92498ddbeaaf173d3fa, type: 3}
   language: 4
   spelling: Vær
   pronunciations:
-  - {fileID: 8300000, guid: f4164fee0f72a4644b4ea7f9bdf71307, type: 3}
+  - {fileID: 8300000, guid: b382799a06f5d2245b0d4e045896c8b3, type: 3}

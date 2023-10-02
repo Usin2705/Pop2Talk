@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_stupe_3
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: e2af467569a5ae746aafb27320129a34, type: 3}
+  picture: {fileID: 21300000, guid: 66abef7e8186a1c4f9600f30f4e010d6, type: 3}
   language: 4
   spelling: Stupe
   pronunciations:
-  - {fileID: 8300000, guid: b8f047b20d828714ba124a41d40d3285, type: 3}
+  - {fileID: 8300000, guid: 8d810376aaed7814b9b17bbe7ab0674d, type: 3}

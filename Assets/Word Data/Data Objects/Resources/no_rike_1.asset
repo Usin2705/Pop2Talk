@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_rike_1
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: a76e21b9baf7fd44ca4a45420b03d01f, type: 3}
+  picture: {fileID: 21300000, guid: df28467dfc0f95f48bc84210f715dcea, type: 3}
   language: 4
   spelling: Rike
   pronunciations:
-  - {fileID: 8300000, guid: 3444fd5cacd023e4a90132986b0485c1, type: 3}
+  - {fileID: 8300000, guid: 55d3e426dd33ab4499174b32df6eafbb, type: 3}

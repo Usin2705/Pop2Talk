@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_sjø_3
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: 03958c6a95183cb489a4c21d9e6eff81, type: 3}
+  picture: {fileID: 21300000, guid: 4ad405f82ec48164e9b1b63beae464eb, type: 3}
   language: 4
   spelling: Sjø
   pronunciations:
-  - {fileID: 8300000, guid: c7e2324ab092da14f8b0d495b6b7d88d, type: 3}
+  - {fileID: 8300000, guid: 1f182eea3b99fd741ad5f50557eddb68, type: 3}

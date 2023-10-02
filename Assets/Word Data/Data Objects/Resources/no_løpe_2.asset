@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_løpe_2
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: 0e526b4cfcac67046b47badb173dbbaa, type: 3}
+  picture: {fileID: 21300000, guid: f5f212644fdf7c245b267a2361159eb9, type: 3}
   language: 4
   spelling: Løpe
   pronunciations:
-  - {fileID: 8300000, guid: 0471573b4a0964443b2b5d37c58455d0, type: 3}
+  - {fileID: 8300000, guid: a2e8f1d6a24372f4fa445593310d6b67, type: 3}

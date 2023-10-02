@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_drops_3
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: f5cc963c3315d6e49adad00ea5d6071f, type: 3}
+  picture: {fileID: 21300000, guid: 9449c5a60e10b9c4ba0d3e6b558d9d24, type: 3}
   language: 4
   spelling: Drops
   pronunciations:
-  - {fileID: 8300000, guid: cd584d84e1620334192c9609d78c79e7, type: 3}
+  - {fileID: 8300000, guid: 97b93a79923a3094398c6e9c3483b422, type: 3}

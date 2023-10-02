@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_skip_othg_2
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: 9788d0610f65d4341979bd0bcac8af77, type: 3}
+  picture: {fileID: 21300000, guid: 23e97caad43c61c48961d8f8c851f60b, type: 3}
   language: 4
   spelling: Skip
   pronunciations:
-  - {fileID: 8300000, guid: e76e9b79b6bc2444db222bd1776f2d81, type: 3}
+  - {fileID: 8300000, guid: 56f5b46c75857734093cb930d310bacc, type: 3}

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_dyne_1
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: ed4c04b1c3decb940bb0fc944aa54d5b, type: 3}
+  picture: {fileID: 21300000, guid: 5dbc9aa52dc1b814382ca3a2036ec0a3, type: 3}
   language: 4
   spelling: Dyne
   pronunciations:
-  - {fileID: 8300000, guid: c815fb55401498a44a10422821abce6e, type: 3}
+  - {fileID: 8300000, guid: 94a02e3e89b56c24a94c786097c2173a, type: 3}

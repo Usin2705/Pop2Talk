@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_buss_3
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: 16591ac942b55e442964fe5815c6b922, type: 3}
+  picture: {fileID: 21300000, guid: f604814ab70bc3447b44b6945a1c1219, type: 3}
   language: 4
   spelling: Buss
   pronunciations:
-  - {fileID: 8300000, guid: 9307d1d1b8a61aa4db24e38f0a165139, type: 3}
+  - {fileID: 8300000, guid: a4738486fa386a04497eaacc806c6f72, type: 3}

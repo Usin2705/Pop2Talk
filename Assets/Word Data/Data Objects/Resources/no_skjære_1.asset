@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_skjære_1
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: e1f34ca1e11d102439a319df139301ca, type: 3}
+  picture: {fileID: 21300000, guid: 2841b33edf72f284283887a8d62aaa25, type: 3}
   language: 4
   spelling: Skjære
   pronunciations:
-  - {fileID: 8300000, guid: bafec4fd83dadc54083e320046fc6183, type: 3}
+  - {fileID: 8300000, guid: 7998834741d494e4ea8c504e18366371, type: 3}

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_brød_2
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: 602eeceab8b0ddb479cd98fa7c033d82, type: 3}
+  picture: {fileID: 21300000, guid: b61c8b94ff7fe8543af4626cd340bba5, type: 3}
   language: 4
   spelling: Brød
   pronunciations:
-  - {fileID: 8300000, guid: 8ef53f560ca8cc2488445d16eac33655, type: 3}
+  - {fileID: 8300000, guid: 636993f07cc5c9f4ebe7a315283e2873, type: 3}

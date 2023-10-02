@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_pluss_3
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: a849140737ffe7d47adb8c717cec1a4e, type: 3}
+  picture: {fileID: 21300000, guid: e5c13cf6c223c6749b542c9a8a207892, type: 3}
   language: 4
   spelling: Pluss
   pronunciations:
-  - {fileID: 8300000, guid: 5e51a0724617f31488538a842157955b, type: 3}
+  - {fileID: 8300000, guid: ac80365036f608148a2598892d24bf2e, type: 3}

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_flagg_3
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: f98deb74c3360e14daa51b418f94badf, type: 3}
+  picture: {fileID: 21300000, guid: 6e94f9968eb4ec948b2da56ab8176b58, type: 3}
   language: 4
   spelling: Flagg
   pronunciations:
-  - {fileID: 8300000, guid: 4b88e0a14cb68a14585e311e40a19216, type: 3}
+  - {fileID: 8300000, guid: 1a7760604cd86094aa870eede957652b, type: 3}

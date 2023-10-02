@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_drue_2
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: 9b0340dcbf6e62644aff58601b0fdea8, type: 3}
+  picture: {fileID: 21300000, guid: ac70ada2fe2c2bb42bce1e18647c0985, type: 3}
   language: 4
   spelling: Drue
   pronunciations:
-  - {fileID: 8300000, guid: 32f99ac1d17dffb49bb9f12c388dbd4c, type: 3}
+  - {fileID: 8300000, guid: 2c7ad81233bb3d1468a01924e08bb39c, type: 3}

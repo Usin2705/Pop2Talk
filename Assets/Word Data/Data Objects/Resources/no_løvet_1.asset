@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_løvet_1
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: 81da821cce674e74ab5d912f9de6bbec, type: 3}
+  picture: {fileID: 21300000, guid: d85094010623b964284abe263fa42da0, type: 3}
   language: 4
   spelling: Løvet
   pronunciations:
-  - {fileID: 8300000, guid: 924d661c664fd1646a65454f53634cba, type: 3}
+  - {fileID: 8300000, guid: 755c5b466f957d545afc276b207f4b08, type: 3}

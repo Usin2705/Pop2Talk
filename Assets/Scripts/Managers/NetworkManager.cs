@@ -5,6 +5,7 @@ using UnityEngine.Networking;
 using System;
 using UnityEngine.UI;
 using System.Reflection;
+using System.Text;
 using UnityEngine.Localization.Components;
 
 
@@ -75,6 +76,11 @@ public class NetworkManager : MonoBehaviour {
 
 	void OnDestroy() {
 
+	}
+
+	public string NormalizeString(string input)
+	{
+    	return input.Normalize(NormalizationForm.FormC);
 	}
 
 	public void ServerWait(bool wait) {
@@ -243,6 +249,9 @@ public class NetworkManager : MonoBehaviour {
 		// 	url = Secret.URL;
 		// 	loginUrl = Secret.LOGIN_URL;
 		// }
+
+		username = NormalizeString(username);
+		password = NormalizeString(password);
 		
 		// Create a WWWForm and add fields for the username, password and local time
 		WWWForm form = new WWWForm();

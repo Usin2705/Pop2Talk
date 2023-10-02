@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_lærer_othg_3
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: e3934726544ccab49b6fd4eb64f901fd, type: 3}
+  picture: {fileID: 21300000, guid: 8aa6d226667d3ab41b75eb9479043a03, type: 3}
   language: 4
   spelling: Lærer
   pronunciations:
-  - {fileID: 8300000, guid: 8a38c326234e7e145b668d9928c7a154, type: 3}
+  - {fileID: 8300000, guid: 8bfed3f05d5a9c14faa31e21b105c7c0, type: 3}

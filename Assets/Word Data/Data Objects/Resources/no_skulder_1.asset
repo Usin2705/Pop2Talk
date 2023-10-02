@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_skulder_1
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: 798ccb568eaa0a244a79dce783214d9d, type: 3}
+  picture: {fileID: 21300000, guid: 7dcb20d34eebf254399e455e41e6eef0, type: 3}
   language: 4
   spelling: Skulder
   pronunciations:
-  - {fileID: 8300000, guid: 8dfa4a1b6d1ce2b48877c11729816649, type: 3}
+  - {fileID: 8300000, guid: 645e688396dda024c8ab9abb8ed1cc20, type: 3}

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_hund_2
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: 71c8aefa06789e54aaf49cf7a9d737a6, type: 3}
+  picture: {fileID: 21300000, guid: 438811470966d4e4b8f8910aef62ba1e, type: 3}
   language: 4
   spelling: Hund
   pronunciations:
-  - {fileID: 8300000, guid: dee369462ba791d4a850917ad4e16ed0, type: 3}
+  - {fileID: 8300000, guid: 8d44b4a7003b47d40977019afabad09d, type: 3}

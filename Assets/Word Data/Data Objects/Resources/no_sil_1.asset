@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_sil_1
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: 523624b63e8af194bab77aaacd0e0de6, type: 3}
+  picture: {fileID: 21300000, guid: 03e62ebe89e67264597860cccc50e8ba, type: 3}
   language: 4
   spelling: Sil
   pronunciations:
-  - {fileID: 8300000, guid: 63aaaffd4e6ceac45811b52bc1a2e404, type: 3}
+  - {fileID: 8300000, guid: c92d1f648d15b3b49bd71f94dcebba27, type: 3}

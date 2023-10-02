@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_kurv_3
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: 6ec2ff53703499b4a8951e5bdbeabc36, type: 3}
+  picture: {fileID: 21300000, guid: b8c09348fd908b54c8826fba215c9ded, type: 3}
   language: 4
   spelling: Kurv
   pronunciations:
-  - {fileID: 8300000, guid: fa738cc6d09ba8a4fab672bdf50723d5, type: 3}
+  - {fileID: 8300000, guid: 2a2a91e4d36bd4c4ca34ec63076bbb02, type: 3}

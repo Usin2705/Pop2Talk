@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_ørn_1
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: b072a3b98f836e64ca3e8b6a1f917b92, type: 3}
+  picture: {fileID: 21300000, guid: 34ab4e6df04ea5645af270e3d79d3926, type: 3}
   language: 4
   spelling: Ørn
   pronunciations:
-  - {fileID: 8300000, guid: b7c1b520c63b7404cb3fc67ac6279a8e, type: 3}
+  - {fileID: 8300000, guid: a8b23ae20b5748d48afcf0b6c33b0ca2, type: 3}

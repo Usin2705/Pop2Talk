@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_hus_2
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: fe8db28cc789a064f9a3cb56c5535536, type: 3}
+  picture: {fileID: 21300000, guid: b19aa039f9d6de7488712033d8e1c77d, type: 3}
   language: 4
   spelling: Hus
   pronunciations:
-  - {fileID: 8300000, guid: a571cd766a237dc49989454857f452ae, type: 3}
+  - {fileID: 8300000, guid: 8ab317f1bd0718b4689038ef0ed7b0f5, type: 3}

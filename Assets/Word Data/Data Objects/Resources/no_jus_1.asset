@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_jus_1
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: 94e599126f675cb4aa71fbbcc673fd7e, type: 3}
+  picture: {fileID: 21300000, guid: 795f99b9533bdba439ab61d2292092d1, type: 3}
   language: 4
   spelling: Jus
   pronunciations:
-  - {fileID: 8300000, guid: 889fbae543d9a1b458a8e1c2c5253612, type: 3}
+  - {fileID: 8300000, guid: f917aecc3d362f243a82feabc440cf9e, type: 3}

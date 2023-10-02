@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_snørr_3
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: c4d491031f79a194f91d4134ba7269ec, type: 3}
+  picture: {fileID: 21300000, guid: b2c1ddb9e298baa4b84cdad447113882, type: 3}
   language: 4
   spelling: Snørr
   pronunciations:
-  - {fileID: 8300000, guid: 6ecb6cbef2e06d6468b530d8f4328738, type: 3}
+  - {fileID: 8300000, guid: b006d00434b2a6d4bacaf1fdf5ce82cc, type: 3}

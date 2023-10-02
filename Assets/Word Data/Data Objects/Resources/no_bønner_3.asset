@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_bønner_3
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: 8c1e29f24d4b5d44cb148f08bab4bd9e, type: 3}
+  picture: {fileID: 21300000, guid: 09533c20f34b8624ea85a21b63a3170f, type: 3}
   language: 4
   spelling: Bønner
   pronunciations:
-  - {fileID: 8300000, guid: 6ea93abab367edb4dac72d6aab6ab189, type: 3}
+  - {fileID: 8300000, guid: 948c0d2336b165842ad10ad28507ee73, type: 3}

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_synge_othg_1
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: cf1cac56612b66f48bb09ee85bc47d3c, type: 3}
+  picture: {fileID: 21300000, guid: b89004605df20704f905afd7f89407cd, type: 3}
   language: 4
   spelling: Synge
   pronunciations:
-  - {fileID: 8300000, guid: bf4d87d92c55e154ca6f750c6a440841, type: 3}
+  - {fileID: 8300000, guid: 703518ba8bd6edd4ea18fdd742a30816, type: 3}

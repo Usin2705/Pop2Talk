@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_pute_2
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: 433ededa2d3874a4db9d97d15979d1e1, type: 3}
+  picture: {fileID: 21300000, guid: fd15e101a69aa0c44934a404f27447d9, type: 3}
   language: 4
   spelling: Pute
   pronunciations:
-  - {fileID: 8300000, guid: 0c2d99de24d853c4db1722258da98505, type: 3}
+  - {fileID: 8300000, guid: bc6b88fb4bced2146bfc930ddeb1ce17, type: 3}

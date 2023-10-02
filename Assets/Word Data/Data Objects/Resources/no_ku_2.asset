@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_ku_2
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: 72dc088aae5d3564f99180307b96a0fa, type: 3}
+  picture: {fileID: 21300000, guid: a3fa777cc4b88da4380d2f4a9ed09966, type: 3}
   language: 4
   spelling: Ku
   pronunciations:
-  - {fileID: 8300000, guid: 89250077df9a0664daedf216006aa5cf, type: 3}
+  - {fileID: 8300000, guid: fb8e256a430f0fc48aa652cf7d2defd9, type: 3}

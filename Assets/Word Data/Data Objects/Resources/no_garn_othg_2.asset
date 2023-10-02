@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_garn_othg_2
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: 8dee4e119221f454b9d74d3d51f0464d, type: 3}
+  picture: {fileID: 21300000, guid: fdd7c479b8da8dd4ea64201212f37c37, type: 3}
   language: 4
   spelling: Garn
   pronunciations:
-  - {fileID: 8300000, guid: 5ea9b1eae7f7484459797e02fe15502b, type: 3}
+  - {fileID: 8300000, guid: 957170a9df1879944a62da93be2823de, type: 3}

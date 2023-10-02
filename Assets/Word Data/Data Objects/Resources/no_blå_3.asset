@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
-  m_Name: no_blå_3
+  m_Name: no_blå_3
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: 109456379258a6646963291e45cba192, type: 3}
+  picture: {fileID: 21300000, guid: 86edd5384f208824e963541a553497ab, type: 3}
   language: 4
-  spelling: Blå
+  spelling: Blå
   pronunciations:
-  - {fileID: 8300000, guid: 068875226f86d2a4bb9a80878ef845c3, type: 3}
+  - {fileID: 8300000, guid: 669038f72b6f8b94c81edabc14294c8f, type: 3}

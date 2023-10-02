@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_erter_2
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: d0cd5d8f3a28f79448c171955b1dd4e3, type: 3}
+  picture: {fileID: 21300000, guid: 9d4acaaba050b0c44b71d295848f46af, type: 3}
   language: 4
   spelling: Erter
   pronunciations:
-  - {fileID: 8300000, guid: bbecf817e94bc374a9437ed5c1f3958c, type: 3}
+  - {fileID: 8300000, guid: 2c6de5ba929072a41a6fd6b5eb863379, type: 3}

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_kø_1
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: c75cd7fefda1f3441894b3c131b312e2, type: 3}
+  picture: {fileID: 21300000, guid: b12f07d2e94530740a8583f92830fcc3, type: 3}
   language: 4
   spelling: Kø
   pronunciations:
-  - {fileID: 8300000, guid: 2d71f3020c69f3d449da2cceeb7a10e3, type: 3}
+  - {fileID: 8300000, guid: 72b6932eb889bde49825ab9df571c630, type: 3}

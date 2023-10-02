@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_skive_othg_1
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: 894b64857098ea74db17ee9e3250c34e, type: 3}
+  picture: {fileID: 21300000, guid: e4be2a167d29bed4cae184261864d0ef, type: 3}
   language: 4
   spelling: Skive
   pronunciations:
-  - {fileID: 8300000, guid: ab86a2b011cb5774c9b383113d945e86, type: 3}
+  - {fileID: 8300000, guid: d538266347b1501469cdd5fcf6b10ea0, type: 3}

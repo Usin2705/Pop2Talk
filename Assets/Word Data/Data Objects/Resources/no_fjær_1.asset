@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_fjær_1
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: 91bb1d3f00b3ad941ba0db92c4af4e37, type: 3}
+  picture: {fileID: 21300000, guid: 3e1308e8d20cf4e42b6687b5542e3dfd, type: 3}
   language: 4
   spelling: Fjær
   pronunciations:
-  - {fileID: 8300000, guid: 7fae72fa1cbe1f54daa189782205236d, type: 3}
+  - {fileID: 8300000, guid: 08a9e92343049994db478a7c73b8438e, type: 3}

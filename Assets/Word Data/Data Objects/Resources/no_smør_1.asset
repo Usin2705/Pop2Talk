@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_smør_1
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: de74847b10c1fbb40809be32139f19e0, type: 3}
+  picture: {fileID: 21300000, guid: 842640b00b0f0ed418991be93542ba60, type: 3}
   language: 4
   spelling: Smør
   pronunciations:
-  - {fileID: 8300000, guid: ff80bd5c53e8c6747ad72693edba880b, type: 3}
+  - {fileID: 8300000, guid: 4c5d8fd07a91655449902dffc681208a, type: 3}

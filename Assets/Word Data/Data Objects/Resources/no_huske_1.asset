@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_huske_1
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: acc4887e9c6d2d849a7d2f4fc3edb922, type: 3}
+  picture: {fileID: 21300000, guid: 61aa5e215f7832a488eae43141c23732, type: 3}
   language: 4
   spelling: Huske
   pronunciations:
-  - {fileID: 8300000, guid: dd9b318cc97469841aca976e3be23af6, type: 3}
+  - {fileID: 8300000, guid: 832eae623adf006478c3bbb9cc36348a, type: 3}

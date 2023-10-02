@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_søster_3
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: d9832571c7370f244a417cd29f0f99aa, type: 3}
+  picture: {fileID: 21300000, guid: 61e70ea78326f8d4aa7f45aa8fd1aac6, type: 3}
   language: 4
   spelling: Søster
   pronunciations:
-  - {fileID: 8300000, guid: 1573e9259f51046469559160d7c7d514, type: 3}
+  - {fileID: 8300000, guid: f462c79dbb29d764392317607d37eb0b, type: 3}

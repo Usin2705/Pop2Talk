@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_syk_othg_1
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: f3695274c98ca384aa366074c89fa47e, type: 3}
+  picture: {fileID: 21300000, guid: b79776cf61d999648b686353329c267c, type: 3}
   language: 4
   spelling: Syk
   pronunciations:
-  - {fileID: 8300000, guid: 7681314f81238ec48ba67b564ca24d4e, type: 3}
+  - {fileID: 8300000, guid: dc3d6092386037941895c298a79cee11, type: 3}

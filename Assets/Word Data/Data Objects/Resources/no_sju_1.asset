@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_sju_1
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: ddf4885c12c7373418473c8929fd81fc, type: 3}
+  picture: {fileID: 21300000, guid: 9c1e46782ac44bc4cbed0216a343c033, type: 3}
   language: 4
   spelling: Sju
   pronunciations:
-  - {fileID: 8300000, guid: c926c453f5696a942a7cb024fef8aaad, type: 3}
+  - {fileID: 8300000, guid: 4b31e504ccc47ae448415984cf8bc3cc, type: 3}

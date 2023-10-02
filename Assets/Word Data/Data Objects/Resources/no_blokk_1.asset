@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_blokk_1
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: 870ad8cb2b272a14da0fc69b2a7fc447, type: 3}
+  picture: {fileID: 21300000, guid: d18b34c7634ee494e8cdfc7f2990ae11, type: 3}
   language: 4
   spelling: Blokk
   pronunciations:
-  - {fileID: 8300000, guid: aa34177df814bcf43a8e03f969d0b41f, type: 3}
+  - {fileID: 8300000, guid: 795057cc8b607de4298b47f26f28c799, type: 3}

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_turn_3
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: 2c4f4873447c18a4fae5659037906f5c, type: 3}
+  picture: {fileID: 21300000, guid: 7b75e334dd6908f4086c7376dbb2dd6c, type: 3}
   language: 4
   spelling: Turn
   pronunciations:
-  - {fileID: 8300000, guid: 31f68c0bc4b51614c8ecd388900a6b13, type: 3}
+  - {fileID: 8300000, guid: 27905e4971c84b642b0d1006fd304fa9, type: 3}

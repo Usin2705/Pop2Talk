@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a94ed0a11f34a96d1a7142c8a53b, type: 3}
   m_Name: no_karneval_3
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: b3327a7534ac3af44a460b89ed10788e, type: 3}
+  picture: {fileID: 21300000, guid: 812a81eb8de82b9488a6b7136d540fd9, type: 3}
   language: 4
   spelling: Karneval
   pronunciations:
-  - {fileID: 8300000, guid: 457793163031b334cae88b349d1e36f4, type: 3}
+  - {fileID: 8300000, guid: a634b667d57959b42b02aa2781889df9, type: 3}
