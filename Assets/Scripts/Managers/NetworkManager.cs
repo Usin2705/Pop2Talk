@@ -181,13 +181,15 @@ public class NetworkManager : MonoBehaviour {
 		form.AddField("project_id", user.project_id);			
 		
 		// Choose ASR URL based on project ID
-		// if ((user.project_id == 5) || (user.project_id == 6)) {
-		// 	asrURL = Secret.ASR_URL;
-		// } else {
-		// 	asrURL = Secret.ASR_URL;
-		// }
+		if (user.project_id == 2) {
+		 	asrURL = Secret.ASR_URL_SWEL2;
+		} else if (user.project_id == 10) {
+			asrURL = Secret.ASR_URL_ENGL2;
+		} else {
+			asrURL = Secret.ASR_URL;
+		}
 
-		Debug.Log("ASR URL: " + asrURL);		
+		// Debug.Log("ASR URL: " + asrURL);		
 		
 		UnityWebRequest www = UnityWebRequest.Post(asrURL, form);
 		
