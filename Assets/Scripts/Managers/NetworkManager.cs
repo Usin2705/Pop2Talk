@@ -193,16 +193,16 @@ public class NetworkManager : MonoBehaviour {
 		
 		UnityWebRequest www = UnityWebRequest.Post(asrURL, form);
 		
-		www.timeout = (int)timeoutDuration;
+		www.timeout = (int) 15;
 
 		// Save the current time
-    	float startTime = Time.realtimeSinceStartup;
+    	// float startTime = Time.realtimeSinceStartup;
 
 		yield return www.SendWebRequest();	
 
 		// Calculate the elapsed time
-    	float elapsedTime = Time.realtimeSinceStartup - startTime;
-    	Debug.Log("Time taken: " + elapsedTime + " seconds");
+    	// float elapsedTime = Time.realtimeSinceStartup - startTime;
+    	// Debug.Log("Time taken: " + elapsedTime + " seconds");
 
         if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError) {
 			Debug.Log(www.error);
